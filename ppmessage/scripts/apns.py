@@ -23,6 +23,8 @@ import base64
 import datetime
 import traceback
 
+is_dev = True
+
 def _clean(dbsession):
     print("clean all apns setting...")
     dbsession.query(APNSSetting).delete()
@@ -68,7 +70,8 @@ def _create(dbsession):
     
     print(len(_dev_pem))
     print(len(_dev_p12))
-        
+
+    print(is_dev)
     _apns = APNSSetting(
         uuid=str(uuid.uuid1()),
         name=_name,
@@ -77,13 +80,12 @@ def _create(dbsession):
         development_p12=_dev_p12,
         production_pem=_pro_pem,
         development_pem=_dev_pem,
-        is_development=False,
-        is_production=True,
+        is_development=is_dev,
+        is_production=not is_dev,
         createtime=datetime.datetime.now(),
         updatetime=datetime.datetime.now(),
     )
 
-    print(str(_apns))
     dbsession.add(_apns)
     dbsession.commit()        
     return
@@ -109,6 +111,10 @@ if __name__ == "__main__":
     import codecs
     codecs.register(lambda name: codecs.lookup('utf8') if name == 'utf8mb4' else None)
 
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "pro":
+            is_dev = False
+    print(is_dev)
     dbsession_class = getDBSessionClass()
     dbsession = dbsession_class()
     try:
