@@ -14,7 +14,7 @@ from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.p12converter import der2pem
 
 from ppmessage.bootstrap.data import BOOTSTRAP_DATA
-from ppmessage.bootstrap.data import BOOTSTRAP_CONFIG
+from ppmessage.bootstrap.config import BOOTSTRAP_CONFIG
 
 import os
 import uuid
