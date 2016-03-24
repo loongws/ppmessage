@@ -67,8 +67,8 @@ BOOTSTRAP_CONFIG = {
     # apns push certificate, dev for developer, pro for production
     "apns": {
         "name": "com.yvertical.mdm.yvio",
-        "dev": "/Users/dingguijin/ppmessage/ppmessage/certs/apnscerts/ppmessage-dev.p12",
-        "pro": "/Users/dingguijin/ppmessage/ppmessage/certs/apnscerts/ppmessage-pro.p12",
+        "dev": "ppmessage-dev.p12",
+        "pro": "ppmessage-pro.p12",
     },
 
     # google cloud message

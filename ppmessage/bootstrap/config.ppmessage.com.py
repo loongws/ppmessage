@@ -67,8 +67,8 @@ BOOTSTRAP_CONFIG = {
     # apns push certificate, dev for developer, pro for production
     "apns": {
         "name": "com.ppmessage.ppkefu",
-        "dev": "/Users/dingguijin/ppmessage/ppmessage/certs/apnscerts/ppkefu-dev.p12",
-        "pro": "/Users/dingguijin/ppmessage/ppmessage/certs/apnscerts/ppkefu-pro.p12",
+        "dev": "ppkefu-dev.p12",
+        "pro": "ppkefu-pro.p12",
     },    
     
     # google cloud message
