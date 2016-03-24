@@ -9,23 +9,33 @@ from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import IOSPUSH_SRV
 
-from ppmessage.core.srv.basehandler import BaseHandler
-
-from tornado.web import Application
-
 from Queue import Queue
-import datetime
-import logging
+from tornado.web import Application
+from tornado.web import RequestHandler
+
+import copy
+import json
+import uuid
 import redis
+import logging
+import datetime
+
+class PushHandler(RequestHandler):
+
+    def post(self):
+        self.application.request_count += 1
+        self.redis.rpush(self.push_key, self.request.body)
+        logging.info("get ios push request : %d" % self.application.request_count)
+        return
 
 class IOSPushApp(Application):
     
-    def hasCallback(self):
-        return True
-
     def __init__(self):
-        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
         self.apns = {}
+        self.request_count = 0
+        self.push_key = REDIS_IOSPUSH_KEY + "." + str(uuid.uuid1())
+        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+        self.push_thread = PushThreadHandler(self)
         
         settings = {}
         settings["debug"] = True
@@ -38,7 +48,8 @@ class IOSPushApp(Application):
         """
         every 5 five minutes check what connection
         is unused in 5 five minutes
-        """        
+        """
+        
         _delta = datetime.timedelta(minutes=5)
         for _i in self.apns:
             if self.apns[_i] == None: 
@@ -47,8 +58,24 @@ class IOSPushApp(Application):
                 continue
             self.apns[_i].apns_session.outdate(_delta)
         return
+
+    def every_push(self):
+        """
+        every 1 second check push request
+        """
+        
+        if self.request_count == 0:
+            return
+
+        push = self.redis.lpop(self.push_key)
+        if push == None:
+            return
+
+        self.push_thread.task(push)
+        return
     
 #    def apns_feedback(self):
 #        _apns = get_apns(self)
 #        _apns.feedback()
 #        return
+
