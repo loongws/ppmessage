@@ -21,6 +21,8 @@ import redis
 import logging
 import datetime
 
+from .pushthreadhandler import PushThreadHandler
+
 class PushHandler(RequestHandler):
 
     def post(self):
