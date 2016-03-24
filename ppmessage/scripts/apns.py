@@ -12,7 +12,9 @@ from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 
 from ppmessage.core.p12converter import der2pem
+
 from ppmessage.bootstrap.data import BOOTSTRAP_DATA
+from ppmessage.bootstrap.data import BOOTSTRAP_CONFIG
 
 import os
 import uuid
@@ -34,7 +36,7 @@ def _create(dbsession):
     _dev_p12 = None
     _pro_p12 = None
 
-    _apns_config = BOOTSTRAP_DATA.get("apns")
+    _apns_config = BOOTSTRAP_CONFIG.get("apns")
     
     _dev_file = _apns_config.get("dev")
     _pro_file = _apns_config.get("pro")
