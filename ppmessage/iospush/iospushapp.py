@@ -43,7 +43,7 @@ class IOSPushApp(Application):
         settings = {}
         settings["debug"] = True
         handlers = []
-        handlers.append(("/"+IOSPUSH_SRV.PUSH, BaseHandler))
+        handlers.append(("/"+IOSPUSH_SRV.PUSH, PushHandler))
         Application.__init__(self, handlers, **settings)
         return
 
