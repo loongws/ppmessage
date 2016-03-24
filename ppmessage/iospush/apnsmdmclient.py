@@ -58,7 +58,7 @@ class APNSMDMClient():
             if _apns_uuid == None:
                 return None
 
-            _key = APNSSettings.__tablename__ + ".uuid." + _apns_uuid
+            _key = APNSSetting.__tablename__ + ".uuid." + _apns_uuid
             _setting = self.application.redis.hgetall(_key)
             return _setting
 
