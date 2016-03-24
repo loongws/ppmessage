@@ -8,3 +8,4 @@ plugins/
 electron/dist
 www/build
 *.log
+app.config.json
