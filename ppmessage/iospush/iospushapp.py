@@ -27,7 +27,7 @@ class PushHandler(RequestHandler):
 
     def post(self):
         self.application.request_count += 1
-        self.redis.rpush(self.push_key, self.request.body)
+        self.application.redis.rpush(self.push_key, self.request.body)
         logging.info("get ios push request : %d" % self.application.request_count)
         return
 
