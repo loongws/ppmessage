@@ -110,7 +110,6 @@ class PPCreateAnonymousHandler(BaseHandler):
             
         if _city == None:
             return _string.get("unknown") + "." + _string.get("user")
-
         
         _country_name = _city.country.names.get(_language)
         _city_name = _city.city.names.get(_language)
