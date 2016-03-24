@@ -435,9 +435,9 @@ WEB_TITLE = {
 
 USER_NAME = {
     "en": {
-        "local": "local area",
-        "unknown": "unknown area",
-        "user": "user",
+        "local": "Local Area",
+        "unknown": "Unknown Area",
+        "user": "User",
     },
 
     "cn": {
