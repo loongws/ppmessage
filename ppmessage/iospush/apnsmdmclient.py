@@ -5,7 +5,6 @@
 #
 
 from ppmessage.db.models import APNSSetting
-
 from ppmessage.core.constant import INVALID_IOS_TOKEN
 
 from apnsclient import *
@@ -19,9 +18,14 @@ import traceback
 import os
 
 class APNSMDMClient():
+    """
+    every object is indexed by app_uuid
+    """
+    
     def __init__(self, _app, _name):
         self.application = _app
         self.app_uuid = _name
+
         self.apns_settings = None
         self.apns_cert_string = None
 
@@ -39,23 +43,24 @@ class APNSMDMClient():
         self.apns_cert_string = None
         
     def _load_settings(self):
-
+        """
+        reload apns settings
+        """
+        
         if self.apns_settings != None:
-            _key = APNSSetting.__tablename__+".uuid." + self.apns_settings.get("uuid")
+            _key = APNSSetting.__tablename__ + ".uuid." + self.apns_settings.get("uuid")
             _setting = self.application.redis.hgetall(_key)
             return _setting
         
         if self.apns_settings == None:
-            _pattern = APNSSetting.__tablename__ + ".uuid.*"
-            _apns_info = self.application.redis.keys(_pattern)
-            if len(_apns_info) == 0:
+            _pattern = APNSSetting.__tablename__ + ".app_uuid." + self.app_uuid
+            _apns_uuid = self.application.redis.get(_pattern)
+            if _apns_uuid == None:
                 return None
 
-            for _key in _apns_info:
-                _app_uuid = self.application.redis.hget(_key, "app_uuid")
-                if _app_uuid == self.app_uuid:
-                    _setting = self.application.redis.hgetall(_key)
-                    return _setting
+            _key = APNSSettings.__tablename__ + ".uuid." + _apns_uuid
+            _setting = self.application.redis.hgetall(_key)
+            return _setting
 
         return None
 
