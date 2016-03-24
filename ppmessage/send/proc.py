@@ -221,23 +221,33 @@ class Proc():
             if _image == None:
                 logging.error("PIL can not identify the file_id=%s, not image." % (_fid))
                 return None
-       
+
+        _image_width = _image.width
+        _image_height = _image.height
+        _thum_width = _image.width
+        _thum_height = _image.height
+        
         if _image.format == "GIF":
-            return {"thum":_fid, "orig":_fid, "mime":"image/gif"}
+            return {"thum":_fid, "orig":_fid, "mime":"image/gif", "orig_width": _image_width, "orig_height": _image_height, "thum_width": _thum_width, "_thum_height": _thum_height}
         
         _thum_format = "JPEG"
         if _image.format == "PNG":
             _thum_format = "PNG"
 
-        _thum_data = ImageConverter.thumbnail(_image, _thum_format)
+        _thum_image_info = ImageConverter.thumbnailByKeepImage(_image, _thum_format)
+        _thum_data = _thum_image_info["data"]
+        _thum_image = _thum_image_info["image"]
         if _thum_data == None:
             logging.error("Error for thumbnail image")
             return None
 
         _thum_id = create_file_with_data(self._redis, _thum_data, _mime, self._from_uuid)
 
+        _thum_width = _thum_image.width
+        _thum_height = _thum_image.height
+
         # where assume the _thum must be jpeg
-        return {"thum":_thum_id, "orig":_fid, "mime":_mime}
+        return {"thum":_thum_id, "orig":_fid, "mime":_mime, "orig_width": _image_width, "orig_height": _image_height, "thum_width": _thum_width, "thum_height": _thum_height}
 
     def _parseAudio(self, _body):
         _redis = self._redis
