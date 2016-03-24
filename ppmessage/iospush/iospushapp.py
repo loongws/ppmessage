@@ -62,7 +62,7 @@ class IOSPushApp(Application):
             self.apns[_i].apns_session.outdate(_delta)
         return
 
-    def every_push(self):
+    def push(self):
         """
         every 1 second check push request
         """
@@ -70,11 +70,11 @@ class IOSPushApp(Application):
         if self.request_count == 0:
             return
 
-        push = self.redis.lpop(self.push_key)
-        if push == None:
+        push_request = self.redis.lpop(self.push_key)
+        if push_request == None:
             return
 
-        self.push_thread.task(push)
+        self.push_thread.task(push_request)
         return
     
 #    def apns_feedback(self):
