@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# version: 0.1
+# version: 0.2
 # maintainer: Jin He <jin.he@ppmessage.com>
 # description: a shell script to deploy PPMessage on Mac
 
@@ -27,6 +27,13 @@ brew tap homebrew/nginx
 brew install nginx-full --with-upload-module
 brew install ffmpeg --with-fdk-aac --with-opencore-amr --with-libvorbis --with-opus
 
+# some python modules need libmaxminddb, install it before run 'pip install ...'
+cd /tmp
+git clone --recursive https://github.com/maxmind/libmaxminddb
+cd libmaxminddb
+./bootstrap
+./configure
+make && sudo make install
 
 # In Mac OS X EI Captain, if your encount below error when install green,
 
@@ -80,12 +87,5 @@ wget http://cdn.mysql.com//Downloads/Connector-Python/mysql-connector-python-$MY
 tar -xzvf mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz
 cd mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION
 sudo python setup.py install
-
-cd /tmp
-git clone --recursive https://github.com/maxmind/libmaxminddb
-cd libmaxminddb
-./bootstrap
-./configure
-make && sudo make install
 
 echo "Finish deployment successfully, have fun with PPMessage"
