@@ -335,8 +335,10 @@ class AbstractPolicy(Policy):
                    ".user_uuid." + _user_uuid + \
                    ".device_uuid." + _device_uuid        
             _count = len(self._redis.smembers(_key))
-        
+
+        _is_pro = bool(self._task.get("is_production"))
         _config = {
+            "is_development": not _is_pro,
             "user_language": _user.get("user_language"),
             "device_ios_token": _token,
             "unacked_notification_count": _count,
