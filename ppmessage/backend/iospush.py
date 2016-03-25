@@ -38,8 +38,8 @@ if __name__ == "__main__":
     # set the periodic check outdated connection
     tornado.ioloop.PeriodicCallback(_app.outdate, 1000*60*5).start()
     
-    # set the periodic check push request every second
-    tornado.ioloop.PeriodicCallback(_app.push, 1000).start()
+    # set the periodic check push request every 200 ms
+    tornado.ioloop.PeriodicCallback(_app.push, 200).start()
     
     logging.info("IOSPush service starting...")
     tornado.ioloop.IOLoop.instance().start()

@@ -348,7 +348,8 @@ class AbstractPolicy(Policy):
             "app": _app_uuid
         }
         logging.info("push ios: %s" % str(_push))
-        async_signal_iospush_push(_push)
+        #async_signal_iospush_push(_push)
+        self._redis.rpush(REDIS_IOSPUSH_KEY, json.dumps(_push))
         return
 
     def _push_to_android(self, _user_uuid, _device_uuid):

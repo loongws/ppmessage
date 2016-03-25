@@ -24,11 +24,11 @@ import datetime
 from .pushthreadhandler import PushThreadHandler
 
 class PushHandler(RequestHandler):
-
+    """
+    not use the web request for internal message, use redis list instead.
+    """
     def post(self):
-        self.application.request_count += 1
-        self.application.redis.rpush(self.application.push_key, self.request.body)
-        logging.info("get ios push request : %d" % self.application.request_count)
+        #self.application.redis.rpush(self.application.push_key, self.request.body)
         return
 
 class IOSPushApp(Application):
@@ -36,7 +36,7 @@ class IOSPushApp(Application):
     def __init__(self):
         self.apns = {}
         self.request_count = 0
-        self.push_key = REDIS_IOSPUSH_KEY + "." + str(uuid.uuid1())
+        self.push_key = REDIS_IOSPUSH_KEY
         self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
         self.push_thread = PushThreadHandler(self)
         
@@ -64,21 +64,12 @@ class IOSPushApp(Application):
 
     def push(self):
         """
-        every 1 second check push request
+        every 200ms check push request
         """
-        
-        if self.request_count == 0:
-            return
-
-        push_request = self.redis.lpop(self.push_key)
-        if push_request == None:
-            return
-
-        self.push_thread.task(push_request)
+        while True:
+            push_request = self.redis.lpop(self.push_key)
+            if push_request == None:
+                return
+            self.push_thread.task(push_request)
         return
-    
-#    def apns_feedback(self):
-#        _apns = get_apns(self)
-#        _apns.feedback()
-#        return
 
