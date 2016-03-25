@@ -13,10 +13,11 @@ from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 from ppmessage.core.constant import IOS_FAKE_TOKEN
 from ppmessage.core.constant import CONVERSATION_TYPE
 from ppmessage.core.constant import MESSAGE_SUBTYPE
-from ppmessage.core.constant import MESSAGE_TYPE
 from ppmessage.core.constant import MESSAGE_STATUS
+from ppmessage.core.constant import MESSAGE_TYPE
 from ppmessage.core.constant import TASK_STATUS
 
+from ppmessage.core.constant import REDIS_IOSPUSH_KEY
 from ppmessage.core.constant import PPCOM_OFFLINE
 from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import YVOBJECT
