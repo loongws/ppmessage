@@ -51,7 +51,7 @@ function ($sceProvider, blockUIConfig, $ionicConfigProvider) {
     $ionicConfigProvider.backButton.text("");
 
     if (window.cordova && ionic.Platform.isAndroid()) {
-        // ionic.Platform.fullScreen(true, false);
+        ionic.Platform.fullScreen(true, false);
         $ionicConfigProvider.scrolling.jsScrolling(false);
     }
 }]).run([
@@ -93,16 +93,32 @@ function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvLocal, yvMonito
     };
 
     $ionicPlatform.ready(function () {
+        if (!window.cordova) return;
+
+        if (ionic.Platform.isAndroid()) {            
+            yvSys.hide_statusbar();
+            // angular.element(document).click(function () {
+            //     yvSys.hide_statusbar();
+            // });
+            // keyboardshow listener doesn't work somehow.
+            // window.addEventListener('native.keyboardshow', yvSys.hide_statusbar, false);
+            window.addEventListener('native.keyboardhide', yvSys.hide_statusbar, false);
+            window.onresize = yvSys.hide_statusbar;
+        }
+        
         if (window.cordova && cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             cordova.plugins.Keyboard.disableScroll(true);
         }
+
         if (window.StatusBar) {
             StatusBar.styleLightContent();
         }
+
         if (window.cordova && cordova.getAppVersion) {
             yvSys.set_bundle_info();
         }
+
         if (window.cordova && navigator.connection) {
             document.addEventListener("online", yvSys.device_online, false);
             document.addEventListener("offline", yvSys.device_offline, false);

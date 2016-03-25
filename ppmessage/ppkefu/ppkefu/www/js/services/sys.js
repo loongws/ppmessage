@@ -427,6 +427,14 @@ function ($state, $cookies, $window, yvLog, yvConstants) {
         click_download: function (href, filename) {
             return _click_download(href, filename);
         },
+
+        hide_statusbar: function (event) {
+            if (ionic.Platform.isFullScreen) {
+                $timeout(function () {
+                    ionic.Platform.showStatusBar(false);
+                });
+            }
+        },
         
     };
 }]);
