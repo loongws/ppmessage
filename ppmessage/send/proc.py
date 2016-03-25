@@ -67,6 +67,7 @@ class Proc():
         self._from_device_uuid = self._body.get("device_uuid")
         self._message_type = self._body.get("message_type")
         self._message_subtype = self._body.get("message_subtype")
+        self._is_development = bool(self._body.get("is_development"))
 
         self._pcsocket = self._body.get("pcsocket")
         
@@ -158,6 +159,7 @@ class Proc():
             "to_type": self._to_type,
             "body": self._message_body,
             "task_status": TASK_STATUS.PENDING,
+            "is_development": self._is_development,
         }
         _row = MessagePushTask(**_task)
         _row.async_add()

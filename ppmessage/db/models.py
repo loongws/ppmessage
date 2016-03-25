@@ -382,6 +382,8 @@ class MessagePushTask(CommonMixin, BaseModel):
 
     # message push procedure
     task_status = Column("task_status", String(32))
+
+    is_development = Column("is_development", Boolean)
     
     __table_args__ = (
         Index(
