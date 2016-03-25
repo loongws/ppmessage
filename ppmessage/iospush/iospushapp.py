@@ -55,11 +55,16 @@ class IOSPushApp(Application):
         
         _delta = datetime.timedelta(minutes=5)
         for _i in self.apns:
-            if self.apns[_i] == None: 
+            _apns = self.apns.get(_i)
+            if _apns == None:
                 continue
-            if self.apns[_i].apns_session == None:
-                continue
-            self.apns[_i].apns_session.outdate(_delta)
+            for _j in _apns:
+                _apn = _apns.get(_j)
+                if _apn == None:
+                    continue
+                if _apn.apns_session == None:
+                    continue
+                _apn.apns_session.outdate(_delta)
         return
 
     def push(self):
