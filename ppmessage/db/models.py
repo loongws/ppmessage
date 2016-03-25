@@ -280,6 +280,9 @@ class DeviceInfo(CommonMixin, BaseModel):
 
     # accelerate the online devices of portal users
     is_ppcom_device = Column("is_ppcom_device", Boolean)
+
+    # is_development
+    is_development = Column("is_development", Boolean)
     
     __table_args__ = ()
 
