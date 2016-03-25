@@ -33,12 +33,16 @@ function get_bootstrap_data () {
 
 function create_app_config(target) {
     var bootstrap_data = get_bootstrap_data();
+    var protocol = "http://";
+    if (bootstrap_data.nginx.ssl == "on") {
+        protocol = "https://";
+    }
     var app_config = {
         "developer_mode": true,
         "api_key": bootstrap_data.PPKEFU.api_key,
         "server": {
-            "port": "8080",
-            "protocol": "http://",
+            "port": bootstrap_data.nginx.listen,
+            "protocol": protocol,
             "name": bootstrap_data.server.name,
             "host": bootstrap_data.server.name
         }
