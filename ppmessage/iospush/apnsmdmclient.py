@@ -59,13 +59,13 @@ class APNSMDMClient():
 
     def _load_cert(self, _settings):        
         if self.is_dev == True:
-            self.apns_cert_string = base64.b64decode(_settings.get("production_pem"))
-            self.apns_push_server = "push_production"
-            self.apns_feedback_server = "feedback_production"
-        else:
             self.apns_cert_string = base64.b64decode(_settings.get("development_pem"))
             self.apns_push_server = "push_sandbox"
             self.apns_feedback_server = "feedback_sandbox"
+        else:
+            self.apns_cert_string = base64.b64decode(_settings.get("production_pem"))
+            self.apns_push_server = "push_production"
+            self.apns_feedback_server = "feedback_production"
         return
 
     def check_cert(self):

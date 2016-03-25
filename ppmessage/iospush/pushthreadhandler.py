@@ -43,12 +43,12 @@ class PushThreadHandler():
                      badge=_count)
 
         _dev = _config.get("is_development")
+        _real_apns = _apns.get("pro")
 
-        _apns = _apns.get("pro")
-        if _dev == True:
-            _apns = _apns.get("dev")
+        if _dev != None and _dev == True:
+            _real_apns = _apns.get("dev")
         
-        _apns.publish_one(_m)
+        _real_apns.publish_one(_m)
         return
 
     def task(self, _data):
