@@ -41,6 +41,13 @@ class PushThreadHandler():
                      alert=_title,
                      sound=_sound,
                      badge=_count)
+
+        _dev = _config.get("is_development")
+
+        _apns = _apns.get("pro")
+        if _dev == True:
+            _apns = _apns.get("dev")
+        
         _apns.publish_one(_m)
         return
 
