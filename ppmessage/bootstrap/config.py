@@ -40,7 +40,7 @@ BOOTSTRAP_CONFIG = {
     },
 
     "server": {
-        "name": "", # `` PPMessage use the host ip address otherwise fill it with host name like `ppmessage.com`/`www.ppmessage.com`
+        "name": "", 
         "identicon_store": "/usr/local/opt/ppmessage/identicon",
         "generic_store": "/usr/local/opt/ppmessage/generic",
     },
@@ -75,12 +75,6 @@ BOOTSTRAP_CONFIG = {
     # google cloud message
     "gcm": {
         "api_key": "AIzaSyBzRHQH-u6-wcT6jUc8DgTITMUB4vdqYiU",
-    },
-
-    # iOS app code signing
-    "ios": {
-        "code_sign_identity": "iOS Distribution",
-        "provisioning_profile": "b00c5be6-cc46-4776-b7c3-02915a5c44ec",
     },
 
 }

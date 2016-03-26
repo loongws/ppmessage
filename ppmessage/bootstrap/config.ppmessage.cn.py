@@ -76,10 +76,4 @@ BOOTSTRAP_CONFIG = {
         "api_key": "AIzaSyBzRHQH-u6-wcT6jUc8DgTITMUB4vdqYiU",
     },
 
-    # iOS app code signing
-    "ios": {
-        "code_sign_identity": "iOS Distribution",
-        "provisioning_profile": "b00c5be6-cc46-4776-b7c3-02915a5c44ec",
-    },
-
 }

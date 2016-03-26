@@ -3,11 +3,10 @@ ppmessageModule.factory("yvDB", [
     "$timeout",
     "yvAPI",
     "yvSys",
-    "yvSSL",
     "yvNav",
     "yvUser",
     "yvConstants",
-function ($rootScope, $timeout, yvAPI, yvSys, yvSSL, yvNav, yvUser, yvConstants) {
+function ($rootScope, $timeout, yvAPI, yvSys, yvNav, yvUser, yvConstants) {
 
     "use strict";
 

@@ -1214,6 +1214,8 @@ class AppInfo(CommonMixin, BaseModel):
     robot_train_click = Column("robot_train_click", Boolean)
 
     robot_train_method = Column("robot_train_method", String(32))
+
+    robot_user_uuid = Column("robot_user_uuid", String(64))
     
     __table_args__ = (
     )
