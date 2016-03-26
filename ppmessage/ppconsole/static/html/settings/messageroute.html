@@ -9,7 +9,7 @@
         <label for="radioSwitch1" style="float:left;"></label>
         <div class="line">
           {{ "statistics.messageroute.ALL" | translate }}
-          <span class="u-icon" data-toggle="tooltip" title="将消息投递给所有客服，无论其在线与否"></span>
+          <span class="u-icon" data-toggle="tooltip" title="将消息投递给所有客服"></span>
         </div>
       </div>
 
@@ -18,7 +18,7 @@
         <label for="radioSwitch2" style="float:left;"></label>
         <div class="line">
           {{ "statistics.messageroute.SMART" | translate }}
-          <span class="u-icon" data-toggle="tooltip" title="按照系统算法投递消息给在线客服，只发给一个在线客服"></span>
+          <span class="u-icon" data-toggle="tooltip" title="按照系统算法投递消息给一个在线客服"></span>
         </div>
       </div>
 
@@ -31,14 +31,23 @@
         </div>
       </div>
 
-      <div class="switch small yan">
-        <input id="radioSwitch4" type="radio" name="testGroup" ng-model="current_app.app_route_policy" value="ROBOT">
-        <label for="radioSwitch4" style="float:left;"></label>
-        <div class="line">
-          {{ "statistics.messageroute.ROBOT" | translate }}
-          <span class="u-icon" data-toggle="tooltip" title="按照人工智能所设定的训练结果进行消息自动回复和分流"></span>
-        </div>
-      </div>
+      <!-- <div class="switch small yan"> -->
+      <!--   <input id="radioSwitch4" type="radio" name="testGroup" ng-model="current_app.app_route_policy" value="ROBOT"> -->
+      <!--   <label for="radioSwitch4" style="float:left;"></label> -->
+      <!--   <div class="line"> -->
+      <!--     {{ "statistics.messageroute.ROBOT" | translate }} -->
+      <!--     <span class="u-icon" data-toggle="tooltip" title="按照人工智能所设定的训练结果进行消息自动分流"></span> -->
+      <!--   </div> -->
+      <!-- </div> -->
+      
+      <!-- <div class="switch small yan"> -->
+      <!--   <input id="radioSwitch4" type="radio" name="testGroup" ng-model="current_app.app_route_policy" value="ROBOT"> -->
+      <!--   <label for="radioSwitch4" style="float:left;"></label> -->
+      <!--   <div class="line"> -->
+      <!--     {{ "statistics.messageroute.ROBOT" | translate }} -->
+      <!--     <span class="u-icon" data-toggle="tooltip" title="按照人工智能所设定的训练结果进行消息自动回复"></span> -->
+      <!--   </div> -->
+      <!-- </div> -->
 
     </div>
   </div>
