@@ -13,10 +13,11 @@ from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 from ppmessage.core.constant import IOS_FAKE_TOKEN
 from ppmessage.core.constant import CONVERSATION_TYPE
 from ppmessage.core.constant import MESSAGE_SUBTYPE
-from ppmessage.core.constant import MESSAGE_TYPE
 from ppmessage.core.constant import MESSAGE_STATUS
+from ppmessage.core.constant import MESSAGE_TYPE
 from ppmessage.core.constant import TASK_STATUS
 
+from ppmessage.core.constant import REDIS_IOSPUSH_KEY
 from ppmessage.core.constant import PPCOM_OFFLINE
 from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import YVOBJECT
@@ -334,8 +335,10 @@ class AbstractPolicy(Policy):
                    ".user_uuid." + _user_uuid + \
                    ".device_uuid." + _device_uuid        
             _count = len(self._redis.smembers(_key))
-        
+
+        _is_dev = bool(_device.get("is_development"))
         _config = {
+            "is_development": _is_dev,
             "user_language": _user.get("user_language"),
             "device_ios_token": _token,
             "unacked_notification_count": _count,
@@ -348,7 +351,8 @@ class AbstractPolicy(Policy):
             "app": _app_uuid
         }
         logging.info("push ios: %s" % str(_push))
-        async_signal_iospush_push(_push)
+        #async_signal_iospush_push(_push)
+        self._redis.rpush(REDIS_IOSPUSH_KEY, json.dumps(_push))
         return
 
     def _push_to_android(self, _user_uuid, _device_uuid):

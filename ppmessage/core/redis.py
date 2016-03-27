@@ -7,7 +7,6 @@
 # core/redis.py
 #
 
-from ppmessage.core.constant import REDIS_SQL_KEY
 from ppmessage.core.constant import DATETIME_FORMAT
 
 from sqlalchemy import DateTime
@@ -71,26 +70,3 @@ def row_to_redis_hash(_redis, _row):
     _redis.hmset(_key, _d)
     return
 
-def invalid_sql_result(_redis, _table):
-    _names = _redis.smembers(REDIS_SQL_KEY + "." + _table)
-    if _names == None or len(_names) == 0:
-        return
-    _redis.hdel(REDIS_SQL_KEY, *_names)
-    return
-
-def register_redis_sql(_redis, _table, _name):
-    _key = REDIS_SQL_KEY + "." + _table
-    if not _redis.sismember(_key, _name):
-        _redis.sadd(_key, _name)
-    return
-
-def set_redis_sql(_redis, _name, _value):
-    _redis.hset(REDIS_SQL_KEY, _name, _value)
-    return
-
-def get_redis_sql(_redis, _name):
-    if not _redis.exists(REDIS_SQL_KEY):
-        return None
-    if not _redis.hexists(REDIS_SQL_KEY, _name):
-        return None
-    return _redis.hget(REDIS_SQL_KEY, _name)

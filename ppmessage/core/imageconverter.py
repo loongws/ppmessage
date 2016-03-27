@@ -98,6 +98,10 @@ class ImageConverter:
 
     @staticmethod
     def thumbnail(_data, _format):
+        return thumbnailByKeepImage(_data, _format)["data"]
+
+    @staticmethod
+    def thumbnailByKeepImage(_data, _format):
         _width = THUMBNAIL_WIDTH
         _height = THUMBNAIL_HEIGHT
         _im = _data
@@ -110,7 +114,7 @@ class ImageConverter:
         _o = StringIO()
         _im.save(_o, format=_format, quality=50)
         _o.seek(0)
-        return _o.read()
+        return {"data": _o.read(), "image": _im}
 
     @staticmethod
     def png2jpeg(_data):

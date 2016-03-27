@@ -10,8 +10,11 @@ MYSQL_CONNECTOR_PYTHON_VERSION=2.1.3
 
 sudo apt-get update
 
-sudo apt-get install -y libjpeg62-turbo-dev # for debian
-sudo apt-get install -y libjpeg8-dev # for ubuntu
+# for debian
+sudo apt-get install -y libjpeg62-turbo-dev
+
+# for ubuntu
+sudo apt-get install -y libjpeg8-dev
 
 sudo apt-get install -y \
     apt-file \
@@ -48,6 +51,14 @@ sudo apt-get install -y \
     python-pip \
     redis-server \
     wget
+
+# some python modules need libmaxminddb, install it before run 'pip install ...'
+cd /tmp
+git clone --recursive https://github.com/maxmind/libmaxminddb
+cd libmaxminddb
+./bootstrap
+./configure
+make && sudo make install
 
 sudo pip install -i http://pypi.douban.com/simple \
     axmlparserpy \
@@ -117,12 +128,5 @@ cd ffmpeg-$FFMPEG_VERSION
             --enable-libopus \
             --enable-libfdk-aac
 make && sudo make install 
-
-cd /tmp
-git clone --recursive https://github.com/maxmind/libmaxminddb
-cd libmaxminddb
-./bootstrap
-./configure
-make && sudo make install
 
 echo "finish deployment successfully, have fun with PPMessage"

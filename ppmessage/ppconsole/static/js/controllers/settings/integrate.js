@@ -1,5 +1,5 @@
 angular.module("this_app")
-	.controller("IntegrateCtrl", function($scope, $rootScope, $stateParams, $cookies, $state, $timeout, $http, $translate, yvTransTags, yvAjax, yvUtil, yvUser, yvConstants) {
+	.controller("IntegrateCtrl", function($scope, $rootScope, $stateParams, $cookies, $state, $timeout, $http, $translate, yvTransTags, yvAjax, yvUtil, yvUser, yvConstants, yvLogin) {
 
         $scope.enterprise = {
             link: null,
@@ -11,12 +11,16 @@ angular.module("this_app")
             if (_team == null) {
                 return;
             }
-            var _copyTeam = angular.extend( angular.copy( _team ), { uuid: yvConstants.PPMESSAGE_APP.uuid } );
+
+            // `base64_encode` only accept `255 ascill` characters, so we need `escape` here
+            var _appObj = { uuid: _team.uuid,
+                            app_name: encodeURI( _team.app_name || '' ) }; 
             var _url = location.protocol + "//" + location.host + "/ppcom/enterprise/";
-            var _param = yvUtil.base64_encode(JSON.stringify(_copyTeam));
+            var _param = yvUtil.base64_encode(JSON.stringify(_appObj));
             $timeout(function() {
                 $scope.enterprise.link = _url + _param;
             });
+            
         };
 
         var _generate_embedded_code = function() {
@@ -63,20 +67,9 @@ angular.module("this_app")
         } );
                 
         var _logined = function() {
-            if(yvUser.get_status() != "OWNER_2") {
-                console.error("should not be here");
-                return;
-            };
-
-            if(!yvUser.get_team()) {
-                var _get = yvAjax.get_app_owned_by_user(yvUser.get_uuid());
-                _get.success(function(data) {
-                    yvUser.set_team(data.app);
-                    _on_team_ok();
-                });
-            } else {
+            yvLogin.prepare( function( errorCode ) {
                 _on_team_ok();
-            }
+            }, { $scope: $scope, onRefresh: _on_team_ok } );
         };
 
         var _translate = function() {
@@ -88,7 +81,7 @@ angular.module("this_app")
             };
 
             $scope.translate = function() {
-                console.log($scope.lang);
+                // console.log($scope.lang);
             };
             
             yvUtil.translate($scope, 'lang', _tag_list, $scope.translate);
@@ -97,7 +90,7 @@ angular.module("this_app")
 		var _init = function() {
             _translate();
             $scope.refresh_settings_menu();
-            yvAjax.check_logined(_logined, null);
+            _logined();
         };
 		
 		_init();

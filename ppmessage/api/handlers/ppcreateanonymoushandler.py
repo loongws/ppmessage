@@ -14,9 +14,10 @@ from ppmessage.db.models import AppUserData
 from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import USER_NAME
 from ppmessage.core.constant import USER_STATUS
+
+from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 from ppmessage.core.redis import redis_hash_to_dict
 from ppmessage.core.utils.createicon import create_user_icon
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 
 import json
 import uuid
@@ -25,11 +26,6 @@ import urllib2
 
 class PPCreateAnonymousHandler(BaseHandler):
     
-    def initialize(self):
-        self.addPermission(app_uuid=True)
-        self.addPermission(api_level=API_LEVEL.PPCOM)
-        return
-
     def _create(self, _ppcom_trace_uuid):
         _redis = self.application.redis
         _key = DeviceUser.__tablename__ + ".ppcom_trace_uuid." + _ppcom_trace_uuid
@@ -103,7 +99,7 @@ class PPCreateAnonymousHandler(BaseHandler):
         _ip = self.request.headers["X-Real-Ip"]
 
         if _ip == None or _ip == "127.0.0.1" or _ip == "localhost" or "192.168." in _ip:
-            return _string.get("local") + _string.get("user")
+            return _string.get("local") + "." + _string.get("user")
 
         _city = None
         try:
@@ -113,22 +109,26 @@ class PPCreateAnonymousHandler(BaseHandler):
             _city = None
             
         if _city == None:
-            return _string.get("unknown") + _string.get("user")
-
+            return _string.get("unknown") + "." + _string.get("user")
         
         _country_name = _city.country.names.get(_language)
         _city_name = _city.city.names.get(_language)
 
         if _city_name != None and _country_name != None:
-            return _country_name + _city_name + _string.get("user")
+            return _country_name + "." + _city_name + "." + _string.get("user")
 
         if _city_name != None:
-            return _city_name + _string.get("user")
+            return _city_name + "." + _string.get("user")
         
         if _country_name != None:
-            return _country_name + _string.get("user")
+            return _country_name + "." + _string.get("user")
         
-        return _string.get("unknown") + _string.get("user")
+        return _string.get("unknown") + "." + _string.get("user")
+
+    def initialize(self):
+        self.addPermission(app_uuid=True)
+        self.addPermission(api_level=API_LEVEL.PPCOM)
+        return
 
     def _Task(self):
         super(PPCreateAnonymousHandler, self)._Task()

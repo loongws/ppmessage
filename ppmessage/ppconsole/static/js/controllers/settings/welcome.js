@@ -1,5 +1,5 @@
 angular.module("this_app")
-    .controller("ApplicationWelcomeCtrl", function($scope, $state, $stateParams, $timeout, yvAjax, yvUser, yvTransTags, yvUtil, yvDebug){
+    .controller("ApplicationWelcomeCtrl", function($scope, $state, $stateParams, $timeout, yvAjax, yvUser, yvTransTags, yvUtil, yvDebug, yvLogin){
 
         $scope.current_bubble = {
             ppcom_launcher_color: '#54c6d6',
@@ -41,16 +41,7 @@ angular.module("this_app")
             }
             $timeout(function() {
                 $scope.current_bubble = {
-                    welcome: {
-                        zh_cn: _own_team.welcome_zh_cn,
-                        zh_tw: _own_team.welcome_zh_tw,
-                        en_us: _own_team.welcome_en_us,
-                    },
-                    offline: {
-                        zh_cn: _own_team.offline_zh_cn,
-                        zh_tw: _own_team.offline_zh_tw,
-                        en_us: _own_team.offline_en_us,
-                    },
+                    welcome_message: _own_team.welcome_message,
                     ppcom_launcher_color: _own_team.ppcom_launcher_color ? _own_team.ppcom_launcher_color : '#54c6d6', //'#54c6d6',
                     ppcom_launcher_style: _own_team.ppcom_launcher_style ? _own_team.ppcom_launcher_style : 'DEFAULT', //'DEFAULT',
                     app_route_policy: _own_team.app_route_policy,//BROADCAST/GROUP/THIRD
@@ -151,12 +142,7 @@ angular.module("this_app")
             };
             var update = {
                 "app_uuid": yvUser.get_team().uuid,
-                "offline_zh_cn": $scope.current_bubble.offline.zh_cn,
-                "offline_zh_tw": $scope.current_bubble.offline.zh_tw,
-                "offline_en_us": $scope.current_bubble.offline.en_us,
-                "welcome_zh_cn": $scope.current_bubble.welcome.zh_cn,
-                "welcome_zh_tw": $scope.current_bubble.welcome.zh_tw,
-                "welcome_en_us": $scope.current_bubble.welcome.en_us,
+                "welcome_message": $scope.current_bubble.welcome_message
             };
 
             _check(update, _ajax_update_team_info);
@@ -189,19 +175,9 @@ angular.module("this_app")
         };
         
         var _logined = function() {
-            if(yvUser.get_status() != "OWNER_2") {
-                console.error("should not be here");
-                return;
-            };
-            if(!yvUser.get_team()) {
-                var _get = yvAjax.get_app_owned_by_user(yvUser.get_uuid());
-                _get.success(function(data) {
-                    yvUser.set_team(data.app);
-                    _team();
-                });
-            } else {
+            yvLogin.prepare( function( errorCode ) {
                 _team();
-            }
+            }, { $scope: $scope, onRefresh: _team } );
         };
         
         var _translate = function() {
@@ -217,7 +193,7 @@ angular.module("this_app")
         var _init = function() {
             $scope.refresh_settings_menu();
             _translate();
-            yvAjax.check_logined(_logined, null);
+            _logined();
         };
 
         _init();

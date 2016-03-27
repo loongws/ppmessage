@@ -36,7 +36,6 @@ function ppmessage_help()
   $0 <command> [options]
 
 Commands:
-  init-ppmessage              Init ppmessage databases and materials.
   dev                         Install development mode with current working directory.
   undev                       Uninstall development mode.
   status                      Show the status of installation mode.
@@ -78,29 +77,6 @@ function ppmessage_exec()
     else
         $* >/dev/null 2>/dev/null
     fi
-}
-
-function ppmessage_init()
-{
-    case "$1" in
-        ppmessage)
-            ;;
-        *)
-            ppmessage_help
-            return
-            ;;
-    esac
-
-    cd ppmessage/init
-    ppmessage_exec sh ./init-all-$1.sh
-    cd - >/dev/null
-}
-
-function ppmessage_init_cache()
-{
-    cd ppmessage/init
-    ppmessage_exec python db2cache.py
-    cd - >/dev/null
 }
 
 function ppmessage_dist()
@@ -292,6 +268,7 @@ function ppmessage_bower()
     cd ppmessage/ppcom/web; bower install; cd -;
     cd ppmessage/ppkefu/ppkefu; bower install; cd -;
     cd ppmessage/ppconsole; bower install; cd -;
+    cd ppmessage/pphome; bower install; cd -;
 }
 
 function ppmessage_npm()
@@ -304,7 +281,7 @@ function ppmessage_npm()
 
 function ppmessage_bootstrap()
 {
-    echo "bootstrap will create db tables and config the PPMessage";
+    echo "bootstrap will create db tables, config PPMessage, cache db to redis.";
     python ppmessage/scripts/table.py;
     python ppmessage/scripts/bootstrap.py;
     python ppmessage/scripts/db2cache.py;

@@ -5,14 +5,13 @@
 #
 #
 
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
-
-from ppmessage.core.constant import MESSAGE_SUBTYPE
 from ppmessage.core.constant import APNS_TITLE
 from ppmessage.core.constant import MESSAGE_TYPE
+from ppmessage.core.constant import MESSAGE_SUBTYPE
+from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 
-from apnsmdmclient import get_apns
 from apnsclient import Message
+from apnsmdmclient import get_apns
 
 from .pushtitle import push_title
 
@@ -29,6 +28,7 @@ class PushThreadHandler():
         if _apns == None:
             logging.error("no apns inited for ios push")
             return
+
         _title = push_title(_body.get("mt"),
                             _body.get("ms"),
                             _body.get("bo"),
@@ -41,10 +41,20 @@ class PushThreadHandler():
                      alert=_title,
                      sound=_sound,
                      badge=_count)
-        _apns.publish_one(_m)
+
+        _dev = _config.get("is_development")
+        logging.info(_dev)
+        
+        _real_apns = _apns.get("pro")
+
+        if _dev != None and _dev == True:
+            _real_apns = _apns.get("dev")
+        
+        _real_apns.publish_one(_m)
         return
 
     def task(self, _data):
+        _data = json.loads(_data)
         _config = _data.get("config")
         _body = _data.get("body")
         #_app_uuid = _data.get("app_uuid")

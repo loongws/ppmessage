@@ -31,7 +31,6 @@ from ppmessage.bootstrap.config import BOOTSTRAP_CONFIG
 
 from ppmessage.db.models import AppInfo
 from ppmessage.db.models import ApiInfo
-from ppmessage.db.models import AdminUser
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import AppUserData    
 from ppmessage.db.models import APNSSetting
@@ -68,24 +67,6 @@ def _check_bootstrap_config():
     _config = copy.deepcopy(BOOTSTRAP_CONFIG)
     return _config
 
-def _create_bootstrap_admin_user(_session, _config):
-    _user_config = _config.get("user")
-    _admin = AdminUser(
-        createtime=datetime.datetime.now(),
-        updatetime=datetime.datetime.now(),
-        uuid=str(uuid.uuid1()),
-        user_email=_user_config.get("user_email"),
-        user_password=hashlib.sha1(_user_config.get("user_password")).hexdigest(),
-        user_fullname=_user_config.get("user_fullname"),
-        user_firstname=_user_config.get("user_firstname"),
-        user_lastname=_user_config.get("user_lastname"),
-        user_language=_user_config.get("user_language")
-    )
-    _session.add(_admin)
-    _session.commit()
-    _user_config["admin_uuid"] = _admin.uuid
-    return _config
-
 def _create_bootstrap_first_user(_session, _config):
     _user_config = _config.get("user")
     _user = DeviceUser(
@@ -98,7 +79,7 @@ def _create_bootstrap_first_user(_session, _config):
         user_firstname=_user_config.get("user_firstname"),
         user_lastname=_user_config.get("user_lastname"),
         user_language=_user_config.get("user_language"),
-        user_status=USER_STATUS.OWNER_2,
+        user_status=USER_STATUS.ADMIN,
         is_anonymous_user=False,
     )
     _session.add(_user)
@@ -334,6 +315,15 @@ def _print_bootstrap_result(_config):
 
     return
 
+def _clean_bootstrap_db_data(_session):
+    _session.query(DeviceUser).delete()
+    _session.query(AppInfo).delete()
+    _session.query(ApiInfo).delete()
+    _session.query(AppUserData).delete()
+    _session.query(APNSSetting).delete()
+    _session.commit()
+    return
+
 def _bootstrap():
 
     _levels = [API_LEVEL.PPCOM, API_LEVEL.PPKEFU, API_LEVEL.PPCONSOLE,
@@ -344,7 +334,7 @@ def _bootstrap():
     _session_class = getDBSessionClass()
     _session = _session_class()
     try:
-        _config = _create_bootstrap_admin_user(_session, _config)
+        _clean_bootstrap_db_data(_session)
         _config = _create_bootstrap_first_user(_session, _config)
         _config = _create_bootstrap_first_team(_session, _config)
         _config = _create_bootstrap_team_data(_session, _config)

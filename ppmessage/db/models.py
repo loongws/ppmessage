@@ -280,6 +280,9 @@ class DeviceInfo(CommonMixin, BaseModel):
 
     # accelerate the online devices of portal users
     is_ppcom_device = Column("is_ppcom_device", Boolean)
+
+    # is_development
+    is_development = Column("is_development", Boolean)
     
     __table_args__ = ()
 
@@ -382,6 +385,8 @@ class MessagePushTask(CommonMixin, BaseModel):
 
     # message push procedure
     task_status = Column("task_status", String(32))
+
+    is_development = Column("is_development", Boolean)
     
     __table_args__ = (
         Index(
@@ -960,7 +965,6 @@ class APNSSetting(CommonMixin, BaseModel):
     __tablename__ = "apns_settings"
 
     app_uuid = Column("app_uuid", String(64))
-
     name = Column("name", String(64))
     
     is_development = Column("is_development", Boolean)
@@ -971,8 +975,26 @@ class APNSSetting(CommonMixin, BaseModel):
 
     production_pem = Column("production_pem", LargeBinary)
     development_pem = Column("development_pem", LargeBinary)
+
     def __init__(self, *args, **kwargs):
         super(APNSSetting, self).__init__(*args, **kwargs)
+
+    def create_redis_keys(self, _redis, *args, **kwargs):
+        CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
+
+        _key = self.__tablename__ + ".app_uuid." + self.app_uuid
+        _redis.set(_key, self.uuid)
+        return
+    
+    def delete_redis_keys(self, _redis):
+        _obj = redis_hash_to_dict(_redis, APNSSetting, self.uuid)
+        if _obj == None:
+            return
+        _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"]
+        _redis.remove(_key)
+
+        CommonMixin.delete_redis_keys(self, _redis)
+        return
 
         
 class AppPackageInfo(CommonMixin, BaseModel):
@@ -1192,6 +1214,8 @@ class AppInfo(CommonMixin, BaseModel):
     robot_train_click = Column("robot_train_click", Boolean)
 
     robot_train_method = Column("robot_train_method", String(32))
+
+    robot_user_uuid = Column("robot_user_uuid", String(64))
     
     __table_args__ = (
     )

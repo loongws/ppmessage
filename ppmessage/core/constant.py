@@ -89,6 +89,11 @@ CACHE_RUN_STATUS = Enum([
 ])
 
 # OWNER and SERVICE are both PPMESSAGE user
+# OWNER_0 is user after signing up
+# OWNER_1 is user after creating first app
+# OWNER_2 is user after launching team
+# owner_3 is ???
+# ADMIN is the admin user
 # ANONYMOUS is PPMESSAGE anonymous + customer's anonymous
 # THIRDPARTY is customer's user
 USER_STATUS = Enum([
@@ -96,6 +101,7 @@ USER_STATUS = Enum([
     "OWNER_1",
     "OWNER_2",
     "OWNER_3",
+    "ADMIN",
     "SERVICE",
     "ANONYMOUS",
     "THIRDPARTY",
@@ -373,11 +379,9 @@ GCMPUSH_HOST = "127.0.0.1"
 GCMPUSH_PORT = 8940
 
 PPHOME_PORT = 8941
-PPUSER_PORT = 8942
 
 PPAUTH_PORT = 8943
-PPCONSOLE_USER_PORT = 8944
-PPCONSOLE_ADMIN_PORT = 8945
+PPCONSOLE_PORT = 8944
 
 IOS_FAKE_TOKEN = "YOU-GOT-A-FAKE-IOS-TOKEN-IN-EMULATOR"
 INVALID_IOS_TOKEN = "INVALID_IOS_TOKEN"
@@ -431,9 +435,9 @@ WEB_TITLE = {
 
 USER_NAME = {
     "en": {
-        "local": "local area",
-        "unknown": "unknown area",
-        "user": "user",
+        "local": "Local Area",
+        "unknown": "Unknown Area",
+        "user": "User",
     },
 
     "cn": {
@@ -449,10 +453,11 @@ USER_NAME = {
     },
 }
 
+REDIS_IOSPUSH_KEY = "redis_iospush_key"
+
 REDIS_MONITOR_KEY = "redis_monitor_key"
 REDIS_TYPING_KEY = "redis_typing_key"
 REDIS_ONLINE_KEY = "redis_online_key"
-REDIS_SQL_KEY = "redis_sql_key"
 
 REDIS_PPKEFU_ONLINE_KEY = "redis_ppkefu_online_key"
 REDIS_PPCOM_ONLINE_KEY = "redis_ppcom_online_key"

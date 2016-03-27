@@ -6,7 +6,7 @@
 #
 #
 
-from ppmessage.core.constant import PPCONSOLE_USER_PORT
+from ppmessage.core.constant import PPCONSOLE_PORT
 from ppmessage.ppconsole.app import App
 
 import tornado.httpserver
@@ -15,7 +15,7 @@ import tornado.options
 
 import logging
 
-tornado.options.define("port", default=PPCONSOLE_USER_PORT, help="", type=int)
+tornado.options.define("port", default=PPCONSOLE_PORT, help="", type=int)
 
 if __name__ == "__main__":
     import sys

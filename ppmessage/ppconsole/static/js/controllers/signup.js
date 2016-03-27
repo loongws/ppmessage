@@ -1,10 +1,7 @@
 angular.module("this_app")
-    .controller("SignupCtrl", function($scope, $state, $timeout, $translate, $cookieStore, yvAjax, yvUtil, yvUser, yvTransTags, yvConstants, yvDebug) {
-
-        var appUUID = yvConstants.PPMESSAGE_APP.uuid;
+    .controller("SignupCtrl", function($scope, $state, $timeout, $translate, $cookieStore, yvAjax, yvUtil, yvUser, yvTransTags, yvConstants, yvDebug, yvLogin) {
         
         $scope.user = {
-            app_uuid: appUUID,
             user_status: "OWNER_0",
             is_service_user: false,
             user_fullname: "",
@@ -119,7 +116,8 @@ angular.module("this_app")
                 // angular.extend(dst, src);
                 var copyUser = angular.extend(
                     angular.copy(user),
-                    { user_password: sha1( user.user_password ) }
+                    { user_password: sha1( user.user_password ),
+                      app_uuid: yvConstants.PPMESSAGE_APP.uuid }
                 );
                 
                 yvAjax.signup(copyUser, credentialsToken)
@@ -129,12 +127,14 @@ angular.module("this_app")
                             yvAjax.login(copyUser).success(function(data) {
 
                                 if ( data.error_code == 0 ) {
-                                    $cookieStore.put("cookie_ppconsole_{WEB_ROLE}_access_token", data.access_token); // store access_token
-                                    $cookieStore.put("cookie_ppconsole_{WEB_ROLE}_user_uuid", data.user_uuid);
+                                    yvLogin.updateActiveUserCookieKey( data.user_uuid );
+                                    yvLogin.updateLoginedUserCookieKey( data.user_uuid, data.access_token );
                                 }
+
+                                yvLogin.updateLoginedUser( copyUser );
+                                yvLogin.setLogined( true );
                                 
                                 _on_completed();
-                                yvUser.set_login_data(data);
                                 $state.go("app.createteam");
                                 
                             }).error(function(data) {

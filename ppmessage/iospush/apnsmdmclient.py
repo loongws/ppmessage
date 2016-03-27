@@ -5,7 +5,6 @@
 #
 
 from ppmessage.db.models import APNSSetting
-
 from ppmessage.core.constant import INVALID_IOS_TOKEN
 
 from apnsclient import *
@@ -19,9 +18,14 @@ import traceback
 import os
 
 class APNSMDMClient():
-    def __init__(self, _app, _name):
+    """
+    every object is indexed by app_uuid
+    """
+    
+    def __init__(self, _app, _name, _dev):
         self.application = _app
         self.app_uuid = _name
+
         self.apns_settings = None
         self.apns_cert_string = None
 
@@ -37,59 +41,45 @@ class APNSMDMClient():
         self.apns_push_server = None
         self.apns_feedback_server = None
         self.apns_cert_string = None
+
+        self.is_dev = _dev
         
     def _load_settings(self):
+        """
+        reload apns settings
+        """
+        _pattern = APNSSetting.__tablename__ + ".app_uuid." + self.app_uuid
+        _apns_uuid = self.application.redis.get(_pattern)
+        if _apns_uuid == None:
+            return None
 
-        if self.apns_settings != None:
-            _key = APNSSetting.__tablename__+".uuid." + self.apns_settings.get("uuid")
-            _setting = self.application.redis.hgetall(_key)
-            return _setting
-        
-        if self.apns_settings == None:
-            _pattern = APNSSetting.__tablename__ + ".uuid.*"
-            _apns_info = self.application.redis.keys(_pattern)
-            if len(_apns_info) == 0:
-                return None
-
-            for _key in _apns_info:
-                _app_uuid = self.application.redis.hget(_key, "app_uuid")
-                if _app_uuid == self.app_uuid:
-                    _setting = self.application.redis.hgetall(_key)
-                    return _setting
-
-        return None
+        _key = APNSSetting.__tablename__ + ".uuid." + _apns_uuid
+        _setting = self.application.redis.hgetall(_key)
+        return _setting
 
     def _load_cert(self, _settings):        
-        if _settings.get("is_production") == "True":
-            self.apns_cert_string = base64.b64decode(_settings.get("production_pem"))
-            self.apns_push_server = "push_production"
-            self.apns_feedback_server = "feedback_production"
-        else:
+        if self.is_dev == True:
             self.apns_cert_string = base64.b64decode(_settings.get("development_pem"))
             self.apns_push_server = "push_sandbox"
             self.apns_feedback_server = "feedback_sandbox"
+        else:
+            self.apns_cert_string = base64.b64decode(_settings.get("production_pem"))
+            self.apns_push_server = "push_production"
+            self.apns_feedback_server = "feedback_production"
         return
 
-    # needs reconnect
-    def _check_cert(self):
+    def check_cert(self):
         _settings = self._load_settings()
         
         if _settings == None:
             logging.error("No setting loaded.")
             return None
 
-        # check the production mode is changed or not
-        if self.apns_settings != None and self.apns_settings.get("is_production") != _settings.get("is_production"):
-            self.close()
-
         self.apns_settings = _settings
         self._load_cert(_settings)
         return _settings
                 
-    def _get_apns_service(self):
-        if not self._check_cert():
-            return None
-                    
+    def _get_apns_service(self):                    
         if self.apns_session == None:
             self.apns_session = Session()
         
@@ -113,7 +103,6 @@ class APNSMDMClient():
                 #self.application.redis.sadd(_key, token)
         except:
             logging.error("feedback connection failed.")
-
         return
         
     def close(self):
@@ -183,6 +172,10 @@ class APNSMDMClient():
 
 def get_apns(app, name):
     if app.apns.get(name) is None:
-        app.apns[name] = APNSMDMClient(app, name)        
+        app.apns[name] = {}
+        app.apns[name]["dev"] = APNSMDMClient(app, name, True)
+        app.apns[name]["dev"].check_cert()
+        app.apns[name]["pro"] = APNSMDMClient(app, name, False)
+        app.apns[name]["pro"].check_cert()
     return app.apns.get(name)
 
