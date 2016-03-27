@@ -51,7 +51,7 @@
     }    
 }
 
-@mixin yv-tip($fontSize: 100px, $fontColor: #000) {
+@mixin yv-tip($fontSize: 100px, $fontColor: #aaa) {
     padding-top: 120px;
     
     .tip-content {

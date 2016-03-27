@@ -282,9 +282,13 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
             }
 
             var pre = server.protocol + server.host;
+            if (server.port) {
+                pre = pre + ":" + server.port;
+            }
             _current_server.id = server.id;
             _current_server.name = server.name;
             _current_server.host = server.host;
+            _current_server.port = server.port;
             _current_server.protocol = server.protocol;
 
             _current_server.api_url = pre + "/api";
@@ -541,5 +545,12 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
             _args.user_uuid = yvUser.get("uuid");
             return _api_post(_url, _args, null, _success, _error, _api_error);
         },
+
+        test_api: function (_success, _error, _api_error) {
+            var _url = "/PP_GET_USER_INFO";
+            var _data = {user_uuid: yvUser.get("uuid")};
+            var _config = {"timeout": 10000};
+            _api_post(_url, _data, _config, _success, _error, _api_error);            
+        }
     };
 }]);

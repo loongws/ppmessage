@@ -1,14 +1,26 @@
 /*
- *  guijin.ding@yvertical.com
- *  2010-2015
+ * window.ppmessage provides addtional below infos. Its value is processed by gulp.
+ * View gulpfile.js and build.config.js for more details.
+ *
+ * api_key: Set ppekfu api_key.
+ * server: Set the default server for mobile-ppkefu and electron-ppkefu, where we can't get server info from window.location.
+ * version: Set browser-ppkefu version, same as mobile-ppkefu version.
+ * developer_mode: Set developer_mode true/false. It influences log and UI.
+ * disableOnbeforeunload: Set disableOnbeforeunload true/false, matters when user refresh web page.
+ *
  */
 
 window.ppmessage = {
-    api_key: '{ppkefu_api_key}',
-    server: '{server}',
-    version: '{version}',
-    developerMode: {developer_mode},
-    disableOnbeforeunload: false
+    "api_key": "{api_key}",
+    "server": {
+        "name": "{server_name}",
+        "protocol": "{server_protocol}",
+        "host": "{server_host}",
+        "port": "{server_port}"
+    },
+    "version": "{version}",
+    "developerMode": "{developer_mode}",
+    "disableOnbeforeunload": false
 };
 
 var ppmessageModule = angular.module("ppmessage", [
@@ -81,16 +93,32 @@ function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvLocal, yvMonito
     };
 
     $ionicPlatform.ready(function () {
+        if (!window.cordova) return;
+
+        if (ionic.Platform.isAndroid()) {            
+            yvSys.hide_statusbar();
+            angular.element(document).click(function () {
+                yvSys.hide_statusbar();
+            });
+            // keyboardshow listener doesn't work somehow.
+            // window.addEventListener('native.keyboardshow', yvSys.hide_statusbar, false);
+            window.addEventListener('native.keyboardhide', yvSys.hide_statusbar, false);
+            window.onresize = yvSys.hide_statusbar;
+        }
+        
         if (window.cordova && cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             cordova.plugins.Keyboard.disableScroll(true);
         }
+
         if (window.StatusBar) {
             StatusBar.styleLightContent();
         }
+
         if (window.cordova && cordova.getAppVersion) {
             yvSys.set_bundle_info();
         }
+
         if (window.cordova && navigator.connection) {
             document.addEventListener("online", yvSys.device_online, false);
             document.addEventListener("offline", yvSys.device_offline, false);

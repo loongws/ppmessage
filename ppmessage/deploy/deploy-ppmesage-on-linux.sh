@@ -64,12 +64,12 @@ sudo pip install -i http://pypi.douban.com/simple \
     axmlparserpy \
     beautifulsoup4 \
     biplist \
+    cffi \
+    cryptography \
     evernote \
     filemagic \
     geoip2 \
     green \
-    git+https://github.com/senko/python-video-converter.git \
-    hg+https://dingguijin@bitbucket.org/dingguijin/apns-client \
     identicon \
     ipython \
     jieba \
@@ -95,7 +95,9 @@ sudo pip install -i http://pypi.douban.com/simple \
     numpy \
     matplotlib \
     scipy \
-    scikit-learn
+    scikit-learn \
+    git+https://github.com/senko/python-video-converter.git \
+    hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
 
 cd /tmp
 wget http://cdn.mysql.com//Downloads/Connector-Python/mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz
@@ -112,6 +114,7 @@ cd nginx-$NGINX_VERSION
 ./configure --with-http_ssl_module \
             --add-module=../nginx-upload-module 
 make && sudo make install 
+sudo ls -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
 
 cd /tmp 
 wget http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 

@@ -2,7 +2,7 @@
     background-color: $stable;
     
     .yv-no-conversation, .yv-no-contact {
-        @include yv-tip(50px, #fff);
+        @include yv-tip(50px, #aaa);
     }
     
 }

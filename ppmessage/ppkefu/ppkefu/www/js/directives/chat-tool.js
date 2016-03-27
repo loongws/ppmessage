@@ -89,6 +89,18 @@ function ($timeout, $ionicGesture, yvLog, yvSys, yvNoti, yvFile, yvDelegate, yvC
         function _on_hide() {
             console.log("keyboardhide");
             _s.scroll = true;
+            
+            // in mobile app, if you click close-button on keyboard to close it, the input area will not lose focus,
+            // thus we have to manually change chatStatus from TEXTING to NULL. Add 100ms delay to ensure we are not
+            // in RECORDING or ADDING status.
+            // fixme: should let textarea lose focus in this case.
+            if (yvSys.in_mobile_app()) {
+                $timeout(function () {
+                    if (_s.status == _S.TEXTING) {
+                        _s.status = _S.NULL;
+                    }
+                }, 100);
+            }            
         }
 
         function _on_show(e) {
@@ -100,6 +112,37 @@ function ($timeout, $ionicGesture, yvLog, yvSys, yvNoti, yvFile, yvDelegate, yvC
             });
         }
 
+        function _change_status(target_status) {
+            if ($scope.chatStatus.status == target_status) {
+                $scope.chatStatus.status = _S.NULL;
+                yvDelegate.scroll_bottom();
+                return;
+            }
+            
+            if ($scope.chatStatus.status == _S.TEXTING) {
+                if (yvSys.in_mobile_browser()) {
+                    $timeout(function () {
+                        $scope.chatStatus.status = target_status;
+                        yvDelegate.scroll_bottom();
+                    }, 400);
+                    return;
+                }
+
+                // In iOS, sometimes keyboard shows even when textarea doesn't get focused,
+                // in which case keyboard will not automaticlly hide when we click adding-button.
+                // So we have to manually hide keyboard.
+                if (yvSys.in_ios_app()) {
+                    if (window.cordova && cordova.plugins.Keyboard.isVisible) {
+                        cordova.plugins.Keyboard.close();
+                    }
+                }
+            }
+            
+            $scope.chatStatus.status = target_status;
+            yvDelegate.scroll_bottom();
+            return;
+        }
+        
         $scope.getPlatformClass = function() {
             if (yvSys.in_mobile_browser()) {
                 return "yv-mobile-browser";
@@ -134,7 +177,6 @@ function ($timeout, $ionicGesture, yvLog, yvSys, yvNoti, yvFile, yvDelegate, yvC
             if (_s.status === _S.TEXTING) {
                 if (yvSys.in_mobile_app() && cordova.plugins.Keyboard.isVisible) {
                     _b = yvSys.get_keyboard_height();
-                    $scope.textarea.element[0].focus();
                     if (_s.scroll) {
                         yvDelegate.scroll_bottom();
                         _s.scroll = false;
@@ -158,69 +200,16 @@ function ($timeout, $ionicGesture, yvLog, yvSys, yvNoti, yvFile, yvDelegate, yvC
 
         $scope.selectToAdd = function () {
             _register_close_gesture();
-
-            if (_s.status === _S.ADDING) {
-                _s.status = _S.NULL;
-                yvDelegate.scroll_bottom();
-                return;
-            }
-
-            if (_s.status === _S.TEXTING) {
-                if (yvSys.in_mobile_browser()) {
-                    $timeout(function () {
-                        _s.status = _S.ADDING;
-                        yvDelegate.scroll_bottom();
-                    }, 400);
-                } else {
-                    _s.status = _S.ADDING;
-                    yvDelegate.scroll_bottom();
-                }
-                return;
-            }
-
-            if (_s.status === _S.RECORDING_PRE || _s.status === _S.NULL) {
-                _s.status = _S.ADDING;
-                yvDelegate.scroll_bottom();
-                return;
-            }
-
-            console.error("ADDING can not transit from status: " + _s.status);
-            return;
+            _change_status(_S.ADDING);
         };
-
+        
         $scope.selectToSound = function () {
             _register_close_gesture();
-
-            if (_s.status === _S.RECORDING_PRE) {
-                _s.status = _S.NULL;
-                yvDelegate.scroll_bottom();
-                return;
-            }
-            if (_s.status === _S.TEXTING) {
-                if (yvSys.in_mobile_browser()) {
-                    $timeout(function () {
-                        _s.status = _S.RECORDING_PRE;
-                        yvDelegate.scroll_bottom();
-                    }, 400);
-                } else {
-                    _s.status = _S.RECORDING_PRE;
-                    yvDelegate.scroll_bottom();
-                }
-                return;
-            }
-
-            if (_s.status === _S.ADDING || _s.status === _S.NULL) {
-                _s.status = _S.RECORDING_PRE;
-                yvDelegate.scroll_bottom();
-                return;
-            }
-
-            console.error("PRE_RECORD can not transit from status: " + _s.status);
-            return;
-        };
-
+            _change_status(_S.RECORDING_PRE);
+        }; 
+        
         // fixme: chat-tool doesn't rise up when keyboard show
-        $scope.lost = function ($event) {
+        $scope.onTextareaBlur = function ($event) {
             console.log("INPUT BLURED..... sending " + _s.sending + " status:" + _s.status);
             if (_s.status === _S.TEXTING && _s.sending === true) {
                 $scope.textarea.element[0].style.height = $scope.textarea.origin_height;
@@ -230,9 +219,15 @@ function ($timeout, $ionicGesture, yvLog, yvSys, yvNoti, yvFile, yvDelegate, yvC
             }
             
             if (_s.status === _S.TEXTING && _s.sending === false) {
+                // In android app, the chat-tool will change position before keyboard hides, which is some kind of weird.
+                // So we add 300ms delay to prevent it from happening.
+                var delay = 0;
+                if (yvSys.in_android_app()) {
+                    delay = 300;
+                }
                 $timeout(function () {
                     _s.status = _S.NULL;
-                });
+                }, delay);
                 return;
             }
         };
@@ -246,11 +241,6 @@ function ($timeout, $ionicGesture, yvLog, yvSys, yvNoti, yvFile, yvDelegate, yvC
                     yvDelegate.scroll_bottom();
                 });
             }
-
-            $scope.textarea.element.off('focusout');
-            $scope.textarea.element.on('focusout', function (event) {
-                $scope.lost(event);
-            });
         };
 
         $scope.prepareText = function () {

@@ -17,18 +17,57 @@ var args = require("get-gulp-args")();
 var os = require("os");
 var xmlParser = require("xml2json");
 
-function _get_ppkefu_version () {
+function get_ppkefu_version () {
     var xml = fs.readFileSync("./config.xml", "utf-8");
     var json = xmlParser.toJson(xml);
     var object = JSON.parse(json);
     return object.widget.version;
 }
 
-function _get_bootstrap_data () {
+function get_bootstrap_data () {
     var data = fs.readFileSync("../../bootstrap/data.py", "utf8");
     data = data.slice(data.search("BOOTSTRAP_DATA"));
     data = eval(data);
     return data;
+}
+
+function create_app_config(target) {
+    var bootstrap_data = get_bootstrap_data();
+    var protocol = "http://";
+    if (bootstrap_data.nginx.ssl == "on") {
+        protocol = "https://";
+    }
+    var app_config = {
+        "developer_mode": true,
+        "api_key": bootstrap_data.PPKEFU.api_key,
+        "server": {
+            "port": bootstrap_data.nginx.listen,
+            "protocol": protocol,
+            "name": bootstrap_data.server.name,
+            "host": bootstrap_data.server.name
+        }
+    };
+    var json = JSON.stringify(app_config, null, 4);
+    fs.writeFile(target, json + "\n", function (err) {
+        if (err) console.error(err);
+    });
+    return app_config;
+}
+
+function load_app_config() {
+    var target = "./app.config.json";
+    try {
+        fs.accessSync(target, fs.F_OK);
+    } catch (err) {
+        if (err.code == "ENOENT") {
+            return create_app_config(target);
+        }
+        throw err;
+    }
+    
+    var data = fs.readFileSync(target, "utf-8");
+    var app_config = JSON.parse(data);
+    return app_config;
 }
 
 var paths = {
@@ -42,16 +81,18 @@ var paths = {
     config: ["./build.config.js"],
 };
 
-var bootstrap_data = _get_bootstrap_data();
-var server = bootstrap_data.server.name;
-var developer_mode = bootstrap_data.js.min;
-if (developer_mode == "no") {
-    developer_mode = true;
-} else {
-    developer_mode = false;
-}
+var version = get_ppkefu_version();
+var appConfig = load_app_config();
 
-var version = _get_ppkefu_version();
+console.log("------------- app config --------------")
+console.log("name    \t", appConfig.server.name);
+console.log("protocol\t", appConfig.server.protocol);
+console.log("host    \t", appConfig.server.host);
+console.log("port    \t", appConfig.server.port);
+console.log("developer mode \t", appConfig.developer_mode);
+console.log("version \t", version);
+console.log("api key \t", appConfig.api_key);
+console.log("------------- app config --------------")
 
 gulp.task("sass", generate_sass);
 gulp.task("lib-css", generate_lib_css);
@@ -85,10 +126,13 @@ function generate_scripts (done) {
     var dest = buildConfig.buildScriptPath;
     
     gulp.src(src)
-        .pipe(replace("{developer_mode}", developer_mode))
-        .pipe(replace("{server}", server))
+        .pipe(replace('"{developer_mode}"', appConfig.developer_mode))
+        .pipe(replace("{server_name}", appConfig.server.name))
+        .pipe(replace("{server_protocol}", appConfig.server.protocol))
+        .pipe(replace("{server_host}", appConfig.server.host))
+        .pipe(replace("{server_port}", appConfig.server.port))
+        .pipe(replace("{api_key}", appConfig.api_key))    
         .pipe(replace("{version}", version))
-        .pipe(replace("{ppkefu_api_key}", bootstrap_data.PPKEFU.api_key))
         .pipe(concat("ppmessage.js"))
         .pipe(gulp.dest(dest))
         .pipe(uglify())
