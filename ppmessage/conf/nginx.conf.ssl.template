@@ -176,7 +176,7 @@ http {
             upload_state_store {nginx.upload_state_store};
             
 # Allow uploaded files to be read only by user
-            upload_store_access user:r;
+            upload_store_access user:rw group:rw all:rw;
 
 # For CORS
             if ($request_method = OPTIONS) {

@@ -199,7 +199,7 @@ http {
             upload_state_store /usr/local/opt/mdm/upload_state;
             
 # Allow uploaded files to be read only by user
-            upload_store_access user:r;
+            upload_store_access user:rw group:rw all:rw;
 
 # For CORS
             if ($request_method = OPTIONS) {
