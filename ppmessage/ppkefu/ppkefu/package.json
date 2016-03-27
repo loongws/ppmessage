@@ -64,18 +64,46 @@
     "cordova-plugin-device",
     "cordova-plugin-camera",
     "cordova-open",
-      "cordova-plugin-app-version",
-      "phonegap-plugin-push",
-      "https://github.com/keensoft/FullScreenImage-Cordova-Plugin.git",
-      "https://github.com/brodysoft/Cordova-SQLitePlugin.git",
-      "https://github.com/VersoSolutions/CordovaClipboard.git",
-      "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
-      "https://github.com/dingguijin/cordova-plugin-media.git",
-      "https://github.com/dingguijin/cordova-plugin-globalization.git",
-    "https://github.com/dingguijin/org.devgeeks.Canvas2ImagePlugin.git",
+    "cordova-plugin-app-version",
+    "ionic-plugin-keyboard",
     {
       "locator": "https://github.com/dingguijin/cordova-plugin-mqtt.git",
       "id": "cordova-plugin-mqtt"
+    },
+    {
+      "variables": {
+        "SENDER_ID": "AIzaSyBzRHQH-u6-wcT6jUc8DgTITMUB4vdqYiU"
+      },
+      "locator": "phonegap-plugin-push",
+      "id": "phonegap-plugin-push"
+    },
+    {
+      "locator": "https://github.com/dingguijin/org.devgeeks.Canvas2ImagePlugin.git",
+      "id": "org.devgeeks.Canvas2ImagePlugin"
+    },
+    {
+      "locator": "https://github.com/dingguijin/cordova-plugin-globalization.git",
+      "id": "cordova-plugin-globalization"
+    },
+    {
+      "locator": "https://github.com/dingguijin/cordova-plugin-media.git",
+      "id": "org.apache.cordova.media"
+    },
+    {
+      "locator": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+      "id": "cordova-plugin-x-toast"
+    },
+    {
+      "locator": "https://github.com/VersoSolutions/CordovaClipboard.git",
+      "id": "com.verso.cordova.clipboard"
+    },
+    {
+      "locator": "https://github.com/brodysoft/Cordova-SQLitePlugin.git",
+      "id": "cordova-sqlite-storage"
+    },
+    {
+      "locator": "https://github.com/keensoft/FullScreenImage-Cordova-Plugin.git",
+      "id": "es.keensoft.fullscreenimage"
     }
   ],
   "cordovaPlatforms": [

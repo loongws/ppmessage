@@ -97,9 +97,9 @@ function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvLocal, yvMonito
 
         if (ionic.Platform.isAndroid()) {            
             yvSys.hide_statusbar();
-            // angular.element(document).click(function () {
-            //     yvSys.hide_statusbar();
-            // });
+            angular.element(document).click(function () {
+                yvSys.hide_statusbar();
+            });
             // keyboardshow listener doesn't work somehow.
             // window.addEventListener('native.keyboardshow', yvSys.hide_statusbar, false);
             window.addEventListener('native.keyboardhide', yvSys.hide_statusbar, false);

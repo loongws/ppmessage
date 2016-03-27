@@ -114,6 +114,7 @@ cd nginx-$NGINX_VERSION
 ./configure --with-http_ssl_module \
             --add-module=../nginx-upload-module 
 make && sudo make install 
+sudo ls -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
 
 cd /tmp 
 wget http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 

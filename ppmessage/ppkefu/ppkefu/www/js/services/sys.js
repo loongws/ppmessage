@@ -1,10 +1,11 @@
 ppmessageModule.factory('yvSys', [
     "$state",
+    "$timeout",
     "$cookies",
     "$window",
     "yvLog",
     "yvConstants",
-function ($state, $cookies, $window, yvLog, yvConstants) {
+function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
     var _page_size = 15;
     var _keyboard_height = 216;
     var _device_online = true;

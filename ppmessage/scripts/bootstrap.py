@@ -59,7 +59,7 @@ def _encode(_key):
     return _key
 
 def _check_bootstrap_config():
-    _fields = ["team", "user", "server", "js", "mysql", "nginx", "ios", "gcm"]
+    _fields = ["team", "user", "server", "js", "mysql", "nginx", "apns", "gcm"]
     for _field in _fields:
         if _field not in BOOTSTRAP_CONFIG:
             print("%s not provided in BOOTSTAP_CONFIG" % _field)
@@ -287,6 +287,14 @@ def _create_nginx_config(_session, _config):
 
     return _config
 
+# FIXME: Get log_path from config.py, and be compatible with supervisor conf.
+# We need to create supervisor conf when bootstrap.
+def _create_log_dir():
+    log_path = "/usr/local/var/log"
+    if not os.path.exists(log_path):
+        subprocess.check_output("mkdir -p " + log_path, shell=True)
+    return
+
 def _print_bootstrap_result(_config):
     _header = """
 # -*- coding: utf-8 -*-
@@ -344,6 +352,7 @@ def _bootstrap():
         _config = _create_apns_settings(_session, _config)
         _config = _create_server_config(_session, _config)
         _config = _create_nginx_config(_session, _config)
+        _create_log_dir()
     except:
         traceback.print_exc()
     finally:
