@@ -435,9 +435,9 @@ WEB_TITLE = {
 
 USER_NAME = {
     "en": {
-        "local": "local area",
-        "unknown": "unknown area",
-        "user": "user",
+        "local": "Local Area",
+        "unknown": "Unknown Area",
+        "user": "User",
     },
 
     "cn": {
@@ -453,10 +453,11 @@ USER_NAME = {
     },
 }
 
+REDIS_IOSPUSH_KEY = "redis_iospush_key"
+
 REDIS_MONITOR_KEY = "redis_monitor_key"
 REDIS_TYPING_KEY = "redis_typing_key"
 REDIS_ONLINE_KEY = "redis_online_key"
-REDIS_SQL_KEY = "redis_sql_key"
 
 REDIS_PPKEFU_ONLINE_KEY = "redis_ppkefu_online_key"
 REDIS_PPCOM_ONLINE_KEY = "redis_ppcom_online_key"

@@ -72,7 +72,8 @@ class PPKefuLoginHandler(BaseHandler):
         _osmodel = self.input_data.get("osmodel")
         _osversion = self.input_data.get("osversion")
         _device_fullname = self.input_data.get("device_fullname")
-
+        _is_development = bool(self.input_data.get("ios_app_development"))
+        
         _device_uuid = str(uuid.uuid1())
         _values = {
             "uuid": _device_uuid,
@@ -82,7 +83,8 @@ class PPKefuLoginHandler(BaseHandler):
             "device_ios_token": _token,
             "device_ios_model": _osmodel,
             "device_osversion": _osversion,
-            "device_fullname": _device_fullname
+            "device_fullname": _device_fullname,
+            "is_development": _is_development,
         }
 
         _row = DeviceInfo(**_values)

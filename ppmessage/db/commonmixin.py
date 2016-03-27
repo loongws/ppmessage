@@ -9,7 +9,6 @@ from ppmessage.core.srv.signal import async_signal_cache_add
 from ppmessage.core.srv.signal import async_signal_cache_delete
 from ppmessage.core.srv.signal import async_signal_cache_update
 
-from ppmessage.core.redis import invalid_sql_result
 from ppmessage.core.utils.copyrow import copy_row_to_dict
 
 from sqlalchemy import Column
@@ -114,7 +113,6 @@ class CommonMixin(object):
 
     def create_redis_keys(self, _redis, *args, **kwargs):
         _create_redis_hash(self, _redis, *args, **kwargs)
-        self.invalid_redis_sql(_redis)
         return
 
     def update_redis_keys(self, _redis):
@@ -123,7 +121,6 @@ class CommonMixin(object):
     
     def delete_redis_keys(self, _redis):
         _delete_redis_hash(self, _redis)
-        self.invalid_redis_sql(_redis)
         return
     
     def async_add(self):
@@ -136,8 +133,4 @@ class CommonMixin(object):
 
     def async_delete(self):
         _async_delete(self)
-        return
-    
-    def invalid_redis_sql(self, _redis):
-        invalid_sql_result(_redis, self.__tablename__)
         return
