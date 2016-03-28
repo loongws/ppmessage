@@ -453,6 +453,10 @@ USER_NAME = {
     },
 }
 
+# email key is a list which queue all email sending request
+REDIS_MAIL_KEY = "redis_email_key"
+
+# iospush key is a list which queue all ios push request
 REDIS_IOSPUSH_KEY = "redis_iospush_key"
 
 REDIS_MONITOR_KEY = "redis_monitor_key"
