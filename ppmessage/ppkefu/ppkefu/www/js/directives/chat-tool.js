@@ -92,11 +92,11 @@ function ($timeout, $ionicGesture, yvLog, yvSys, yvNoti, yvFile, yvDelegate, yvC
             
             // in mobile app, if you click close-button on keyboard to close it, the input area will not lose focus,
             // thus we have to manually change chatStatus from TEXTING to NULL. Add 100ms delay to ensure we are not
-            // in RECORDING or ADDING status.
+            // in RECORDING or ADDING status. If Keyboard is actually open, do nothing.
             // fixme: should let textarea lose focus in this case.
             if (yvSys.in_mobile_app()) {
                 $timeout(function () {
-                    if (_s.status == _S.TEXTING) {
+                    if (_s.status == _S.TEXTING && !cordova.plugins.Keyboard.isVisible) {
                         _s.status = _S.NULL;
                     }
                 }, 100);
@@ -209,7 +209,7 @@ function ($timeout, $ionicGesture, yvLog, yvSys, yvNoti, yvFile, yvDelegate, yvC
         }; 
         
         // fixme: chat-tool doesn't rise up when keyboard show
-        $scope.onTextareaBlur = function ($event) {
+        $scope.onTextareaBlur = function () {
             console.log("INPUT BLURED..... sending " + _s.sending + " status:" + _s.status);
             if (_s.status === _S.TEXTING && _s.sending === true) {
                 $scope.textarea.element[0].style.height = $scope.textarea.origin_height;
