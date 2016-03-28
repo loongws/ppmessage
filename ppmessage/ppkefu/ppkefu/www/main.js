@@ -1,6 +1,7 @@
-var app = require('app');  // Module to control application life.
-var BrowserWindow = require('browser-window');  // Module to create native browser window.
-var globalShortcut = require('global-shortcut');
+var electron = require("electron");
+var app = electron.app;
+var BrowserWindow = electron.BrowserWindow;
+var globalShortcut = electron.globalShortcut;
 
 // Report crashes to our server.
 // require('crash-reporter').start();
@@ -22,7 +23,7 @@ app.on('window-all-closed', function() {
 // initialization and is ready to create browser windows.
 app.on('ready', function() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 1068, height: 1096, resizable: true, center: true});
+    mainWindow = new BrowserWindow({width: 1068, height: 1096, resizable: true, center: true, title: "ppkefu"});
     
     // and load the index.html of the app.
     mainWindow.loadURL("file://" + __dirname + '/index.html');
@@ -31,6 +32,10 @@ app.on('ready', function() {
     globalShortcut.register('ctrl+alt+4', function () {
         //mainWindow.webContents.send('global-shortcut', 1);
         mainWindow.webContents.openDevTools();
+    });
+    
+    mainWindow.on("page-title-updated", function (event) {
+        event.preventDefault();
     });
     
     // Emitted when the window is closed.
