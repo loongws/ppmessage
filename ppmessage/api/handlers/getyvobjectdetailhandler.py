@@ -259,7 +259,7 @@ class GetYVObjectDetailHandler(BaseHandler):
         self.addPermission(api_level=API_LEVEL.PPKEFU)
         self.addPermission(api_level=API_LEVEL.PPCONSOLE)
         self.addPermission(api_level=API_LEVEL.THIRD_PARTY_KEFU)
-        self.addPermission(api_level=API_LEVEL.THIRD_PARTY_PPCONSOLE)
+        self.addPermission(api_level=API_LEVEL.THIRD_PARTY_CONSOLE)
         return
     
     def _Task(self):

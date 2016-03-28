@@ -23,8 +23,9 @@ function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, 
         // make sure init one time
         if (typeof this.device_token !== "string") {
             // device info
-            LoginSession.prototype.device_token = "";  // iOS only
             LoginSession.prototype.device_uuid = "";
+            LoginSession.prototype.device_token = "";           // iOS only
+            LoginSession.prototype.ios_app_development = true;  // iOS only
             LoginSession.prototype.device_model = yvSys.get_device_model();
             LoginSession.prototype.device_version = yvSys.get_device_version();
             LoginSession.prototype.device_platform = yvSys.get_device_platform();
@@ -136,6 +137,9 @@ function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, 
         }
 
         if (yvSys.in_ios_app()) {
+            // 'is_development' decide which APNS push service mode this device will apply,
+            // true for development mode, false for produciton mode.
+            session.ios_app_development = !!ppmessage.developerMode;
             yvNoti.get_ios_token(function (token) {
                 session.device_uuid = hex_sha1(token);
                 session.device_token = token;

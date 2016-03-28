@@ -31,8 +31,7 @@ function get_bootstrap_data () {
     return data;
 }
 
-function create_app_config(target) {
-    var bootstrap_data = get_bootstrap_data();
+function create_app_config(target, bootstrap_data) {
     var protocol = "http://";
     if (bootstrap_data.nginx.ssl == "on") {
         protocol = "https://";
@@ -56,17 +55,22 @@ function create_app_config(target) {
 
 function load_app_config() {
     var target = "./app.config.json";
+    var bootstrap_data = get_bootstrap_data();
+
     try {
         fs.accessSync(target, fs.F_OK);
     } catch (err) {
         if (err.code == "ENOENT") {
-            return create_app_config(target);
+            return create_app_config(target, bootstrap_data);
         }
         throw err;
     }
     
     var data = fs.readFileSync(target, "utf-8");
     var app_config = JSON.parse(data);
+    if (app_config.api_key != bootstrap_data.PPKEFU.api_key) {
+        console.log(gutil.colors.yellow("Notice: api key is different from bootstrap.PPKEFU.api_key. If you are using custom app.config.json, ignore this message. Otherwise, remove app.config.json and run gulp again"));
+    }
     return app_config;
 }
 
@@ -85,13 +89,13 @@ var version = get_ppkefu_version();
 var appConfig = load_app_config();
 
 console.log("------------- app config --------------")
-console.log("name    \t", appConfig.server.name);
-console.log("protocol\t", appConfig.server.protocol);
-console.log("host    \t", appConfig.server.host);
-console.log("port    \t", appConfig.server.port);
-console.log("developer mode \t", appConfig.developer_mode);
-console.log("version \t", version);
-console.log("api key \t", appConfig.api_key);
+console.log("name    \t", gutil.colors.green(appConfig.server.name));
+console.log("protocol\t", gutil.colors.green(appConfig.server.protocol));
+console.log("host    \t", gutil.colors.green(appConfig.server.host));
+console.log("port    \t", gutil.colors.green(appConfig.server.port));
+console.log("developer mode \t", gutil.colors.green(appConfig.developer_mode));
+console.log("version \t", gutil.colors.green(version));
+console.log("api key \t", gutil.colors.green(appConfig.api_key));
 console.log("------------- app config --------------")
 
 gulp.task("sass", generate_sass);

@@ -3,17 +3,20 @@ ppmessageModule.controller("SwitchLanguageCtrl", [
     "$state",
     "$timeout",
     "$ionicHistory",
-    "yvLocal",
+    "yvNav",
     "yvSys",
     "yvAlert",
-function ($scope, $state, $timeout, $ionicHistory, yvLocal, yvSys, yvAlert) {
+    "yvLocal",
+function ($scope, $state, $timeout, $ionicHistory, yvNav, yvSys, yvAlert, yvLocal) {
     
     function _select_cb(language) {
         $scope.active_language = language;
         yvAlert.success();
         if (yvSys.in_mobile()) {
-            $ionicHistory.clearCache();
-            $ionicHistory.goBack();
+            yvNav.clear(function () {
+                yvNav.disable_back();
+                $state.go("app.setting-list-mobile");
+            });
         }
     }
 
