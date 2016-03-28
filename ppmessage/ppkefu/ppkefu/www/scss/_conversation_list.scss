@@ -44,3 +44,9 @@
         }         
     }    
 }
+
+.platform-ios.platform-cordova:not(.fullscreen) .yv-conversation-list-view {
+    .filter-bar, .has-filter-bar {
+        margin-top: 19px !important;
+    }
+}
