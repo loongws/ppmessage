@@ -156,13 +156,13 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
         var _url = "/PPKEFU_LOGIN";
         var _config = {timeout: API_REQUEST_TIMEOUT};
         var _data = {
-            ios_app_development: true,
             token: _session.device_token,
             osmodel: _session.device_model,
             terminal: _session.device_uuid,
             ostype: _session.device_platform,
             osversion: _session.device_version,
-            device_fullname: _session.device_fullname
+            device_fullname: _session.device_fullname,
+            ios_app_development: _session.ios_app_development
         };
         
         if (_session.user_email) {
