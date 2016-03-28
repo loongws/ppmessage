@@ -44,6 +44,12 @@ function ($ionicHistory, $timeout, $state, yvSys, yvUser, yvConstants) {
             });
         },
 
+        disable_back: function () {
+            $ionicHistory.nextViewOptions({
+                disableBack: true
+            });
+        },
+
         login_no_user: function () {
             this.disable_next();
             $state.go("noapp.login-no-user");
