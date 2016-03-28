@@ -111,10 +111,6 @@ function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvLocal, yvMonito
             cordova.plugins.Keyboard.disableScroll(true);
         }
 
-        if (window.StatusBar) {
-            StatusBar.styleLightContent();
-        }
-
         if (window.cordova && cordova.getAppVersion) {
             yvSys.set_bundle_info();
         }
