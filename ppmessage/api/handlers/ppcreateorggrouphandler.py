@@ -53,7 +53,7 @@ class PPCreateOrgGroupHandler(BaseHandler):
     def initialize(self):
         self.addPermission(app_uuid=True)
         self.addPermission(api_level=API_LEVEL.PPCONSOLE)
-        self.addPermission(api_level=API_LEVEL.THIRD_PARTY_PPCONSOLE)
+        self.addPermission(api_level=API_LEVEL.THIRD_PARTY_CONSOLE)
         return
         
     def _Task(self):
