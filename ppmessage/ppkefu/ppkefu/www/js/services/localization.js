@@ -3,20 +3,30 @@ ppmessageModule.factory('yvLocal', [
     "$cookies",
     "$translate",
     "yvSys",
-function ($filter, $cookies, $translate, yvSys) {
+    "yvAPI",
+function ($filter, $cookies, $translate, yvSys, yvAPI) {
 
-    if (yvSys.in_electron()) {
-        var session = require("electron").remote.session.defaultSession;
+    function _get_electron_session() {
+        var win = require("electron").remote.getCurrentWindow();
+        var session = win.webContents.session;
+        return session;
     }
     
     // for Browser and Electron only
     function _get_current_language(callback) {
         if (yvSys.in_electron()) {
-            session.cookies.get({ "name": "current_language" }, function (err, cookies) {
-                console.log(err, cookies);
+            // don't set url when get cookies
+            var session = _get_electron_session();
+            var server = yvAPI.get_server();
+            var data = {
+                "url": server.protocol + server.host,
+                "name": "current_language"
+            };
+            session.cookies.get(data, function (err, cookies) {
+                if (err) console.error(err);
                 var language = navigator.language;
-                if (cookies.length != 0) {
-                    language = cookies[0].value
+                if (cookies.length > 0 && cookies[0].value) {
+                    language = cookies[0].value;
                 }
                 callback(language);
             });
@@ -26,17 +36,21 @@ function ($filter, $cookies, $translate, yvSys) {
         }
     }
     
-    // for Browser and Electron only    
+    // for Browser and Electron only
     function _set_current_language(language) {
         var expire_date = new Date();
         expire_date.setDate(expire_date.getDate() + "365");
         if (yvSys.in_electron()) {
-            session.cookies.set({
+            var session = _get_electron_session();
+            var server = yvAPI.get_server();
+            var data = {
+                "url": server.protocol + server.host,
                 "name": "current_language",
                 "value": language,
                 "expirationDate": expire_date / 1000
-            }, function (err) {
-                if (err) throw err;
+            };
+            session.cookies.set(data, function (err) {
+                if (err) console.error(err);
             });
         } else {
             $cookies.put("current_language", language, { "expires": expire_date });
