@@ -19,7 +19,7 @@
 
         <span class="dropdown" ng-show="isAdminUser && is_logined()" >
           <button class="btn btn-default dropdown-toggle" type="button" id="dropdownApps" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            {{ "app.APPS" | translate }}
+            {{ selectedApp.app_name }}
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu app-menu" aria-labelledby="dropdownApps">
