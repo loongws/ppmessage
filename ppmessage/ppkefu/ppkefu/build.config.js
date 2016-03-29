@@ -33,6 +33,7 @@ module.exports = {
         "www/js/services/mime.js",
         "www/js/services/uploader.js",
         "www/js/services/login.js",
+        "www/js/services/logout.js",
         "www/js/services/nav.js",
         "www/js/services/link.js",
         "www/js/services/localization.js",

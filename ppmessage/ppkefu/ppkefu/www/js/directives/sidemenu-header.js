@@ -2,13 +2,13 @@ ppmessageModule.directive("yvSidemenuHeader", [
     "$rootScope",
     "yvSys",
     "yvAPI",
-    "yvMain",
     "yvLink",
     "yvUser",
     "yvBase",
     "yvLogin",
+    "yvLogout",
     "yvConstants",
-function ($rootScope, yvSys, yvAPI, yvMain, yvLink, yvUser, yvBase, yvLogin, yvConstants) {
+function ($rootScope, yvSys, yvAPI, yvLink, yvUser, yvBase, yvLogin, yvLogout, yvConstants) {
 
     function link($scope, $element, $attrs) {
 
@@ -34,7 +34,7 @@ function ($rootScope, yvSys, yvAPI, yvMain, yvLink, yvUser, yvBase, yvLogin, yvC
 
 
         $scope.logout = function () {
-            yvMain.logout();
+            yvLogout.logout();
         };
 
         

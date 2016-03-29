@@ -10,7 +10,8 @@ ppmessageModule.factory("yvLogin", [
     "yvMain",
     "yvLink",
     "yvAlert",
-function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, yvMain, yvLink, yvAlert) {
+    "yvLogout",
+function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, yvMain, yvLink, yvAlert, yvLogout) {
 
     var session = null;
     
@@ -159,7 +160,7 @@ function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, 
 
     
     function _check_session() {
-        session || yvMain.local_logout();
+        session || yvLogout.logout_reset();
     }
     
     return {
