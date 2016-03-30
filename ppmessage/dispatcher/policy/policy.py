@@ -17,6 +17,7 @@ from ppmessage.core.constant import MESSAGE_STATUS
 from ppmessage.core.constant import MESSAGE_TYPE
 from ppmessage.core.constant import TASK_STATUS
 
+from ppmessage.core.constant import REDIS_MQTTPUSH_KEY
 from ppmessage.core.constant import REDIS_GCMPUSH_KEY
 from ppmessage.core.constant import REDIS_IOSPUSH_KEY
 from ppmessage.core.constant import PPCOM_OFFLINE
@@ -392,7 +393,8 @@ class AbstractPolicy(Policy):
             self._redis.rpush(REDIS_GCMPUSH_KEY, json.dumps(_push))
             #async_signal_gcmpush_push(_push)
         else :
-            async_signal_mqttpush_push(_push)
+            self._redis.rpush(REDIS_MQTTPUSH_KEY, json.dumps(_push))
+            #async_signal_mqttpush_push(_push)
         return
     
     def _push_to_pc(self, _user_uuid, _device_uuid):
