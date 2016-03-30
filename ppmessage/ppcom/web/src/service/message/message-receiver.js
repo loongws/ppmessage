@@ -16,15 +16,17 @@
  */
 Service.$messageReceiverModule = (function() {
 
-    var isGroupOnChatting = function ( groupUUID ) {
-
-        return groupUUID &&
-            View.$conversationContentContainer.visible() &&
-            !Ctrl.$launcher.get().isLauncherShow() && // launcher is not visible
-            Service.$conversationManager.activeConversation() && Service.$conversationManager.activeConversation().uuid === groupUUID;
+    var browserTabNotify,
         
-    },
-
+        isGroupOnChatting = function ( groupUUID ) {
+            
+            return groupUUID &&
+                View.$conversationContentContainer.visible() &&
+                !Ctrl.$launcher.get().isLauncherShow() && // launcher is not visible
+                Service.$conversationManager.activeConversation() && Service.$conversationManager.activeConversation().uuid === groupUUID;
+            
+        },
+        
         getModal = function ( groupUUID ) {
             return Modal.$conversationContentGroup.get( groupUUID );
         },
@@ -34,6 +36,10 @@ Service.$messageReceiverModule = (function() {
             var $pubsub = Service.$pubsub,
                 body = ppMessage.getBody(),
                 groupId = body.conversation.uuid;
+
+            if ( browserTabNotify ) { // browser tab notify
+                browserTabNotify.notify( ppMessage );
+            }
 
             if ( isGroupOnChatting ( groupId ) ) { // we are chating with `groupId`
 
@@ -74,6 +80,12 @@ Service.$messageReceiverModule = (function() {
                 app_uuid: settings.app_uuid
             }).start();
 
+            // listen page visibility change event
+            if ( browserTabNotify )
+                browserTabNotify.unregister();
+            browserTabNotify = BrowserTabNotify();
+            browserTabNotify.register();
+
             // Subscribe newMessageArrivced event
             Service.$pubsub.subscribe("ws/msg", onNewMessageArrived);
         };
@@ -81,5 +93,150 @@ Service.$messageReceiverModule = (function() {
     return {
         start: start
     };
+
+    /////////////////////////////////////////
+    //        Browser Tab Notify           //
+    /////////////////////////////////////////
+
+    //
+    // https://www.w3.org/TR/page-visibility/
+    //
+    // @description:
+    //     Let website title in browser tab change and scroll, when new message
+    // arrived & page not visible.
+    //
+    // ```
+    // var browserNotify = BrowserTabNotify();
+    // browserNotify.register(); // listen `page visibility` change event
+    //
+    // browserNotify.notify( ppMessage ); // notify browser title to change and scroll
+    // ...
+    // browserNotify.unregister(); // unlisten `page visiblility` change event
+    // ```
+    //
+    // NOTE: Only notify in PC browser 
+    //
+    function BrowserTabNotify() {
+
+        var hiddenType,
+            pageHidden = false,
+            registered = false,
+            originTitle,
+            timeoutToken,
+            scrollMsg,
+            scrollPosition = 0;
+
+        return {
+            register: register,
+            unregister: unregister,
+
+            notify: notify
+        }
+        
+        function register() {
+            if ( registered ) return;
+            
+            var hidden;
+
+            // Standards:
+            if ((hidden = "hidden") in document)
+                document.addEventListener("visibilitychange", onchange);
+            else if ((hidden = "mozHidden") in document)
+                document.addEventListener("mozvisibilitychange", onchange);
+            else if ((hidden = "webkitHidden") in document)
+                document.addEventListener("webkitvisibilitychange", onchange);
+            else if ((hidden = "msHidden") in document)
+                document.addEventListener("msvisibilitychange", onchange);
+
+            registered = hidden !== undefined;
+            hiddenType = hidden;
+
+            originTitle = document.title;
+            
+        }
+
+        function unregister() {
+            if (registered) {
+                if ( hiddenType === 'hidden' )
+                    document.removeEventListener( 'visibilitychange', onchange );
+                else if ( hiddenType === 'mozHidden' )
+                    document.removeEventListener( 'mozvisibilitychange', onchange );
+                else if ( hiddenType === 'webkitHidden' )
+                    document.removeEventListener( 'webkitvisibilitychange', onchange );
+                else if ( hiddenType === 'msHidden' )
+                    document.removeEventListener( 'msvisibilitychange', onchange );
+            }
+            
+            registered = false;
+            hiddenType = undefined;
+
+            resumeTitle();
+            
+        }
+
+        function onchange( event ) {
+            pageHidden = document[ hiddenType ];
+
+            if ( !pageHidden ) {
+                resumeTitle();
+            }
+        }
+
+        function notify( ppMessage ) {
+            if ( canNotify() ) {
+                clearScroll();
+                scrollMsg = buildMsgTitle( ppMessage );
+                scrollTitle();
+            }
+        }
+
+        function canNotify() {
+            return registered &&
+                hiddenType !== undefined &&
+                ( !Service.$device.isMobileBrowser() ) &&
+                pageHidden;
+        }
+
+        function buildMsgTitle( ppMessage ) {
+            return Service.Constants.i18n( 'PPMESSAGE' ) +
+                ': ' +
+                ppMessage.getMessageSummary() +
+                '... ';
+        }
+
+        function changeTitle( title ) {
+            if ( title ) document.title = title;
+        }
+
+        function resumeTitle() {
+            clearScroll();
+            if ( originTitle ) {
+                changeTitle( originTitle );
+            }
+        }
+
+        function scrollTitle() {
+            var title = scrollMsg;
+
+            var newTitle = title.substring( scrollPosition , title.length ) + title.substring( 0, scrollPosition );
+            scrollPosition++;
+
+            changeTitle( newTitle );
+
+            if ( scrollPosition > title.length ) scrollPosition = 0;
+            
+            timeoutToken = $timeout( scrollTitle, 200 );
+        }
+
+        function clearScroll() {
+            if ( timeoutToken ) {
+                $clearTimeout( timeoutToken );
+                timeoutToken = undefined;
+            }
+            scrollMsg = undefined;
+            scrollPosition = 0;
+        }
+        
+    }
     
 })();
