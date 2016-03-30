@@ -4,7 +4,7 @@
 # Guijin Ding, dingguijin@gmail.com
 # All rights reserved
 #
-# backend/email.py 
+# backend/ppemail.py 
 #
 
 from ppmessage.core.constant import REDIS_HOST
@@ -18,6 +18,8 @@ import tornado.options
 
 import requests
 import logging
+import redis
+import json
 import sys
 
 class MailGunWorker():
@@ -28,7 +30,7 @@ class MailGunWorker():
     def config(self, email_config):
         self.domain_name = email_config.get("domain_name")
         self.api_url = "https://api.mailgun.net/v3/%s/messages" % self.domain_name
-        self.from_email = email_config.get("from")
+        self.from_email = email_config.get("from_email")
         self.from_name = email_config.get("from_name")
         self.private_api_key = email_config.get("private_api_key")
         if self.private_api_key == None or self.domain_name == None or \
@@ -52,7 +54,10 @@ class MailGunWorker():
         }
         if _html != None:
             _data["html"] = _html
-        requests.post(self.api_url, auth=("api", self.private_api_key), data=_data)
+        
+        logging.info("sending email via: %s to: %s" % (self.api_url, " ".join(_to)))
+        _r = requests.post(self.api_url, auth=("api", self.private_api_key), data=_data)
+        logging.info(_r.json())
         return
 
 class EmailWorker():
@@ -71,6 +76,7 @@ class EmailWorker():
             logging.error("No worker for the mail service: %s" % _service_name)
             return
         _worker_object = _worker_class(self)
+        _worker_object.config(_email)
         _worker_object.work(email_request)
         return
 
@@ -84,9 +90,10 @@ class EmailApp():
     def send(self):
         while True:
             _request = self.redis.lpop(self.email_key)
-            if _request == None:
+            if _request == None or len(_request) == 0:
                 return
-            self.email_worker(_request)
+            _request = json.loads(_request)
+            self.email_worker.work(_request)
         return
 
 if __name__ == "__main__":

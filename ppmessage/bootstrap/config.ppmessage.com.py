@@ -79,6 +79,7 @@ BOOTSTRAP_CONFIG = {
     # email service config
     "email": {
         "service_type": "mailgun",
+        "domain_name": "mg.ppmessage.com",
         "from_email": "service@ppmessage.com",
         "from_name": "PPMessage Service",
         "private_api_key": "key-7d5cf0ffe7c013db67b3f4af98108f3d",

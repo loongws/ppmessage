@@ -29,7 +29,7 @@ def _install():
         "AxmlParserPY", "beautifulsoup4", "biplist", "certifi", "cffi", "chardet",
         "cryptography", "evernote", "filemagic", "geoip2", "green",
         "identicon", "ipaddr", "ipython", "jieba", "matplotlib",
-        "maxminddb", "numpy", "urllib3", "requests",
+        "maxminddb", "numpy", "urllib3", "requests", "email",
         "paho-mqtt", "paramiko", "Pillow", "pip", "ppmessage-mqtt", "pyOpenSSL",
         "pyparsing", "pypinyin", "python-dateutil", "python-gcm", "qiniu", "qrcode",
         "readline", "redis", "requests", "rq", "scikit-learn", "scipy", "setuptools",
