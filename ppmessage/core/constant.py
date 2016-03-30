@@ -458,6 +458,7 @@ REDIS_EMAIL_KEY = "redis_email_key"
 
 # iospush key is a list which queue all ios push request
 REDIS_IOSPUSH_KEY = "redis_iospush_key"
+REDIS_GCMPUSH_KEY = "redis_gcmpush_key"
 
 REDIS_MONITOR_KEY = "redis_monitor_key"
 REDIS_TYPING_KEY = "redis_typing_key"
