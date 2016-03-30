@@ -8,6 +8,8 @@
 # The entry form mqttpush service
 #
 
+from ppmessage.core.constant import REDIS_HOST
+from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import REDIS_MQTTPUSH_KEY
 from ppmessage.mqttpush.pushhandler import PushHandler
 
@@ -15,6 +17,7 @@ import tornado.ioloop
 import tornado.options
 
 import sys
+import redis
 import logging
 import datetime
 
@@ -22,6 +25,7 @@ class MqttPushApp():
     def __init__(self, *args, **kwargs):
         self._mqtt_client = None
         self.push_handler = PushHandler(self)
+        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
         return
 
     def outdate(self):

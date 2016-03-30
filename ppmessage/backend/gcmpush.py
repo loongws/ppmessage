@@ -13,12 +13,15 @@ from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import REDIS_GCMPUSH_KEY
 from ppmessage.bootstrap.config import BOOTSTRAP_CONFIG
 
+from gcm import GCM
+
 import tornado.ioloop
 import tornado.options
 import tornado.httpserver
 
 import sys
 import json
+import redis
 import logging
 import datetime
 
