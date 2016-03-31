@@ -19,6 +19,7 @@ angular.module("this_app")
         $scope.menuStyle = {
             'margin-top': $scope.isAdminUser ? '12px' : '24px'
         }; // menu style
+        $scope.selectedApp = { app_name: '' };
 
         var _getPreferredLanguage = function() {
             var _p = $translate.use();
@@ -189,6 +190,11 @@ angular.module("this_app")
         
         function setupAppsDropDownButton( apps ) {
             $scope.apps = apps;
+            angular.forEach( apps, function( app, index ) {
+                if ( app.is_selected ) {
+                    $scope.selectedApp = app;                    
+                }
+            } );
         }
 
         function selectApp( app ) {
