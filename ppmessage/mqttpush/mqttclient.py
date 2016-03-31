@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2010-2016 . PPMESSAGE.
+# Copyright (C) 2010-2016. PPMESSAGE.
 # Guijin Ding, dingguijin@gmail.com
 #
 
@@ -159,4 +159,5 @@ class MQTTClient():
             if self._mqttc_connection_status == "NULL":
                 logging.info("mqttclient connection error")
                 break
+            
         return
