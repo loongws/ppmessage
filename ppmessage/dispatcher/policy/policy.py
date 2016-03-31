@@ -336,7 +336,7 @@ class AbstractPolicy(Policy):
                    ".app_uuid." + _app_uuid + \
                    ".user_uuid." + _user_uuid + \
                    ".device_uuid." + _device_uuid        
-            _count = len(self._redis.smembers(_key))
+            _count = self._redis.zcard(_key)
 
         _is_dev = bool(_device.get("is_development"))
         _config = {
@@ -370,7 +370,7 @@ class AbstractPolicy(Policy):
                    ".app_uuid." + _app_uuid + \
                    ".user_uuid." + _user_uuid + \
                    ".device_uuid." + _device_uuid        
-            _count = len(self._redis.smembers(_key))
+            _count = self._redis.zcard(_key)
 
         _config = {
             "user_language": _user.get("user_language"),
