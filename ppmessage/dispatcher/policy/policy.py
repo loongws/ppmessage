@@ -379,7 +379,7 @@ class AbstractPolicy(Policy):
         }
         _mqtt_token = self._android_token(_user_uuid, _device_uuid)
         _gcm_token = _device.get("device_android_gcmtoken")
-        if _device.get("device_use_gcmpush") == True and _gcm_token != None:
+        if _device.get("device_android_gcmpush") == True and _gcm_token != None:
             _config["android_gcm_token"] = _gcm_token
         else:
             _config["android_mqtt_token"] = _mqtt_token,
@@ -388,7 +388,7 @@ class AbstractPolicy(Policy):
             "body": self._task.get("message_body"),
             "app_uuid": _app_uuid
         }
-        # logging.info("push android: %s" % str(_push))
+        logging.info("push android: %s" % str(_push))
         if _config.get("android_gcm_token") != None:
             self._redis.rpush(REDIS_GCMPUSH_KEY, json.dumps(_push))
             #async_signal_gcmpush_push(_push)
