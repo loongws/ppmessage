@@ -137,7 +137,7 @@ function ($rootScope, $timeout, yvAPI, yvSys, yvNav, yvUser, yvConstants) {
     }
 
 
-    function _create_servers() {
+    function _create_servers(callback) {
         // uncomment this to force drop tables
         // _exec(_yvdb, "drop table if exists yvdb_servers", [], null, null);
         var _sql0 = "CREATE TABLE IF NOT EXISTS yvdb_servers (id integer primary key, name text UNIQUE, " +
@@ -145,20 +145,20 @@ function ($rootScope, $timeout, yvAPI, yvSys, yvNav, yvUser, yvConstants) {
         var _sql1 = "SELECT * FROM yvdb_servers WHERE name=? AND host=?";
         var _sql2 = "UPDATE yvdb_servers SET is_selected = 0";
         var _sql3 = "INSERT INTO yvdb_servers (name, host, port, protocol, is_selected) VALUES (?, ?, ?, ?, ?)";
-        var _servers = [
-            [ppmessage.server.name, ppmessage.server.host, ppmessage.server.port, ppmessage.server.protocol, 1],
-        ];
+        var _server = [ppmessage.server.name, ppmessage.server.host, ppmessage.server.port, ppmessage.server.protocol, 1];
 
         _exec(_yvdb, _sql0, [], null, null);
-        angular.forEach(_servers, function (server, index) {
-            _exec(_yvdb, _sql1, [server[0], server[1]], function (tx, res) {
-                if (res.rows.length === 0) {
-                    _exec(_yvdb, _sql2, [], function (tx, res) {
-                        _exec(_yvdb, _sql3, server, null, null);
+        _exec(_yvdb, _sql1, [_server[0], _server[1]], function (tx, res) {
+            if (res.rows.length === 0) {
+                _exec(_yvdb, _sql2, [], function (tx, res) {
+                    _exec(_yvdb, _sql3, _server, function (tx, res) {
+                        callback && callback();
                     }, null);
-                }
-            }, null);
-        });
+                }, null);
+                return;
+            }
+            callback && callback();
+        }, null);
     }
 
 
@@ -180,15 +180,14 @@ function ($rootScope, $timeout, yvAPI, yvSys, yvNav, yvUser, yvConstants) {
         var _sql2 = "PRAGMA user_version = 2";
 
         if (yvSys.in_electron()) {
-            _create_servers();
+            _create_servers(cb);            
             _create_login_user();
-            cb && cb();
             return;
         }
 
         _exec(_yvdb, _sql0, [], function (tx, res) {
             var _v = res.rows.item(0).user_version;
-            _create_servers(); // alway try to create new server
+            _create_servers(cb); // alway try to create new server
             if (_v === 0) {
                 console.log("NO DB -> create now.");
                 _create_login_user();
@@ -196,7 +195,6 @@ function ($rootScope, $timeout, yvAPI, yvSys, yvNav, yvUser, yvConstants) {
             } else if (_v === 1) {
                 console.log("HAS DB and updated.");
             }
-            cb && cb();
         }, null);
     }
 

@@ -2,11 +2,11 @@ ppmessageModule.controller("SettingListCtrl", [
     "$scope",
     "$state",
     "yvSys",
-    "yvMain",
     "yvUser",
     "yvLink",
     "yvLogin",
-function ($scope, $state, yvSys, yvMain, yvUser, yvLink, yvLogin) {
+    "yvLogout",
+function ($scope, $state, yvSys, yvUser, yvLink, yvLogin, yvLogout) {
 
     $scope.uiPostfix = yvSys.in_mobile() ? "-mobile" : "";    
     
@@ -16,7 +16,7 @@ function ($scope, $state, yvSys, yvMain, yvUser, yvLink, yvLogin) {
     
 
     $scope.logoutDeviceUser = function () {
-        yvMain.logout();
+        yvLogout.logout();
     };
 
 

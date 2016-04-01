@@ -8,6 +8,7 @@
 # The entry form gcmpush service
 #
 
+from ppmessage.iospush.pushtitle import push_title
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import REDIS_GCMPUSH_KEY
@@ -76,7 +77,7 @@ class GcmPushApp():
         if self.gcm == None:
             logging.error("no gcm inited.")
             return
-        self.gcm.outdate(_delta)
+        # self.gcm.outdate(_delta)
         return
 
     def push(self):

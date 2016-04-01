@@ -219,6 +219,14 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
         options.fileName = _get_file_name(_file_url);
         options.params = { user_uuid: yvUser.get("uuid") };
 
+        // If we don't set chunkedMode to false, in android app, upload file to 'https://ppmessage.cn/upload' will fail,
+        // but upload file to 'http://localhost:8080/upload' still works. It must have something to do with https/http protocol
+        // and nginx.conf. iOS app has not such problem though.
+        // To fix this problem, we have to set chunkedMode to false.
+        if (yvSys.in_android_app() && !ppmessage.developerMode) {
+            options.chunkedMode = false;
+        }
+
         if (_onprogress) {
             ft.onprogress = _onprogress;
         }

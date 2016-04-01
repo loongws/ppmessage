@@ -85,7 +85,7 @@ function ($ionicHistory, $timeout, $state, yvSys, yvUser, yvConstants) {
         exit_app: function (should_reset) {
             this.disable_next();
             if (should_reset) {
-                $state.go("noapp.main-with-logo");
+                $state.go("main-with-logo");
                 return;
             }
             this.login_with_user();

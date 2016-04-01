@@ -5,6 +5,13 @@ function ($stateProvider, $urlRouterProvider) {
 
     $stateProvider
 
+        .state("main-with-logo", {
+            cache: false,
+            controller: "MainWithLogoCtrl",
+            url: "/main-with-logo",
+            // templateUrl: "templates/controllers/noapp.main-with-logo.html"
+        })
+
         .state("noapp", {
             abstract: true,
             controller: "NoAppCtrl",
@@ -24,13 +31,6 @@ function ($stateProvider, $urlRouterProvider) {
             controller: "AutoLoginCtrl",
             url: "/auto-login/:request_body",
             templateUrl: "templates/controllers/noapp.auto-login.html"
-        })
-
-        .state("noapp.main-with-logo", {
-            cache: false,
-            controller: "MainWithLogoCtrl",
-            url: "/main-with-logo",
-            // templateUrl: "templates/controllers/noapp.main-with-logo.html"
         })
 
         .state("noapp.login-no-user", {
@@ -365,6 +365,6 @@ function ($stateProvider, $urlRouterProvider) {
             }
         });
 
-    $urlRouterProvider.otherwise("/noapp/main-with-logo");
+    $urlRouterProvider.otherwise("/main-with-logo");
 
 }]);

@@ -1,15 +1,62 @@
 ppmessageModule.factory('yvLocal', [
     "$filter",
+    "$cookies",
     "$translate",
     "yvSys",
-function ($filter, $translate, yvSys) {
+    "yvAPI",
+function ($filter, $cookies, $translate, yvSys, yvAPI) {
 
-    var current_language = null;
-
-    if (!yvSys.in_mobile_app()) {
-        current_language = navigator.language;
+    function _get_electron_session() {
+        var win = require("electron").remote.getCurrentWindow();
+        var session = win.webContents.session;
+        return session;
     }
-   
+    
+    // for Browser and Electron only
+    function _get_current_language(callback) {
+        if (yvSys.in_electron()) {
+            // don't set url when get cookies
+            var session = _get_electron_session();
+            var server = yvAPI.get_server();
+            var data = {
+                "url": server.protocol + server.host,
+                "name": "current_language"
+            };
+            session.cookies.get(data, function (err, cookies) {
+                if (err) console.error(err);
+                var language = navigator.language;
+                if (cookies.length > 0 && cookies[0].value) {
+                    language = cookies[0].value;
+                }
+                callback(language);
+            });
+        } else {
+            var language = $cookies.get("current_language") || navigator.language;
+            callback(language);
+        }
+    }
+    
+    // for Browser and Electron only
+    function _set_current_language(language) {
+        var expire_date = new Date();
+        expire_date.setDate(expire_date.getDate() + "365");
+        if (yvSys.in_electron()) {
+            var session = _get_electron_session();
+            var server = yvAPI.get_server();
+            var data = {
+                "url": server.protocol + server.host,
+                "name": "current_language",
+                "value": language,
+                "expirationDate": expire_date / 1000
+            };
+            session.cookies.set(data, function (err) {
+                if (err) console.error(err);
+            });
+        } else {
+            $cookies.put("current_language", language, { "expires": expire_date });
+        }
+    }
+
     function _translate(str) {
         if (str && typeof str === "string") {
             return $filter("translate")(str);
@@ -87,18 +134,21 @@ function ($filter, $translate, yvSys) {
                         cb && cb();
                     });
                 });
-            } else {
-                $translate.use(navigator.language).then(function () {
+                return;
+            }
+            
+            _get_current_language(function (current_language) {
+                $translate.use(current_language).then(function () {
                     _set_moment_locale();
                     cb && cb();
                 });
-            }
+            });
         },
         
         localize_by_language: function (language) {
             $translate.use(language).then(function () {
                 _set_moment_locale();
-                current_language = language;
+                _set_current_language(language);
             });
         },
 
@@ -106,10 +156,14 @@ function ($filter, $translate, yvSys) {
             return _filter_language(language);
         },
         
-        get_current_language: function () {
-            return current_language;
+        get_current_language: function (callback) {
+            return _get_current_language(callback);
         },
 
+        set_current_language: function (language) {
+            return _set_current_language(language);
+        },
+        
         translate: function (_str) {
             return _translate(_str);
         },

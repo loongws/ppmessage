@@ -776,7 +776,6 @@ ppmessageModule.config([
                 LOCATION: "位置",
                 SLACK: "Slack",
                 EVERNOTE: "印象笔记",
-                MESSAGE_CONTENT: "消息内容",
 
                 ASSIGN: "分配",
                 TYPE: "类型",
@@ -966,7 +965,8 @@ ppmessageModule.config([
                 LOCATION: "位置",
                 SLACK: "Slack",
                 EVERNOTE: "印象笔记",
-
+                MESSAGE_CONTENT: "消息内容",
+                
                 ASSIGN_TO: "对话分配给： ",
 
                 CANCEL: "取消",

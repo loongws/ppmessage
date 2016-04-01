@@ -15,16 +15,13 @@ ppmessageModule.factory("yvMain", [
     "yvFile",
     "yvType",
     "yvBase",
+    "yvLogout",
     "yvMessage",
     "yvConstants",
-function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yvMime, yvSend, yvUser, yvLink, yvFile, yvType, yvBase,
+function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yvMime, yvSend, yvUser, yvLink, yvFile, yvType, yvBase, yvLogout,
           yvMessage, yvConstants) {
 
     var scope = $rootScope.$new();
-
-    scope.$on("event:logout", function (event) {
-        _local_logout();
-    });
 
     scope.$on("event:get_unack_all", function(event) {
         _get_unack_all();
@@ -120,22 +117,6 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
                 });
             });
         });
-    }
-
-
-    function _local_logout() {
-        if (yvSys.has_db()) {
-            yvDB.logout_user();
-        }
-        yvNoti.exit();
-        yvBase.reset();
-        yvNav.exit_app();
-    }
-
-
-    function _logout() {
-        yvAPI.logout(null, null, null);
-        _local_logout();
     }
 
 
@@ -486,7 +467,7 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
     function _check_logout(_message, _cb) {
         var _device_uuid = yvUser.get("device_uuid");
         if (_message.body === _device_uuid) {
-            $rootScope.$broadcast("event:logout");
+            yvLogout.local_logout();
         }
         _cb && _cb();
     }
@@ -848,14 +829,6 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
 
         add_login_user: function (userdata, callback) {
             _add_login_user(userdata, callback);
-        },
-
-        logout: function () {
-            _logout();
-        },
-
-        local_logout: function () {
-            _local_logout();
         },
 
         set_server: function () {
