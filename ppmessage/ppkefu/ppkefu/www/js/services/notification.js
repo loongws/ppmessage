@@ -10,9 +10,10 @@ ppmessageModule.factory("yvNoti", [
     "yvAlert",
     "yvLocal",
     "yvBase",
+    "yvPush",
     "yvMessage",
     "yvConstants",
-function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvAlert, yvLocal, yvBase, yvMessage, yvConstants) {
+function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvAlert, yvLocal, yvBase, yvPush, yvMessage, yvConstants) {
     
     var SOCKET_STATE = ["CONNECTING", "OPEN", "CLOSING", "CLOSED"];
     var _ios_plugin = null;
@@ -20,7 +21,21 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
     var _typing_promise = null;
     var _reconnect_interval = null;
     var _pending_messages = [];
-        
+
+    function _on_resume() {
+        $timeout(function () {
+            yvPush.register_push();
+            __open_socket();
+            $rootScope.$broadcast("event:get_unack_all");
+        });
+    }
+
+    function _on_pause() {
+        $timeout(function() {
+            __close_socket();
+        });
+    }
+
     function _typing() {
         if (_typing_promise == null) {
             _typing_promise = $timeout(function () {
@@ -99,7 +114,7 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
             timeout: 10, //optional
             keepAliveInterval: 20 * 60, //optional
             userName: yvUser.get("uuid"), //user_uuid
-            password: yvUser.get("session_uuid"), //session_uuid
+            password: yvUser.get("access_token"), //session_uuid
             notificationTitle: "ppmessage" //optional
         };
 
@@ -230,101 +245,11 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
         return SOCKET_STATE[_socket_state];
     }
 
-    function _on_init_error() {
-        console.error("error for notification register.");
-    }
-
-    function _fn_ios_unregister_success() {
-        console.log("unregister ios notification success.");
-    }
-
-    function _fn_ios_unregister_failed() {
-        console.error("unregister ios notification failed");
-    }
-
-    function _real_ios_register(_success, _error) {
-        var _options = {
-            "badge": "true",
-            "sound": "true",
-            "alert": "true",
-            "ecb": "_fn_ios_listener"
-        };
-        _ios_plugin = window.plugins.pushNotification;
-        if (device.isVirtual) {
-            _success && _success("YOU-GOT-A-FAKE-IOS-TOKEN-IN-EMULATOR");
-            return;
-        }
-        if (_ios_plugin) {
-            _ios_plugin.register(_success, _error, _options);
-        }
-    }
-
-    function _on_ios_resume() {
-        // When called from a resume event handler, interactive functions
-        // such as alert() need to be wrapped in a setTimeout() call with
-        // a timeout value of zero, or else the app hangs.
-        // resume means the app exists, but the network action already closed
-        // FIXME: display the resume status in title bar "Connecting...", "Loading..."
-        $timeout(function () {
-            __open_socket();
-            $rootScope.$broadcast("event:get_unack_all");
-            _real_ios_register(function (_token) {
-                console.log("_register success when on resume");
-                console.log("TOKEN: " + _token);
-            }, _on_init_error);
-        });
-    }
-
-    function _on_android_resume() {
-        $timeout(function () {
-            __open_socket();
-            $rootScope.$broadcast("event:get_unack_all");
-            __connect_mqtt();
-        });
-    }
-
-    function _on_ios_pause() {
-        $timeout(function() {
-            __close_socket();
-        });
-    }
-
-    function _on_android_pause() {
-        $timeout(function() {
-            __close_socket();
-        });
-    }
-    
-    function _android_init() {
-        document.addEventListener('resume', _on_android_resume, false);
-        document.addEventListener('pause', _on_android_pause, false);
-        __connect_mqtt();
-    }
-
-    function _ios_init(_success, _error) {
-        if (!_error) {
-            _error = _on_init_error;
-        }
-        console.log("_ios_register and register resume now");
-        document.addEventListener('resume', _on_ios_resume, false);
-        document.addEventListener('pause', _on_ios_pause, false);
-        _real_ios_register(_success, _error);
-    }
-
     function _exit() {
-        if (yvSys.in_ios_app()) {
-            if (_ios_plugin) {
-                _ios_plugin.unregister(_fn_ios_unregister_success, _fn_ios_unregister_failed);
-                _ios_plugin = null;
-            }
-            document.removeEventListener('resume', _on_ios_resume, false);
-            document.removeEventListener('pause', _on_ios_pause, false);
-        }
-        
-        if (yvSys.in_android_app()) {
-            __disconnect_mqtt();
-            document.removeEventListener('resume', _on_android_resume, false);
-            document.removeEventListener('pause', _on_android_pause, false);
+        if (yvSys.in_mobile_app()) {
+            yvPush.unregister_push();
+            document.removeEventListener('resume', _on_resume, false);
+            document.removeEventListener('pause', _on_pause, false);
         }
 
         // for every platform
@@ -353,12 +278,9 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
     
     return {
         init: function (_success, _error) {
-            if (yvSys.in_ios_app()) {
-                _ios_init(_success, _error);
-            }
-            
-            if (yvSys.in_android_app()) {
-                _android_init();
+            if (yvSys.in_mobile_app()) {
+                document.addEventListener('resume', _on_resume, false);
+                document.addEventListener('pause', _on_pause, false);
             }
             
             // every platform

@@ -252,7 +252,7 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
 
         // get unique android device uuid, or null
         get_device_uuid: function (_user_id) {
-            if (this.in_android_app()) {
+            if (this.in_mobile_app()) {
                 return _platform.device.uuid;
             }
             if (this.in_browser() || this.in_electron()) {

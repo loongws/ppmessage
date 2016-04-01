@@ -9,9 +9,10 @@ ppmessageModule.factory("yvLogin", [
     "yvUser",
     "yvMain",
     "yvLink",
+    "yvPush",
     "yvAlert",
     "yvLogout",
-function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, yvMain, yvLink, yvAlert, yvLogout) {
+function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, yvMain, yvLink, yvPush, yvAlert, yvLogout) {
 
     var session = null;
     
@@ -24,8 +25,8 @@ function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, 
         // make sure init one time
         if (typeof this.device_token !== "string") {
             // device info
-            LoginSession.prototype.device_uuid = "";
-            LoginSession.prototype.device_token = "";           // iOS only
+            LoginSession.prototype.device_uuid = yvSys.get_device_uuid();
+            LoginSession.prototype.device_token = null;           // iOS only
             LoginSession.prototype.ios_app_development = true;  // iOS only
             LoginSession.prototype.device_model = yvSys.get_device_model();
             LoginSession.prototype.device_version = yvSys.get_device_version();
@@ -137,17 +138,16 @@ function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, 
             return;
         }
 
-        if (yvSys.in_ios_app()) {
+        if (yvSys.in_mobile_app()) {
             // 'is_development' decide which APNS push service mode this device will apply,
             // true for development mode, false for produciton mode.
-            session.ios_app_development = !!ppmessage.developerMode;
-            yvNoti.get_ios_token(function (token) {
-                session.device_uuid = hex_sha1(token);
-                session.device_token = token;
-                session.login();
-            }, function () {
-                session._login_error("app.GLOBAL.ERR_IOSTOKEN");
-            });
+            var token = yvPush.get_token();
+            session.device_token = token;
+            if (yvSys.in_ios_app()) {
+                session.ios_app_development = !!ppmessage.developerMode;
+            }
+            
+            session.login();
             return;
         }
 

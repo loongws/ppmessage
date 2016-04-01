@@ -12,6 +12,7 @@
 
 window.ppmessage = {
     "api_key": "{api_key}",
+    "sender_id": "{sender_id}",
     "server": {
         "name": "{server_name}",
         "protocol": "{server_protocol}",
