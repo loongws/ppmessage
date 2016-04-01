@@ -119,10 +119,14 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
         };
 
         //FIXME: mqttPlugin connect should check if connected then ignore
-        mqttPlugin.connect(url, yvUser.get("device_uuid"), options, null, function () {
+        mqttPlugin.connect(url, yvUser.get("device_uuid"), options, function () {
+            console.log("%cmqtt connection is established.", "color: green");
+        }, function () {
             console.log('---->connect failed:');
         });
-        mqttPlugin.setOnMessageArrivedCallback(null);
+        mqttPlugin.setOnMessageArrivedCallback(function (message) {
+            console.log("%creceive mqtt message. %s", "color: green", message);
+        });
     }
 
     function __disconnect_mqtt() {
@@ -251,7 +255,10 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
             document.removeEventListener('resume', _on_resume, false);
             document.removeEventListener('pause', _on_pause, false);
         }
-
+        if (yvSys.in_android_app()) {
+            __disconnect_mqtt();
+        }
+        
         // for every platform
         __close_socket();
     }
@@ -281,6 +288,9 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
             if (yvSys.in_mobile_app()) {
                 document.addEventListener('resume', _on_resume, false);
                 document.addEventListener('pause', _on_pause, false);
+            }
+            if (yvSys.in_android_app()) {
+                __connect_mqtt();
             }
             
             // every platform
