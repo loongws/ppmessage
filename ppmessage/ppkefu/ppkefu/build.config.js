@@ -25,6 +25,7 @@ module.exports = {
         "www/js/services/type.js",
         "www/js/services/sqldb.js",
         "www/js/services/notification.js",
+        "www/js/services/push.js",
         "www/js/services/user.js",
         "www/js/services/send.js",
         "www/js/services/message.js",
