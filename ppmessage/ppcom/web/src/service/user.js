@@ -17,54 +17,6 @@ Service.$user = (function() {
             Service.$users.setUser(user_uuid, Service.$users.createUser(userInfo));
         },
         
-        // Make user offline
-        offline: function() {
-            if (!user_uuid) return;
-
-            var userInfo = getUserInfo( user_uuid );
-            
-            userInfo && // user info is ok
-            userInfo.device_uuid && // user device_uuid is also ok
-            userInfo.is_online && // user really `online` now
-            Service.$api.offline( {
-                app_uuid: Service.$ppSettings.getAppUuid(),
-                user_uuid: user_uuid,
-                device_uuid: userInfo.device_uuid
-            }, function ( response ) {
-                
-                if ( response && response.error_code === 0 ) {
-                    // update user's local info
-                    getUser( user_uuid ).update( {
-                        user_uuid: user_uuid,
-                        is_online: false
-                    } );
-                }
-                
-            } );
-
-        },
-
-        online: function() {
-            if ( !user_uuid ) return;
-
-            var userInfo = getUserInfo( user_uuid );
-            userInfo &&
-                userInfo.device_uuid &&
-                ( !userInfo.is_online ) &&
-                Service.$api.online( {
-                    app_uuid: Service.$ppSettings.getAppUuid(),
-                    user_uuid: user_uuid,
-                    device_uuid: userInfo.device_uuid
-                }, function ( response ) {
-                    if ( response && response.error_code === 0 ) {
-                        getUser( user_uuid ).update( {
-                            user_uuid: user_uuid,
-                            is_online: true
-                        } );
-                    }
-                } );
-        },
-
         // Clear user
         clear: function() {
             user_uuid = null;

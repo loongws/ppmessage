@@ -54,13 +54,9 @@ Service.$notification = (function() {
         // on webSocket close
         // An event listener to be called when the WebSocket connection's readyState changes to CLOSED.
         onWebSocketClose = function() {
-            if (wsSettings == null) return;
-
-            Service.$user.offline();
-            
+            if (wsSettings == null) return;            
             // reset status
             ws = null;
-
             // reset callback
             if (_resetCallback) {
                 _resetCallback();
