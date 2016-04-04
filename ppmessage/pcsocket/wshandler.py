@@ -170,7 +170,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         if self.is_service_user == False:
             self.application.ppcom_device_online_log(self.app_uuid, self.user_uuid, self.device_uuid)
 
-        if self.is_service_user == True and self.is_mobile_user == False:
+        if self.is_service_user == True and self.is_mobile_device == False:
             self.application.device_online(self.device_uuid)
 
         if self.is_service_user == False:
