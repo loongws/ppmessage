@@ -14,6 +14,7 @@ from ppmessage.core.constant import PCSOCKET_SRV
 
 from ppmessage.core.constant import REDIS_TYPING_KEY
 from ppmessage.core.constant import REDIS_ONLINE_KEY
+from ppmessage.core.constant import REDIS_PPCOM_ONLINE_KEY
 
 from ppmessage.core.constant import DIS_WHAT
 
