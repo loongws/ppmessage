@@ -13,7 +13,6 @@ from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import PCSOCKET_SRV
 
 from ppmessage.core.constant import REDIS_TYPING_KEY
-from ppmessage.core.constant import REDIS_MONITOR_KEY
 from ppmessage.core.constant import REDIS_ONLINE_KEY
 
 from ppmessage.core.constant import DIS_WHAT
@@ -138,14 +137,6 @@ class PCSocketApp(Application):
         Application.__init__(self, handlers, **settings)
         return
 
-    def monitor_device(self, _device_uuid, _status):
-        _key = REDIS_MONITOR_KEY + ".websocket_status.device_uuid." + _device_uuid
-        _now = now_to_string("basic")
-        self.redis.hset(_key, "auto_logout", str(TIMEOUT_WEBSOCKET_OFFLINE))
-        self.redis.hset(_key, "status", _status)
-        self.redis.hset(_key, "updatetime",  _now)
-        return
-        
     def _remove_device_data_by_pattern(self, _pattern):
         _keys = self.redis.keys(_pattern)
         for _i in _keys:
@@ -252,6 +243,19 @@ class PCSocketApp(Application):
 
     def user_online(self, _user_uuid, _body):
         pcsocket_user_online(self.redis, _user_uuid, _body)
+        return
+
+    def device_online(self, _device_uuid, _is_online=True):
+        _row = DeviceInfo(uuid=_device_uuid, device_is_online=_is_online)
+        _row.async_update()
+        _row.update_redis_keys(self.redis)
+        return
+
+    def ppcom_device_online_log(self, _app_uuid, _user_uuid, _device_uuid):
+        _key = REDIS_PPCOM_ONLINE_KEY + ".app_uuid." + _app_uuid + ".day." + datetime.datetime.now().strftime("%Y-%m-%d")
+        self.redis.sadd(_key, _user_uuid + "." + _device_uuid)
+        _key = _key + ".hour." + str(datetime.datetime.now().hour)
+        self.redis.sadd(_key, _user_uuid + "." + _device_uuid)
         return
 
     def _get_service_care_users(self, _app_uuid, _user_uuid):
