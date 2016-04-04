@@ -76,11 +76,11 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
         self.application.unmap_device(_ws.device_uuid)
         
-        if self.is_service_user == True and self.is_mobile_device == False:
-            self.application.device_online(self.device_uuid, _is_online=False)
+        if _ws.is_service_user == True and _ws.is_mobile_device == False:
+            self.application.device_online(_ws.device_uuid, _is_online=False)
 
-        if self.is_service_user == False:
-            self.application.device_online(self.device_uuid, _is_online=False)
+        if _ws.is_service_user == False:
+            self.application.device_online(_ws.device_uuid, _is_online=False)
 
         self.application.device_online(_ws.device_uuid, _is_online=False)
 
