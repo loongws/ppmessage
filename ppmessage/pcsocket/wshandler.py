@@ -94,8 +94,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def _check_ostype(self, _device_uuid):
         _is_mobile = False
-        _key = DeviceInfo.__tablename__ + \
-               ".uuid." + _device_uuid
+        _key = DeviceInfo.__tablename__ + ".uuid." + _device_uuid
         _ostype = self.application.redis.hget(_key, "device_ostype")
         if _ostype == OS.AND or _ostype == OS.IOS:
             _is_mobile = True
