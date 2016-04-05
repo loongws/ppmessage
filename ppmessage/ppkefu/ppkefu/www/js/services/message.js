@@ -281,6 +281,10 @@ function ($timeout, yvSys, yvUser, yvFile, yvType, yvLocal, yvConstants) {
             _message.conversation_type = yvConstants.CONVERSATION_TYPE.S2P;
         }
 
+        if (conversation.latest_message && conversation.latest_message.timestamp > _message.timestamp) {
+            _message.timestamp = conversation.latest_message.timestamp + 1;
+        }
+
         if (yvType.is_text(_message)) {
             return _sending_text_message(_message, _data);
         }

@@ -10,13 +10,9 @@ function ($rootScope, yvConstants, yvNoti, yvMessage) {
         // send message to server or forward this message
         var _api_message = null;
         
-        function __success(res) {
-            var params = {
-                timestamp: res.ts,
-                task_uuid: res.task,
-                status: yvConstants.SEND_STATUS.SEND_SUCCESS
-            };
-            $rootScope.$broadcast("event:update_message_all", _message, params);
+        function __success() {
+            var status = yvConstants.SEND_STATUS.SEND_SUCCESS;
+            $rootScope.$broadcast("event:update_message_status", _message, status);
         }
 
         function __error() {
@@ -33,11 +29,7 @@ function ($rootScope, yvConstants, yvNoti, yvMessage) {
                 type:"send",
                 send:_api_message
             };
-
-            yvNoti.send_message(_ws_message, function() {
-                var _r = {task: _api_message.uuid, ts: Date.parse(new Date())/1000};
-                __success(_r);
-            }, __error);
+            yvNoti.send_message(_ws_message, __success, __error);
         }
     }
     
