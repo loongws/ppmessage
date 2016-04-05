@@ -53,7 +53,7 @@ Service.$user = (function() {
                 
             }
         },
-
+        
         // Clear user
         clear: function() {
             user_uuid = null;

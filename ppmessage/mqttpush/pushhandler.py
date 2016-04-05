@@ -35,7 +35,7 @@ class PushHandler():
         _subtype = _body.get("ms")
         _count = _config.get("unacked_notification_count")
         _title = push_title(_type, _subtype, _body.get("bo"), _config.get("user_language"))
-        _token = _config.get("mqtt_android_token")
+        _token = _config.get("android_mqtt_token")
         _sound = None
         if not _config.get("user_silence_notification"):
             _sound = "beep.wav"

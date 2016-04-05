@@ -4,7 +4,7 @@
     
     <div class="yv-textarea-outer">
       <textarea class="yv-dynamic-height" rows="1" form="upload_txt" name="content_txt" ng-model="textarea.text"
-                ng-focus="focusToText()" ng-keypress="onKeyPress($event)">
+                ng-focus="focusToText()" ng-blur="onTextareaBlur()" ng-keypress="onKeyPress($event)">
       </textarea>
     </div>
     

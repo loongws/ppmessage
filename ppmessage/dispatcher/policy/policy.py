@@ -17,6 +17,8 @@ from ppmessage.core.constant import MESSAGE_STATUS
 from ppmessage.core.constant import MESSAGE_TYPE
 from ppmessage.core.constant import TASK_STATUS
 
+from ppmessage.core.constant import REDIS_MQTTPUSH_KEY
+from ppmessage.core.constant import REDIS_GCMPUSH_KEY
 from ppmessage.core.constant import REDIS_IOSPUSH_KEY
 from ppmessage.core.constant import PPCOM_OFFLINE
 from ppmessage.core.constant import APP_POLICY
@@ -89,7 +91,7 @@ class AbstractPolicy(Policy):
         self._conversation_user_datas_hash = {}
         
         self._users = set()
-        
+
         self._name = APP_POLICY.ABASTRACT
         return
 
@@ -334,7 +336,7 @@ class AbstractPolicy(Policy):
                    ".app_uuid." + _app_uuid + \
                    ".user_uuid." + _user_uuid + \
                    ".device_uuid." + _device_uuid        
-            _count = len(self._redis.smembers(_key))
+            _count = self._redis.zcard(_key)
 
         _is_dev = bool(_device.get("is_development"))
         _config = {
@@ -368,7 +370,7 @@ class AbstractPolicy(Policy):
                    ".app_uuid." + _app_uuid + \
                    ".user_uuid." + _user_uuid + \
                    ".device_uuid." + _device_uuid        
-            _count = len(self._redis.smembers(_key))
+            _count = self._redis.zcard(_key)
 
         _config = {
             "user_language": _user.get("user_language"),
@@ -377,7 +379,7 @@ class AbstractPolicy(Policy):
         }
         _mqtt_token = self._android_token(_user_uuid, _device_uuid)
         _gcm_token = _device.get("device_android_gcmtoken")
-        if _device.get("device_use_gcmpush") == True and _gcm_token != None:
+        if _device.get("device_android_gcmpush") == True and _gcm_token != None:
             _config["android_gcm_token"] = _gcm_token
         else:
             _config["android_mqtt_token"] = _mqtt_token,
@@ -386,16 +388,13 @@ class AbstractPolicy(Policy):
             "body": self._task.get("message_body"),
             "app_uuid": _app_uuid
         }
-        # logging.info("push android: %s" % str(_push))
+        logging.info("push android: %s" % str(_push))
         if _config.get("android_gcm_token") != None:
-            _gcm_config = BOOTSTRAP_DATA.get("gcm")
-            _api_key = _gcm_config.get("api_key")
-            if _api_key == None or len(_api_key) == 0:
-                logging.info("gcmpush not start for gcm not config")
-                return
-            async_signal_gcmpush_push(_push)
+            self._redis.rpush(REDIS_GCMPUSH_KEY, json.dumps(_push))
+            #async_signal_gcmpush_push(_push)
         else :
-            async_signal_mqttpush_push(_push)
+            self._redis.rpush(REDIS_MQTTPUSH_KEY, json.dumps(_push))
+            #async_signal_mqttpush_push(_push)
         return
     
     def _push_to_pc(self, _user_uuid, _device_uuid):

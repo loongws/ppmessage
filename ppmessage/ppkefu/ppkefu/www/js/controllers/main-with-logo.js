@@ -5,9 +5,10 @@ ppmessageModule.controller("MainWithLogoCtrl", [
     "yvMain",
     "yvUser",
     "yvFile",
+    "yvPush",
     "yvLogin",
     "yvUpdater",
-function ($scope, yvSys, yvNav, yvMain, yvUser, yvFile, yvLogin, yvUpdater) {
+function ($scope, yvSys, yvNav, yvMain, yvUser, yvFile, yvPush, yvLogin, yvUpdater) {
 
     function nav_login(user) {
         if (!user) {
@@ -22,8 +23,11 @@ function ($scope, yvSys, yvNav, yvMain, yvUser, yvFile, yvLogin, yvUpdater) {
     function init_db() {
         yvMain.init_yvdb(function (user) {
             yvUpdater.check_update();
-            yvNav.clear(function () {
-                nav_login(user);
+            // fixme: init push.
+            yvPush.register_push(null, null, function () {
+                yvNav.clear(function () {
+                    nav_login(user);
+                });
             });
         });
     }

@@ -43,7 +43,7 @@ class PushThreadHandler():
                      badge=_count)
 
         _dev = _config.get("is_development")
-        logging.info(_dev)
+        logging.info(_config)
         
         _real_apns = _apns.get("pro")
 

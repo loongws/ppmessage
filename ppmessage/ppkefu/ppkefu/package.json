@@ -6,13 +6,14 @@
   "scripts": {
     "start": "electron www/main.js",
     "dev": "electron ./www",
+    "sign-mac-app": "cd electron/sign-mac-app && bash sign.sh",
     "clean": "rm -rf ./electron/dist",
     "clean:osx": "rm -rf ./electron/dist/osx",
     "clean:win32": "rm -rf ./electron/dist/win32",
     "clean:win64": "rm -rf ./electron/dist/win64",
     "clean:linux": "rm -rf ./electron/dist/linux",
     "build": "npm run clean && npm run build:osx && npm run build:win32 && npm run build:win64 && npm run build:linux",
-    "build:osx": "npm run clean:osx && electron-packager ./www \"ppmessage\" --out=electron/dist/osx --platform=darwin --arch=x64 --version=0.37.2 --icon=electron/assets/osx/ppmessage.icns --asar=true",
+    "build:osx": "npm run clean:osx && electron-packager ./www \"ppmessage\" --out=electron/dist/osx --platform=darwin --arch=x64 --version=0.35.6 --icon=electron/assets/osx/ppmessage.icns --asar=true",
     "build:win32": "npm run clean:win32 && electron-packager ./www \"ppmessage-win32\" --out=electron/dist/win32 --platform=win32 --arch=ia32 --version=0.37.2 --icon=electron/assets/win/ppmessage.ico --asar=true",
     "build:win64": "npm run clean:win64 && electron-packager ./www \"ppmessage-win64\" --out=electron/dist/win64 --platform=win32 --arch=x64 --version=0.37.2 --icon=electron/assets/win/ppmessage.ico --asar=true",
     "build:linux": "npm run clean:linux && electron-packager ./www \"ppmessage\" --out=electron/dist/linux --platform=linux --arch=x64 --version=0.37.2 --asar=true",
@@ -72,7 +73,7 @@
     },
     {
       "variables": {
-        "SENDER_ID": "AIzaSyBzRHQH-u6-wcT6jUc8DgTITMUB4vdqYiU"
+        "SENDER_ID": "468664932317"
       },
       "locator": "phonegap-plugin-push",
       "id": "phonegap-plugin-push"

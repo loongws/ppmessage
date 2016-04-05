@@ -65,8 +65,8 @@ function ($scope, $state, $timeout, $ionicHistory, yvNav, yvSys, yvAlert, yvLoca
             });
             return;
         }
-
-        _init_cb(yvLocal.get_current_language());
+        
+        yvLocal.get_current_language(_init_cb);
     }
 
     _init(); 

@@ -47,7 +47,7 @@ def _create(dbsession):
     _certs_dir = _certs_dir + os.path.sep + ".." + os.path.sep + "certs" + os.path.sep + "apnscerts"
     _dev_file = _certs_dir + os.path.sep + _dev_file
     _pro_file = _certs_dir + os.path.sep + _pro_file
-    print(_pro_file)
+
     if not os.path.exists(_dev_file) or not os.path.exists(_pro_file):
         print("No dev or pro cert file found")
         sys.exit()

@@ -23,8 +23,6 @@ from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import PPCOM_WELCOME
 from ppmessage.core.constant import DATETIME_FORMAT
-from ppmessage.core.constant import REDIS_MONITOR_KEY
-from ppmessage.core.constant import WEBSOCKET_STATUS
 from ppmessage.core.constant import CONVERSATION_TYPE
 
 from ppmessage.bootstrap.data import BOOTSTRAP_DATA

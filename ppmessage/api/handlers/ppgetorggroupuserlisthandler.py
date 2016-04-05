@@ -11,9 +11,6 @@ from ppmessage.core.redis import redis_hash_to_dict
 from ppmessage.core.utils.datetimestring import datetime_to_timestamp
 from ppmessage.core.utils.datetimestring import string_to_datetime
 
-from ppmessage.core.constant import DATETIME_FORMAT
-from ppmessage.core.constant import REDIS_MONITOR_KEY
-from ppmessage.core.constant import WEBSOCKET_STATUS
 from ppmessage.core.constant import API_LEVEL
 
 from ppmessage.db.models import OrgUserGroupData

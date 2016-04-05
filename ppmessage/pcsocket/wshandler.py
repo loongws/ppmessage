@@ -75,8 +75,18 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         del self.application.ws_hash[_ws.device_uuid]
 
         self.application.unmap_device(_ws.device_uuid)
-        self.application.monitor_device(_ws.device_uuid, WEBSOCKET_STATUS.CLOSE)
+        
+        if _ws.is_service_user == True and _ws.is_mobile_device == False:
+            self.application.device_online(_ws.device_uuid, _is_online=False)
 
+        if _ws.is_service_user == False:
+            self.application.device_online(_ws.device_uuid, _is_online=False)
+
+        self.application.device_online(_ws.device_uuid, _is_online=False)
+
+        # let wshandler on_close handle the normal
+        # but the force logout should not
+        # the close function has been done here
         _ws.device_uuid = None
         #_ws.close()
 
@@ -84,8 +94,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def _check_ostype(self, _device_uuid):
         _is_mobile = False
-        _key = DeviceInfo.__tablename__ + \
-               ".uuid." + _device_uuid
+        _key = DeviceInfo.__tablename__ + ".uuid." + _device_uuid
         _ostype = self.application.redis.hget(_key, "device_ostype")
         if _ostype == OS.AND or _ostype == OS.IOS:
             _is_mobile = True
@@ -93,6 +102,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
     def _user_online(self, _status):
         # ignore the service user who logined with mobile device
+        # which is called ppkefulogin, and should be always online
         logging.info("online service:%s, mobile:%s" % (str(self.is_service_user), str(self.is_mobile_device)))
         if self.is_service_user == True and self.is_mobile_device == True:
             return
@@ -111,10 +121,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         return
     
     def _on_auth(self, _body):
-        self.api_token = _body.get("api_token")
         self.app_uuid = _body.get("app_uuid")
-        self.device_uuid = _body.get("device_uuid")
+        self.api_token = _body.get("api_token")
         self.user_uuid = _body.get("user_uuid")
+        self.device_uuid = _body.get("device_uuid")
         self.is_service_user = _body.get("is_service_user")
         self.extra_data = _body.get("extra_data")
 
@@ -147,14 +157,24 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         if self.device_uuid in self.application.ws_hash:
             _ws = self.application.ws_hash.get(self.device_uuid)
             if _ws.ws_uuid != self.ws_uuid:
-                logging.info("same device:%s %s:%s" % (self.device_uuid, _ws.ws_uuid, self.ws_uuid))
+                logging.error("should not be there, same device:%s %s:%s" % (self.device_uuid, _ws.ws_uuid, self.ws_uuid))
+                
                 self._please_logout(_ws, self.device_uuid)
 
         self.application.save_extra(self.app_uuid, self.device_uuid, self.extra_data)
         self.application.map_device(self.device_uuid)
         self.application.ws_hash[self.device_uuid] = self
-        self.application.monitor_device(self.device_uuid, WEBSOCKET_STATUS.OPEN)
         self.application.start_watching_online(self)
+        
+        if self.is_service_user == False:
+            self.application.ppcom_device_online_log(self.app_uuid, self.user_uuid, self.device_uuid)
+
+        if self.is_service_user == True and self.is_mobile_device == False:
+            self.application.device_online(self.device_uuid)
+
+        if self.is_service_user == False:
+            self.application.device_online(self.device_uuid)
+            
         self._user_online(ONLINE_STATUS.ONLINE)
         logging.info("AUTH DEVICE:%s USER:%s." % (self.device_uuid, self.user_uuid))
         return
@@ -301,9 +321,15 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         self.application.ws_hash[self.device_uuid] = None
         del self.application.ws_hash[self.device_uuid]
         self.application.unmap_device(self.device_uuid)
-        self.application.monitor_device(self.device_uuid, WEBSOCKET_STATUS.CLOSE)
         self.application.stop_watching_online(self)
         self.application.stop_watching_typing(self)
+
+        if self.is_service_user == True and self.is_mobile_device == False:
+            self.application.device_online(self.device_uuid, _is_online=False)
+
+        if self.is_service_user == False:
+            self.application.device_online(self.device_uuid, _is_online=False)
+
         self._user_online(ONLINE_STATUS.OFFLINE)
         return
     

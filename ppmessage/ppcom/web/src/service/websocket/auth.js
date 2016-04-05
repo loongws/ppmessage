@@ -60,9 +60,6 @@ Service.$notifyAuth = (function() {
 
                 var wsSettings = $notifyService.getWsSettings();
                 
-                // make me online
-                Service.$user.online();
-
                 // get unacked messages
                 Service.$api.getUnackedMessages({
                     app_uuid: Service.$ppSettings.getAppUuid(),

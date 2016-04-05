@@ -158,35 +158,35 @@ def _create_apns_settings(_session, _config):
     _dev_p12 = None
     _pro_p12 = None
 
-    _apns = _config.get("apns")
-    _dev_path = _apns.get("dev")
-    _pro_path = _apns.get("pro")
-    _name = _apns.get("name")
     _app_uuid = _config.get("team").get("app_uuid")
+    _apns_config = _config.get("apns")
 
-    if _apns == None or _dev_path == None or _pro_path == None or _name == None:
+    _name = _apns_config.get("name")
+    _dev_file = _apns_config.get("dev")
+    _pro_file = _apns_config.get("pro")
+
+    _certs_dir = os.path.dirname(os.path.abspath(__file__))
+    _certs_dir = _certs_dir + os.path.sep + ".." + os.path.sep + "certs" + os.path.sep + "apnscerts"
+    _dev_file = _certs_dir + os.path.sep + _dev_file
+    _pro_file = _certs_dir + os.path.sep + _pro_file
+
+    if not os.path.exists(_dev_file) or not os.path.exists(_pro_file):
+        print("No dev or pro cert file found")
         return _config
+        
+    with open(_dev_file, "rb") as _file:
+        _dev_p12 = _file.read()
+        _dev_pem = der2pem(_dev_p12)
 
-    if len(_dev_path) == 0 or len(_pro_path) == 0 or len(_name) == 0:
-        return _config
-
-    try:
-        with open(_dev_path, "rb") as _file:
-            _dev_p12 = _file.read()
-            _dev_pem = der2pem(_dev_p12)
-
-        with open(_pro_path, "rb") as _file:
-            _pro_p12 = _file.read()
-            _pro_pem = der2pem(_pro_p12)
-    except:
-        print("no apns config. iospush will not start.")
-        return _config
+    with open(_pro_file, "rb") as _file:
+        _pro_p12 = _file.read()
+        _pro_pem = der2pem(_pro_p12)
 
     _dev_p12 = base64.b64encode(_dev_p12)
     _dev_pem = base64.b64encode(_dev_pem)
     _pro_p12 = base64.b64encode(_pro_p12)
     _pro_pem = base64.b64encode(_pro_pem)
-    
+
     _apns = APNSSetting(
         uuid=str(uuid.uuid1()),
         app_uuid=_app_uuid,

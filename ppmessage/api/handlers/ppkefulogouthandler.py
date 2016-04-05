@@ -45,8 +45,7 @@ class PPKefuLogoutHandler(BaseHandler):
         _redis.sunionstore(_key1, _key0, _key0)
 
         _key2 = _key1 + ".hour." + str(datetime.datetime.now().hour)
-        _redis.sunionstore(_key2, _key0, _key0)
-        
+        _redis.sunionstore(_key2, _key0, _key0)        
         return
     
     def _update_device(self):
@@ -57,9 +56,6 @@ class PPKefuLogoutHandler(BaseHandler):
         _row = DeviceInfo(**_values)
         _row.update_redis_keys(self.application.redis)
         _row.async_update()
-
-        _d = redis_hash_to_dict(self.application.redis, DeviceInfo, self.device_uuid)
-        logging.info(_d)
         return
 
     def _send_online(self):
