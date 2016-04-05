@@ -171,28 +171,6 @@
         };
 
         /*
-         * Make user online
-         */
-        this.online = function(data, success, fail) {
-            this._post("/PP_ONLINE", {
-                app_uuid: data.app_uuid,
-                user_uuid: data.user_uuid,
-                device_uuid: data.device_uuid
-            }, success, fail);
-        };
-
-        /*
-         * Make user offline
-         */
-        this.offline = function(data, success, fail) {
-            this._post("/PP_OFFLINE", {
-                app_uuid: data.app_uuid,
-                user_uuid: data.user_uuid,
-                device_uuid: data.device_uuid
-            }, success, fail);
-        };
-
-        /*
          * Get unacked messages
          */
         this.getUnackedMessages = function(data, success, fail) {
