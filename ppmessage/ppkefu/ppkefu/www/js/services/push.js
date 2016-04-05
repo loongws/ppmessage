@@ -1,10 +1,15 @@
 ppmessageModule.factory("yvPush", [
-
-function () {
+    "yvSys",
+function (yvSys) {
     var push = null;
     var push_token = null;
     
     function _register_push(success, error, final_cb) {
+        if (!yvSys.in_mobile_app()) {
+            final_cb && final_cb();
+            return;
+        }
+
         if (device.isVirtual) {
             _success && _success("YOU-GOT-A-FAKE-IOS-TOKEN-IN-EMULATOR");
             return;
