@@ -39,6 +39,7 @@ function create_app_config(target, bootstrap_data) {
     var app_config = {
         "developer_mode": true,
         "api_key": bootstrap_data.PPKEFU.api_key,
+        "sender_id": bootstrap_data.gcm.sender_id,
         "server": {
             "port": bootstrap_data.nginx.listen,
             "protocol": protocol,
@@ -96,6 +97,7 @@ console.log("port    \t", gutil.colors.green(appConfig.server.port));
 console.log("developer mode \t", gutil.colors.green(appConfig.developer_mode));
 console.log("version \t", gutil.colors.green(version));
 console.log("api key \t", gutil.colors.green(appConfig.api_key));
+console.log("sender id \t", gutil.colors.green(appConfig.sender_id));
 console.log("------------- app config --------------")
 
 gulp.task("sass", generate_sass);
@@ -136,6 +138,7 @@ function generate_scripts (done) {
         .pipe(replace("{server_host}", appConfig.server.host))
         .pipe(replace("{server_port}", appConfig.server.port))
         .pipe(replace("{api_key}", appConfig.api_key))    
+        .pipe(replace("{sender_id}", appConfig.sender_id))    
         .pipe(replace("{version}", version))
         .pipe(concat("ppmessage.js"))
         .pipe(gulp.dest(dest))

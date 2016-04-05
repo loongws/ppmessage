@@ -22,7 +22,7 @@ def _icon_url(_file_name):
     _ssl = BOOTSTRAP_DATA.get("nginx").get("ssl")
     _protocol = "http"
     _port = BOOTSTRAP_DATA.get("nginx").get("listen")
-    if _ssl == "yes":
+    if _ssl == "on":
         _protocol = "https"
         _port = BOOTSTRAP_DATA.get("nginx").get("ssl_listen")
     _url = _protocol + "://" + _server_name + ":" + _port + _post

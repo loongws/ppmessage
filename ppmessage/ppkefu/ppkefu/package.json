@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron www/main.js",
     "dev": "electron ./www",
-      "sign-mac-app": "cd electron/sign-mac-app && bash sign.sh",
+    "sign-mac-app": "cd electron/sign-mac-app && bash sign.sh",
     "clean": "rm -rf ./electron/dist",
     "clean:osx": "rm -rf ./electron/dist/osx",
     "clean:win32": "rm -rf ./electron/dist/win32",
@@ -73,7 +73,7 @@
     },
     {
       "variables": {
-        "SENDER_ID": "AIzaSyBzRHQH-u6-wcT6jUc8DgTITMUB4vdqYiU"
+        "SENDER_ID": "468664932317"
       },
       "locator": "phonegap-plugin-push",
       "id": "phonegap-plugin-push"

@@ -223,7 +223,7 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
         // but upload file to 'http://localhost:8080/upload' still works. It must have something to do with https/http protocol
         // and nginx.conf. iOS app has not such problem though.
         // To fix this problem, we have to set chunkedMode to false.
-        if (yvSys.in_android_app() && !ppmessage.developerMode) {
+        if (yvSys.in_android_app() && _current_server.protocol == "https://") {
             options.chunkedMode = false;
         }
 
@@ -250,6 +250,15 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
             var ft = new FileTransfer();
             var source = encodeURI(url);
             var target = yvFile.get_root_dir() + targetFile;
+            
+            // We will get a empty file if we try to download from a link that will be redirected
+            // to somewhere else, only in Android, https server. To avoid this, server should give
+            // client the 'true' link.
+            if (yvSys.in_android_app() && _current_server.protocol == "https://") {
+                source = source.replace("http://ppmessage.com:80", "https://ppmessage.com");
+                source = source.replace("http://ppmessage.cn:80", "https://ppmessage.cn");
+            }
+            
             ft.download(source, target, function (file) {
                 yvLog.log("download file successfully", file.name);
                 success && success(file);

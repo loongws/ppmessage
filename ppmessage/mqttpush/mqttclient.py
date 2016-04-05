@@ -95,7 +95,13 @@ class MQTTClient():
         qos = 1
         retain = True
         _body = json.dumps(_body)
-        self._push_queue.put([_token, _body, qos, retain])
+        params = {
+            "topic": _token,
+            "payload": _body,
+            "qos": qos,
+            "retain": retain
+        }
+        self._push_queue.put(params)
         return True
 
     def disconnect(self):
@@ -134,8 +140,7 @@ class MQTTClient():
                 self._mqttc.loop()
             return
         self._push_queue.task_done()
-
-        result, mid = self._mqttc.publish(*_push)
+        result, mid = self._mqttc.publish(_push["topic"][0], _push["payload"], _push["qos"], _push["retain"])
         if result == mqttc.MQTT_ERR_SUCCESS:
             self._published.add(mid)
         elif result == mqttc.MQTT_ERR_NO_CONN:

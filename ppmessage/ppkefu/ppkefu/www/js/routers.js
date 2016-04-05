@@ -9,7 +9,7 @@ function ($stateProvider, $urlRouterProvider) {
             cache: false,
             controller: "MainWithLogoCtrl",
             url: "/main-with-logo",
-            // templateUrl: "templates/controllers/noapp.main-with-logo.html"
+            templateUrl: "templates/controllers/noapp.main-with-logo.html"
         })
 
         .state("noapp", {
