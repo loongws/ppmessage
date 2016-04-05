@@ -140,7 +140,6 @@ class MQTTClient():
                 self._mqttc.loop()
             return
         self._push_queue.task_done()
-        logging.info(_push)
         result, mid = self._mqttc.publish(_push["topic"][0], _push["payload"], _push["qos"], _push["retain"])
         if result == mqttc.MQTT_ERR_SUCCESS:
             self._published.add(mid)
