@@ -36,9 +36,10 @@ function ($scope, yvSys, yvNav, yvLog, yvMain, yvUser, yvFile, yvPush, yvLogin, 
             if (yvSys.in_android_app()) {
                 if (yvUser.get("android_notification_type") === yvConstants.NOTIFICATION_TYPE.GCM) {
                     yvPush.register_push(function () {
+                        yvLog.green("gcm push init successfully");
                         yvMain.update_android_notification_type(yvConstants.NOTIFICATION_TYPE.GCM);
                     }, function () {
-                        yvLog.log("gcm push failed, downgrade to mqtt ");
+                        yvLog.yellow("gcm push failed, downgrade to mqtt ");
                         yvMain.update_android_notification_type(yvConstants.NOTIFICATION_TYPE.MQTT);
                     }, function () {
                         nav_login(user);

@@ -103,44 +103,46 @@ function ($scope, $ionicLoading, yvSys, yvAPI, yvUser, yvLog, yvMain, yvPush, yv
 
 
     function _error() {
-        $ionicLoading.hide();        
-        yvAlert.tip('app.GLOBAL.NOTIFICATION_CHANGE_FAIL');
+        yvLog.red("set up failed", $scope.notification.new_type);
         $scope.notification.new_type = $scope.notification.type;
+        $ionicLoading.hide();
+        yvAlert.tip('app.GLOBAL.NOTIFICATION_CHANGE_FAIL');        
     }
     
     function _success() {
-        $ionicLoading.hide();
-        yvAlert.tip('app.GLOBAL.NOTIFICATION_CHANGE_SUCCESS');
-        yvLog.log("%c set up %s successfully", "color: green", $scope.notification.new_type);
-        
-        if ($scope.notification.type === yvConstants.NOTIFICATION_TYPE.GCM) {
-            yvPush.unregister_push();
-        } else {
-            yvPush.disconnect_mqtt();
-        }
+        yvLog.green("set up successfully", $scope.notification.new_type);        
         $scope.notification.type = $scope.notification.new_type;
         yvMain.update_android_notification_type($scope.notification.type);
+        $ionicLoading.hide();
+        yvAlert.tip('app.GLOBAL.NOTIFICATION_CHANGE_SUCCESS');
     }
     
     function _setUpGCM() {
-        $ionicLoading.show();
+        $ionicLoading.show({ duration: 30000});
         yvPush.register_push(function (token) {
-            var data = {
-                "device_android_gcmpush": true,          
-                "device_android_gcmtoken": token
-            };
-            yvAPI.update_device_info(data, _success, _error, _error);
+            yvPush.disconnect_mqtt(function () {
+                var data = {
+                    "device_android_gcmpush": true,
+                    "device_android_gcmtoken": token
+                };
+                yvAPI.update_device_info(data, _success, _error, _error);
+            }, _error);
         }, _error);
     }
     
     
     function _setUpMQTT() {
-        $ionicLoading.show();
+        $ionicLoading.show({ duration: 30000 });
         yvPush.connect_mqtt(function () {
-            var data = {
-                "device_android_gcmpush": false,
-            };
-            yvAPI.update_device_info(data, _success, _error, _error);
+            // Unregister push may fail because of nework, but
+            // set-up process shall continue. Once we set-up MQTT,
+            // the server will no longer send send message  via GCM.
+            yvPush.unregister_push(null, null, function () {
+                var data = {
+                    "device_android_gcmpush": false,
+                };
+                yvAPI.update_device_info(data, _success, _error, _error);
+            }, _error);
         }, _error);
     }
         
