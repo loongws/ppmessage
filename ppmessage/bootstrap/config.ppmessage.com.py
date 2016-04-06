@@ -66,13 +66,14 @@ BOOTSTRAP_CONFIG = {
 
     # apns push certificate, dev for developer, pro for production
     "apns": {
-        "name": "com.ppmessage.ppkefu",
-        "dev": "ppkefu-dev.p12",
-        "pro": "ppkefu-pro.p12",
+        "name": "com.ppmessage.ppkefu.team",
+        "dev": "team-dev.p12",
+        "pro": "team-pro.p12",
     },    
     
     # google cloud message
     "gcm": {
+        "sender_id": "468664932317",
         "api_key": "AIzaSyBzRHQH-u6-wcT6jUc8DgTITMUB4vdqYiU",
     },
 
