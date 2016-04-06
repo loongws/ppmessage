@@ -168,7 +168,7 @@ function ($rootScope, $timeout, yvAPI, yvSys, yvNav, yvUser, yvConstants) {
         var _sql = "CREATE TABLE IF NOT EXISTS yvdb_login_users (id integer primary key, server_id integer, " +
             " user_uuid text, device_uuid text, access_token text, app_uuid text, app_name text, app_key text, " +
             " app_secret text, show_badge integer, mute_notification integer, silence_notification integer, " +
-            " is_distributor_user integer, login_time integer, logout_time integer, is_online integer)";
+            " is_distributor_user integer, android_notification_type text, login_time integer, logout_time integer, is_online integer)";
         
         _exec(_yvdb, _sql, [], null, null);
     }
@@ -211,7 +211,7 @@ function ($rootScope, $timeout, yvAPI, yvSys, yvNav, yvUser, yvConstants) {
         var _sql0 = "SELECT id FROM yvdb_login_users WHERE server_id = ? AND user_uuid = ?";
         var _sql1 = "INSERT INTO yvdb_login_users (server_id, user_uuid, device_uuid, access_token, app_uuid, " +
             " app_name, app_key, app_secret, show_badge, mute_notification, silence_notification, is_distributor_user, " +
-            " login_time, is_online) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            " android_notification_type, login_time, is_online) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         var _sql2 = "UPDATE yvdb_login_users SET device_uuid = ?, access_token = ?, app_uuid = ?, app_name = ?, " +
             " app_key = ?, app_secret = ?, show_badge = ?, mute_notification = ?, silence_notification = ?, " +
             " is_distributor_user = ?, login_time = ?, is_online = ? WHERE id = ?";
@@ -221,10 +221,11 @@ function ($rootScope, $timeout, yvAPI, yvSys, yvNav, yvUser, yvConstants) {
         var _mute_notification = user.mute_notification ? 1 : 0;
         var _silence_notification = user.silence_notification ? 1 : 0;
         var _is_distributor_user = user.is_distributor_user ? 1 : 0;
+        var _android_notification_type = yvUser.get("android_notification_type");
         var _values0 = [_current_server.id, user.uuid];
         var _values1 = [_current_server.id, user.uuid, user.device_uuid, user.access_token, app.uuid, app.app_name,
                         app.app_key, app.app_secret, _show_badge, _mute_notification, _silence_notification,
-                        _is_distributor_user, _td, 1];
+                        _is_distributor_user, _android_notification_type, _td, 1];
         
         function __success(id) {
             yvUser.set("id", id);
@@ -263,6 +264,13 @@ function ($rootScope, $timeout, yvAPI, yvSys, yvNav, yvUser, yvConstants) {
     function _update_noti_settings(key, value) {
         var _sql = "update yvdb_login_users set " + key + " = ? where id = ?";
         var _values = [value ? 1 : 0, yvUser.get("id")];
+        
+        _exec(_yvdb, _sql, _values, null, null);
+    }
+
+    function _update_android_notification_type(value) {
+        var _sql = "update yvdb_login_users set android_notification_type = ? where id = ?";
+        var _values = [value, yvUser.get("id")];
         
         _exec(_yvdb, _sql, _values, null, null);
     }
@@ -781,6 +789,10 @@ function ($rootScope, $timeout, yvAPI, yvSys, yvNav, yvUser, yvConstants) {
 
         update_noti_settings: function (key, value) {
             return _update_noti_settings(key, value);
+        },
+
+        update_android_notification_type: function (key, value) {
+            return _update_android_notification_type(key, value);
         },
 
         unread_zero: function (_conv_uuid) {

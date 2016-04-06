@@ -387,6 +387,10 @@ ppmessageModule.config([
                 ERR_NO_PASSWORD_EMAIL: "No password and email",
                 ERR_NO_ENOUGH_INFO: "Miss parameter to action.",
 
+                NOTIFICATION_CHANGE_SUCCESS: "Notification changed successfully",
+                NOTIFICATION_CHANGE_FAIL: "Fail to change Notification",
+                NOTIFICATION_TYPE: "Notification Type",
+                
                 ONLINE: "OnLine",
                 OFFLINE: "Offline",
                 
@@ -891,6 +895,10 @@ ppmessageModule.config([
                 ERR_NO_PASSWORD_EMAIL: "没有填写邮箱或密码",
                 ERR_NO_ENOUGH_INFO: "提供的参数不够",
 
+                NOTIFICATION_CHANGE_SUCCESS: "成功变更推送方式",
+                NOTIFICATION_CHANGE_FAIL: "变更推送方式失败",
+                NOTIFICATION_TYPE: "推送方式",
+                
                 ONLINE: "在线",
                 OFFLINE: "离线",
 
