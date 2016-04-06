@@ -4,11 +4,12 @@ ppmessageModule.controller("PushNotificationCtrl", [
     "yvSys",
     "yvAPI",
     "yvUser",
+    "yvLog",
     "yvMain",
     "yvPush",
     "yvAlert",
     "yvConstants",
-function ($scope, $ionicLoading, yvSys, yvAPI, yvUser, yvMain, yvPush, yvAlert, yvConstants) {
+function ($scope, $ionicLoading, yvSys, yvAPI, yvUser, yvLog, yvMain, yvPush, yvAlert, yvConstants) {
     var user = yvUser.get();
     
     var item_badge = _item("show_badge");
@@ -137,7 +138,7 @@ function ($scope, $ionicLoading, yvSys, yvAPI, yvUser, yvMain, yvPush, yvAlert, 
         $ionicLoading.show();
         yvPush.connect_mqtt(function () {
             var data = {
-                "device_android_gcmpush": false,          
+                "device_android_gcmpush": false,
             };
             yvAPI.update_device_info(data, _success, _error, _error);
         }, _error);

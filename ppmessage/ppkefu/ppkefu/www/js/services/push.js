@@ -20,6 +20,7 @@ function (yvAPI, yvSys, yvLog, yvUser, yvConstants) {
             final_cb && final_cb();
             return;
         }
+
         push = PushNotification.init({
             "ios": {
                 "sound": true,
@@ -49,16 +50,21 @@ function (yvAPI, yvSys, yvLog, yvUser, yvConstants) {
     }
 
     function _unregister_push(success, error, final_cb) {
-        var push = PushNotification.init();
-        push.unregister(function () {
-            yvLog.green("unregister push success");
+        if (push && push.unregister) {
+            push.unregister(function () {
+                yvLog.green("unregister push success");
+                success && success();
+                final_cb && final_cb();
+            }, function (err) {
+                yvLog.red("unregister push error", error);
+                error && error();
+                final_cb && final_cb();
+            });
+        } else {
+            yvLog.yellow("unregister push: no push instance found");
             success && success();
             final_cb && final_cb();
-        }, function (err) {
-            yvLog.red("unregister push error", error);
-            error && error();
-            final_cb && final_cb();
-        });
+        }
     }
 
     function _connect_mqtt(success, error) {
