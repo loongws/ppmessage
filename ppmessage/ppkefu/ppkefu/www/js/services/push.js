@@ -107,7 +107,9 @@ function (yvAPI, yvSys, yvLog, yvUser, yvConstants) {
                 _connect_mqtt();
                 return;
             }
-            _register_push();
+            if (!push || !push_token) {
+                _register_push();
+            }
         }
     }
     
