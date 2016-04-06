@@ -347,6 +347,11 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
             _update_device(_token, _success, _error, _api_error);
         },
 
+        update_device_info: function (_data, _success, _error, _api_error) {
+            var _url = "/SET_DEVICE_INFO";
+            _api_post(_url, _data, null, _success, _error, _api_error);
+        },
+
         send_message: function (_m, _success, _error, _api_error) {
             var _url = "/PP_SEND_MESSAGE";
             _api_post(_url, _m, null, _success, _error, _api_error);

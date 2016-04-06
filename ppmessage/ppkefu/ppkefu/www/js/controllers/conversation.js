@@ -27,7 +27,7 @@ function ($scope, $timeout, $rootScope, $stateParams, $ionicLoading, yvAPI, yvSy
     
     $scope.$on("$ionicView.beforeEnter", function () {
         if (yvSys.in_mobile()) {
-            $ionicLoading.show();
+            $ionicLoading.show({duration: 5000});
         }
     });
     
@@ -51,7 +51,7 @@ function ($scope, $timeout, $rootScope, $stateParams, $ionicLoading, yvAPI, yvSy
             yvNoti.unwatch_typing($scope.conversation.uuid);
         }
         $scope.$broadcast("event:save-chat-text", $scope.conversation);
-        $ionicLoading.show();
+        $ionicLoading.show({duration: 5000});
         _init_core(params);
     });
 

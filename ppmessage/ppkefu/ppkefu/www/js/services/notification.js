@@ -16,7 +16,6 @@ ppmessageModule.factory("yvNoti", [
 function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvAlert, yvLocal, yvBase, yvPush, yvMessage, yvConstants) {
     
     var SOCKET_STATE = ["CONNECTING", "OPEN", "CLOSING", "CLOSED"];
-    var _ios_plugin = null;
     var _pc_socket = null;
     var _typing_promise = null;
     var _reconnect_interval = null;
@@ -24,7 +23,7 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
 
     function _on_resume() {
         $timeout(function () {
-            yvPush.register_push();
+            yvPush.retry();
             __open_socket();
             $rootScope.$broadcast("event:get_unack_all");
         });
@@ -106,33 +105,6 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
             _desktop_notification(obj);
             return;
         }
-    }
-
-    function __connect_mqtt() {
-        var url = "tcp://" + yvAPI.get_server().host + ":1883";
-        var options = {
-            timeout: 10, //optional
-            keepAliveInterval: 20 * 60, //optional
-            userName: yvUser.get("uuid"), //user_uuid
-            password: yvUser.get("access_token"), //session_uuid
-            notificationTitle: "ppmessage" //optional
-        };
-
-        //FIXME: mqttPlugin connect should check if connected then ignore
-        mqttPlugin.connect(url, yvUser.get("device_uuid"), options, function () {
-            console.log("%cmqtt connection is established.", "color: green");
-        }, function () {
-            console.log('---->connect failed:');
-        });
-        mqttPlugin.setOnMessageArrivedCallback(function (message) {
-            console.log("%creceive mqtt message. %s", "color: green", message);
-        });
-    }
-
-    function __disconnect_mqtt() {
-        mqttPlugin.disconnect(function () {
-            console.log('------->disconnect mqtt successful.');
-        });
     }
 
     function __open_socket() {
@@ -251,12 +223,13 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
 
     function _exit() {
         if (yvSys.in_mobile_app()) {
-            yvPush.unregister_push();
+            // As the app doesn't register push when login, it should not unregister push when logout
+            // yvPush.unregister_push();
             document.removeEventListener('resume', _on_resume, false);
             document.removeEventListener('pause', _on_pause, false);
         }
-        if (yvSys.in_android_app()) {
-            __disconnect_mqtt();
+        if (yvSys.in_android_app() && yvUser.get("android_notification_type") === yvConstants.NOTIFICATION_TYPE.MQTT) {
+            yvPush.disconnect_mqtt();
         }
         
         // for every platform
@@ -289,8 +262,8 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
                 document.addEventListener('resume', _on_resume, false);
                 document.addEventListener('pause', _on_pause, false);
             }
-            if (yvSys.in_android_app()) {
-                __connect_mqtt();
+            if (yvSys.in_android_app() && yvUser.get("android_notification_type") === yvConstants.NOTIFICATION_TYPE.MQTT) {
+                yvPush.connect_mqtt();
             }
             
             // every platform

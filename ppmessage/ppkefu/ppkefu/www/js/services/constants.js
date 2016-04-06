@@ -203,7 +203,12 @@ ppmessageModule.factory("yvConstants", [function () {
             MAC_BROWSER: "MAB", // MAC BROWSER
             LINUX_BROWSER: "LIB", // LINUX BROWSER
             WIN_BROWSER: "WIB", // WINDOWS BROWSER
-        }
+        },
+
+        NOTIFICATION_TYPE: {
+            GCM: "GCM",
+            MQTT: "MQTT"
+        },
         
     };
     

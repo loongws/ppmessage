@@ -72,6 +72,12 @@ class SetDeviceInfoHandler(BaseHandler):
             _values["device_ios_token"] = _request["iostoken"]
             self.application.redis.srem(INVALID_IOS_TOKEN, _request["iostoken"])
 
+        if "device_android_gcmtoken" in _request:
+            _values["device_android_gcmtoken"] = _request["device_android_gcmtoken"]
+
+        if "device_android_gcmpush" in _request:
+            _values["device_android_gcmpush"] = _request["device_android_gcmpush"]
+
         _row = DeviceInfo(**_values)
         _row.update_redis_keys(_redis)
         _row.async_update()        

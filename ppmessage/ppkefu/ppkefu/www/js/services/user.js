@@ -21,12 +21,14 @@ function (yvSys, yvConstants) {
             app_name: "",
             app_secret: ""
         },
-        
+
         show_badge: null,
         mute_notification: null,
         is_distributor_user: null,
         silence_notification: null,
-        mute_other_mobile_device: null
+        mute_other_mobile_device: null,
+
+        android_notification_type: yvConstants.NOTIFICATION_TYPE.GCM        
     };
 
     // update user from API return
@@ -46,7 +48,7 @@ function (yvSys, yvConstants) {
         } else {
             user.device_uuid = data.browser_device_uuid;
         }
-
+        
         user.show_badge = !!data.user_show_badge;
         user.is_distributor_user = !!data.is_distributor_user;
         user.mute_notification = !!data.user_mute_notification;
@@ -75,6 +77,7 @@ function (yvSys, yvConstants) {
         user.mute_notification = !!item.mute_notification;
         user.silence_notification = !!item.silence_notification;
 
+        user.android_notification_type = item.android_notification_type || yvConstants.NOTIFICATION_TYPE.GCM;
         return user;
     }
     
