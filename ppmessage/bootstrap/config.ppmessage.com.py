@@ -75,6 +75,7 @@ BOOTSTRAP_CONFIG = {
     "gcm": {
         "sender_id": "468664932317",
         "api_key": "AIzaSyBzRHQH-u6-wcT6jUc8DgTITMUB4vdqYiU",
+        "sender_id": "468664932317",        
     },
 
     # email service config

@@ -124,7 +124,7 @@ function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvLocal, yvMonito
 
 }]).constant("$ionicLoadingConfig", {
     // delay: 100,
-    duration: 5000,
+    // duration: 5000,
     noBackdrop: true,
     hideOnStateChange: true,
     template: "<ion-spinner></ion-spinner>"

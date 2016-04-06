@@ -12,7 +12,8 @@ ppmessageModule.factory("yvLogin", [
     "yvPush",
     "yvAlert",
     "yvLogout",
-function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, yvMain, yvLink, yvPush, yvAlert, yvLogout) {
+    "yvConstants",
+    function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, yvMain, yvLink, yvPush, yvAlert, yvLogout, yvConstants) {
 
     var session = null;
     
@@ -146,7 +147,9 @@ function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, 
             if (yvSys.in_ios_app()) {
                 session.ios_app_development = !!ppmessage.developerMode;
             }
-            
+            if (yvSys.in_android_app() && yvUser.get("android_notification_type") === yvConstants.NOTIFICATION_TYPE.MQTT) {
+                session.device_token = null;
+            }
             session.login();
             return;
         }

@@ -20,7 +20,7 @@ function ($scope, $timeout, $rootScope, $stateParams, yvLog, yvSys, yvAPI, yvBas
     $scope.showP2S = true;
     $scope.showOnline = true;
     $scope.showOffline = true;
-    $scope.showFilterBar = true;
+    $scope.showFilterBar = false;
     $scope.eableInfiniteScroll = true;
     $scope.canShowNoConversation = true;
 

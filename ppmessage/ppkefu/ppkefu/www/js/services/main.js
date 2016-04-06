@@ -215,6 +215,21 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
             yvDB.update_noti_settings(key, value);
         } 
     }
+
+    function _update_android_notification_type(value) {
+        if (!yvSys.in_android_app()) {
+            return;
+        }
+        if ([yvConstants.NOTIFICATION_TYPE.GCM, yvConstants.NOTIFICATION_TYPE.MQTT].indexOf(value) === -1) {
+            return;
+        }
+
+        yvUser.set("android_notification_type", value);
+        
+        if (yvSys.has_db()) {
+            yvDB.update_android_notification_type(value);
+        } 
+    }
     
     function _add_object(object, callback) {
         if (!object) {
@@ -310,10 +325,14 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
         if (!active || (active.uuid != conversation.uuid && message.direction === yvConstants.MESSAGE_DIR.DIR_IN)) {
             conversation.unread += 1;
         }
+        if (!message.from_unack && conversation.latest_message && conversation.latest_message.timestamp > message.timestamp) {
+            message.timestamp = conversation.latest_message.timestamp + 1;
+        }
         conversation.add_message(message);
         callback && callback();
 
         if (yvSys.has_db()) {
+            yvDB.insert_message(message);
             yvDB.update_conversation_unread(conversation);
         }
     }
@@ -476,10 +495,6 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
     function _handle_message(message) {
         _download_message_file(message, function (msg) {
             _update_conversation(msg);
-
-            if (yvSys.has_db()) {
-                yvDB.insert_message(msg);
-            }
         });
     }
 
@@ -515,6 +530,7 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
                 message = angular.fromJson(message);
                 if (!message) { return; }
                 message.pid = push_uuid;
+                message.from_unack = true;
                 _add_message(message, false);
             });
             _ack_message_list(data.list);
@@ -913,6 +929,10 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
 
         update_noti_settings: function (key, value) {
             _update_noti_settings(key, value);
+        },
+
+        update_android_notification_type: function (value) {
+            _update_android_notification_type(value);
         },
     };
 
