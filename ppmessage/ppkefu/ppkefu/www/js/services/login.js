@@ -5,6 +5,7 @@ ppmessageModule.factory("yvLogin", [
     "yvSys",
     "yvAPI",
     "yvNav",
+    "yvLog",
     "yvNoti",
     "yvUser",
     "yvMain",
@@ -13,7 +14,7 @@ ppmessageModule.factory("yvLogin", [
     "yvAlert",
     "yvLogout",
     "yvConstants",
-    function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvNoti, yvUser, yvMain, yvLink, yvPush, yvAlert, yvLogout, yvConstants) {
+function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvLog, yvNoti, yvUser, yvMain, yvLink, yvPush, yvAlert, yvLogout, yvConstants) {
 
     var session = null;
     
@@ -104,13 +105,20 @@ ppmessageModule.factory("yvLogin", [
         session.access_token = user.access_token;
         session.device_uuid = user.device_uuid;
 
+        // test api is actuall get_user_info with max timeout 10s.
         // if api failed because of token, then login with user.
         // if api failed because of network, enter app without network.
         // if api success, enter app with network.
-        yvAPI.test_api(function () {
-            _enter_app();
+        yvAPI.test_api(function (data) {
+            if (data.mobile_device_uuid !== yvUser.get("device_uuid")) {
+                // The user has logined in another device, we shall log lout now.
+                yvLogout.local_logout();
+            } else {
+                yvUser.update_user_from_api(data);
+                _enter_app();
+            }
         }, function () {
-            _enter_app(true);       
+            _enter_app(true);
         }, function () {
             yvNav.login_with_user();
         });
