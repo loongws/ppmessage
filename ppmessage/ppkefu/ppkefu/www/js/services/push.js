@@ -39,7 +39,7 @@ function (yvAPI, yvSys, yvLog, yvUser, yvConstants) {
         });
         
         push.on("notification", function (data) {
-            yvLog.log("notification arrive", data);
+            yvLog.green("notification arrive", data);
         });
         
         push.on("error", function (err) {
@@ -49,19 +49,16 @@ function (yvAPI, yvSys, yvLog, yvUser, yvConstants) {
     }
 
     function _unregister_push(success, error, final_cb) {
-        if (push && push.unregister) {
-            push.unregister(function () {
-                success && success();
-                final_cb && final_cb();
-            }, function (err) {
-                yvLog.error("unregister push error", error);
-                error && error();
-                final_cb && final_cb();
-            });
-        } else {
+        var push = PushNotification.init();
+        push.unregister(function () {
+            yvLog.green("unregister push success");
             success && success();
             final_cb && final_cb();
-        }
+        }, function (err) {
+            yvLog.red("unregister push error", error);
+            error && error();
+            final_cb && final_cb();
+        });
     }
 
     function _connect_mqtt(success, error) {
@@ -75,27 +72,26 @@ function (yvAPI, yvSys, yvLog, yvUser, yvConstants) {
         };
 
         mqttPlugin.connect(url, yvUser.get("device_uuid"), options, function () {
-            yvLog.log("%cmqtt connection is established.", "color: green");
+            yvLog.green("mqtt connection is established.");
             success && success();
         }, function (err) {
-            yvLog.error('---->connect mqtt failed:', err);
+            yvLog.red("---->connect mqtt failed:", err);
             error && error();
         });
 
         mqttPlugin.setOnMessageArrivedCallback(function (message) {
-            yvLog.log("%creceive mqtt message. %s", "color: green", message);
+            yvLog.green("receive mqtt message: ", message);
         });
     }
 
     function _disconnect_mqtt(success) {
         mqttPlugin.disconnect(function () {
-            yvLog.log('------->disconnect mqtt successful.');
+            yvLog.green("disconnect mqtt successful.");
             success && success();
         });
     }
 
     function _retry() {
-        console.log("----------retry");
         if (yvSys.in_ios_app()) {
             _register_push();
             return;

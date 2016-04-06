@@ -108,15 +108,17 @@ function ($scope, $ionicLoading, yvSys, yvAPI, yvUser, yvMain, yvPush, yvAlert, 
     }
     
     function _success() {
-        $ionicLoading.hide();        
+        $ionicLoading.hide();
         yvAlert.tip('app.GLOBAL.NOTIFICATION_CHANGE_SUCCESS');
-        $scope.notification.type = $scope.notification.new_type;
-        yvMain.update_android_notification_type($scope.notification.type);
+        yvLog.log("%c set up %s successfully", "color: green", $scope.notification.new_type);
+        
         if ($scope.notification.type === yvConstants.NOTIFICATION_TYPE.GCM) {
             yvPush.unregister_push();
         } else {
             yvPush.disconnect_mqtt();
         }
+        $scope.notification.type = $scope.notification.new_type;
+        yvMain.update_android_notification_type($scope.notification.type);
     }
     
     function _setUpGCM() {
