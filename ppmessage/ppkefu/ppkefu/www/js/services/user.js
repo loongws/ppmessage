@@ -31,6 +31,26 @@ function (yvSys, yvConstants) {
         android_notification_type: yvConstants.NOTIFICATION_TYPE.GCM        
     };
 
+    // update user from API/PP_GET_USER_INFO
+    function _update_user_from_api(data) {
+        user.uuid = data.uuid;
+        user.icon = data.user_icon;
+        user.name = data.user_name;
+        user.email = data.user_email;
+        user.fullname = data.user_fullname;
+        user.signature = data.user_signature;
+        user.updatetime = data.updatetime;
+        user.is_online = true;
+        
+        if (yvSys.in_mobile_app()) {
+            user.device_uuid = data.mobile_device_uuid;
+        } else {
+            user.device_uuid = data.browser_device_uuid;
+        }
+                
+        return user;
+    }
+
     // update user from API return
     function _update_user_from_login(data) {
         user.app = data.app;
@@ -84,6 +104,10 @@ function (yvSys, yvConstants) {
     return {
         update_user_from_login: function (_user) {
             return _update_user_from_login(_user);
+        },
+
+        update_user_from_api: function (_data) {
+            return _update_user_from_api(_data);
         },
 
         update_user_from_db: function (item) {

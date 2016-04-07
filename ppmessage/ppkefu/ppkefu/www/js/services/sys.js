@@ -105,6 +105,19 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
         link.href = href;
         link.dispatchEvent(event);
     }
+
+    function _read_image_file(file, success, error) {
+        reader = new FileReader();
+        reader.onload = function(event) {
+            $timeout(function () {
+                success && success(event.target.result);
+            });
+        };
+        reader.onerror = function (err) {
+            error && error(err);
+        }
+        reader.readAsDataURL(file);
+    }
     
     return {
         // running in a mobile device, iphone, ipad, android, windows phone .etc
@@ -436,6 +449,22 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
                 });
             }
         },
+
+        read_image_file: function (file, success, error) {
+            _read_image_file(file, success, error);
+        },
+
+        is_file: function(item) {
+            return angular.isObject(item) && item instanceof $window.File;
+        },
+
+        is_image_file: function(file) {
+            if (!this.is_file(file)) {
+                return false;
+            }
+            var type =  '|' + file.type.slice(file.type.lastIndexOf('/') + 1) + '|';
+            return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+        }
         
     };
 }]);

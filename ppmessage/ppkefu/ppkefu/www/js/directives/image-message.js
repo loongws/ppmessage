@@ -36,11 +36,13 @@ function($window, yvLink, yvSys, yvFile, yvMime, yvAPI) {
                 };
             }
             
+            // show image message we receive
             if (!helper.isFile(file)) {
                 img.src = yvLink.get_message_image($scope.message);
                 return;
             }
 
+            // show image message we sent
             if (helper.isImage(file)) {
                 if (!helper.support) {
                     img.src = DEFAULT_IMAGE;
