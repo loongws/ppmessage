@@ -88,7 +88,13 @@ function ($timeout, $ionicModal, $ionicActionSheet, $ionicScrollDelegate, yvAler
         };
 
         $scope.$on("event:show-image-modal", function (event, image) {
-            $scope.imgSrc = image;
+            if ((yvSys.in_browser() || yvSys.in_electron()) && yvSys.is_image_file(image)) {
+                yvSys.read_image_file(image, function (dataUrl) {
+                    $scope.imgSrc = dataUrl;
+                });
+            } else {
+                $scope.imgSrc = image;
+            }
             $scope.showModal();
         });
         
