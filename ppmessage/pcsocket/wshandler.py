@@ -82,8 +82,6 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         if _ws.is_service_user == False:
             self.application.device_online(_ws.device_uuid, _is_online=False)
 
-        self.application.device_online(_ws.device_uuid, _is_online=False)
-
         # let wshandler on_close handle the normal
         # but the force logout should not
         # the close function has been done here
