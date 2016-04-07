@@ -32,7 +32,7 @@ function (yvSys, yvConstants) {
     };
 
     // update user from API/PP_GET_USER_INFO
-    function _update_user_from_login(data) {
+    function _update_user_from_api(data) {
         user.uuid = data.uuid;
         user.icon = data.user_icon;
         user.name = data.user_name;
@@ -104,6 +104,10 @@ function (yvSys, yvConstants) {
     return {
         update_user_from_login: function (_user) {
             return _update_user_from_login(_user);
+        },
+
+        update_user_from_api: function (_data) {
+            return _update_user_from_api(_data);
         },
 
         update_user_from_db: function (item) {
