@@ -97,6 +97,7 @@ from .ppconsolegetmessagenumberbyrange import PPConsoleGetMessageNumberByRange
 from .ppgetapiinfohandler import PPGetApiInfoHandler
 
 from .ppgetallapplisthandler import PPGetAllAppListHandler
+from .ppvalidateonlinedevicehandler import PPValidateOnlineDeviceHandler
 
 def getWebServiceHandlers():
     handler_list = []
@@ -210,6 +211,7 @@ def getWebServiceHandlers():
     handler_list.append((r"/PP_GET_API_INFO", PPGetApiInfoHandler))
 
     handler_list.append((r"/PP_GET_ALL_APP_LIST", PPGetAllAppListHandler))
+    handler_list.append((r"/PP_VALIDATE_ONLINE_DEVICE", PPValidateOnlineDeviceHandler))
     
     return handler_list
 
