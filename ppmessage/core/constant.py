@@ -367,8 +367,6 @@ STA_PORT = 8935
 PPAUTOINSTALL_PORT = 8936
 PPAUTOINSTALL_HOST = "127.0.0.1"
 
-MONITOR_PORT = 8937
-
 SEND_HOST = "127.0.0.1"
 SEND_PORT = 8938
 
@@ -461,7 +459,6 @@ REDIS_IOSPUSH_KEY = "redis_iospush_key"
 REDIS_GCMPUSH_KEY = "redis_gcmpush_key"
 REDIS_MQTTPUSH_KEY = "redis_mqttpush_key"
 
-REDIS_MONITOR_KEY = "redis_monitor_key"
 REDIS_TYPING_KEY = "redis_typing_key"
 REDIS_ONLINE_KEY = "redis_online_key"
 

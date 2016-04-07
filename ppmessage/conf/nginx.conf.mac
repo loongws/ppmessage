@@ -68,10 +68,6 @@ http {
         server 127.0.0.1:21100;
     }
 
-    upstream monitor_backends {
-       server 127.0.0.1:21200;
-    }
-
     upstream pphome_backends {
        server 127.0.0.1:21300;
     }
@@ -148,10 +144,6 @@ http {
 
         location /api/ {
             proxy_pass http://api_backends/;
-        }
-
-        location /monitor/ {
-            proxy_pass http://monitor_backends/;
         }
 
         location /pcsocket/WS {
