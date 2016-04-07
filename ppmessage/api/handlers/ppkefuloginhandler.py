@@ -325,15 +325,19 @@ class PPKefuLoginHandler(BaseHandler):
         return
 
     def _send_online(self):
-        if self.device_is_browser == True:
-            return
-
         _body = {
             "extra_data": None,
             "user_uuid": self.user.get("uuid"),
-            "browser": ONLINE_STATUS.UNCHANGED,
-            "mobile": ONLINE_STATUS.ONLINE,
-        }
+            "browser": ONLINE_STATUS.ONLINE,
+            "mobile": ONLINE_STATUS.UNCHAGED,
+        }        
+        if self.device_is_browser == False:
+            _body = {
+                "extra_data": None,
+                "user_uuid": self.user.get("uuid")
+                "browser": ONLINE_STATUS.UNCHAGED,
+                "mobile": ONLINE_STATUS.ONLINE,
+            }
         pcsocket_user_online(self.application.redis, self.user.get("uuid"), _body)
         return
 
