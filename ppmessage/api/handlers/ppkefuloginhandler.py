@@ -334,7 +334,7 @@ class PPKefuLoginHandler(BaseHandler):
         if self.device_is_browser == False:
             _body = {
                 "extra_data": None,
-                "user_uuid": self.user.get("uuid")
+                "user_uuid": self.user.get("uuid"),
                 "browser": ONLINE_STATUS.UNCHAGED,
                 "mobile": ONLINE_STATUS.ONLINE,
             }
