@@ -37,13 +37,22 @@ function ($timeout, FileUploader, yvLog, yvAPI, yvSys, yvUser, yvMain, yvBase, y
     function _upload_file_in_android(message, file_item, success, error) {
         var file_path = file_item.localURL;
         var options = new FileUploadOptions();
-        var uri = encodeURI(yvAPI.get_server().upload_url);
+        var server = yvAPI.get_server();
+        var uri = encodeURI(server.upload_url);
 
         options.fileKey = "file";
         options.mimeType = message.mime;
         options.fileName = message.name;
         options.params = { "user_uuid": yvUser.get("uuid") };
-        
+
+        // If we don't set chunkedMode to false, in android app, upload file to 'https://ppmessage.cn/upload' will fail,
+        // but upload file to 'http://localhost:8080/upload' still works. It must have something to do with https/http protocol
+        // and nginx.conf. iOS app has not such problem though.
+        // To fix this problem, we have to set chunkedMode to false.
+        if (server.protocol == "https://") {
+            options.chunkedMode = false;
+        }
+
         // we can controll this fileTransfer instance anywhere
         message.ft = new FileTransfer();
         message.ft.onprogress = function (event) {
@@ -63,8 +72,8 @@ function ($timeout, FileUploader, yvLog, yvAPI, yvSys, yvUser, yvMain, yvBase, y
                 error && error();
             }
         }, function (err) {
-            if (data.code == 4) {
-                yvLog.log("File Transfer canceled", data);
+            if (err.code == 4) {
+                yvLog.log("File Transfer canceled", err);
                 return;
             }
             yvLog.error("FileTransfer _err: %o.", err);
