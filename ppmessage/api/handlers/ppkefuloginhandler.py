@@ -329,13 +329,13 @@ class PPKefuLoginHandler(BaseHandler):
             "extra_data": None,
             "user_uuid": self.user.get("uuid"),
             "browser": ONLINE_STATUS.ONLINE,
-            "mobile": ONLINE_STATUS.UNCHAGED,
+            "mobile": ONLINE_STATUS.UNCHANGED,
         }        
         if self.device_is_browser == False:
             _body = {
                 "extra_data": None,
                 "user_uuid": self.user.get("uuid"),
-                "browser": ONLINE_STATUS.UNCHAGED,
+                "browser": ONLINE_STATUS.UNCHANGED,
                 "mobile": ONLINE_STATUS.ONLINE,
             }
         pcsocket_user_online(self.application.redis, self.user.get("uuid"), _body)

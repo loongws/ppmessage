@@ -64,7 +64,7 @@ class PPKefuLogoutHandler(BaseHandler):
             "extra_data": None,
             "user_uuid": self.user_uuid,
             "browser": ONLINE_STATUS.OFFLINE,
-            "mobile": ONLINE_STATUS.UNCHAGED,
+            "mobile": ONLINE_STATUS.UNCHANGED,
         }
         
         _key = DeviceInfo.__tablename__ + ".uuid." + self.device_uuid
@@ -76,7 +76,7 @@ class PPKefuLogoutHandler(BaseHandler):
             _body = {
                 "extra_data": None,
                 "user_uuid": self.user_uuid,
-                "browser": ONLINE_STATUS.UNCHAGED,
+                "browser": ONLINE_STATUS.UNCHANGED,
                 "mobile": ONLINE_STATUS.OFFLINE,
             }
         pcsocket_user_online(self.application.redis, self.user_uuid, _body)
