@@ -222,7 +222,7 @@ class AbstractPolicy(Policy):
         _is_service_user = self._is_service_user.get(_user_uuid)
         
         if _user == None or _is_service_user == None:
-            logging.error("no user in hash: %s" % _user_uuid)
+            logging.error("no user or is_service_user in hash: %s" % _user_uuid)
             return
         
         _user["_online_devices"] = {}
@@ -230,7 +230,6 @@ class AbstractPolicy(Policy):
         if _is_service_user == False:
             _device_name = ["ppcom_mobile_device_uuid", "ppcom_browser_device_uuid"]
 
-        _is_user_online = False
         for _i in _device_name:
             _device_uuid = self._users_hash[_user_uuid][_i]
             if _device_uuid == None or len(_device_uuid) == 0:
@@ -244,14 +243,11 @@ class AbstractPolicy(Policy):
             
             if _device.get("device_is_online") == True:
                 _user["_online_devices"][_device_uuid] = _device
-                _is_user_online = True
 
-        # should check all devices
-        if _is_user_online == True:
+        if len(_user["_online_devices"]) > 0:
             self._online_users.add(_user_uuid)
         else:
             self._offline_users.add(_user_uuid)
-
         return
 
     def _users_devices(self):
@@ -303,31 +299,33 @@ class AbstractPolicy(Policy):
         _apns_dev = _apns_config.get("dev")
         _apns_pro = _apns_config.get("pro")
 
-        if _apns_name == None or len(_apns_name) == 0 or _apns_dev == None or len(_apns_dev) == 0 or _apns_pro == None or len(_apns_pro) == 0:
+        if _apns_name == None or len(_apns_name) == 0 or \
+           _apns_dev == None or len(_apns_dev) == 0 or \
+           _apns_pro == None or len(_apns_pro) == 0:
             logging.info("iospush not start for no apns config")
             return
-        
-        _device = self._devices_hash.get(_device_uuid)
-        _user = self._users_hash.get(_user_uuid)
+
         _app_uuid = self._task["app_uuid"]
+        _user = self._users_hash.get(_user_uuid)
+        _device = self._devices_hash.get(_device_uuid)
         _conversation_data = self._conversation_user_datas_hash.get(_user_uuid)
         
         if _user == None:
-            logging.error("push ios failed for 0001")
+            logging.error("push ios failed for no user")
             return
         if _device == None:
-            logging.error("push ios failed for 0002")
+            logging.error("push ios failed for no device")
             return
         _token = _device.get("device_ios_token")
         if _token == None or len(_token) == 0:
-            logging.error("push ios failed for 2")
+            logging.error("push ios failed for no ios token")
             return
         if _device["device_ios_token"] == IOS_FAKE_TOKEN:
-            logging.error("push ios failed for 3")
+            logging.error("push ios failed for fake token")
             return
         if _conversation_data != None and _conversation_data["user_mute_notification"] == True:
             # user only do not want recv push for this conversation
-            logging.error("push ios failed for 4")
+            logging.error("push ios failed for silence required")
             return
 
         _count = 0
@@ -445,7 +443,7 @@ class AbstractPolicy(Policy):
         if self._task["from_type"] == YVOBJECT.DU:
             _is_service_user = self._is_service_user.get(self._task["from_uuid"])
             if _is_service_user != False:
-                logging.info("not from portal user, no push")
+                logging.info("not from customer, not push")
                 return
 
         _is_service_user = self._is_service_user.get(_user_uuid)
@@ -463,10 +461,6 @@ class AbstractPolicy(Policy):
             return
         
         return
-
-    def _push_to_offline(self, _user_uuid):
-        #self._push_to_db(_user_uuid, None, MESSAGE_STATUS.NODEVICE) 
-        return
     
     def _push(self):
         if len(self._online_users) == 0:
@@ -482,9 +476,6 @@ class AbstractPolicy(Policy):
                 self._push_to_pc(_j, _j)
                 if _real_push == True:
                     self._push_to_mobile(_i, _j)
-
-        ### for _i in self._offline_users:
-        ###     self._push_to_offline(_i)
         return
 
     def _other_device(self):
