@@ -73,7 +73,7 @@ BOOTSTRAP_CONFIG = {
     
     # google cloud message
     "gcm": {
-        "api_key": "AIzaSyBzRHQH-u6-wcT6jUc8DgTITMUB4vdqYiU",
+        "api_key": "AIzaSyArXf60KTz2KwROtzAlQDJozAskFAdvzBE",
         "sender_id": "878558045932",
     },
 
