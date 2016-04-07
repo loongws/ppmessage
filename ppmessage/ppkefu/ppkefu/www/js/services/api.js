@@ -261,7 +261,10 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
             
             ft.download(source, target, function (file) {
                 yvLog.log("download file successfully", file.name);
-                success && success(file);
+                // Wrap callback within $timeout to tell angular to update element.
+                $timeout(function () {
+                    success && success(file);
+                });
             }, function (err) {
                 error && error(err);
             }, true, null);
