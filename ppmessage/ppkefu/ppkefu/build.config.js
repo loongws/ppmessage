@@ -46,7 +46,7 @@ module.exports = {
         "www/js/services/conversation.js",
         "www/js/services/base.js",
         "www/js/services/main.js",
-
+        "www/js/services/test.js",
         "www/js/services/monitor.js",
         
         // DIRECTIVE: CHAT-MESSAGE
