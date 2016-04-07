@@ -1,9 +1,9 @@
 {
     "developer_mode": false,
     "api_key": "MWJkZWI3NDZhZmRiN2NjNDYzZDVmZGI3YTk2YjI5NzhhOWJhNzIyZA==",
-    "sender_id": "468664932317",
+    "sender_id": "878558045932",
     "server": {
-        "port": "",
+        "port": "443",
         "protocol": "https://",
         "name": "ppmessage.com",
         "host": "ppmessage.com"
