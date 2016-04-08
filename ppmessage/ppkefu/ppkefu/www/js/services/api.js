@@ -576,6 +576,12 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
             var _data = {user_uuid: yvUser.get("uuid")};
             var _config = {"timeout": 10000};
             _api_post(_url, _data, _config, _success, _error, _api_error);            
+        },
+
+        validate_online_device: function (_success, _error, _api_error) {
+            var _url = "/PP_VALIDATE_ONLINE_DEVICE";
+            var _data = {};
+            _api_post(_url, _data, null, _success, _error, _api_error);
         }
     };
 }]);
