@@ -48,7 +48,7 @@ class PPKefuLogoutHandler(BaseHandler):
         _redis.sunionstore(_key2, _key0, _key0)        
         return
     
-    def _update_device(self):
+    def _update_device(self):        
         _values = {
             "uuid": self.device_uuid,
             "device_is_online": False
@@ -59,14 +59,26 @@ class PPKefuLogoutHandler(BaseHandler):
         return
 
     def _send_online(self):
-        if self.device_is_browser == True:
-            return
+        _is_browser = True
         _body = {
             "extra_data": None,
             "user_uuid": self.user_uuid,
-            "browser": ONLINE_STATUS.UNCHANGED,
-            "mobile": ONLINE_STATUS.OFFLINE,
+            "browser": ONLINE_STATUS.OFFLINE,
+            "mobile": ONLINE_STATUS.UNCHANGED,
         }
+        
+        _key = DeviceInfo.__tablename__ + ".uuid." + self.device_uuid
+        _ostype = self.application.redis.hget(_key, "device_ostype")
+        if _ostype == OS.AND or _ostype == OS.IOS:
+            _is_browser = False
+
+        if _is_browser == False:
+            _body = {
+                "extra_data": None,
+                "user_uuid": self.user_uuid,
+                "browser": ONLINE_STATUS.UNCHANGED,
+                "mobile": ONLINE_STATUS.OFFLINE,
+            }
         pcsocket_user_online(self.application.redis, self.user_uuid, _body)
         return
 
@@ -85,14 +97,8 @@ class PPKefuLogoutHandler(BaseHandler):
         self.user_uuid = _user_uuid
         self.device_uuid = _device_uuid
         self.app_uuid = _app_uuid
-
-        _key = DeviceInfo.__tablename__ + ".uuid." + _device_uuid
-        _ostype = self.application.redis.hget(_key, "device_ostype")
-        self.device_is_browser = True
-        if _ostype == OS.AND or _ostype == OS.IOS:
-            self.device_is_browser = False
         
-        #logging.info("DEVICEUSERLOGOUT with user_uuid:%s, device_uuid:%s." % (_user_uuid, _device_uuid))        
+        logging.info("DEVICEUSERLOGOUT with: %s." % str(self.request_body))
         self._update_device()
         self._user_online_status()
         self._send_online()
