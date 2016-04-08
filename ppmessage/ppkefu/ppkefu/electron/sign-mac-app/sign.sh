@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Name of your app.
-APP="ppmessage"
+APP="PPMessage"
 # The path of you app to sign.
-APP_PATH="../dist/osx/ppmessage-darwin-x64/ppmessage.app"
+APP_PATH="../dist/mas/PPMessage-mas-x64/PPMessage.app"
 # The path to the location you want to put the signed package.
-RESULT_PATH="../dist/osx/$APP.pkg"
+RESULT_PATH="../dist/mas/$APP.pkg"
 # The name of certificates you requested.
 
 # APP_KEY and INSTALLER_KEY should be in the keychain
-APP_KEY="Developer ID Application: Beijing Yourui Technology Co., Ltd. (2ADRW6ALVC)"
-INSTALLER_KEY="Developer ID Installer: Beijing Yourui Technology Co., Ltd. (2ADRW6ALVC)"
+APP_KEY="3rd Party Mac Developer Application: Beijing Yourui Technology Co., Ltd. (2WSQ489AT3)"
+INSTALLER_KEY="3rd Party Mac Developer Installer: Beijing Yourui Technology Co., Ltd. (2WSQ489AT3)"
 FRAMEWORKS_PATH="$APP_PATH/Contents/Frameworks"
 
 codesign --deep -fs "$APP_KEY" --entitlements child.plist "$FRAMEWORKS_PATH/Electron Framework.framework/Versions/A"
