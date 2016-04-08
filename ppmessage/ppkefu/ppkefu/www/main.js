@@ -12,7 +12,7 @@ var mainWindow = null;
 
 function init() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 1068, height: 1096, resizable: true, center: true, title: "ppmessage"});
+    mainWindow = new BrowserWindow({width: 1068, height: 1096, resizable: true, center: true, title: "PPMessage"});
     
     // and load the index.html of the app.
     mainWindow.loadURL("file://" + __dirname + '/index.html');

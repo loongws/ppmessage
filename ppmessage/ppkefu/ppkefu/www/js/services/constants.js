@@ -175,7 +175,7 @@ ppmessageModule.factory("yvConstants", [function () {
             P2S: "P2S"
         },
 
-        DEFAULT_BUNDLE_NAME: "ppmessage",
+        DEFAULT_BUNDLE_NAME: "PPMessage",
 
         OS: {
             MAC: "MAC",

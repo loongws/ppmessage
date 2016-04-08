@@ -1,6 +1,6 @@
 {
     "osx" : {
-        "title": "ppmessage",
+        "title": "PPMessage",
         "background": "assets/osx/background.png",
         "icon": "assets/osx/ppmessage.icns",
         "icon-size": 80,

@@ -1,5 +1,5 @@
 {
-  "name": "ppmessage",
+  "name": "PPMessage",
   "app_id": "",
   "gulpStartupTasks": [
     "watch",

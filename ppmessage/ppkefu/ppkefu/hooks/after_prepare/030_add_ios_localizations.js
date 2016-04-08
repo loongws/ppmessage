@@ -4,7 +4,7 @@ var fs = require('fs');
 var path = require('path');
 
 var root_dir = process.argv[2];
-var plist_path = path.join(root_dir, "platforms/ios/ppmessage/ppmessage-Info.plist");
+var plist_path = path.join(root_dir, "platforms/ios/PPMessage/PPMessage-Info.plist");
     
 var localization_key = "<key>CFBundleLocalizations</key>";
 var origin = "<key>CFBundleExecutable</key>";
