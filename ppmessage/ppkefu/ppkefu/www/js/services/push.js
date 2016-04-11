@@ -74,7 +74,7 @@ function (yvAPI, yvSys, yvLog, yvUser, yvConstants) {
             keepAliveInterval: 20 * 60, //optional
             userName: yvUser.get("uuid"), //user_uuid
             password: yvUser.get("access_token"), //session_uuid
-            notificationTitle: "ppmessage" //optional
+            notificationTitle: "PPMessage" //optional
         };
 
         mqttPlugin.connect(url, yvUser.get("device_uuid"), options, function () {

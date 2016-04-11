@@ -18,7 +18,7 @@
                 user_name: null,
                 user_icon: null,
 
-                language: 'zh-CN',
+                language: window.navigator.userLanguage || window.navigator.language,
 
                 view: {
                     launcher_bottom_margin: '20px',
