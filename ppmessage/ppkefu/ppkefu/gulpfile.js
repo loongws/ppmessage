@@ -8,7 +8,6 @@ var minifyCss = require("gulp-minify-css");
 var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
 var replace = require("gulp-replace");
-var templateCache = require("gulp-angular-templatecache");
 var sh = require("shelljs");
 var buildConfig = require("./build.config.js");
 var jslint = require("gulp-jslint");
@@ -82,7 +81,6 @@ var paths = {
         "./www/js/*.js",
         "./www/js/**/*.js"
     ],
-    templates: ["./www/templates/*/*.html"],
     config: ["./build.config.js"],
 };
 
@@ -104,8 +102,6 @@ gulp.task("sass", generate_sass);
 gulp.task("lib-css", generate_lib_css);
 gulp.task("scripts", generate_scripts);
 gulp.task("lib-scripts", generate_lib_scripts);
-gulp.task("templatecache", generate_template_cache);
-gulp.task("scripts-with-templatecache", ["templatecache"], generate_scripts);
 gulp.task("refresh-config", refresh_config);
 gulp.task("copy-jcrop-gif", copy_jcrop_gif);
 gulp.task("copy-ionic-fonts", copy_ionic_fonts);
@@ -116,14 +112,13 @@ gulp.task("default", [
     "lib-scripts",
     "copy-jcrop-gif",
     "copy-ionic-fonts",
-    "scripts-with-templatecache"
+    "scripts"
 ]);
 
-gulp.task("watch", ["lib-css", "sass", "scripts-with-templatecache"], function() {
+gulp.task("watch", ["lib-css", "sass", "scripts"], function() {
     gulp.watch(paths.sass, ["sass"]);
     gulp.watch(paths.css, ["lib-css"]);
     gulp.watch(paths.scripts, ["scripts"]);
-    gulp.watch(paths.templates, ["scripts-with-templatecache"]);
     gulp.watch(paths.config, ["refresh-config", "scripts"]);
 });
 
@@ -148,16 +143,6 @@ function generate_scripts (done) {
             done();
         })
         .pipe(rename({ extname: ".min.js" }))
-        .pipe(gulp.dest(dest))
-        .on("end", done);
-}
-
-function generate_template_cache (done) {
-    var src = buildConfig.ppmessageTemplates;
-    var dest = buildConfig.buildScriptPath;
-
-    gulp.src(src)
-        .pipe(templateCache({module: "ppmessage"}))
         .pipe(gulp.dest(dest))
         .on("end", done);
 }
