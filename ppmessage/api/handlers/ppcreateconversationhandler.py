@@ -36,6 +36,9 @@ import datetime
 
 class Conversation():
     def _result_data(self, _conversation, _member_list):
+        _now = datetime.datetime.now()
+        _now_timestamp = datetime_to_microsecond_timestamp(_now)
+
         _rdata = {}
         _rdata["user_list"] = _member_list        
         _rdata["uuid"] = _conversation["uuid"]
@@ -47,8 +50,10 @@ class Conversation():
         _rdata["conversation_name"] = self._return_name
         _rdata["conversation_icon"] = self._return_icon
         _rdata["conversation_type"] = self._conv_type
-        _rdata["updatetime"] = datetime_to_microsecond_timestamp(datetime.datetime.now())
-        _rdata["createtime"] = datetime_to_microsecond_timestamp(datetime.datetime.now())
+        _rdata["updatetime"] = _now
+        _rdata["createtime"] = _now
+        _rdata["updatetimestamp"] = _now_timestamp
+        _rdata["createtimestamp"] = _now_timestamp
         return _rdata
 
     def _get_conversation_user_list(self):
