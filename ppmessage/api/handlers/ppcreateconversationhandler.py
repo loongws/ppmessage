@@ -25,6 +25,7 @@ from ppmessage.dispatcher.policy.policy import AbstractPolicy
 from ppmessage.dispatcher.policy.policy import BroadcastPolicy
 
 from ppmessage.core.utils.createicon import create_group_icon
+from ppmessage.core.utils.datetimestring import datetime_to_microsecond_timestamp
 
 import copy
 import uuid
@@ -46,8 +47,8 @@ class Conversation():
         _rdata["conversation_name"] = self._return_name
         _rdata["conversation_icon"] = self._return_icon
         _rdata["conversation_type"] = self._conv_type
-        _rdata["updatetime"] = datetime.datetime.now()
-        _rdata["createtime"] = datetime.datetime.now()
+        _rdata["updatetime"] = datetime_to_microsecond_timestamp(datetime.datetime.now())
+        _rdata["createtime"] = datetime_to_microsecond_timestamp(datetime.datetime.now())
         return _rdata
 
     def _get_conversation_user_list(self):

@@ -18,3 +18,6 @@ def string_to_datetime(_str, _fmt):
 
 def datetime_to_timestamp(_dt):
     return int(time.mktime(_dt.timetuple()))
+
+def datetime_to_microsecond_timestamp(_dt):
+    return time.mktime(_dt.timetuple()) + _dt.microsecond / 1e6

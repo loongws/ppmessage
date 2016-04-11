@@ -44,6 +44,7 @@ from ppmessage.core.srv.signal import async_signal_mqttpush_push
 
 from ppmessage.core.redis import redis_hash_to_dict
 from ppmessage.core.utils.datetimestring import datetime_to_timestamp
+from ppmessage.core.utils.datetimestring import datetime_to_microsecond_timestamp
 
 from apnsclient import Message
 
@@ -199,8 +200,8 @@ class AbstractPolicy(Policy):
         if isinstance(self._task.get("body"), unicode):
             _message["bo"] = self._task.get("body").encode("utf-8")
 
-        _ts = self._task["createtime"]
-        _message["ts"] = time.mktime(_ts.timetuple()) + _ts.microsecond / 1e6
+        _message["ts"] = datetime_to_microsecond_timestamp(self._task["createtime"])
+        
         self._task["message_body"] = _message
 
         _message_body = json.dumps(self._task["message_body"])
