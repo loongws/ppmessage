@@ -30,19 +30,19 @@ PPHome.DownloadPage = ( function() {
                 } );
         }
         
-        $( '.download-mobile-app' ).click(function () {
-            var width = 430;
-            var height = 410;
-            var to_left = (window.screen.width - width) / 2;
-            var to_top = (window.screen.height - height) / 2;
-            var features = "width=" + width + ",height=" + height + ",left=" + to_left + ",top=" + to_top;
-            var target = null;
-            var list = window.location.href.split("/");
-            list.pop();
-            list.push("download_mobile_app.html");
-            target = list.join("/");
-            window.open(target, "scan-qrcode", features);
-        });
+        // $( '.download-mobile-app' ).click(function () {
+        //     var width = 430;
+        //     var height = 410;
+        //     var to_left = (window.screen.width - width) / 2;
+        //     var to_top = (window.screen.height - height) / 2;
+        //     var features = "width=" + width + ",height=" + height + ",left=" + to_left + ",top=" + to_top;
+        //     var target = null;
+        //     var list = window.location.href.split("/");
+        //     list.pop();
+        //     list.push("download_mobile_app.html");
+        //     target = list.join("/");
+        //     window.open(target, "scan-qrcode", features);
+        // });
     }
     
 } )();
