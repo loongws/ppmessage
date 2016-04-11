@@ -1,6 +1,6 @@
 Service.$language = ( function() {
 
-    var _DEFAULT = 'zh-CN',
+    var _DEFAULT = 'en',
         _language = _DEFAULT;
 
     return {
@@ -17,11 +17,16 @@ Service.$language = ( function() {
             language = language.toLowerCase();
         }
         switch(language) {
+        case 'zh':
         case 'zh-cn':
+        case 'zh-hk':
+        case 'zh-tw':
+        case 'zh-sg':
             _language = 'zh-CN';
             break;
 
         case 'en':
+        case 'en-us':
             _language = 'en';
             break;
 

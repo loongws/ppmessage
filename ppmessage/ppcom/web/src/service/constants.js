@@ -174,7 +174,6 @@
     };
 
     PPConstants.i18n = function(key) {
-        var language = Service.$language.getLanguage();
         return Service.Constants.I18N[Service.$language.getLanguage()][key];
     };
 
