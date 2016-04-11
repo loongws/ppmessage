@@ -76,7 +76,8 @@
 
 /* first-page: banner */
 .main .banner {
-    background-image: url(../img/intro-1600.jpg);
+    /* background-image: url(../img/intro-1600.jpg); */
+    background-image: url(../img/banner-1600x1000.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
