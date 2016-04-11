@@ -1,5 +1,5 @@
 {
-  "name": "HelloIonic",
+  "name": "ppmessage-bower",
   "private": "true",
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#v1.1.1",
