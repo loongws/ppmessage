@@ -5,8 +5,10 @@
   </head>
   
   <body style="text-align:center;">
-    <img style="padding:20px" src="{{ static_url('ppmessage/img/download-mobile-app-qrcode.png') }} ">
-    <a href="https://github.com/PPMESSAGE/ppmessage/releases/download/v1.1.1/PPMessage-v1.2.0.apk">{{ _("download_directly") }}</a>
+    <div>
+      <img style="padding:20px; height: 300px; width: 300px;" src="{{ static_url('ppmessage/img/download-mobile-app-qrcode.png') }} ">
+      <a href="{{ static_url('releases/v1.1.1/PPMessage-v1.2.0.apk') }}">{{ _("download_directly") }}</a>
+    </div>
   </body>
   
 </html>
