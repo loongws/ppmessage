@@ -343,6 +343,7 @@ PPHome.IndexPage = ( function() {
             .animate( { opacity: 0 }, function() {
                 var img = "/home/static/ppmessage/img/" + feature.img;
                 $( this ).attr( 'src', img );
+                $( this ).addClass("feature-img");
             } )
             .animate( { opacity: 1 } );
         
