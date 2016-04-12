@@ -159,7 +159,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 menu: {
                     DATA_ANALYSIS_TAG: "Data analysis",
                     DATA_OVERVIEW_TAG: "Data overview",
-                    HISTORY_MSG_TAG: "Message historys",
+                    HISTORY_MSG_TAG: "Message history",
                     TEAM_CONFIG_TAG: "Team settings",
                     BASIC_CONFIG_TAG: "Basic info",
                     USER_INTERFACE_TAG: "User interface",
