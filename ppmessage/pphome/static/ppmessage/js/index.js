@@ -36,9 +36,9 @@ PPHome.IndexPage = ( function() {
             "smart_title": "Real Smart Customer Communication",
             "answer_title": "Automatically Message Response",            
             "transfer_title": "Automatically Message Routing",
-            "learn_conversation": "Learn from conversation between service user and costomer",
+            "learn_conversation": "Learn from conversation between service user and customer user",
             "learn_knowledge": "Learn from knowledge base",
-            "learn_behavior": "Learn from customer and service user behavior",
+            "learn_behavior": "Learn from customer user and service user behavior",
 
             "mobile_title": "Mobile First",
             "push_title": "Message Push, Never Miss",
@@ -232,7 +232,7 @@ PPHome.IndexPage = ( function() {
                         ]
                     },
                     {
-                        subTitle: _t("route_title"),
+                        subTitle: _t("transfer_title"),
                         subFeatures: [
                             _t("learn_conversation"),
                             _t("learn_behavior"),
