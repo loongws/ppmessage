@@ -9,6 +9,15 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
             COPYRIGHT_PPMESSAGE: "PPMESSAGE.",
 
+            global: {
+                DELETE_TEAM_TAG: "Delete Team",
+                DELETE_TEAM_NOTE_TAG: "Delete team will remove all your team data from this site. Any question please use the chat launcher button to contact the service agent.",
+                DELETE_TEAM_CONFIRM_TAG: "Confirm Delete",
+                DELETE_TEAM_CANCEL_TAG: "Cancel Delete",
+                DELETE_TEAM_NOTE_DATA_TAG: "Delete, mean remove all data related the team.",
+                DELETE_TEAM_NOTE_MEAN_TAG: "Make sure understand?",
+            },
+            
             app: {
                 MY_PROFILE_TAG: "My Profile",
                 LOGOUT_TAG: "Logout",
@@ -150,7 +159,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 menu: {
                     DATA_ANALYSIS_TAG: "Data analysis",
                     DATA_OVERVIEW_TAG: "Data overview",
-                    HISTORY_MSG_TAG: "Message historys",
+                    HISTORY_MSG_TAG: "Message history",
                     TEAM_CONFIG_TAG: "Team settings",
                     BASIC_CONFIG_TAG: "Basic info",
                     USER_INTERFACE_TAG: "User interface",
@@ -404,6 +413,15 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
         cn: {
             COPYRIGHT_PPMESSAGE: "皮皮消息.",
+
+            global: {
+                DELETE_TEAM_TAG: "删除团队",
+                DELETE_TEAM_NOTE_TAG: "删除团队是不可逆操作，该操作意味着将永久从本网站删除与该团队有关的所有数据.如有疑问请点击右下角图标咨询客服.",
+                DELETE_TEAM_CONFIRM_TAG: "确认删除",
+                DELETE_TEAM_CANCEL_TAG: "取消删除",
+                DELETE_TEAM_NOTE_DATA_TAG: "删除，意味着您将失去所有与该团队有关的数据.",
+                DELETE_TEAM_NOTE_MEAN_TAG: "请确保您充分了解该操作的意义?",
+            },
 
             app: {
                 MY_PROFILE_TAG: "我的信息",
