@@ -5,12 +5,12 @@
 
       <div class="column">
           <dl class="form">
-            <dt><label>团队UUID (app_uuid)</label></dt>
+            <dt><label>Team UUID (app_uuid)</label></dt>
             <dd><input class="input-noborder" size="30" type="text" readonly="readonly" ng-model="team_info.app_uuid"></dd>
           </dl>
 
           <dl class="form">
-            <dt><label>客服端 API Key (PPKefu api_key)</label></dt>
+            <dt><label>PPKefu API Key (PPKefu api_key)</label></dt>
             <dd>
               <input class="input-noborder" size="30" type="text" readonly="readonly" ng-model="team_info.ppkefu_thirdparty.api_key">
             </dd>
@@ -18,12 +18,12 @@
 
           
           <dl class="form">
-            <dt><label>客服端 API Secret (PPKefu api_secret)</label></dt>
+            <dt><label>PPKefu API Secret (PPKefu api_secret)</label></dt>
             <dd><input class="input-noborder" size="30" type="text" readonly="readonly" ng-model="team_info.ppkefu_thirdparty.api_secret"></dd>
           </dl>
 
           <dl class="form">
-            <dt><label>管理端 API Key (PPConsole api_key)</label></dt>
+            <dt><label>PPConsole API Key (PPConsole api_key)</label></dt>
             <dd>
               <input class="input-noborder" size="30" type="text" readonly="readonly" ng-model="team_info.ppconsole_thirdparty.api_key">
             </dd>
@@ -31,7 +31,7 @@
 
           
           <dl class="form">
-            <dt><label>管理端 API Secret (PPConsole api_secret)</label></dt>
+            <dt><label>PPConsole API Secret (PPConsole api_secret)</label></dt>
             <dd>
               <input class="input-noborder" size="30" type="text" readonly="readonly" ng-model="team_info.ppconsole_thirdparty.api_secret">
             </dd>
@@ -50,11 +50,11 @@
 </div>
 
 <div class="boxed-group dangerzone" ng-if="can_delete">
-  <h3>删除团队</h3>
+  <h3>{{ "global.DELETE_TEAM_TAG" | translate }}</h3>
   <div class="boxed-group-inner">
-    <p>删除须知：删除团队是不可逆操作，该操作意味着将永久从本网站删除与该团队有关的所有数据.如有疑问请点击右下角图标咨询客服.</p>
+    <p>{{ "global.DELETE_TEAM_NOTE_TAG" | translate }} </p>
 
-    <p><button type="button" class="btn btn-danger" tabindex="4" ng-click="show_remove_modal()">确认删除</button></p>
+    <p><button type="button" class="btn btn-danger" tabindex="4" ng-click="show_remove_modal()">{{ "global.DELETE_TEAM_CONFIRM" | translate }}</button></p>
   </div>
 </div>
 
@@ -63,16 +63,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><strong>删除团队</strong></h4>
+        <h4 class="modal-title"><strong>{{ "global.DELETE_TEAM_TAG" | translate }}</strong></h4>
       </div>
       <div class="modal-body" style="color: #D03F3F;">
-        <p>删除，意味着您将失去所有与该团队有关的数据.</p>
-        <p>请确保您充分了解该操作的意义?</p>
+        <p>{{ "global.DELETE_TEAM_NOTE_DATA_TAG" | translate }}</p>
+        <p>{{ "global.DELETE_TEAM_NOTE_MEAN_TAG" | translate }}</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">{{ "global.DELETE_TEAM_CANCEL_TAG" | translate }}</button>
         <button type="button" class="btn btn-danger" style="background-image: linear-gradient(#C16552, #E24215);"
-                ng-click="remove_app()">确认删除</button>
+                ng-click="remove_app()">{{ "global.DELETE_TEAM_CONFIRM_TAG" | translate }}</button>
       </div>
     </div>
   </div>

@@ -164,17 +164,8 @@ Service.$messageSender = ( function() {
     }
 
     function updateMessageStateOnSendSucc(ppMessage, response) {
-        var messageId = response.task;
-        ppMessage [ 'messageRawData' ] = {
-            id: messageId,
-            ts: response.ts
-        };
-
-        // NOTE: We need add the new message-id which generated from server to local array here,
-        // to prevent duplicate message
-        Modal.$conversationContentGroup
-            .get(ppMessage.conversation.uuid)
-            .updateMessageIdsArray(messageId);
+        // Because of `response` contains no useful info here
+        // So we don't need to do anyting with `response` here
     }
 
     function onSendFail(ppMessage, settings) {

@@ -36,9 +36,9 @@ PPHome.IndexPage = ( function() {
             "smart_title": "Real Smart Customer Communication",
             "answer_title": "Automatically Message Response",            
             "transfer_title": "Automatically Message Routing",
-            "learn_conversation": "Learn from conversation between service user and costomer",
+            "learn_conversation": "Learn from conversation between service user and customer user",
             "learn_knowledge": "Learn from knowledge base",
-            "learn_behavior": "Learn from customer and service user behavior",
+            "learn_behavior": "Learn from customer user and service user behavior",
 
             "mobile_title": "Mobile First",
             "push_title": "Message Push, Never Miss",
@@ -150,7 +150,7 @@ PPHome.IndexPage = ( function() {
         [
             {
                 title: _t("open_title"),
-                img: 'feature_open.png',
+                img: 'feature-api.png',
                 features: [
                     {
                         subTitle: _t('open_source'),
@@ -172,7 +172,7 @@ PPHome.IndexPage = ( function() {
 
             {
                 title: _t("easy_support_title"),
-                img: 'feature_open.png',
+                img: 'feature-all.png',
                 features: [
                     {
                         subTitle: _t("support_title"),
@@ -197,7 +197,7 @@ PPHome.IndexPage = ( function() {
 
             {
                 title: _t("oauth_title"),
-                img: 'feature_open.png',
+                img: 'feature-oauth.png',
                 features: [
                     {
                         subTitle: _t("oauthing_title"),
@@ -222,7 +222,7 @@ PPHome.IndexPage = ( function() {
 
             {
                 title: _t("smart_title"),
-                img: 'feature_open.png',
+                img: 'feature-smart.png',
                 features: [
                     {
                         subTitle: _t("answer_title"),
@@ -232,7 +232,7 @@ PPHome.IndexPage = ( function() {
                         ]
                     },
                     {
-                        subTitle: _t("route_title"),
+                        subTitle: _t("transfer_title"),
                         subFeatures: [
                             _t("learn_conversation"),
                             _t("learn_behavior"),
@@ -243,7 +243,7 @@ PPHome.IndexPage = ( function() {
 
             {
                 title: _t('mobile_title'),
-                img: 'feature_open.png',
+                img: 'feature-mobile.png',
                 features: [
                     {
                         subTitle: _t("push_title"),
@@ -274,7 +274,7 @@ PPHome.IndexPage = ( function() {
              
             {
                 title: _t("data_extend_title"),
-                img: 'feature_open.png',
+                img: 'feature-data.png',
                 features: [
                     {
                         subTitle: _t("data_title"),
@@ -343,6 +343,7 @@ PPHome.IndexPage = ( function() {
             .animate( { opacity: 0 }, function() {
                 var img = "/home/static/ppmessage/img/" + feature.img;
                 $( this ).attr( 'src', img );
+                $( this ).addClass("feature-img");
             } )
             .animate( { opacity: 1 } );
         
