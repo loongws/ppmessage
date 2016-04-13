@@ -37,7 +37,7 @@ function create_app_config(target, bootstrap_data) {
     }
     var app_config = {
         "developer_mode": true,
-        "api_key": "",
+        "api_key": bootstrap_data.PPKEFU.api_key,
         "sender_id": bootstrap_data.gcm.sender_id,
         "server": {
             "port": bootstrap_data.nginx.listen,
