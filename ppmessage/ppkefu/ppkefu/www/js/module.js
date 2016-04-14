@@ -95,6 +95,21 @@ function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvMenu, yvLocal, 
         return yvSys.get_app_body_style();
     };
 
+    $rootScope.getDeviceClass = function () {
+        if (yvSys.in_mobile_browser()) {
+            return "in-mobile-browser";
+        }
+        if (yvSys.in_pc_browser()) {
+            return "in-pc-browser";
+        }
+        if (yvSys.in_electron()) {
+            return "in-electron";
+        }
+        if (yvSys.in_mobile_app()) {
+            return "in-mobile-app";
+        }
+    };
+
     $ionicPlatform.ready(function () {
         if (!window.cordova) return;
 

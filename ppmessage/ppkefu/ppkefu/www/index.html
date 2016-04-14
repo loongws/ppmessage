@@ -19,9 +19,11 @@
     <link rel="shortcut icon" href="img/favicon.ico">
   </head>
   
-  <body>
-    
-    <ion-nav-view class="main-nav-view"></ion-nav-view>
+  <body ng-class="getDeviceClass()">
+
+    <div ng-style="getAppBodyStyle()">
+      <ion-nav-view class="main-nav-view"></ion-nav-view>
+    </div>
     
     <script src="cordova.js"></script>
     <script src="build/js/lib.min.js"></script>
