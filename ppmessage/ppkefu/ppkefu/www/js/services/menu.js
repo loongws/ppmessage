@@ -67,19 +67,19 @@ function (yvLog, yvSys) {
                                 focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
                         }
                     },
-                    {
-                        label: 'Toggle Developer Tools',
-                        accelerator: (function() {
-                            if (process.platform == 'darwin')
-                                return 'Alt+Command+I';
-                            else
-                                return 'Ctrl+Shift+I';
-                        })(),
-                        click: function(item, focusedWindow) {
-                            if (focusedWindow)
-                                focusedWindow.toggleDevTools();
-                        }
-                    },
+                    // {
+                    //     label: 'Toggle Developer Tools',
+                    //     accelerator: (function() {
+                    //         if (process.platform == 'darwin')
+                    //             return 'Alt+Command+I';
+                    //         else
+                    //             return 'Ctrl+Shift+I';
+                    //     })(),
+                    //     click: function(item, focusedWindow) {
+                    //         if (focusedWindow)
+                    //             focusedWindow.toggleDevTools();
+                    //     }
+                    // },
                 ]
             },
             {
@@ -104,7 +104,7 @@ function (yvLog, yvSys) {
                 submenu: [
                     {
                         label: 'Learn More',
-                        click: function() { require('electron').shell.openExternal('http://electron.atom.io') }
+                        click: function() { require('electron').shell.openExternal('https://ppmessage.com') }
                     },
                 ]
             },
