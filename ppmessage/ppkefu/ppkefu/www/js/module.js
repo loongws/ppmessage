@@ -61,12 +61,14 @@ function ($sceProvider, blockUIConfig, $ionicConfigProvider) {
     "$rootScope",
     "$ionicPlatform",
     "yvSys",
+    "yvMenu",
     "yvLocal",
     "yvMonitor",
-function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvLocal, yvMonitor) {
+function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvMenu, yvLocal, yvMonitor) {
 
     yvLocal.localize();
-
+    yvMenu.init();
+    
     if (ppmessage.developerMode) {
         ppmessage.monitor = yvMonitor;
     }
