@@ -8,6 +8,7 @@
     overflow: auto;
     padding: 100px;
     padding-bottom: 150px;
+    position: absolute;
 }
 
 .section-intro .content .column-left {
@@ -62,17 +63,8 @@
     white-space: nowrap;
 }
 
-.dropdown-list img.appstore {
-    border: 1px solid #e7e7e7;
-    border-width: 0 1px 1px 1px;
-    padding: 5px 27.5px;
-    height: 52px;
-}
-
-.dropdown-list a.clear-style {
-    background-image: none !important;
-    padding: 0px !important;
-    border-width: 0px !important;
+.dropdown-list li a.appstore {
+    padding: 7px 22px 7px 56px;
 }
 
 .dropdown-list .download-mac a,
@@ -150,6 +142,7 @@
     }
     .section-intro .content {
         padding: 0px;
+        position: initial;
     }
     .section-intro .content .button-download {
         padding-right: 26px;

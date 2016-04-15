@@ -15,8 +15,18 @@ PPHome.DownloadPage = ( function() {
         var mobile = PPHome.Device.size() <= 948;
 
         if ( mobile ) {
+            // Default is Android
+            var DEFAULT_HREF = 'https://play.google.com/store/apps/details?id=com.ppmessage.ppkefu',
+                href = DEFAULT_HREF;
+
+            if ( PPHome.Device.os() === 'iOS' ) {
+                href = 'https://itunes.apple.com/cn/app/ppmessage/id1100663783';
+            }
+            
             $( '.download-wrapper a.button-download' )
-                .attr( 'href', PPHome.Device.os() );
+                .attr('target', '_blank')
+                .attr( 'href', href );
+            
         } else {
             $( '.download-wrapper' )
                 .on( 'click', function( e ) {
