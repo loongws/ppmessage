@@ -21,8 +21,10 @@
   
   <body ng-class="getDeviceClass()">
 
-    <div ng-style="getAppBodyStyle()">
-      <ion-nav-view class="main-nav-view"></ion-nav-view>
+    <div class="main-container">
+      <div class="main-container-inner" ng-style="getAppBodyStyle()">
+        <ion-nav-view class="main-nav-view"></ion-nav-view>
+      </div>
     </div>
     
     <script src="cordova.js"></script>
