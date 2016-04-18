@@ -154,7 +154,8 @@ module.exports = {
         "bower_components/angular-cookies/angular-cookies.js",        
         "bower_components/angular-translate/angular-translate.js",
         "bower_components/angular-block-ui/dist/angular-block-ui.js",
-        "bower_components/angular-file-upload/angular-file-upload.js"
+        "bower_components/angular-file-upload/angular-file-upload.js",
+        "bower_components/angular-base64/angular-base64.js"
     ],
 
     ppmessageCss: [

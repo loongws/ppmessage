@@ -6,7 +6,7 @@ ppmessageModule.controller("AutoLoginCtrl", [
     "yvNav",
     "yvMain",
     "yvLogin",
-function ($scope, $state, $stateParams, $ionicHistory, yvNav, yvMain, yvLogin) {
+    function ($scope, $state, $stateParams, $ionicHistory, yvNav, yvMain, yvLogin, yvUtil) {
 
     function login_success() {
         console.log("login successfully...");
@@ -33,7 +33,7 @@ function ($scope, $state, $stateParams, $ionicHistory, yvNav, yvMain, yvLogin) {
         }
 
         console.log("auto login with %o", _body);
-        var _body_str = Base64.decode($scope.user.request_body);
+        var _body_str = yvUtil.base64_decode($scope.user.request_body);
         _body = JSON.parse(_body_str);
         console.log("auto login with %o", _body);
         
