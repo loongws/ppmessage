@@ -10,14 +10,15 @@ body {
         width: 100%;
         height: 100%;
 
-        .main-container-inner {
-            position: absolute;
-        }
     }
 
     &.in-pc-browser .main-container{
         background: url("../../img/body_background.jpeg") no-repeat center;
         background-size: cover;
+
+        .main-container-inner {
+            position: absolute;
+        }
     }
     
     .yv-main-logo-content {
