@@ -32,8 +32,8 @@ ppmessageModule.controller("AutoLoginCtrl", [
             return;
         }
 
-        console.log("auto login with %o", _body);
         var _body_str = yvUtil.base64_decode($scope.user.request_body);
+        console.log("auto login with %o", _body_str);
         _body = JSON.parse(_body_str);
         console.log("auto login with %o", _body);
         
