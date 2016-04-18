@@ -4,6 +4,7 @@
 bower_components/
 node_modules/
 node_modules_win/
+node_modules_osx/
 platforms/
 plugins/
 electron/dist
