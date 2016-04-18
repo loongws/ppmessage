@@ -1,4 +1,4 @@
-!define APP_NAME "<%= app_name %>"
+!define APP_NAME "<%= name %>"
 !define APP_DIR "${APP_NAME}"
 
 Name "${APP_NAME}"
@@ -93,3 +93,23 @@ Section "Uninstall"
 
   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
 SectionEnd
+
+Function .onInit
+
+	;Language selection dialog
+
+	Push ""
+	Push ${LANG_TRADCHINESE}
+	Push "Traditional Chinese"
+	Push ${LANG_SIMPCHINESE}
+	Push "Simplified Chinese"
+	Push ${LANG_ENGLISH}
+	Push "English"
+	Push A ; A means auto count languages
+	       ; for the auto count to work the first empty push (Push "") must remain
+	LangDLL::LangDialog "Installer Language" "Please select the language of the installer"
+
+	Pop $LANGUAGE
+	StrCmp $LANGUAGE "cancel" 0 +2
+		Abort
+FunctionEnd
