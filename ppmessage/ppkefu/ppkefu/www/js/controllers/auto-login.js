@@ -6,8 +6,9 @@ ppmessageModule.controller("AutoLoginCtrl", [
     "yvNav",
     "yvMain",
     "yvLogin",
-    function ($scope, $state, $stateParams, $ionicHistory, yvNav, yvMain, yvLogin, yvUtil) {
-
+    "yvUtil",
+function ($scope, $state, $stateParams, $ionicHistory, yvNav, yvMain, yvLogin, yvUtil) {
+        
     function login_success() {
         console.log("login successfully...");
     }
