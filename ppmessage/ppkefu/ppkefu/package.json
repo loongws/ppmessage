@@ -25,9 +25,9 @@
 
     "pack:mas": "npm run clean:mas && electron-packager ./www $npm_package_name --out=electron/dist/mas --platform=mas --arch=x64 --version=$npm_package_config_masElectronVersion --app-version=$npm_package_version --build-version=$npm_package_version --icon=electron/assets/osx/ppmessage.icns --asar=true --overwrite --app-bundle-id=com.ppmessage.ppkefu.mac --helper-bundle-id=com.ppmessage.ppkefu.mac.helper --osx-sign.identity=\"3rd Party Mac Developer Application: Beijing Yourui Technology Co., Ltd. (2WSQ489AT3)\" --osx-sign.entitlements=electron/sign-mac-app/parent.plist --osx-sign.entitlements-inherit=electron/sign-mac-app/child.plist",
 
-    "pack:win32": "npm run clean:win32 && electron-packager ./www PPMessage --out=electron/dist/win32 --platform=win32 --arch=ia32 --version=0.37.5 --app-version=1.1.1 --build-version=1.1.1 --icon=electron/assets/win/ppmessage.ico --asar=true --overwrite",
+    "pack:win32": "npm run clean:win32 && electron-packager ./www PPMessage --out=electron/dist/win32 --platform=win32 --arch=ia32 --version=0.37.5 --app-version=1.1.2 --build-version=1.1.2 --icon=electron/assets/win/ppmessage.ico --asar=true --overwrite",
 
-    "pack:win64": "npm run clean:win64 && electron-packager ./www PPMessage --out=electron/dist/win64 --platform=win32 --arch=x64 --version=0.37.5 --app-version=1.1.1 --build-version=1.1.1 --icon=electron/assets/win/ppmessage.ico --asar=true --overwrite",
+    "pack:win64": "npm run clean:win64 && electron-packager ./www PPMessage --out=electron/dist/win64 --platform=win32 --arch=x64 --version=0.37.5 --app-version=1.1.2 --build-version=1.1.2 --icon=electron/assets/win/ppmessage.ico --asar=true --overwrite",
 
     "pack:linux": "npm run clean:linux && electron-packager ./www $npm_package_name --out=electron/dist/linux --platform=linux --arch=x64 --version=$npm_config_electronVersion --app-version=$npm_package_version --build-version=$npm_package_version --asar=true --overwrite",
 
