@@ -7,7 +7,7 @@ The directory tree should be as follows.
     |   |-- PPMessage-v1.1.1-osx-PAD.xml
     |   |-- PPMessage-v1.1.1-win32-PAD.xml
     |   |-- PPMessage-v1.1.1-win64-PAD.xml
-    |   |-- PPMessage-v1.1.1-android-PAD.xml
+    |   |-- PPMessage-v1.2.0-android-PAD.xml
     |   |-- PPMessage-v1.1.1-osx.dmg
     |   |-- PPMessage-v1.1.1-win32-setup.exe
     |   |-- PPMessage-v1.1.1-win64-setup.exe
