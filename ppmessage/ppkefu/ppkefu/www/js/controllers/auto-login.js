@@ -27,11 +27,12 @@ function ($scope, $state, $stateParams, $ionicHistory, yvNav, yvMain, yvLogin) {
             request_body: $stateParams.request_body,
         };
 
-        if (!$scope.user.request_body) {
+        if (!$scope.user.request_body || $scope.user.request_body.length == 0) {
             login_error();
             return;
         }
-        
+
+        console.log("auto login with %o", _body);
         var _body_str = Base64.decode($scope.user.request_body);
         _body = JSON.parse(_body_str);
         console.log("auto login with %o", _body);

@@ -26,6 +26,7 @@ window.ppmessage = {
 
 var ppmessageModule = angular.module("ppmessage", [
     "ionic",
+    "base64",
     "blockUI",
     "ngCookies",
     "ngSanitize",

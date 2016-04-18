@@ -17,6 +17,7 @@ module.exports = {
 
         // Service
         "www/js/services/constants.js",
+        "www/js/services/util.js",
         "www/js/services/log.js",
         "www/js/services/ssl.js",
         "www/js/services/file.js",

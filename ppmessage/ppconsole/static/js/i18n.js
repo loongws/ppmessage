@@ -31,7 +31,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 EXIT_APP_TAG: "Log Out",
                 SIGNUP_TAG: "Sign Up",
                 LOGIN_TAG: "Sign In",
-                SLOGAN: "Open Source Plug & Play Customer Communication Platform",
+                SLOGAN: "Open Source Plug & Play Enterprise Message Communication Platform",
 
                 APPS: "Apps",
                 
@@ -436,10 +436,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 EXIT_APP_TAG: "退出",
                 SIGNUP_TAG: "注册",
                 LOGIN_TAG: "登录",
-                SLOGAN: "开源在线客服平台",
-
+                SLOGAN: "开源企业消息通讯平台",
                 APPS: "所有团队",
-                
             },
 
             calendar:{
