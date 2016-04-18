@@ -3,21 +3,21 @@
 }
 
 body {
-    
-    &.platform-browser {
-        ion-nav-view.main-nav-view {
-            background: url("../../img/body_background.jpeg") no-repeat center;
-            background-size: cover;
-        }
-        div.pane {
-            background: transparent;
+
+    .main-container{
+        position:absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        .main-container-inner {
+            position: absolute;
         }
     }
-    
-    &.platform-browser.platform-android, &platform-browser.platform-ios {
-        ion-nav-view.main-nav-view {
-            background: transparent !important;
-        }
+
+    &.in-pc-browser .main-container{
+        background: url("../../img/body_background.jpeg") no-repeat center;
+        background-size: cover;
     }
     
     .yv-main-logo-content {

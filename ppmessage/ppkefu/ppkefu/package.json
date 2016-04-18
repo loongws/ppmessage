@@ -1,6 +1,6 @@
 {
   "name": "PPMessage",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "license": "GPL-3.0",
   "author": "developer@ppmessage.com",
   "homepage": "https://ppmessage.com",
@@ -49,7 +49,6 @@
     "gulp": "^3.5.6",
     "shelljs": "^0.3.0",
     "get-gulp-args": "^0.0.1",
-    "gulp-angular-templatecache": "^1.8.0",
     "gulp-concat": "^2.6.0",
     "gulp-jslint": "^0.2.2",
     "gulp-minify-css": "^0.3.0",

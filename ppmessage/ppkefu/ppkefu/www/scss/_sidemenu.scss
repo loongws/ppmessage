@@ -7,12 +7,12 @@
     
 }
 
-.yv-sidemenu-right-content {
+.in-pc-browser .yv-sidemenu-right-content {
     max-width: 768px;
-    
-    ion-header-bar {
-        border-bottom: solid 1px #ddd !important;
-    }
+}
+
+.yv-sidemenu-right-content ion-header-bar {
+    border-bottom: solid 1px #ddd !important;
 }
 
 .yv-sidemenu {

@@ -1,4 +1,4 @@
-<ion-side-menus eable-menu-with-back-views="false"  delegate-handle="left-sidemenu" ng-style="getAppBodyStyle()" ng-if="!isInMobile()">
+<ion-side-menus eable-menu-with-back-views="false"  delegate-handle="left-sidemenu" ng-if="!isInMobile()">
 
   <!-- Left menu -->
   <ion-side-menu class="yv-sidemenu" side="left" width="300" expose-aside-when="large">
@@ -47,7 +47,7 @@
 
 <!-- In Mobile -->
 
-<ion-view  ng-style="getAppBodyStyle()" ng-if="isInMobile()">
+<ion-view ng-if="isInMobile()">
   <ion-nav-bar class="bar-dark">
     <ion-nav-back-button></ion-nav-back-button>
   </ion-nav-bar>

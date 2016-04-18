@@ -61,12 +61,14 @@ function ($sceProvider, blockUIConfig, $ionicConfigProvider) {
     "$rootScope",
     "$ionicPlatform",
     "yvSys",
+    "yvMenu",
     "yvLocal",
     "yvMonitor",
-function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvLocal, yvMonitor) {
+function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvMenu, yvLocal, yvMonitor) {
 
     yvLocal.localize();
-
+    yvMenu.init();
+    
     if (ppmessage.developerMode) {
         ppmessage.monitor = yvMonitor;
     }
@@ -91,6 +93,21 @@ function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvLocal, yvMonito
 
     $rootScope.getAppBodyStyle = function () {
         return yvSys.get_app_body_style();
+    };
+
+    $rootScope.getDeviceClass = function () {
+        if (yvSys.in_mobile_browser()) {
+            return "in-mobile-browser";
+        }
+        if (yvSys.in_pc_browser()) {
+            return "in-pc-browser";
+        }
+        if (yvSys.in_electron()) {
+            return "in-electron";
+        }
+        if (yvSys.in_mobile_app()) {
+            return "in-mobile-app";
+        }
     };
 
     $ionicPlatform.ready(function () {

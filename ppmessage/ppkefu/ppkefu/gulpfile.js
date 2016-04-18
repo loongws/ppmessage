@@ -8,7 +8,6 @@ var minifyCss = require("gulp-minify-css");
 var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
 var replace = require("gulp-replace");
-var templateCache = require("gulp-angular-templatecache");
 var sh = require("shelljs");
 var buildConfig = require("./build.config.js");
 var jslint = require("gulp-jslint");
@@ -66,13 +65,17 @@ function load_app_config() {
         }
         throw err;
     }
-    
+
     var data = fs.readFileSync(target, "utf-8");
     var app_config = JSON.parse(data);
-    if (app_config.api_key != bootstrap_data.PPKEFU.api_key) {
-        console.log(gutil.colors.yellow("Notice: api key is different from bootstrap.PPKEFU.api_key. If you are using custom app.config.json, ignore this message. Otherwise, remove app.config.json and run gulp again"));
-    }
     return app_config;
+}
+
+function colorfulText(text) {
+    if (typeof text == "string" && text.length == 0) {
+        return gutil.colors.red("Not specified, resolve this issue and run gulp again.");
+    }
+    return gutil.colors.green(text);
 }
 
 var paths = {
@@ -82,7 +85,6 @@ var paths = {
         "./www/js/*.js",
         "./www/js/**/*.js"
     ],
-    templates: ["./www/templates/*/*.html"],
     config: ["./build.config.js"],
 };
 
@@ -90,22 +92,20 @@ var version = get_ppkefu_version();
 var appConfig = load_app_config();
 
 console.log("------------- app config --------------")
-console.log("name    \t", gutil.colors.green(appConfig.server.name));
-console.log("protocol\t", gutil.colors.green(appConfig.server.protocol));
-console.log("host    \t", gutil.colors.green(appConfig.server.host));
-console.log("port    \t", gutil.colors.green(appConfig.server.port));
-console.log("developer mode \t", gutil.colors.green(appConfig.developer_mode));
-console.log("version \t", gutil.colors.green(version));
-console.log("api key \t", gutil.colors.green(appConfig.api_key));
-console.log("sender id \t", gutil.colors.green(appConfig.sender_id));
+console.log("server name      \t", colorfulText(appConfig.server.name));
+console.log("server protocol  \t", colorfulText(appConfig.server.protocol));
+console.log("server host      \t", colorfulText(appConfig.server.host));
+console.log("server port      \t", colorfulText(appConfig.server.port));
+console.log("developer mode   \t", colorfulText(appConfig.developer_mode));
+console.log("app version      \t", colorfulText(version));
+console.log("api key          \t", colorfulText(appConfig.api_key));
+console.log("gcm sender id    \t", colorfulText(appConfig.sender_id));
 console.log("------------- app config --------------")
 
 gulp.task("sass", generate_sass);
 gulp.task("lib-css", generate_lib_css);
 gulp.task("scripts", generate_scripts);
 gulp.task("lib-scripts", generate_lib_scripts);
-gulp.task("templatecache", generate_template_cache);
-gulp.task("scripts-with-templatecache", ["templatecache"], generate_scripts);
 gulp.task("refresh-config", refresh_config);
 gulp.task("copy-jcrop-gif", copy_jcrop_gif);
 gulp.task("copy-ionic-fonts", copy_ionic_fonts);
@@ -116,29 +116,28 @@ gulp.task("default", [
     "lib-scripts",
     "copy-jcrop-gif",
     "copy-ionic-fonts",
-    "scripts-with-templatecache"
+    "scripts"
 ]);
 
-gulp.task("watch", ["lib-css", "sass", "scripts-with-templatecache"], function() {
+gulp.task("watch", ["lib-css", "sass", "scripts"], function() {
     gulp.watch(paths.sass, ["sass"]);
     gulp.watch(paths.css, ["lib-css"]);
     gulp.watch(paths.scripts, ["scripts"]);
-    gulp.watch(paths.templates, ["scripts-with-templatecache"]);
     gulp.watch(paths.config, ["refresh-config", "scripts"]);
 });
 
 function generate_scripts (done) {
     var src = buildConfig.ppmessageScripts;
     var dest = buildConfig.buildScriptPath;
-    
+
     gulp.src(src)
         .pipe(replace('"{developer_mode}"', appConfig.developer_mode))
         .pipe(replace("{server_name}", appConfig.server.name))
         .pipe(replace("{server_protocol}", appConfig.server.protocol))
         .pipe(replace("{server_host}", appConfig.server.host))
         .pipe(replace("{server_port}", appConfig.server.port))
-        .pipe(replace("{api_key}", appConfig.api_key))    
-        .pipe(replace("{sender_id}", appConfig.sender_id))    
+        .pipe(replace("{api_key}", appConfig.api_key))
+        .pipe(replace("{sender_id}", appConfig.sender_id))
         .pipe(replace("{version}", version))
         .pipe(concat("ppmessage.js"))
         .pipe(gulp.dest(dest))
@@ -148,16 +147,6 @@ function generate_scripts (done) {
             done();
         })
         .pipe(rename({ extname: ".min.js" }))
-        .pipe(gulp.dest(dest))
-        .on("end", done);
-}
-
-function generate_template_cache (done) {
-    var src = buildConfig.ppmessageTemplates;
-    var dest = buildConfig.buildScriptPath;
-
-    gulp.src(src)
-        .pipe(templateCache({module: "ppmessage"}))
         .pipe(gulp.dest(dest))
         .on("end", done);
 }
