@@ -459,8 +459,10 @@ REDIS_IOSPUSH_KEY = "redis_iospush_key"
 REDIS_GCMPUSH_KEY = "redis_gcmpush_key"
 REDIS_MQTTPUSH_KEY = "redis_mqttpush_key"
 
-REDIS_TYPING_KEY = "redis_typing_key"
-REDIS_ONLINE_KEY = "redis_online_key"
+REDIS_TYPING_LISTEN_KEY = "redis_typing_listen_key"
+REDIS_ONLINE_LISTEN_KEY = "redis_online_listen_key"
+REDIS_TYPING_NOTIFICATION_KEY = "redis_typing_notification_key"
+REDIS_ONLINE_NOTIFICATION_KEY = "redis_online_notification_key"
 
 REDIS_PPKEFU_ONLINE_KEY = "redis_ppkefu_online_key"
 REDIS_PPCOM_ONLINE_KEY = "redis_ppcom_online_key"

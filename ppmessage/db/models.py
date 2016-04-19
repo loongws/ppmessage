@@ -1631,9 +1631,15 @@ class PCSocketDeviceData(CommonMixin, BaseModel):
                + ".pc_socket_uuid." + self.pc_socket_uuid \
                + ".device_uuid." + self.device_uuid
         _redis.set(_key, self.uuid)
+
         _key = self.__tablename__ \
                + ".device_uuid." + self.device_uuid
         _redis.set(_key, self.pc_socket_uuid)
+
+        _key = self.__tablename__ \
+               + ".pc_socket_uuid." + self.pc_socket_uuid
+        _redis.sadd(_key, self.device_uuid)
+        
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
         return
 
@@ -1641,13 +1647,20 @@ class PCSocketDeviceData(CommonMixin, BaseModel):
         _obj = redis_hash_to_dict(_redis, PCSocketDeviceData, self.uuid)
         if _obj == None or _obj["pc_socket_uuid"] == None or _obj["device_uuid"] == None:
             return
+
         _key = self.__tablename__ \
                + ".pc_socket_uuid." + _obj["pc_socket_uuid"] \
                + ".device_uuid." + _obj["device_uuid"]
         _redis.delete(_key)
+
         _key = self.__tablename__ \
                + ".device_uuid." + _obj["device_uuid"]
         _redis.delete(_key)
+
+        _key = self.__tablename__ \
+               + ".pc_socket_uuid." + _obj["pc_socket_uuid"]
+        _redis.srem(_key, _obj["device_uuid"])
+        
         CommonMixin.delete_redis_keys(self, _redis)
         return
 
