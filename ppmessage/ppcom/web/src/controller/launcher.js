@@ -53,7 +53,10 @@ Ctrl.$launcher = (function() {
                 return;
             }
 
-            Ctrl.$hoverCard.get().isInited() && _showHoverCard();
+            var $hoverCardController = Ctrl.$hoverCard.get();
+            $hoverCardController.asyncPrepareHoverCardInfo( function( prepareSucc ) {
+                prepareSucc && _showHoverCard();
+            } );
         },
 
         this.onMouseLeaveEvent = function() {
