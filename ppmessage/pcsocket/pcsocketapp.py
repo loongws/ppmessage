@@ -418,7 +418,7 @@ class PCSocketApp(Application):
                 return
 
             body = json.loads(noti)
-            logging.info("will send: %s" % body)
+            logging.info("WS will send: %s" % body)
             pcsocket = body.get("pcsocket") 
             if pcsocket == None:
                 logging.error("no pcsocket in push: %s" % (body))
@@ -428,7 +428,7 @@ class PCSocketApp(Application):
             if ws == None:
                 logging.error("No WS handle push: %s" % body)
                 continue
-            ws.send_msg(body)
+            ws.send_msg(body["body"])
 
         return
 
