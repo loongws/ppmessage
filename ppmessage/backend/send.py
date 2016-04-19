@@ -43,8 +43,8 @@ class SendApp(tornado.web.Application):
 
 if __name__ == "__main__":
     tornado.options.parse_command_line()
+    
     _app = SendApp()
-
     # set the periodic check send every 50 ms
     tornado.ioloop.PeriodicCallback(_app.send_loop, 50).start()
 
