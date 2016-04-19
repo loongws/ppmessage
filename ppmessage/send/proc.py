@@ -5,12 +5,11 @@
 #
 #
 
-from ppmessage.core.srv.signal import async_signal_dis_message
-from ppmessage.core.srv.signal import async_signal
-
 from ppmessage.core.imageconverter import ImageConverter
 from ppmessage.core.audioconverter import AudioConverter
 
+from ppmessage.core.constant import REDIS_DISPATCHER_NOTIFICATION_KEY
+from ppmessage.core.constant import REDIS_ACK_NOTIFICATION_KEY
 from ppmessage.core.constant import MESSAGE_MAX_TEXT_LEN
 from ppmessage.core.constant import MESSAGE_SUBTYPE
 from ppmessage.core.constant import MESSAGE_TYPE
@@ -168,7 +167,7 @@ class Proc():
         _row.update_redis_keys(self._redis)
 
         _m = {"task_uuid": self._uuid}
-        async_signal_dis_message(_m)
+        self._redis.rpush(REDIS_DISPATCHER_NOTIFICATION_KEY, json.dumps(_m))
 
         _key = ConversationUserData.__tablename__ + ".conversation_uuid." + self._conversation_uuid + ".datas"
         _datas = self._redis.smembers(_key)
@@ -409,6 +408,7 @@ class Proc():
             "code": _code,
             "extra": {"uuid": self._uuid, "conversation_uuid": self._conversation_uuid},
         }
-        async_signal(_host, _port, PCSOCKET_SRV.ACK, _body)
+        _key = REDIS_ACK_NOTIFICATION_KEY + ".host." + _host + ".port." + _port
+        self._redis.rpush(_key, json.dumps(_body))
         return
     

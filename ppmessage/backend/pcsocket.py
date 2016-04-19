@@ -9,7 +9,6 @@
 #
 #
 
-
 from ppmessage.pcsocket.pcsocketapp import PCSocketApp
 from ppmessage.pcsocket.getthread import getThread
 
@@ -41,6 +40,15 @@ if __name__ == "__main__":
 
     # set the periodic check typing every 1000 ms
     tornado.ioloop.PeriodicCallback(_app.typing_loop, 1000).start()
+
+    # set the periodic check logout every 1000 ms
+    tornado.ioloop.PeriodicCallback(_app.logout_loop, 1000).start()
+
+    # set the periodic check ack every 100 ms
+    tornado.ioloop.PeriodicCallback(_app.ack_loop, 100).start()
+
+    # set the periodic check push every 50 ms
+    tornado.ioloop.PeriodicCallback(_app.push_loop, 50).start()
 
     logging.info("Starting pcsocket service......")
     tornado.ioloop.IOLoop.instance().start()

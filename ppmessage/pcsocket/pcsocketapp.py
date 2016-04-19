@@ -14,8 +14,13 @@ from ppmessage.core.constant import PCSOCKET_SRV
 
 from ppmessage.core.constant import REDIS_TYPING_LISTEN_KEY
 from ppmessage.core.constant import REDIS_ONLINE_LISTEN_KEY
+
+from ppmessage.core.constant import REDIS_ACK_NOTIFICATION_KEY
+from ppmessage.core.constant import REDIS_PUSH_NOTIFICATION_KEY
+from ppmessage.core.constant import REDIS_SEND_NOTIFICATION_KEY
 from ppmessage.core.constant import REDIS_TYPING_NOTIFICATION_KEY
 from ppmessage.core.constant import REDIS_ONLINE_NOTIFICATION_KEY
+from ppmessage.core.constant import REDIS_LOGOUT_NOTIFICATION_KEY
 
 from ppmessage.core.constant import REDIS_PPCOM_ONLINE_KEY
 
@@ -23,10 +28,6 @@ from ppmessage.core.constant import DIS_WHAT
 from ppmessage.core.constant import DATETIME_FORMAT
 
 from ppmessage.core.constant import TIMEOUT_WEBSOCKET_OFFLINE
-
-from ppmessage.core.srv.basehandler import BaseHandler
-
-from ppmessage.core.srv.signal import async_signal_send_send
 
 from ppmessage.core.utils.getipaddress import getIPAddress
 from ppmessage.core.utils.datetimestring import now_to_string
@@ -45,8 +46,6 @@ from .error import DIS_ERR
 from tornado.ioloop import IOLoop
 from tornado.web import Application
 from tornado.web import RequestHandler
-
-from Queue import Queue
 
 import datetime
 import logging
@@ -72,38 +71,10 @@ class MainHandler(RequestHandler):
         self.write("PCSOCKET WORKED.")
         return
 
-class AckHandler(RequestHandler):
-    def post(self):
-        _body = json.loads(self.request.body)
-        logging.info("recv ack:%s" % str(_body))
-        _device_uuid = _body.get("device_uuid")
-        _ws = self.application.ws_hash.get(_device_uuid)
-        if _ws == None:
-            logging.error("no such ws<->device needs noti:%s" % _device_uuid)
-            return
-        _ws.send_ack(_body)
-        return
-
-class LogoutHandler(RequestHandler):
-    def post(self):
-        _body = json.loads(self.request.body)
-        logging.info("recv logout:%s" % str(_body))
-        _device_uuid = _body.get("device_uuid")
-        _ws = self.application.ws_hash.get(_device_uuid)
-        if _ws == None:
-            logging.error("no websocket for the device:%s" % _device_uuid)
-            return
-        _ws.send_logout(_body)
-        return
-
 class PCSocketApp(Application):
-
-    def hasCallback(self):
-        return True
     
     def __init__(self):
         self.ws_hash = {}
-        self.send_queue = Queue()
         self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
         
         settings = {}
@@ -111,9 +82,6 @@ class PCSocketApp(Application):
         handlers = []
         handlers.append(("/", MainHandler))
         handlers.append(("/"+PCSOCKET_SRV.WS, WSHandler))
-        handlers.append(("/"+PCSOCKET_SRV.ACK, AckHandler))
-        handlers.append(("/"+PCSOCKET_SRV.PUSH, BaseHandler))
-        handlers.append(("/"+PCSOCKET_SRV.LOGOUT, LogoutHandler))
         Application.__init__(self, handlers, **settings)
         return
 
@@ -342,25 +310,15 @@ class PCSocketApp(Application):
         _ws._watch_typing["users"] = None
         _ws._watch_typing["conversation"] = None
         return
-
-    def _send_loop(self):
-        if self.send_queue.empty() == True:
-            return
-        _body = self.send_queue.get(False)
-        if _body == None:
-            return
-        self.send_queue.task_done()
-        async_signal_send_send(_body)
-        return
     
     def send_send(self, _device_uuid, _body):
         _body["pcsocket"] = {
             "host": self.register["host"],
             "port": self.register["port"],
             "device_uuid": _device_uuid
-        }        
-        self.send_queue.put(_body)
-        IOLoop.instance().add_callback(self._send_loop)
+        }
+        _key = REDIS_SEND_NOTIFICATION_KEY
+        self.redis.rpush(_key, json.dumps(_body))
         return
     
     def save_extra(self, _app_uuid, _device_uuid, _extra_data):
@@ -413,3 +371,63 @@ class PCSocketApp(Application):
 
         return
     
+    def logout_loop(self):
+        """
+        every 1000ms check logout notification
+        """
+        key = REDIS_LOGOUT_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+        while True:
+            noti = self.redis.lpop(key)
+            if noti == None:
+                # no message
+                return
+            body = json.loads(noti)
+            ws = self.ws_hash.get(body.get("device_uuid"))
+            if ws == None:
+                logging.error("No WS to handle logout body: %s" % body) 
+                continue
+            ws.send_logout(body)
+        return
+    
+    def ack_loop(self):
+        """
+        every 100ms check ack notification
+        """
+        key = REDIS_ACK_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+        while True:
+            noti = self.redis.lpop(key)
+            if noti == None:
+                # no message
+                return
+            body = json.loads(noti)
+            ws = self.ws_hash.get(body.get("device_uuid"))
+            if ws == None:
+                logging.error("No WS to handle ack body: %s" % body) 
+                continue
+            ws.send_ack(body)
+        return
+
+    def push_loop(self):
+        """
+        every 50ms check push notification
+        """
+        key = REDIS_PUSH_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+        while True:
+            noti = self.redis.lpop(key)
+            if noti == None:
+                return
+
+            body = json.loads(noti)
+            pcsocket = _data.get("pcsocket") 
+            if pcsocket == None:
+                logging.error("no pcsocket in push: %s" % (body))
+                continue
+            device_uuid = pcsocket.get("device_uuid")
+            ws = self.ws_hash.get(device_uuid)
+            if ws == None:
+                logging.error("No WS handle push: %s" % body)
+                continue
+            ws.send_msg(body)
+
+        return
+

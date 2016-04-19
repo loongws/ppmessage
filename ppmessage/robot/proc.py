@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2010-2016 PPMessage YVertical.
+# Copyright (C) 2010-2016 PPMessage.
 # Guijin Ding, dingguijin@gmail.com
 #
-#
-
-from mdm.core.srv.signal import async_signal_dis_message
-from mdm.core.srv.signal import async_signal
 
 from mdm.core.constant import MESSAGE_TYPE
 from mdm.core.constant import MESSAGE_SUBTYPE
@@ -14,6 +10,9 @@ from mdm.core.constant import CONVERSATION_TYPE
 from mdm.core.constant import PCSOCKET_SRV
 from mdm.core.constant import TASK_STATUS
 from mdm.core.constant import YVOBJECT
+
+from mdm.core.constant import REDIS_ACK_NOTIFICATION_KEY
+from mdm.core.constant import REDIS_DISPATCHER_NOTIFICATION_KEY
 
 from mdm.db.models import PCSocketInfo
 from mdm.db.models import MessagePushTask
@@ -189,7 +188,8 @@ class Proc():
             "code": _code,
             "extra": _extra,
         }
-        async_signal(_host, _port, PCSOCKET_SRV.ACK, _body)
+        _key = REDIS_ACK_NOTIFICATION_KEY + ".host." + _host + ".port." + _port
+        self._redis.rpush(_key, json.dumps(_body))
         return
     
     def _push_task(self, _label):        
@@ -221,6 +221,6 @@ class Proc():
         _row.update_redis_keys(self._redis)
 
         _m = {"task_uuid": _task.uuid}
-        async_signal_dis_message(_m)
+        self._redis.rpush(REDIS_DISPATCHER_NOTIFICATION_KEY, json.dumps(_m))
         return True
 

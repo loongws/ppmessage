@@ -11,9 +11,9 @@ from ppmessage.iospush.iospushapp import IOSPushApp
 from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 from ppmessage.core.constant import IOSPUSH_PORT
 
-import tornado.httpserver
 import tornado.ioloop
 import tornado.options
+import tornado.httpserver
 
 import logging
 import sys

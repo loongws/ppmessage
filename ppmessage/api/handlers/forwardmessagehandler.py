@@ -6,11 +6,10 @@
 #
 from .basehandler import BaseHandler
 
-from ppmessage.core.srv.signal import async_signal_dis_message
-
 from ppmessage.core.imageconverter import ImageConverter
 from ppmessage.core.audioconverter import AudioConverter
 
+from ppmessage.core.constant import REDIS_DISPATCHER_NOTIFICATION_KEY
 from ppmessage.core.constant import MESSAGE_MAX_TEXT_LEN
 from ppmessage.core.constant import MESSAGE_SUBTYPE
 from ppmessage.core.constant import MESSAGE_TYPE
@@ -104,8 +103,8 @@ class ForwardMessageHandler(BaseHandler):
         _row.update_redis_keys(self.application.redis)
         
         _m = {"task_uuid": _uuid}
-        async_signal_dis_message(_m)
-
+        self.application.redis.rpush(REDIS_DISPATCHER_NOTIFICATION_KEY, json.dumps(_m))
+        
         #link file
         if _old.message_subtype == MESSAGE_SUBTYPE.FILE:
             self._check_link_file(_old, _from_uuid)
