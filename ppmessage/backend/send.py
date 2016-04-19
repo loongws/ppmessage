@@ -47,6 +47,6 @@ if __name__ == "__main__":
     # set the periodic check send every 50 ms
     tornado.ioloop.PeriodicCallback(_app.send_loop, 50).start()
 
-    logging.info("Starting send service......%d" % SEND_PORT)
+    logging.info("Starting send service......")
     tornado.ioloop.IOLoop.instance().start()
     
