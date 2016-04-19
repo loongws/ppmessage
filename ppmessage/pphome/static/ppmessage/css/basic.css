@@ -289,7 +289,7 @@ a.highlight:hover,
 }
 
 .mobile-nav-close {
-    background-image: url({{ static_url("ppmessage/img/mobile-nav-icon.png") }});
+    background-image: url(../img/mobile-nav-icon.png);
     background-repeat: no-repeat;
     background-position-x: 0px;
     background-position-y: 0px;
