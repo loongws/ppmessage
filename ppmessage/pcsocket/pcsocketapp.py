@@ -418,6 +418,7 @@ class PCSocketApp(Application):
                 return
 
             body = json.loads(noti)
+            logging.info("will send: %s" % body)
             pcsocket = body.get("pcsocket") 
             if pcsocket == None:
                 logging.error("no pcsocket in push: %s" % (body))
