@@ -10,6 +10,9 @@
 #
 
 from ppmessage.core.constant import REDIS_DISPATCHER_NOTIFICATION_KEY
+from ppmessage.core.constant import REDIS_HOST
+from ppmessage.core.constant import REDIS_PORT
+
 from ppmessage.dispatcher.task import TaskHandler
 
 import tornado.web
