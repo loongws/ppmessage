@@ -14,6 +14,7 @@ from ppmessage.core.constant import REDIS_PORT
 from ppmessage.send.sendhandler import SendHandler
 from ppmessage.core.constant import REDIS_SEND_NOTIFICATION_KEY
 
+import json
 import redis
 import logging
 import tornado.web
