@@ -430,7 +430,7 @@ class AbstractPolicy(Policy):
             "pcsocket": _pcsocket,
             "body": _body
         }
-        _key = REDIS_PUSH_NOTIFICATION_KEY + ".host." + _pcsocket["host"] + ".port." + _pcsocket.["port"]
+        _key = REDIS_PUSH_NOTIFICATION_KEY + ".host." + _pcsocket["host"] + ".port." + _pcsocket["port"]
         self._redis.rpush(_key, json.dumps(_push))
         return
     
