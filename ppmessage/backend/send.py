@@ -7,9 +7,14 @@
 # backend/send.py 
 # The entry form send service
 #
+
+from ppmessage.core.constant import REDIS_HOST
+from ppmessage.core.constant import REDIS_PORT
+
 from ppmessage.send.sendhandler import SendHandler
 from ppmessage.core.constant import REDIS_SEND_NOTIFICATION_KEY
 
+import redis
 import logging
 import tornado.web
 import tornado.ioloop
