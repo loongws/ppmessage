@@ -8,11 +8,16 @@
 """
 BOOSTRAP_CONFIG is the first place for developer edit before run PPMessage.
 
+required:
 "team", to run PPMessage needing a team who is the first service team of the PPMessage
 "user", to run PPMessage needing a user who create the first service team and admin the whole PPMessage system
 "mysql", database config
-"redis", redis config
 "nginx", nginx config
+"js",   client javascript minimization
+
+optional:
+"apns", apple push service
+"gcm",  google clould message
 
 """
 
@@ -40,7 +45,7 @@ BOOTSTRAP_CONFIG = {
     },
 
     "server": {
-        "name": "", # 
+        "name": "", # server's ip, like '192.168.0.110', PPKefu need this to know which server to connect
         "identicon_store": "/usr/local/opt/ppmessage/identicon",
         "generic_store": "/usr/local/opt/ppmessage/generic",
     },
@@ -51,6 +56,8 @@ BOOTSTRAP_CONFIG = {
     
     # nginx conf 
     "nginx": {
+        # In Ubuntu/Debian/Docker, "nginx_conf_path" is "/usr/local/nginx/conf/nginx.conf"
+        # In Mac, "nginx_conf_path" is "/usr/local/etc/nginx/nginx.conf"
         "nginx_conf_path": "/usr/local/etc/nginx/nginx.conf",
         "server_name": ["ppmessage.com", "www.ppmessage.com"],
         "listen": "8080", #80
@@ -58,23 +65,24 @@ BOOTSTRAP_CONFIG = {
         "upload_store": "/usr/local/opt/ppmessage/uploads 1",
         "upload_state_store": "/usr/local/opt/ppmessage/upload_state",
 
+        # on for https, off for http
         "ssl": "off", # off/on
         "ssl_listen": "443",
-        "ssl_certificate": "/Users/dingguijin/ppmessage/ppmessage/certs/ppmessage.cn.instant/issue/ssl_bundle.crt",
-        "ssl_certificate_key": "/Users/dingguijin/ppmessage/ppmessage/certs/ppmessage.cn.instant/server.key",
+        "ssl_certificate": "/path-to-your-ssl-cert",
+        "ssl_certificate_key": "/path-to-your-ssl-server-key",
     },
 
-    # apns push certificate, dev for developer, pro for production
+    # optional, apns push certificate, dev for developer, pro for production
     "apns": {
-        "name": "com.ppmessage.ppkefu",
-        "dev": "/Users/dingguijin/ppmessage/ppmessage/certs/apnscerts/ppkefu-dev.p12",
-        "pro": "/Users/dingguijin/ppmessage/ppmessage/certs/apnscerts/ppkefu-pro.p12",
+        "name": "your-app's-bundle-id",
+        "dev": "/path-to-your-apns-development.p12",
+        "pro": "/path-to-your-apns-production.p12",
     },
 
-    # google cloud message
+    # optional, google cloud message
     "gcm": {
-        "api_key": "AIzaSyArXf60KTz2KwROtzAlQDJozAskFAdvzBE",
-        "sender_id": "878558045932",
+        "api_key": "your gcm api key",
+        "sender_id": "your gcm sender id",
     },
 
 }
