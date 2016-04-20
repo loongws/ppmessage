@@ -1804,9 +1804,9 @@ class PredefinedScript(CommonMixin, BaseModel):
 
     # copy from api info
     app_uuid = Column("app_uuid", String(64))
+    group_uuid = Column("group_uuid", String(64))
     script_answer = Column("script_answer", String(512))
     script_question = Column("script_question", String(512))
-    group_uuid = Column("group_uuid", String(64))
     
     def __init__(self, *args, **kwargs):
         super(PredefinedScript, self).__init__(*args, **kwargs)
@@ -1816,6 +1816,10 @@ class PredefinedScript(CommonMixin, BaseModel):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
         _key = self.__tablename__ + ".group_uuid." + str(self.group_uuid)
         _redis.sadd(_key, self.uuid)
+
+        _key = self.__tablename__ + ".app_uuid." + self.app_uuid
+        _redis.sadd(_key, self.uuid)
+        
         return
 
     def update_redis_keys(self, _redis):
@@ -1831,8 +1835,13 @@ class PredefinedScript(CommonMixin, BaseModel):
         _obj = redis_hash_to_dict(_redis, PredefinedScript, self.uuid)
         if _obj == None:
             return
+
         _key = self.__tablename__ + ".group_uuid." + str(_obj.get("group_uuid"))
         _redis.srem(_key, self.uuid)
+
+        _key = self.__tablename__ + ".app_uuid." + _obj.get("app_uuid")
+        _redis.srem(_key, self.uuid)
+
         CommonMixin.delete_redis_keys(self, _redis)
         return
 
@@ -1848,13 +1857,17 @@ class PredefinedScriptGroup(CommonMixin, BaseModel):
         return
     
     def create_redis_keys(self, _redis, *args, **kwargs):
-        CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)        
+        CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
+        _key = PredefinedScriptGroup.__tablename__ + ".app_uuid." + self.app_uuid
+        _redis.sadd(_key, self.uuid)
         return
     
     def delete_redis_keys(self, _redis):
         _obj = redis_hash_to_dict(_redis, PredefinedScriptGroup, self.uuid)
         if _obj == None:
             return
+        _key = PredefinedScriptGroup.__tablename__ + ".app_uuid." + _obj["app_uuid"]
+        _redis.srem(_key, self.uuid)
         CommonMixin.delete_redis_keys(self, _redis)
         return
     
