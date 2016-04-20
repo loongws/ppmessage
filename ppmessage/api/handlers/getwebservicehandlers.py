@@ -110,7 +110,7 @@ from .ppremovepredefinedscriptgroup import PPRemovePredefinedScriptGroup
 from .ppmovepredefinedscriptintogroup import PPMovePredefinedScriptIntoGroup
 
 from .ppgetallpredefinedscript import PPGetAllPredefinedScript
-from .ppgetallpredefinedscriptGroup import PPGetAllPredefinedScriptGroup
+from .ppgetallpredefinedscriptgroup import PPGetAllPredefinedScriptGroup
 from .ppgetpredefinedscriptwithgroup import PPGetPredefinedScriptWithGroup
 
 def getWebServiceHandlers():
