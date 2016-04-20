@@ -110,7 +110,7 @@
   background-position: 0 -260px;
 }
 
-@media (min-height: 900px) {
+@media (min-height: 0px) {
     .footer {
         position: fixed;
         bottom: 0px;

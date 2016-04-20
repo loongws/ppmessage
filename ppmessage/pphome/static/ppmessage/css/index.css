@@ -13,7 +13,7 @@
     list-style: none;
     top: 50%;
     position: relative;
-    width: 600px;
+    width: 250px;
     margin: 0 auto;
 }
 
@@ -71,14 +71,5 @@
 @media (max-width:480px) {
     .column {
         max-width: 100%;
-    }
-    .snav ul {
-        width: 100%;
-    }
-    .snav ul li {
-        border-radius: 10px;
-        margin-right: 8px;
-        width: 10px;
-        height: 10px;
     }
 }

@@ -89,7 +89,16 @@ Ctrl.$hoverCard = (function() {
          * HoverCard Initialization Event
          */
         this.onHoverCardInit = function() {
+            // Nothing to do, delay `this.asyncPrepareHoverCardInfo`
+        };
 
+        this.asyncPrepareHoverCardInfo = function( callback ) {
+            
+            if ( this.isInited() ) {
+                $onResult( true, callback );
+                return;
+            }
+            
             Service.$conversationManager.asyncGetDefaultConversation( function( response ) {
 
                 if ( response ) {
@@ -107,9 +116,10 @@ Ctrl.$hoverCard = (function() {
                     $hoverCardController = controller;
                     
                 }
+
+                $onResult( !!response, callback );
                 
             } );
-
         };
 
         /**

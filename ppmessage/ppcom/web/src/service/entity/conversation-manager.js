@@ -252,8 +252,8 @@ Service.$conversationManager = ( function() {
 
             // move welcome info and `vip` flag to the newer conversation
             newer.vip = true;
-            newer.app_welcome = appWelcome;
-            newer.app_name = appName;
+            appWelcome && ( newer.app_welcome = appWelcome );
+            appName && ( newer.app_name = appName );
             
         }
         

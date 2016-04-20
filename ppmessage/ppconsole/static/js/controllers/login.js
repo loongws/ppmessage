@@ -95,6 +95,7 @@ angular.module("this_app")
                                 
                                 var _url = yvConstants.USER_STATUS[data.user_status];
                                 if(data.user_status == "SERVICE") {
+                                    yvLogin.updateActiveUser( data );
                                     $scope.start_ppmessage(true);
                                     return;
                                 };
