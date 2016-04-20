@@ -10,16 +10,12 @@
 #
 
 from ppmessage.pcsocket.pcsocketapp import PCSocketApp
-from ppmessage.pcsocket.getthread import getThread
-
-from ppmessage.core.srv.backendio import BackendIO
 from ppmessage.core.constant import PCSOCKET_PORT
 
-import tornado.httpserver
+import logging
 import tornado.ioloop
 import tornado.options
-
-import logging
+import tornado.httpserver
 
 tornado.options.define("port", default=PCSOCKET_PORT, help="", type=int)  
 
@@ -30,7 +26,6 @@ if __name__ == "__main__":
     _app = PCSocketApp()
 
     _app.register_service(str(_port))
-    _io = BackendIO(getThread(), _app)
     
     _http_server = tornado.httpserver.HTTPServer(_app)
     _http_server.listen(_port)

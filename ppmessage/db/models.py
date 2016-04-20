@@ -10,6 +10,7 @@ from ppmessage.core.constant import TASK_STATUS
 from ppmessage.core.constant import MESSAGE_STATUS
 from ppmessage.core.constant import MESSAGE_SUBTYPE
 from ppmessage.core.constant import CONVERSATION_STATUS
+from ppmessage.core.constant import SERVICE_USER_STATUS
 
 from ppmessage.core.redis import row_to_redis_hash
 from ppmessage.core.redis import redis_hash_to_dict
@@ -93,6 +94,13 @@ class DeviceUser(CommonMixin, BaseModel):
     # USER_SERVICE -> create by the owner of app
     
     create_status = Column("create_status", String(16))
+
+    # service_user_status for service user
+    # READY -> ready to allocate message to me
+    # BUSY -> busy not allocate message to me
+    # REST -> rest not allocate message to me
+    
+    service_user_status = Column("service_user_status", String(16))
     
     # ppcom portal user
     is_anonymous_user = Column("is_anonymous_user", Boolean)
@@ -118,6 +126,7 @@ class DeviceUser(CommonMixin, BaseModel):
         self.user_mute_notification = False
         self.is_email_verified = False
         self.is_mobile_verified = False
+        self.service_user_status = SERVICE_USER_STATUS.READY
         super(DeviceUser, self).__init__(*args, **kwargs)
         
     def create_redis_keys(self, _redis, *args, **kwargs):
@@ -1790,4 +1799,63 @@ class ApiTokenData(CommonMixin, BaseModel):
         CommonMixin.delete_redis_keys(self, _redis)
         return
 
+class PredefinedScript(CommonMixin, BaseModel):
+    __tablename__ = "predefined_scripts"
+
+    # copy from api info
+    app_uuid = Column("app_uuid", String(64))
+    script_answer = Column("script_answer", String(512))
+    script_question = Column("script_question", String(512))
+    group_uuid = Column("group_uuid", String(64))
+    
+    def __init__(self, *args, **kwargs):
+        super(PredefinedScript, self).__init__(*args, **kwargs)
+        return
+    
+    def create_redis_keys(self, _redis, *args, **kwargs):
+        CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
+        _key = self.__tablename__ + ".group_uuid." + str(self.group_uuid)
+        _redis.sadd(_key, self.uuid)
+        return
+
+    def update_redis_keys(self, _redis):
+        CommonMixin.update_redis_keys(self, _redis)
+        _obj = redis_hash_to_dict(_redis, PredefinedScript, self.uuid)
+        if _obj == None:
+            return
+        _key = self.__tablename__ + ".group_uuid." + str(_obj.get("group_uuid"))
+        _redis.sadd(_key, self.uuid)
+        return
+    
+    def delete_redis_keys(self, _redis):
+        _obj = redis_hash_to_dict(_redis, PredefinedScript, self.uuid)
+        if _obj == None:
+            return
+        _key = self.__tablename__ + ".group_uuid." + str(_obj.get("group_uuid"))
+        _redis.srem(_key, self.uuid)
+        CommonMixin.delete_redis_keys(self, _redis)
+        return
+
+class PredefinedScriptGroup(CommonMixin, BaseModel):
+    __tablename__ = "predefined_script_groups"
+
+    # copy from api info
+    app_uuid = Column("app_uuid", String(64))
+    group_name = Column("group_name", String(128))
+    
+    def __init__(self, *args, **kwargs):
+        super(PredefinedScriptGroup, self).__init__(*args, **kwargs)
+        return
+    
+    def create_redis_keys(self, _redis, *args, **kwargs):
+        CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)        
+        return
+    
+    def delete_redis_keys(self, _redis):
+        _obj = redis_hash_to_dict(_redis, PredefinedScriptGroup, self.uuid)
+        if _obj == None:
+            return
+        CommonMixin.delete_redis_keys(self, _redis)
+        return
+    
 

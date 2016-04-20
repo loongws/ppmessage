@@ -426,9 +426,15 @@ GROUP_ALGORITHM = Enum([
     "ROBOT",
 ])
 
+SERVICE_USER_STATUS = Enum([
+    "READY",
+    "BUSY",
+    "REST",
+])
+
 WEB_TITLE = {
-    "user": "PPMessage | Opensource Plug and Play Online Customer Service System - ppmessage.com",
-    "admin": "PPMessage | Opensource Plug and Play Online Customer Service System - ppmessage.com",
+    "user": "PPMessage | Open Source Plug and Play Customer Communication Message Platform - ppmessage.com",
+    "admin": "PPMessage | Open Source Plug and Play Customer Communication Message Platform - ppmessage.com",
 }
 
 USER_NAME = {
