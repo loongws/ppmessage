@@ -20,7 +20,10 @@ Ctrl.$launcher = (function() {
         this.onClickEvent = function() { // Launcher onClick event
             // If hoverCard delegate launcher click event, we will not show MessageBox
             if (!Ctrl.$hoverCard.get().interceptLauncherClickEvent()) {
-                this.showMessageBox();
+                var $hoverCardController = Ctrl.$hoverCard.get();
+                $hoverCardController.asyncPrepareHoverCardInfo( function( prepareSucc ) {
+                    prepareSucc && self.showMessageBox();
+                } );
             }
         },
 
