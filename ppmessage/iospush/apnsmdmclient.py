@@ -35,8 +35,8 @@ class APNSMDMClient():
 
         self.apns_updatetime = 0
         self.apns_alivedelta = datetime.timedelta(minutes=5)
-        self.apns_invalid_token = set()
-        self.application.redis.delete(INVALID_IOS_TOKEN)
+        #self.apns_invalid_token = set()
+        #self.application.redis.delete(INVALID_IOS_TOKEN)
 
         self.apns_push_server = None
         self.apns_feedback_server = None
@@ -83,8 +83,8 @@ class APNSMDMClient():
         if self.apns_session == None:
             self.apns_session = Session()
         
-        if self.apns_session != None:
-            self.apns_invalid_token.update(self.application.redis.smembers(INVALID_IOS_TOKEN))
+        #if self.apns_session != None:
+        #    self.apns_invalid_token.update(self.application.redis.smembers(INVALID_IOS_TOKEN))
 
         self.apns_connection = self.apns_session.get_connection(self.apns_push_server, cert_string=self.apns_cert_string)
         self.apns_service = APNs(self.apns_connection)
@@ -96,10 +96,10 @@ class APNSMDMClient():
         logging.info("feedback checking...")
         _con = Session().new_connection(self.apns_feedback_server, cert_string=self.apns_cert_string)
         _srv = APNs(_con)
-        _key = INVALID_IOS_TOKEN
+        #_key = INVALID_IOS_TOKEN
         try:
             for token, when in _srv.feedback():
-                logging.info("feedback get token: %s" % (token))
+                logging.info("feedback get invalid token: %s" % (token))
                 #self.application.redis.sadd(_key, token)
         except:
             logging.error("feedback connection failed.")
@@ -119,13 +119,12 @@ class APNSMDMClient():
         if not self._get_apns_service():
             return
 
-        _state = _message.__getstate__()
-        for _i in self.apns_invalid_token:
-            if _i in _state["tokens"]:
-                _state["tokens"].remove(_i)
+        #_state = _message.__getstate__()
+        #for _i in self.apns_invalid_token:
+        #    if _i in _state["tokens"]:
+        #        _state["tokens"].remove(_i)
         
         logging.info("sending: " + str(_message.tokens))
-            
         _message = Message(**_state)
         try:
             response = self.apns_service.send(_message)
@@ -154,7 +153,6 @@ class APNSMDMClient():
             logging.error(error_string.format(str(_message)))
             # repeat with retry_message or reschedule your task
             retry_message = response.retry()
-            logging.info("retry tokens invalid: " + str(self.apns_invalid_token))
             tornado.ioloop.IOLoop.instance().add_callback(self.publish_one, retry_message)
             
         # Check failures. Check codes in APNs reference docs.
@@ -162,12 +160,13 @@ class APNSMDMClient():
             code, errmsg = reason
             error_string = "Device failed: {0}, reason: {1}, code: {2}."
             logging.error(error_string.format(token, errmsg, code))
-            self.application.redis.sadd(INVALID_IOS_TOKEN, token)
-            self.apns_invalid_token.add(token)
+            #self.application.redis.sadd(INVALID_IOS_TOKEN, token)
+            #self.apns_invalid_token.add(token)
             
-        info_string = "APNS failed: {0}, invalid: {1}."
-        logging.info(info_string.format(str(response.failed), str(self.apns_invalid_token)))
-        return self.apns_invalid_token
+        #info_string = "APNS failed: {0}, invalid: {1}."
+        #logging.info(info_string.format(str(response.failed), str(self.apns_invalid_token)))
+        #return self.apns_invalid_token
+        return
 
 
 def get_apns(app, name):
