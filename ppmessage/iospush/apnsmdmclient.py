@@ -119,7 +119,7 @@ class APNSMDMClient():
         if not self._get_apns_service():
             return
 
-        #_state = _message.__getstate__()
+        _state = _message.__getstate__()
         #for _i in self.apns_invalid_token:
         #    if _i in _state["tokens"]:
         #        _state["tokens"].remove(_i)
