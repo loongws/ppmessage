@@ -50,7 +50,7 @@
 
         var launcherCtrl = Ctrl.$launcher.get();
         if (launcherCtrl) {
-            launcherCtrl.showMessageBox(true);
+            launcherCtrl.onClickEvent();
             if (this._onShowEvent && typeof this._onShowEvent === 'function') {
                 this._onShowEvent();
             }
@@ -99,8 +99,7 @@
         var user = Service.$user.getUser();
         
         if (s && user
-            && s.app_key == api.getAppKey()
-            && s.app_secret == api.getAppSecret()
+            && s.app_uuid == api.getAppUuid()
             && s.user_email == user.getInfo().user_email) {
             return false;
         }

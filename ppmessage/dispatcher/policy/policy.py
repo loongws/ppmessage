@@ -17,6 +17,8 @@ from ppmessage.core.constant import MESSAGE_STATUS
 from ppmessage.core.constant import MESSAGE_TYPE
 from ppmessage.core.constant import TASK_STATUS
 
+from ppmessage.core.constant import REDIS_DISPATCHER_NOTIFICATION_KEY
+from ppmessage.core.constant import REDIS_PUSH_NOTIFICATION_KEY
 from ppmessage.core.constant import REDIS_MQTTPUSH_KEY
 from ppmessage.core.constant import REDIS_GCMPUSH_KEY
 from ppmessage.core.constant import REDIS_IOSPUSH_KEY
@@ -36,11 +38,6 @@ from ppmessage.db.models import MessagePushTask
 from ppmessage.db.models import PCSocketInfo
 from ppmessage.db.models import PCSocketDeviceData
 from ppmessage.db.models import ConversationUserData
-
-from ppmessage.core.srv.signal import async_signal_dis_message
-from ppmessage.core.srv.signal import async_signal_iospush_push
-from ppmessage.core.srv.signal import async_signal_pcsocket_push
-from ppmessage.core.srv.signal import async_signal_mqttpush_push
 
 from ppmessage.core.redis import redis_hash_to_dict
 from ppmessage.core.utils.datetimestring import datetime_to_timestamp
@@ -264,8 +261,7 @@ class AbstractPolicy(Policy):
 
     def _pcsocket_data(self, _device_uuid):
         _redis = self._redis
-        _key = PCSocketDeviceData.__tablename__ + \
-                   ".device_uuid." + _device_uuid
+        _key = PCSocketDeviceData.__tablename__ + ".device_uuid." + _device_uuid
         _pc_socket_uuid = _redis.get(_key)
         if _pc_socket_uuid == None:
             logging.error("device no pcsocket %s" % _device_uuid)
@@ -352,7 +348,6 @@ class AbstractPolicy(Policy):
             "app": _app_uuid
         }
         logging.info("push ios: %s" % str(_push))
-        #async_signal_iospush_push(_push)
         self._redis.rpush(REDIS_IOSPUSH_KEY, json.dumps(_push))
         return
 
@@ -390,10 +385,8 @@ class AbstractPolicy(Policy):
         logging.info("push android: %s" % str(_push))
         if _config.get("android_gcm_token") != None:
             self._redis.rpush(REDIS_GCMPUSH_KEY, json.dumps(_push))
-            #async_signal_gcmpush_push(_push)
         else :
             self._redis.rpush(REDIS_MQTTPUSH_KEY, json.dumps(_push))
-            #async_signal_mqttpush_push(_push)
         return
     
     def _push_to_pc(self, _user_uuid, _device_uuid):
@@ -437,7 +430,8 @@ class AbstractPolicy(Policy):
             "pcsocket": _pcsocket,
             "body": _body
         }
-        async_signal_pcsocket_push(_push)
+        _key = REDIS_PUSH_NOTIFICATION_KEY + ".host." + _pcsocket["host"] + ".port." + _pcsocket["port"]
+        self._redis.rpush(_key, json.dumps(_push))
         return
     
     def _push_to_mobile(self, _user_uuid, _device_uuid):
@@ -561,9 +555,8 @@ class AbstractPolicy(Policy):
         _row = MessagePushTask(**_task)
         _row.async_add()
         _row.create_redis_keys(self._redis)
-        #self._send_to_queue(_row.uuid)
         _m = {"task_uuid": _row.uuid}
-        async_signal_dis_message(_m)
+        self._redis.rpush(REDIS_DISPATCHER_NOTIFICATION_KEY, json.dumps(_m))
         return
 
     def _get_app_apologize(self):

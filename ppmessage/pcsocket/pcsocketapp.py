@@ -12,18 +12,22 @@ from ppmessage.core.constant import REDIS_PORT
 
 from ppmessage.core.constant import PCSOCKET_SRV
 
-from ppmessage.core.constant import REDIS_TYPING_KEY
-from ppmessage.core.constant import REDIS_ONLINE_KEY
+from ppmessage.core.constant import REDIS_TYPING_LISTEN_KEY
+from ppmessage.core.constant import REDIS_ONLINE_LISTEN_KEY
+
+from ppmessage.core.constant import REDIS_ACK_NOTIFICATION_KEY
+from ppmessage.core.constant import REDIS_PUSH_NOTIFICATION_KEY
+from ppmessage.core.constant import REDIS_SEND_NOTIFICATION_KEY
+from ppmessage.core.constant import REDIS_TYPING_NOTIFICATION_KEY
+from ppmessage.core.constant import REDIS_ONLINE_NOTIFICATION_KEY
+from ppmessage.core.constant import REDIS_LOGOUT_NOTIFICATION_KEY
+
 from ppmessage.core.constant import REDIS_PPCOM_ONLINE_KEY
 
 from ppmessage.core.constant import DIS_WHAT
+from ppmessage.core.constant import DATETIME_FORMAT
 
 from ppmessage.core.constant import TIMEOUT_WEBSOCKET_OFFLINE
-
-from ppmessage.core.srv.basehandler import BaseHandler
-
-from ppmessage.core.srv.signal import async_signal
-from ppmessage.core.srv.signal import async_signal_send_send
 
 from ppmessage.core.utils.getipaddress import getIPAddress
 from ppmessage.core.utils.datetimestring import now_to_string
@@ -39,11 +43,9 @@ from ppmessage.dispatcher.policy.policy import AbstractPolicy
 
 from .error import DIS_ERR
 
+from tornado.ioloop import IOLoop
 from tornado.web import Application
 from tornado.web import RequestHandler
-from tornado.ioloop import IOLoop
-
-from Queue import Queue
 
 import datetime
 import logging
@@ -54,12 +56,14 @@ import json
 import copy
 
 def pcsocket_user_online(_redis, _user_uuid, _body):
-    _key = REDIS_ONLINE_KEY + ".user_uuid." + _user_uuid
+    _key = REDIS_ONLINE_LISTEN_KEY + ".user_uuid." + _user_uuid
     _listeners = _redis.smembers(_key)
     for _i in _listeners:
         _listener = json.loads(_i)
         _body["device_uuid"] = _listener["device_uuid"]
-        async_signal(_listener["host"], _listener["port"], PCSOCKET_SRV.ONLINE, copy.deepcopy(_body))
+        _body["createtime"] = datetime.datetime.now().strftime(DATETIME_FORMAT["basic"])
+        _key = REDIS_ONLINE_NOTIFICATION_KEY + ".host." + _listener["host"] + ".port." + _listener["port"]
+        _redis.rpush(_key, json.dumps(_body))
     return
     
 class MainHandler(RequestHandler):
@@ -67,62 +71,10 @@ class MainHandler(RequestHandler):
         self.write("PCSOCKET WORKED.")
         return
 
-class TypingHandler(RequestHandler):
-    def post(self):
-        _body = json.loads(self.request.body)
-        _device_uuid = _body.get("listen_device")
-        _user_uuid = _body.get("typing_user")
-        _conversation_uuid = _body.get("typing_conversation")
-        _ws = self.application.ws_hash.get(_device_uuid)
-        if _ws == None:
-            return
-        _ws.send_typing(_user_uuid, _conversation_uuid)
-        return
-
-class OnlineHandler(RequestHandler):
-    def post(self):
-        _body = json.loads(self.request.body)
-        logging.info("recv online:%s" % str(_body))
-        _device_uuid = _body.get("device_uuid")
-        _ws = self.application.ws_hash.get(_device_uuid)
-        if _ws == None:
-            logging.error("no such ws<->device needs noti:%s" % _device_uuid)
-            return
-        _ws.send_online(_body)
-        return
-
-class AckHandler(RequestHandler):
-    def post(self):
-        _body = json.loads(self.request.body)
-        logging.info("recv ack:%s" % str(_body))
-        _device_uuid = _body.get("device_uuid")
-        _ws = self.application.ws_hash.get(_device_uuid)
-        if _ws == None:
-            logging.error("no such ws<->device needs noti:%s" % _device_uuid)
-            return
-        _ws.send_ack(_body)
-        return
-
-class LogoutHandler(RequestHandler):
-    def post(self):
-        _body = json.loads(self.request.body)
-        logging.info("recv logout:%s" % str(_body))
-        _device_uuid = _body.get("device_uuid")
-        _ws = self.application.ws_hash.get(_device_uuid)
-        if _ws == None:
-            logging.error("no websocket for the device:%s" % _device_uuid)
-            return
-        _ws.send_logout(_body)
-        return
-
 class PCSocketApp(Application):
-
-    def hasCallback(self):
-        return True
     
     def __init__(self):
         self.ws_hash = {}
-        self.send_queue = Queue()
         self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
         
         settings = {}
@@ -130,11 +82,6 @@ class PCSocketApp(Application):
         handlers = []
         handlers.append(("/", MainHandler))
         handlers.append(("/"+PCSOCKET_SRV.WS, WSHandler))
-        handlers.append(("/"+PCSOCKET_SRV.ACK, AckHandler))
-        handlers.append(("/"+PCSOCKET_SRV.PUSH, BaseHandler))
-        handlers.append(("/"+PCSOCKET_SRV.TYPING, TypingHandler))
-        handlers.append(("/"+PCSOCKET_SRV.ONLINE, OnlineHandler))
-        handlers.append(("/"+PCSOCKET_SRV.LOGOUT, LogoutHandler))
         Application.__init__(self, handlers, **settings)
         return
 
@@ -230,16 +177,18 @@ class PCSocketApp(Application):
         return
     
     def user_typing(self, _user_uuid, _conversation_uuid):
-        _key = REDIS_TYPING_KEY + ".user_uuid." + _user_uuid
+        _key = REDIS_TYPING_LISTEN_KEY + ".user_uuid." + _user_uuid
         _listens = self.redis.smembers(_key)
         for _listen in _listens:
             _listen = json.loads(_listen)
-            _d = {
+            _body = {
                 "typing_user": _user_uuid,
+                "listen_device": _listen["device_uuid"],
                 "typing_conversation": _conversation_uuid,
-                "listen_device": _listen["device_uuid"]
+                "createtime": datetime.datetime.now().strftime(DATETIME_FORMAT["basic"])
             }
-            async_signal(_listen["host"], _listen["port"], PCSOCKET_SRV.TYPING, _d)
+            _key = REDIS_TYPING_NOTIFICATION_KEY + ".host." + _listen["host"] + ".port." + _listen["port"]
+            self.redis.rpush(_key, json.dumps(_body))
         return
 
     def user_online(self, _user_uuid, _body):
@@ -297,7 +246,7 @@ class PCSocketApp(Application):
         }
         _s = json.dumps(_d)
         for _user_uuid in _users:
-            _key = REDIS_ONLINE_KEY + ".user_uuid." + _user_uuid
+            _key = REDIS_ONLINE_LISTEN_KEY + ".user_uuid." + _user_uuid
             self.redis.sadd(_key, _s)
 
         _ws._watch_online["users"] = _users
@@ -315,7 +264,7 @@ class PCSocketApp(Application):
         }
         _s = json.dumps(_d)
         for _user_uuid in _users:
-            _key = REDIS_ONLINE_KEY + ".user_uuid." + _user_uuid
+            _key = REDIS_ONLINE_LISTEN_KEY + ".user_uuid." + _user_uuid
             self.redis.srem(_key, _s)
         _ws._watch_online["users"] = None
         return
@@ -339,7 +288,7 @@ class PCSocketApp(Application):
             if _user_uuid == _ws.user_uuid:
 		continue
             _users.add(_user_uuid)
-            _listen_key = REDIS_TYPING_KEY + ".user_uuid." + _user_uuid
+            _listen_key = REDIS_TYPING_LISTEN_KEY + ".user_uuid." + _user_uuid
             self.redis.sadd(_listen_key, _v)
         _ws._watch_typing["users"] = _users
         _ws._watch_typing["conversation"] = _conversation_uuid
@@ -356,20 +305,10 @@ class PCSocketApp(Application):
         }
         _v = json.dumps(_d)
         for _user_uuid in _users:
-            _listen_key = REDIS_TYPING_KEY + ".user_uuid." + _user_uuid
+            _listen_key = REDIS_TYPING_LISTEN_KEY + ".user_uuid." + _user_uuid
             self.redis.srem(_listen_key, _v)
         _ws._watch_typing["users"] = None
         _ws._watch_typing["conversation"] = None
-        return
-
-    def _send_loop(self):
-        if self.send_queue.empty() == True:
-            return
-        _body = self.send_queue.get(False)
-        if _body == None:
-            return
-        self.send_queue.task_done()
-        async_signal_send_send(_body)
         return
     
     def send_send(self, _device_uuid, _body):
@@ -377,9 +316,9 @@ class PCSocketApp(Application):
             "host": self.register["host"],
             "port": self.register["port"],
             "device_uuid": _device_uuid
-        }        
-        self.send_queue.put(_body)
-        IOLoop.instance().add_callback(self._send_loop)
+        }
+        _key = REDIS_SEND_NOTIFICATION_KEY
+        self.redis.rpush(_key, json.dumps(_body))
         return
     
     def save_extra(self, _app_uuid, _device_uuid, _extra_data):
@@ -391,3 +330,105 @@ class PCSocketApp(Application):
         _row.async_add()
         _row.create_redis_keys(self.redis)
         return
+
+    def online_loop(self):
+        """
+        every 1000ms check online notification
+        """
+        key = REDIS_ONLINE_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+        while True:
+            noti = self.redis.lpop(key)
+            if noti == None:
+                # no message
+                return
+            body = json.loads(noti)
+            ws = self.ws_hash.get(body.get("devcie_uuid"))
+            if ws == None:
+                logging.error("No WS to handle online body: %s" % body) 
+                continue
+            ws.send_online(body)
+        return
+
+    def typing_loop(self):
+        """
+        every 1000ms check typing notification
+        """
+        key = REDIS_TYPING_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+        while True:
+            noti = self.redis.lpop(key)
+            if noti == None:
+                # no message
+                return
+            body = json.loads(noti)
+            ws = self.ws_hash.get(body.get("listen_device"))
+            if ws == None:
+                logging.error("No WS to handle typing body: %s" % body) 
+                continue
+            
+            user_uuid = body.get("typing_user")
+            conversation_uuid = body.get("typing_conversation")
+            ws.send_typing(user_uuid, conversation_uuid)
+
+        return
+    
+    def logout_loop(self):
+        """
+        every 1000ms check logout notification
+        """
+        key = REDIS_LOGOUT_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+        while True:
+            noti = self.redis.lpop(key)
+            if noti == None:
+                # no message
+                return
+            body = json.loads(noti)
+            ws = self.ws_hash.get(body.get("device_uuid"))
+            if ws == None:
+                logging.error("No WS to handle logout body: %s" % body) 
+                continue
+            ws.send_logout(body)
+        return
+    
+    def ack_loop(self):
+        """
+        every 100ms check ack notification
+        """
+        key = REDIS_ACK_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+        while True:
+            noti = self.redis.lpop(key)
+            if noti == None:
+                # no message
+                return
+            body = json.loads(noti)
+            ws = self.ws_hash.get(body.get("device_uuid"))
+            if ws == None:
+                logging.error("No WS to handle ack body: %s" % body) 
+                continue
+            ws.send_ack(body)
+        return
+
+    def push_loop(self):
+        """
+        every 50ms check push notification
+        """
+        key = REDIS_PUSH_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+        while True:
+            noti = self.redis.lpop(key)
+            if noti == None:
+                return
+
+            body = json.loads(noti)
+            logging.info("WS will send: %s" % body)
+            pcsocket = body.get("pcsocket") 
+            if pcsocket == None:
+                logging.error("no pcsocket in push: %s" % (body))
+                continue
+            device_uuid = pcsocket.get("device_uuid")
+            ws = self.ws_hash.get(device_uuid)
+            if ws == None:
+                logging.error("No WS handle push: %s" % body)
+                continue
+            ws.send_msg(body["body"])
+
+        return
+

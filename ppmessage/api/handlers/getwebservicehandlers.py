@@ -99,6 +99,20 @@ from .ppgetapiinfohandler import PPGetApiInfoHandler
 from .ppgetallapplisthandler import PPGetAllAppListHandler
 from .ppvalidateonlinedevicehandler import PPValidateOnlineDeviceHandler
 
+from .ppkefusetbusy import PPKefuSetBusy
+from .ppkefusetready import PPKefuSetReady
+from .ppkefusetrest import PPKefuSetRest
+
+from .ppaddpredefinedscript import PPAddPredefinedScript
+from .ppremovepredefinedscript import PPRemovePredefinedScript
+from .ppaddpredefinedscriptgroup import PPAddPredefinedScriptGroup
+from .ppremovepredefinedscriptgroup import PPRemovePredefinedScriptGroup
+from .ppmovepredefinedscriptintogroup import PPMovePredefinedScriptIntoGroup
+
+from .ppgetallpredefinedscript import PPGetAllPredefinedScript
+from .ppgetallpredefinedscriptgroup import PPGetAllPredefinedScriptGroup
+from .ppgetpredefinedscriptwithgroup import PPGetPredefinedScriptWithGroup
+
 def getWebServiceHandlers():
     handler_list = []
 
@@ -212,6 +226,20 @@ def getWebServiceHandlers():
 
     handler_list.append((r"/PP_GET_ALL_APP_LIST", PPGetAllAppListHandler))
     handler_list.append((r"/PP_VALIDATE_ONLINE_DEVICE", PPValidateOnlineDeviceHandler))
+
+    handler_list.append((r"/PPKEFU_SET_BUSY", PPKefuSetBusy))
+    handler_list.append((r"/PPKEFU_SET_READY", PPKefuSetReady))
+    handler_list.append((r"/PPKEFU_SET_REST", PPKefuSetRest))
+
+    handler_list.append(("/PP_ADD_PREDEFINED_SCRIPT", PPAddPredefinedScript))
+    handler_list.append(("/PP_REMOVE_PREDEFINED_SCRIPT", PPRemovePredefinedScript))
+    handler_list.append(("/PP_ADD_PREDEFINED_SCRIPT_GROUP", PPAddPredefinedScriptGroup))
+    handler_list.append(("/PP_REMOVE_PREDEFINED_SCRIPT_GROUP", PPRemovePredefinedScriptGroup))
+    handler_list.append(("/PP_MOVE_PREDEFINED_SCRIPT_INTO_GROUP", PPMovePredefinedScriptIntoGroup))
     
+    handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT", PPGetAllPredefinedScript))
+    handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT_GROUP", PPGetAllPredefinedScriptGroup))
+    handler_list.append(("/PP_GET_PREDEFINED_SCRIPT_WITH_GROUP", PPGetPredefinedScriptWithGroup))
+
     return handler_list
 

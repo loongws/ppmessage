@@ -426,9 +426,15 @@ GROUP_ALGORITHM = Enum([
     "ROBOT",
 ])
 
+SERVICE_USER_STATUS = Enum([
+    "READY",
+    "BUSY",
+    "REST",
+])
+
 WEB_TITLE = {
-    "user": "PPMessage | Opensource Plug and Play Online Customer Service System - ppmessage.com",
-    "admin": "PPMessage | Opensource Plug and Play Online Customer Service System - ppmessage.com",
+    "user": "PPMessage | Open Source Plug and Play Customer Communication Message Platform - ppmessage.com",
+    "admin": "PPMessage | Open Source Plug and Play Customer Communication Message Platform - ppmessage.com",
 }
 
 USER_NAME = {
@@ -459,8 +465,16 @@ REDIS_IOSPUSH_KEY = "redis_iospush_key"
 REDIS_GCMPUSH_KEY = "redis_gcmpush_key"
 REDIS_MQTTPUSH_KEY = "redis_mqttpush_key"
 
-REDIS_TYPING_KEY = "redis_typing_key"
-REDIS_ONLINE_KEY = "redis_online_key"
+REDIS_TYPING_LISTEN_KEY = "redis_typing_listen_key"
+REDIS_ONLINE_LISTEN_KEY = "redis_online_listen_key"
+
+REDIS_ACK_NOTIFICATION_KEY = "redis_ack_notification_key"
+REDIS_PUSH_NOTIFICATION_KEY = "redis_push_notification_key"
+REDIS_SEND_NOTIFICATION_KEY = "redis_send_notification_key"
+REDIS_TYPING_NOTIFICATION_KEY = "redis_typing_notification_key"
+REDIS_ONLINE_NOTIFICATION_KEY = "redis_online_notification_key"
+REDIS_LOGOUT_NOTIFICATION_KEY = "redis_logout_notification_key"
+REDIS_DISPATCHER_NOTIFICATION_KEY = "redis_dispatcher_notification_key"
 
 REDIS_PPKEFU_ONLINE_KEY = "redis_ppkefu_online_key"
 REDIS_PPCOM_ONLINE_KEY = "redis_ppcom_online_key"

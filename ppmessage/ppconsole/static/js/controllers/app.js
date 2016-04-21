@@ -116,13 +116,12 @@ angular.module("this_app")
             var userUuid = yvUser.get_uuid();
             var password = yvUser.get_password();
             var userEmail = yvUser.get_email();
-            var uuid = yvUtil.uuid();
-            var signature = sha1(uuid + userEmail + password);
             var body = {
-                user_email: yvUser.get_email(),
-                user_password: yvUser.get_password(),
-                user_uuid: yvUser.get_uuid()
+                user_email: userEmail,
+                user_password: password,
+                user_uuid: userUuid,
             };
+            console.log("autologin with: %s", body);
             body = yvUtil.base64_encode(JSON.stringify(body));
             var http = yvUtil.http_protocol(location.hostname);
             var url = http + location.host + "/ppkefu/#/noapp/auto-login/" + body;

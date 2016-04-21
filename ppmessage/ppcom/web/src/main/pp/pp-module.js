@@ -35,7 +35,7 @@ function PPModule(jQuery) {
              *         2 for release candiate
              *         3 for (final) release
              */
-            version : '0.2.0.0',
+            version : '0.2.0.2',
 
             /**
              * Boot PPCom with ppSettings

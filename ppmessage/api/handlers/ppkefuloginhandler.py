@@ -28,8 +28,6 @@ from ppmessage.core.constant import MESSAGE_SUBTYPE
 from ppmessage.core.constant import REDIS_PPKEFU_ONLINE_KEY
 
 from ppmessage.pcsocket.pcsocketapp import pcsocket_user_online
-from ppmessage.core.srv.signal import async_signal_dis_message
-from ppmessage.core.srv.signal import async_signal
 from ppmessage.core.redis import redis_hash_to_dict
 
 import traceback
@@ -52,7 +50,9 @@ class PPKefuLoginHandler(BaseHandler):
         if _pcsocket == None:
             return
         _logout = {"device_uuid": _device_uuid, "other_device": self.device.get("uuid")}
-        async_signal(_pcsocket["host"], _pcsocket["port"], PCSOCKET_SRV.LOGOUT, _logout)
+        _key = REDIS_LOGOUT_NOTIFICATION_KEY + ".host." + _pcsocket["host"] + ".port." + _pcsocket["port"]
+        _redis.rpush(_key, json.dumps(_logout))
+        
         logging.info("force logout the same user with multiple devices")
         return
 
