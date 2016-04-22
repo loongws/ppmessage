@@ -21,7 +21,7 @@
         <ul>
           <li ng-repeat="group in team.group_list | orderBy: 'createtime' " id="colored_group_{{$index}}" class="not_exist">
             
-            <a ng-click="checkout_to_group( group, $index )" >{{handle_group_name(group.group_name, 5)}}</a>
+            <a ng-click="checkout_to_group( group, $index )" >{{handle_group_name(group.group_name, 12)}}</a>
             <i class="glyphicon glyphicon-pencil dd" ng-click="show_update_group_modal( group, $index )" ng-show="isGroupEditable(group)" ></i>
             <i class="glyphicon glyphicon-trash dd" ng-click="remove_group( group, $index )" ng-show="isGroupEditable(group)" ></i>
             
@@ -44,7 +44,7 @@
               <td><input type="checkbox" id="current_list_{{$index}}" ng-click="select_user($index)" ng-show="showCheckAllColumn" /></td>
               <td>{{user.user_email}}</td>
               <td>{{show_identify(user.user_email)}}</td>
-              <td>{{handle_group_name(user.user_group_name, 3)}}</td>
+              <td>{{handle_group_name(user.user_group_name, 12)}}</td>
             </tr>
           </tbody>
         </table>
