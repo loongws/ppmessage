@@ -83,7 +83,7 @@ angular.module("this_app")
                     },
                     
                     processing: true,
-                    serching: true,
+                    searching: true,
                     paging: true,
                     pageLength: 10,
                     language: language,

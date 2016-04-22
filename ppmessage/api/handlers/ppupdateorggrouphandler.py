@@ -30,10 +30,12 @@ class PPUpdateOrgGroupHandler(BaseHandler):
     a org group detail and the org group must belong to this app
 
     """
-    def _get(self, _app_uuid, _group_uuid, _body):
+    def _update(self, _body):
         _redis = self.application.redis
-        _key = OrgGroup.__tablename__ + \
-                   ".app_uuid." + _app_uuid
+        _app_uuid = _body.get("app_uuid")
+        _group_uuid = _body.get("group_uuid")
+        
+        _key = OrgGroup.__tablename__ + ".app_uuid." + _app_uuid
         _is = _redis.sismember(_key, _group_uuid)
         if _is != True:
             self.setErrorCode(API_ERR.NO_ORG_GROUP)
@@ -81,5 +83,5 @@ class PPUpdateOrgGroupHandler(BaseHandler):
         # FIXME: check permission of the app_uuid
         # if self.app_uuid == PPMESSAGE_UUID
         # or self.app_uuid == app_uuid
-        self._get(_body.get("app_uuid"), _body.get("group_uuid"), _body)
+        self._update(_body)
         return

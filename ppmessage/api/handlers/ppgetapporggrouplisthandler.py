@@ -55,6 +55,7 @@ class PPGetAppOrgGroupListHandler(BaseHandler):
 
         for _group in _groups:
             _group["conversation_uuid"] = _conversation_dict.get(_group["uuid"])
+            _group["is_distributor"] = eval(str(_group["is_distributor"]))
 
         _r = self.getReturnData()
         _r["list"] = _groups
