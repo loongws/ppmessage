@@ -26,7 +26,6 @@
             <i class="glyphicon glyphicon-trash dd" ng-click="remove_group( group, $index )" ng-show="isGroupEditable(group)" ></i>
             
           </li>
-          <!-- <li id="no_group_list" class="not_exist"><a ng-click="checkout_no_group_user()" >未分组（{{team.no_group_info.user_list.length}}）</a></li> -->
         </ul>
         <span  ng-click="show_create_group_modal()"><i class="glyphicon glyphicon-plus"></i>{{ "application.grouping.NEW_GROUP" | translate }}</span>
       </div>
@@ -52,40 +51,8 @@
       </div>
     </div>
   </div>
-  <h3 style="margin-top:40px;">{{ "application.grouping.GROUP_MODE_CONFIG" | translate }}</h3>
-  <div class="boxed-group-inner clearfix" style="max-height:300px;overflow-x:scroll">
-    <table class="table" style="margin-bottom:0px !important">
-      <thead>
-        <tr>
-          <th class="one_five">{{ "application.grouping.IS_SHOW_GROUP" | translate }}</th>
-          <!-- <th class="one_five">显示顺序</th> -->
-          <th class="one_five">{{ "application.grouping.GROUP_NAME" | translate }}</th>
-          <!-- <th class="two_five">服务时间</th> -->
-          <th class="three_zero">{{ "application.grouping.DISPATCH_WAY" | translate }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="group-config" ng-repeat="group in team.group_list | filter : groupListFilter |orderBy:'createtime' ">
-          <td><input type="checkbox" ng-model="group.checked" ng-click="modify_group($index)"/></td>
-          <!-- <td><input type="text" class="five_zero" ng-model="group.group_visible_order_for_ppcom" ng-change="modify_group($index)" ng-model-options="{ updateOn: 'blur' }" /></td> -->
-          <td class="top">{{handle_group_name(group.group_name, 3)}}</td>
-          <!-- <td><input type="text" name="start_time_{{$index}}" class="two_five" ng-model="group.start_time" ng-change="modify_group($index)" ng-model-options="{ updateOn: 'blur' }">点 至<input type="text" name="end_time_{{$index}}" class="two_five" ng-model="group.end_time" ng-change="modify_group($index)" ng-model-options="{ updateOn: 'blur' }">点</td> -->
-          <td>
-            <select ng-model="group.group_route_algorithm" ng-change="modify_group($index)">
-              <option value="broadcast">新增访客平均分流</option>
-              <option value="smart">优先分配给“发送总消息”最少客服</option>
-              <option value="load">优先分配给“累积总消息数”最少客服</option>
-            </select>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-     <p class="button-group" style="display:none;"> 
-       <a ui-sref="app.glance" target="_blank" href="#/app/glance"><span class="union left">效果预览</span></a> 
-       <span class="union right" ng-click="config_group()">提交</span> 
-     </p> 
-  </div>
 </div>
+
 <div class="modal fade" id="create_group" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document" style="top: 150px;">
     <div class="modal-content">
@@ -144,6 +111,3 @@
     </div>
   </div>
 </div>
-<script>
-  $(function () { $("[data-toggle='tooltip']").tooltip(); });
-</script>
