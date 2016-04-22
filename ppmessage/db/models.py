@@ -11,7 +11,7 @@ from ppmessage.core.constant import MESSAGE_STATUS
 from ppmessage.core.constant import MESSAGE_SUBTYPE
 from ppmessage.core.constant import CONVERSATION_STATUS
 from ppmessage.core.constant import SERVICE_USER_STATUS
-from ppmessage.core.constant import GROUP_ALGORITHM.SMART
+from ppmessage.core.constant import GROUP_ALGORITHM
 
 from ppmessage.core.redis import row_to_redis_hash
 from ppmessage.core.redis import redis_hash_to_dict
