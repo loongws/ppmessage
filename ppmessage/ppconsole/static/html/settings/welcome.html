@@ -5,7 +5,7 @@
       <table class="config_basic">
         <tr>
           <th>
-            <span class="u-icon" tooltips tooltip-template="网站用户鼠标移到聊天图标时显示的欢迎信息"></span>
+            <span class="u-icon" tooltips tooltip-template="{{ 'application.welcome.TOOLTIP_WELCOME_TAG' | translate }}"></span>
           </th>
           <td>
             {{ "application.welcome.WELCOME_INFO_TAG" | translate }}：
@@ -13,31 +13,31 @@
           <td colspan="2"><input type="text" placeholder="{{ 'application.welcome.WELCOME_INFO_TAG' | translate }}" class="form-control div" ng-model="current_bubble.welcome_message"></td>
           <td><button class="btn btn-primary" style="margin-left:20px;" type="submit" ng-click="update_team_info(basicForm.$dirty)">{{ "application.welcome.SAVE_TAG" | translate }}</button></td>
         </tr>
-
-        <tr>
-          <th>
-            <span class="u-icon" tooltips tooltip-template="网页打开时候自动弹出聊天界面"></span>
-          </th>
-          <td>
-            {{ "application.welcome.AUTO_POPUP" | translate }}：
-          </td>
-          <td>
-            <input style="margin-left:10px;" type="radio" id="radio1" name="show_ppcom_hover" value="ONCE" ng-model="current_bubble.show_ppcom_hover"/>
-            <label for="radio1"><span></span>{{ "application.welcome.POPUP_ONLY_ONCE" | translate }}</label>
-          </td>
-          <td>
-            <input style="margin-left:0px;" type="radio" id="radio2" name="show_ppcom_hover" value="NEVER" ng-model="current_bubble.show_ppcom_hover"/>
-            <label for="radio2"><span></span>{{ "application.welcome.POPUP_NEVER" | translate }}</label>
-          </td>
-          <td>
-            <input type="radio" id="radio3" name="show_ppcom_hover" value="ALWAYS" ng-model="current_bubble.show_ppcom_hover" />
-            <label for="radio3"><span></span>{{ "application.welcome.POPUP_ALWAYS" | translate }}</label>
-          </td>
-        </tr>
+        
+        <!-- <tr> -->
+        <!--   <th> -->
+        <!--     <span class="u-icon" tooltips tooltip-template="网页打开时候自动弹出聊天界面"></span> -->
+        <!--   </th> -->
+        <!--   <td> -->
+        <!--     {{ "application.welcome.AUTO_POPUP" | translate }}： -->
+        <!--   </td> -->
+        <!--   <td> -->
+        <!--     <input style="margin-left:10px;" type="radio" id="radio1" name="show_ppcom_hover" value="ONCE" ng-model="current_bubble.show_ppcom_hover"/> -->
+        <!--     <label for="radio1"><span></span>{{ "application.welcome.POPUP_ONLY_ONCE" | translate }}</label> -->
+        <!--   </td> -->
+        <!--   <td> -->
+        <!--     <input style="margin-left:0px;" type="radio" id="radio2" name="show_ppcom_hover" value="NEVER" ng-model="current_bubble.show_ppcom_hover"/> -->
+        <!--     <label for="radio2"><span></span>{{ "application.welcome.POPUP_NEVER" | translate }}</label> -->
+        <!--   </td> -->
+        <!--   <td> -->
+        <!--     <input type="radio" id="radio3" name="show_ppcom_hover" value="ALWAYS" ng-model="current_bubble.show_ppcom_hover" /> -->
+        <!--     <label for="radio3"><span></span>{{ "application.welcome.POPUP_ALWAYS" | translate }}</label> -->
+        <!--   </td> -->
+        <!-- </tr> -->
         
         <tr>
           <th>
-            <span class="u-icon" tooltips tooltip-template="聊天启动图标的颜色"></span>
+            <span class="u-icon" tooltips tooltip-template="{{ 'application.welcome.TOOLTIP_COLOR_TAG' | translate }}"></span>
           </th>
           <td>
             {{ "application.welcome.COLOR" | translate }}：

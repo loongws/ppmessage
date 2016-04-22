@@ -263,7 +263,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     POPUP_NEVER: "Never",
                     POPUP_ALWAYS: "Always",
                     COLOR: "Color",
-                    
+                    TOOLTIP_WELCOME_TAG: "Welcome string when mouse hover on chat launcher icon.",
+                    TOOLTIP_COLOR_TAG: "Chat launcher icon colour.",
                 },
 
                 grouping: {
@@ -657,12 +658,14 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
                     WELCOME_INFO_TAG: "欢迎信息",
                     SAVE_TAG: "保存",
-                    AUTO_POPUP: "自动退出",
+                    AUTO_POPUP: "自动弹出",
                     POPUP_ONLY_ONCE: "仅首次",
                     POPUP_NEVER: "从不弹出",
                     POPUP_ALWAYS: "总是弹出",
                     COLOR: "图标颜色",
-                    
+
+                    TOOLTIP_WELCOME_TAG: "鼠标悬停在聊天图标上的时候，显示的欢迎信息",
+                    TOOLTIP_COLOR_TAG: "聊天图标的背景颜色",
                 },
 
                 grouping: {
