@@ -85,10 +85,10 @@ angular.module("this_app")
         
         $scope.show_identify = function(_email) {
             if(_email == yvUser.get_email()) {
-                return $scope.lang["application.grouping.ADMIN_USER_TAG"],
+                return $scope.lang["application.grouping.ADMIN_USER_TAG"];
                 //return '管理员';
             }else {
-                return $scope.lang["application.grouping.SERVICE_USER_TAG"],
+                return $scope.lang["application.grouping.SERVICE_USER_TAG"];
                 //return '客服';
             };
         };
