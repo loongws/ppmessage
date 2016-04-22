@@ -301,7 +301,9 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     GROUP_DESC: "Group Infos",
                     MODIFY_GROUP: "Modify Group",
                     SAVE: "Save"
-                    
+
+                    ADMIN_USER_TAG: "Team admin",
+                    SERVICE_USER_TAG: "Service user",
                 },
 
                 people: {
@@ -703,6 +705,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     MODIFY_GROUP: "修改分组",
                     SAVE: "确认修改"
                     
+                    ADMIN_USER_TAG: "团队管理员",
+                    SERVICE_USER_TAG: "客服人员",
                 },
                 
                people: {

@@ -11,6 +11,7 @@ from ppmessage.core.constant import MESSAGE_STATUS
 from ppmessage.core.constant import MESSAGE_SUBTYPE
 from ppmessage.core.constant import CONVERSATION_STATUS
 from ppmessage.core.constant import SERVICE_USER_STATUS
+from ppmessage.core.constant import GROUP_ALGORITHM.SMART
 
 from ppmessage.core.redis import row_to_redis_hash
 from ppmessage.core.redis import redis_hash_to_dict
@@ -545,7 +546,7 @@ class OrgGroup(CommonMixin, BaseModel):
     )
 
     def __init__(self, *args, **kwargs):
-        self.group_route_algorithm = "broadcast"
+        self.group_route_algorithm = GROUP_ALGORITHM.SMART
         self.group_visible_for_ppcom = True
         self.group_visible_order_for_ppcom = 1
         self.group_work_time_str="09:00-18:00"
@@ -554,8 +555,7 @@ class OrgGroup(CommonMixin, BaseModel):
 
     def create_redis_keys(self, _redis, *args, **kwargs):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
-        _key = self.__tablename__ + \
-               ".app_uuid." + self.app_uuid
+        _key = self.__tablename__ + ".app_uuid." + self.app_uuid
         _redis.sadd(_key, self.uuid)
         return
 
@@ -563,8 +563,7 @@ class OrgGroup(CommonMixin, BaseModel):
         _obj = redis_hash_to_dict(_redis, OrgGroup, self.uuid)
         if _obj == None or _obj["app_uuid"] == None:
             return
-        _key = self.__tablename__ + \
-               ".app_uuid." + _obj["app_uuid"]
+        _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"]
         _redis.srem(_key, _obj["uuid"])
         CommonMixin.delete_redis_keys(self, _redis)
         return
