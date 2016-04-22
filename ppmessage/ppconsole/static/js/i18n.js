@@ -304,6 +304,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
                     ADMIN_USER_TAG: "Team admin",
                     SERVICE_USER_TAG: "Service user",
+
+                    UNAMED_GROUP_NAME_TAG: "Not grouped",
                 },
 
                 people: {
@@ -707,6 +709,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     
                     ADMIN_USER_TAG: "团队管理员",
                     SERVICE_USER_TAG: "客服人员",
+
+                    UNAMED_GROUP_NAME_TAG: "未分组",
                 },
                 
                people: {

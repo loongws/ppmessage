@@ -1,10 +1,11 @@
 //// this is data service for `GroupingCtrl` ///////
 (function() {
 
-    yvAppGroupingService.$inject = [ 'yvLog', 'yvAjax', 'yvUser', 'yvUtil', 'yvCallbackService', 'yvAppPeopleService' ];
-    function yvAppGroupingService( yvLog, yvAjax, yvUser, yvUtil, yvCallbackService, yvAppPeopleService ) {
+    yvAppGroupingService.$inject = [ '$filter', 'yvLog', 'yvAjax', 'yvUser', 'yvUtil', 'yvCallbackService', 'yvAppPeopleService' ];
+    function yvAppGroupingService( $filter, yvLog, yvAjax, yvUser, yvUtil, yvCallbackService, yvAppPeopleService ) {
 
-        var UNGROUPED_GROUP_INFO = { uuid: 'group_uuid_no_group', group_name: '未分组' },
+        var unamed_group_name = $filter("translate")("application.grouping.UNAMED_GROUP_NAME_TAG");
+        var UNGROUPED_GROUP_INFO = { uuid: 'group_uuid_no_group', group_name: unamed_group_name },
             jQuery = $,
 
             groups = {
