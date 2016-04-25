@@ -45,7 +45,8 @@ make && sudo make install
 
 # Installing other package might have similar problem. In that case, use '--ignore-installed xxx' should do the trick.
 
-sudo pip install -i http://pypi.douban.com/simple \
+# "pip install -i http://pypi.douban.com/simple xxx" might be faster
+sudo pip install \
     axmlparserpy \
     beautifulsoup4 \
     biplist \

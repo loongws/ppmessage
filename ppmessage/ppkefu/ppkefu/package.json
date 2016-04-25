@@ -33,13 +33,13 @@
 
     "pack:all": "npm run pack:osx && npm run pack:win && npm run pack:win64 && npm run pack:linux",
 
-    "build:osx": "npm run pack:osx && electron-builder \"electron/dist/osx/${npm_package_name}-darwin-x64/${npm_package_name}.app\" --platform=osx --out=\"electron/dist/osx\" --config=electron/config-osx.json",
+    "build:osx": "npm run pack:osx && electron-builder \"electron/dist/osx/${npm_package_name}-darwin-x64/${npm_package_name}.app\" --platform=osx --out=\"electron/dist/osx\" --config=electron/assets/osx/config.json",
 
     "build:mas": "npm run pack:mas && cd electron/sign-mac-app && bash installer.sh",
 
-    "build:win32": "npm run pack:win32 && electron-builder \"electron/dist/win32/PPMessage-win32-ia32\" --platform=win --out=\"electron/dist/win32\" --config=electron/config-win32.json",
+    "build:win32": "npm run pack:win32 && electron-builder \"electron/dist/win32/PPMessage-win32-ia32\" --platform=win --out=\"electron/dist/win32\" --config=electron/assets/win/config.json",
 
-    "build:win64": "npm run pack:win64 && electron-builder \"electron/dist/win64/PPMessage-win32-x64\" --platform=win --out=\"electron/dist/win64\" --config=electron/config-win64.json"
+    "build:win64": "npm run pack:win64 && electron-builder \"electron/dist/win64/PPMessage-win32-x64\" --platform=win --out=\"electron/dist/win64\" --config=electron/assets/win/config.json"
   },
   "dependencies": {
 

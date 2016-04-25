@@ -60,7 +60,8 @@ cd libmaxminddb
 ./configure
 make && sudo make install
 
-sudo pip install -i http://pypi.douban.com/simple \
+# "pip install -i http://pypi.douban.com/simple xxx" might be faster
+sudo pip install \
     axmlparserpy \
     beautifulsoup4 \
     biplist \

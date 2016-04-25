@@ -146,7 +146,7 @@ ENV PATH=$PATH:/usr/local/nginx/sbin
 ########## step 5: other docker settings ##########
 EXPOSE 8080
 
-VOLUME ["/ppmessage", "/usr/local/var/log", "usr/local/opt/mdm/uploads"]
+VOLUME ["/ppmessage", "/usr/local/var/log", "/usr/local/opt/mdm/uploads"]
 
 COPY ["docker-entrypoint.sh", "/entrypoint.sh"]
 
