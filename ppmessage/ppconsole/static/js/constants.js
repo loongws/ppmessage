@@ -26,7 +26,7 @@ angular.module("this_app.constants", [])
         MAX_TEXT_LEN: 128,
 
         STATIC_PREFIX: "/{WEB_ROLE}/static/",
-        DEFAULT_USER_ICON: "/{WEB_ROLE}/static/img/avatar3_small.jpg",
+        DEFAULT_USER_ICON: "/{WEB_ROLE}/static/img/default-user.png",
 
         MESSAGE_TYPE: {
             NOTI: "NOTI",

@@ -59,8 +59,7 @@ angular.module("this_app")
                     // refresh data and update dom
                     response.list && $.each(response.list, function(index, item) {
 
-                        // Ignore 'S2S' conversation_type, only show 'P2S' type
-                        var ignore = item.conversation_type == 'S2S';
+                        var ignore = false;
 
                         if (!ignore) {
                             var conversation = {
