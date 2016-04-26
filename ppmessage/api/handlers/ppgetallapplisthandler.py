@@ -46,8 +46,6 @@ class PPGetAllAppListHandler(BaseHandler):
         _redis = self.application.redis
         _key = AppInfo.__tablename__
         _app_uuids = _redis.smembers(_key)
-        logging.info(_app_uuids)
-        
         if len(_app_uuids) == 0:
             _r = self.getReturnData()
             _r["app"] = []
