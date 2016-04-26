@@ -113,6 +113,8 @@ from .ppgetallpredefinedscript import PPGetAllPredefinedScript
 from .ppgetallpredefinedscriptgroup import PPGetAllPredefinedScriptGroup
 from .ppgetpredefinedscriptwithgroup import PPGetPredefinedScriptWithGroup
 
+from .ppcancelwaitingcreateconversation import PPCancelWaitingCreateConversation
+
 def getWebServiceHandlers():
     handler_list = []
 
@@ -240,6 +242,8 @@ def getWebServiceHandlers():
     handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT", PPGetAllPredefinedScript))
     handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT_GROUP", PPGetAllPredefinedScriptGroup))
     handler_list.append(("/PP_GET_PREDEFINED_SCRIPT_WITH_GROUP", PPGetPredefinedScriptWithGroup))
+
+    handler_list.append(("/PP_CANCEL_WAITING_CREATE_CONVERSATION", PPCancelWaitingCreateConversation))
 
     return handler_list
 
