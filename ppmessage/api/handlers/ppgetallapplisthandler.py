@@ -42,7 +42,7 @@ class PPGetAllAppListHandler(BaseHandler):
             return False
         return True
 
-    def _get(self, _user_uuid):
+    def _get(self):
         _redis = self.application.redis
         _key = AppInfo.__tablename__
         _app_keys = _redis.smembers(_key)
@@ -56,6 +56,7 @@ class PPGetAllAppListHandler(BaseHandler):
             _pi.hgetall(_app_key)
         _apps = _pi.execute()
 
+        logging.info(_apps)
         _r = self.getReturnData()
         _r["app"] = _apps
         return
@@ -73,6 +74,5 @@ class PPGetAllAppListHandler(BaseHandler):
             self.setErrorCode(API_ERR.NO_PARA)
             return
         if self._check_user(_user_uuid) == True:
-            self._get(_user_uuid)
-            return
+            self._get()
         return
