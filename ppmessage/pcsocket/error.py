@@ -18,6 +18,8 @@ DIS_ERR = enum(
     "MESSAGE",
     "NOTOKEN",
     "WRLEVEL",
+    "CONVERSATION",
+    "WAITING",
 )
 
 def get_error_string(_code):
@@ -32,6 +34,8 @@ def get_error_string(_code):
         DIS_ERR.MESSAGE: "message content is illegal.",
         DIS_ERR.NOTOKEN: "no api auth token provided.",
         DIS_ERR.WRLEVEL: "wrong api auth level.",
+        DIS_ERR.CONVERSATION: "can not create conversation.",
+        DIS_ERR.WAITING: "keep waiting to create conversation.",
     }
     _str = _err.get(_code)
     if _str == None:

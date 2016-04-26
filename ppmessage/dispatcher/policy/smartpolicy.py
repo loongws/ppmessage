@@ -21,31 +21,6 @@ class SmartPolicy(AbstractPolicy):
     @classmethod
     def name(cls):
         return APP_POLICY.SMART
-
-    @classmethod
-    def fallback_users(cls, _group_uuid, _redis):
-        _key = AppUserData.__tablename__ + ".app_uuid." + ".is_service_user.True.is_distributor_user.True"
-        _users = _redis.smembers(_key)
-        if len(_users) > 0:
-            return _users[0]
-        _key = AppUserData.__tablename__ + ".app_uuid." + ".is_service_user.True"
-        _users = _redis.smembers(_key)
-        _count = len(_users)
-        if _count > 0:
-            return _users[random.randint(0, _count - 1)]
-        return None
-
-    @classmethod
-    def _search_best_with_app(cls, _app_uuid, _redis):
-        _users = AbstractPolicy.distributor_users(_app_uuid, _redis)
-        return SmartAppAlgorithm._best(_users, _redis)
-
-    @classmethod
-    def create_conversation_users(cls, _app_uuid, _group_uuid, _redis):
-        _users = cls._search_best_with_app(_app_uuid, _redis)
-        if _users == None or len(_users) == 0:
-            _users = cls.fallback_users(_app_uuid, _redis)
-        return _users
     
     def users(self):
         super(SmartPolicy, self).users()
