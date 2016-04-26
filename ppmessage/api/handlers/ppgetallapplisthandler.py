@@ -45,18 +45,19 @@ class PPGetAllAppListHandler(BaseHandler):
     def _get(self):
         _redis = self.application.redis
         _key = AppInfo.__tablename__
-        _app_keys = _redis.smembers(_key)
-        if len(_app_keys) == 0:
+        _app_uuids = _redis.smembers(_key)
+        
+        if len(_app_uuids) == 0:
             _r = self.getReturnData()
             _r["app"] = []
             return
             
         _pi = _redis.pipeline()
-        for _app_key in _app_keys:
-            _pi.hgetall(_app_key)
+        for _app_uuid in _app_uuids:
+            _key = AppInfo.__tablename__ + ".uuid." + _app_uuid
+            _pi.hgetall(_key)
         _apps = _pi.execute()
 
-        logging.info(_apps)
         _r = self.getReturnData()
         _r["app"] = _apps
         return
