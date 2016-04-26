@@ -57,6 +57,7 @@ DIS_WHAT = Enum([
     "TYPING",
     "TYPING_WATCH",
     "TYPING_UNWATCH",
+    "CONVERSATION",
 ])
 
 ONLINE_STATUS = Enum([
@@ -427,6 +428,7 @@ GROUP_ALGORITHM = Enum([
 ])
 
 SERVICE_USER_STATUS = Enum([
+    "NULL",
     "READY",
     "BUSY",
     "REST",
@@ -475,6 +477,8 @@ REDIS_TYPING_NOTIFICATION_KEY = "redis_typing_notification_key"
 REDIS_ONLINE_NOTIFICATION_KEY = "redis_online_notification_key"
 REDIS_LOGOUT_NOTIFICATION_KEY = "redis_logout_notification_key"
 REDIS_DISPATCHER_NOTIFICATION_KEY = "redis_dispatcher_notification_key"
+
+REDIS_AMD_KEY = "redis_amd_key"
 
 REDIS_PPKEFU_ONLINE_KEY = "redis_ppkefu_online_key"
 REDIS_PPCOM_ONLINE_KEY = "redis_ppcom_online_key"
