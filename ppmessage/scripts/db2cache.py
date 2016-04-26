@@ -56,6 +56,9 @@ from ppmessage.db.models import PortalWebSession
 from ppmessage.db.models import ApiInfo
 from ppmessage.db.models import ApiTokenData
 
+from ppmessage.db.models import PredefinedScript
+from ppmessage.db.models import PredefinedScriptGroup
+
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 
@@ -110,6 +113,10 @@ def load():
         OrgUserGroupData,        
 
         ApiInfo,
+
+        PredefinedScript,
+        PredefinedScriptGroup,
+        
     ]
 
     logging.basicConfig(level=logging.DEBUG)
