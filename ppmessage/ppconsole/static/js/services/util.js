@@ -39,7 +39,26 @@ function $yvUtilService($rootScope, $translate, $http, $base64, yvConstants, yvL
                 getMessageFormatedDate: function(messageJsonBody) {
                     if (!messageJsonBody) return '';
 
+                    if ( messageJsonBody.message_body &&
+                         typeof messageJsonBody.message_body === 'string' ) {
+                        var jsonMsg = JSON.parse( messageJsonBody.message_body );
+                        return moment.unix( jsonMsg.ts ).format( 'YYYY-MM-DD HH:mm' );
+                    }
+
                     return dateUtil.moment(messageJsonBody.updatetime).format('YYYY-MM-DD HH:mm');
+                },
+
+                getConversationUpdateTsInSeconds: function( conversation ) {
+                    if ( !conversation ) return 0;
+                    
+                    if ( conversation.latest_message ) {
+                        var msgStringBody = conversation.latest_message.message_body;
+                        if ( msgStringBody && typeof msgStringBody === 'string' ) {
+                            return JSON.parse( msgStringBody ).ts;
+                        }
+                    }
+                    
+                    return dateUtil.moment( conversation.updatetime ).unix();
                 }
             }
             
