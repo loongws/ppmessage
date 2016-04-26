@@ -127,7 +127,7 @@ class DeviceUser(CommonMixin, BaseModel):
         self.user_mute_notification = False
         self.is_email_verified = False
         self.is_mobile_verified = False
-        self.service_user_status = SERVICE_USER_STATUS.READY
+        self.service_user_status = SERVICE_USER_STATUS.NULL
         super(DeviceUser, self).__init__(*args, **kwargs)
         
     def create_redis_keys(self, _redis, *args, **kwargs):
@@ -550,6 +550,7 @@ class OrgGroup(CommonMixin, BaseModel):
         self.group_visible_for_ppcom = True
         self.group_visible_order_for_ppcom = 1
         self.group_work_time_str="09:00-18:00"
+        self.is_distributor=False
         super(OrgGroup, self).__init__(*args, **kwargs)
         return
 
@@ -557,14 +558,37 @@ class OrgGroup(CommonMixin, BaseModel):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
         _key = self.__tablename__ + ".app_uuid." + self.app_uuid
         _redis.sadd(_key, self.uuid)
+
+        if self.is_distributor == True:
+            _key = self.__tablename__ + ".app_uuid." + self.app_uuid + \
+                   ".is_distributor." + str(self.is_distributor)
+            _redis.set(_key, self.uuid)
         return
 
+    def update_redis_keys(self, _redis):
+        CommonMixin.update_redis_keys(self, _redis)
+        _obj = redis_hash_to_dict(_redis, OrgGroup, self.uuid)
+        if _obj == None:
+            return
+        
+        if _obj["is_distributor"] == True:
+            _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
+                   ".is_distributor." + _obj["is_distributor"]
+            _redis.set(_key, _obj["uuid"])
+        return
+    
     def delete_redis_keys(self, _redis):
         _obj = redis_hash_to_dict(_redis, OrgGroup, self.uuid)
         if _obj == None or _obj["app_uuid"] == None:
             return
         _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"]
         _redis.srem(_key, _obj["uuid"])
+
+        if _obj["is_distributor"] == True:
+            _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
+                   ".is_distributor." + _obj["is_distributor"]
+            _redis.delete(_key)
+
         CommonMixin.delete_redis_keys(self, _redis)
         return
 
@@ -1236,6 +1260,10 @@ class AppInfo(CommonMixin, BaseModel):
     
     def create_redis_keys(self, _redis, *args, **kwargs):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
+
+        _key = self.__tablename__
+        _redis.sadd(_key, self.uuid)
+        
         _key = self.__tablename__ + ".app_key." + self.app_key
         _redis.set(_key, self.uuid)
 
@@ -1253,6 +1281,9 @@ class AppInfo(CommonMixin, BaseModel):
         _obj = redis_hash_to_dict(_redis, AppInfo, self.uuid)
         if _obj == None:
             return
+
+        _key = self.__tablename__
+        _redis.srem(_key, self.uuid)
         
         _key = self.__tablename__ + ".app_key." + _obj["app_key"]
         _redis.delete(_key)
