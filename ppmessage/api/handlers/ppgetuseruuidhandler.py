@@ -35,7 +35,7 @@ class PPGetUserUUIDHandler(BaseHandler):
     response:
     user_uuid,
     """
-    def _create_third_party(self, _user_email, _user_fullname, _user_icon):
+    def _create_third_party(self, _app_uuid, _user_email, _user_fullname, _user_icon):
         _redis = self.application.redis
         _du_uuid = str(uuid.uuid1())
         _values = {
@@ -57,7 +57,7 @@ class PPGetUserUUIDHandler(BaseHandler):
         _values = {
             "uuid": _data_uuid,
             "user_uuid": _du_uuid,
-            "app_uuid": self.app_uuid,
+            "app_uuid": _app_uuid,
             "is_portal_user": True,
             "is_service_user": False,
             "is_owner_user": False,
@@ -71,15 +71,15 @@ class PPGetUserUUIDHandler(BaseHandler):
         _r["user_uuid"] = _du_uuid
         return
     
-    def _get(self, _user_email, _user_fullname, _user_icon):
+    def _get(self, _app_uuid, _user_email, _user_fullname, _user_icon):
         _redis = self.application.redis
         _key = DeviceUser.__tablename__ + ".user_email." + _user_email
         _uuid = _redis.get(_key)
         if _uuid == None:
-            self._create_third_party(_user_email, _user_fullname, _user_icon)
+            self._create_third_party(_app_uuid, _user_email, _user_fullname, _user_icon)
             return
 
-        _key = AppUserData.__tablename__ + ".app_uuid." +  self.app_uuid + ".user_uuid." + _uuid + ".is_service_user.True"
+        _key = AppUserData.__tablename__ + ".app_uuid." +  _app_uuid + ".user_uuid." + _uuid + ".is_service_user.True"
         
         if _redis.exists(_key):
             logging.error("user is service user who can not help himself ^_^.")
@@ -91,6 +91,8 @@ class PPGetUserUUIDHandler(BaseHandler):
         return
 
     def initialize(self):
+        self.addPermission(app_uuid=True)
+        self.addPermission(api_level=API_LEVEL.PPCOM)
         self.addPermission(api_level=API_LEVEL.PPCONSOLE)
         self.addPermission(api_level=API_LEVEL.THIRD_PARTY_CONSOLE)
         return
@@ -101,6 +103,7 @@ class PPGetUserUUIDHandler(BaseHandler):
         _user_email = _request.get("user_email")
         _user_fullname = _request.get("user_fullname")
         _user_icon = _request.get("user_icon")
+        _app_uuid = _request.get("app_uuid")
         
         if _user_email == None:
             logging.error("no user_eamil provided.")
@@ -110,6 +113,6 @@ class PPGetUserUUIDHandler(BaseHandler):
         if _user_fullname == None:
             _user_fullname = _user_email.split("@")[0]
 
-        self._get(_user_email, _user_fullname, _user_icon)
+        self._get(_app_uuid, _user_email, _user_fullname, _user_icon)
         return
 

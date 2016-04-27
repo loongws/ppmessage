@@ -33,6 +33,7 @@ from ppmessage.db.models import ConversationUserData
 
 from ppmessage.core.utils.createicon import create_group_icon
 
+import tornado.log
 import tornado.web
 import tornado.ioloop
 import tornado.options
