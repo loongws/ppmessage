@@ -30,10 +30,7 @@ angular.module("this_app")
             sortConversationList = function(conversationList) { // sort conversations by time
                 
                 var getConversationTimestamp = function (conversation) {
-                    var time = (conversation.latest_message && conversation.latest_message.updatetime) ||
-                        conversation.updatetime;
-                    
-                    return yvUtil.dateUtil.moment(time);
+                    return conversation.update_ts;
                 };
 
                 // sort
@@ -42,7 +39,7 @@ angular.module("this_app")
                     var timestampA = getConversationTimestamp(conversationA),
                         timestampB = getConversationTimestamp(conversationB);
 
-                    return timestampA >= timestampB ? 1 : -1;
+                    return timestampA >= timestampB ? -1 : 1;
                     
                 });
             },
@@ -78,6 +75,7 @@ angular.module("this_app")
                                 news_date : yvUtil.messageUtil.getMessageFormatedDate(item.latest_message),
                                 
                                 con_uuid: item.uuid,
+                                update_ts: yvUtil.messageUtil.getConversationUpdateTsInSeconds( item )
                             };
 
                             // append to array
@@ -274,6 +272,8 @@ angular.module("this_app")
 
         // show the preview window.
         $scope.show_pre_window = function(item) {
+            $scope.messages = []; // clear cached messages before show
+            
             var con_uuid = item.con_uuid;
             var user_uuid = item.user_uuid;
 
