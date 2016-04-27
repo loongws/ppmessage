@@ -114,6 +114,8 @@ from .ppgetallpredefinedscriptgroup import PPGetAllPredefinedScriptGroup
 from .ppgetpredefinedscriptwithgroup import PPGetPredefinedScriptWithGroup
 
 from .ppcancelwaitingcreateconversation import PPCancelWaitingCreateConversation
+from .ppcomgetdefaultconversationhandler import PPComGetDefaultConversationHandler
+from .ppcomcreateconversationhandler import PPComCreateConversationHandler
 
 def getWebServiceHandlers():
     handler_list = []
@@ -233,17 +235,18 @@ def getWebServiceHandlers():
     handler_list.append((r"/PPKEFU_SET_READY", PPKefuSetReady))
     handler_list.append((r"/PPKEFU_SET_REST", PPKefuSetRest))
 
-    handler_list.append(("/PP_ADD_PREDEFINED_SCRIPT", PPAddPredefinedScript))
-    handler_list.append(("/PP_REMOVE_PREDEFINED_SCRIPT", PPRemovePredefinedScript))
-    handler_list.append(("/PP_ADD_PREDEFINED_SCRIPT_GROUP", PPAddPredefinedScriptGroup))
-    handler_list.append(("/PP_REMOVE_PREDEFINED_SCRIPT_GROUP", PPRemovePredefinedScriptGroup))
-    handler_list.append(("/PP_MOVE_PREDEFINED_SCRIPT_INTO_GROUP", PPMovePredefinedScriptIntoGroup))
+    handler_list.append((r"/PP_ADD_PREDEFINED_SCRIPT", PPAddPredefinedScript))
+    handler_list.append((r"/PP_REMOVE_PREDEFINED_SCRIPT", PPRemovePredefinedScript))
+    handler_list.append((r"/PP_ADD_PREDEFINED_SCRIPT_GROUP", PPAddPredefinedScriptGroup))
+    handler_list.append((r"/PP_REMOVE_PREDEFINED_SCRIPT_GROUP", PPRemovePredefinedScriptGroup))
+    handler_list.append((r"/PP_MOVE_PREDEFINED_SCRIPT_INTO_GROUP", PPMovePredefinedScriptIntoGroup))
     
-    handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT", PPGetAllPredefinedScript))
-    handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT_GROUP", PPGetAllPredefinedScriptGroup))
-    handler_list.append(("/PP_GET_PREDEFINED_SCRIPT_WITH_GROUP", PPGetPredefinedScriptWithGroup))
+    handler_list.append((r"/PP_GET_ALL_PREDEFINED_SCRIPT", PPGetAllPredefinedScript))
+    handler_list.append((r"/PP_GET_ALL_PREDEFINED_SCRIPT_GROUP", PPGetAllPredefinedScriptGroup))
+    handler_list.append((r"/PP_GET_PREDEFINED_SCRIPT_WITH_GROUP", PPGetPredefinedScriptWithGroup))
 
-    handler_list.append(("/PP_CANCEL_WAITING_CREATE_CONVERSATION", PPCancelWaitingCreateConversation))
-
+    handler_list.append((r"/PP_CANCEL_WAITING_CREATE_CONVERSATION", PPCancelWaitingCreateConversation))
+    handler_list.append((r"/PPCOM_GET_DEFAULT_CONVERSATION", PPComGetDefaultConversationHandler))
+    handler_list.append((r"/PPCOM_CREATE_CONVERSATION", PPComCreateConversationHandler))
     return handler_list
 
