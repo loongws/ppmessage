@@ -17,7 +17,9 @@ from ppmessage.db.models import ConversationUserData
 from ppmessage.core.redis import redis_hash_to_dict
 
 from ppmessage.api.error import API_ERR
+
 from ppmessage.core.constant import API_LEVEL
+from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import CONVERSATION_TYPE
 from ppmessage.core.constant import CONVERSATION_STATUS
 
@@ -44,9 +46,10 @@ class PPComCreateConversationHandler(BaseHandler):
     
     """
     def _return(self, _conversation_uuid, _request):
+        _redis = self.application.redis
         _app_uuid = _request.get("app_uuid")
         _user_uuid = _request.get("user_uuid")
-
+        
         _conversation = redis_hash_to_dict(self.application.redis, ConversationInfo, _conversation_uuid)
         if _conversation == None:
             self.setErrorCode(API_ERR.NO_CONVERSATION)
@@ -71,11 +74,11 @@ class PPComCreateConversationHandler(BaseHandler):
         _user_uuid = _request.get("user_uuid")
         _redis = self.application.redis
 
-        _key = DeviceUser.__tablename + ".uuid." + _user_uuid
+        _key = DeviceUser.__tablename__ + ".uuid." + _user_uuid
         _portal_user_name = _redis.hget(_key, "user_name")
         _portal_user_icon = _redis.hget(_key, "user_icon")
 
-        _key = DeviceUser.__tablename + ".uuid." + _member_uuid
+        _key = DeviceUser.__tablename__ + ".uuid." + _member_uuid
         _member_user_name = _redis.hget(_key, "user_name")
         _member_user_icon = _redis.hget(_key, "user_icon")
         
@@ -94,6 +97,7 @@ class PPComCreateConversationHandler(BaseHandler):
         _row.create_redis_keys(_redis)
 
         _row = ConversationUserData(uuid=str(uuid.uuid1()),
+                                    app_uuid=_app_uuid,
                                     user_uuid=_user_uuid,
                                     conversation_uuid=_conversation_uuid,
                                     conversation_type=CONVERSATION_TYPE.P2S,
@@ -104,6 +108,7 @@ class PPComCreateConversationHandler(BaseHandler):
         _row.create_redis_keys(_redis)
 
         _row = ConversationUserData(uuid=str(uuid.uuid1()),
+                                    app_uuid=_app_uuid,
                                     user_uuid=_member_uuid,
                                     conversation_uuid=_conversation_uuid,
                                     conversation_type=CONVERSATION_TYPE.P2S,
@@ -113,6 +118,7 @@ class PPComCreateConversationHandler(BaseHandler):
         _row.async_add()
         _row.create_redis_keys(_redis)
 
+        self._return(_conversation_uuid, _request)
         return
     
     def _existed(self, _request):
@@ -208,7 +214,7 @@ class PPComCreateConversationHandler(BaseHandler):
             _value = {"user_uuid": _user_uuid, "device_uuid":_device_uuid, "group_uuid":_group_uuid}
             self.application.redis.rpush(_key, json.dumps(_value))
             return
-        
-        logging.error("can not create conversation for PPCom: %s" % str(_request))
+
+        logging.error("Error to create conversation for PPCom: %s, for no member or group provided." % str(_request))
         return
 
