@@ -119,6 +119,7 @@ class AmdApp(tornado.web.Application):
     
     def _group(self, _app_uuid, _user_uuid, _device_uuid, _group_uuid):
         if _group_uuid == None:
+            # find the primary group
             _key = OrgGroup.__tablename__ + ".app_uuid." + _app_uuid + \
                    ".is_distributor.True"
             _group_uuid = self.redis.get(_key)
@@ -353,7 +354,11 @@ class AmdApp(tornado.web.Application):
                 _request = self.redis.lpop(_key)
                 if _request == None:
                     break
-                _continue = self._task(_app_uuid, _user_uuid, _device_uuid)
+                _requst = json.loads(_request)
+                _user_uuid = _request.get("user_uuid")
+                _device_uuid = _request.get("device_uuid")
+                _group_uuid = _request.get("group_uuid")
+                _continue = self._task(_app_uuid, _user_uuid, _device_uuid, _group_uuid)
                 if not _continue:
                     break
         return

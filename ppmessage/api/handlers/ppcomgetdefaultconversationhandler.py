@@ -133,7 +133,9 @@ class PPComGetDefaultConversationHandler(BaseHandler):
         _request = json.loads(self.request.body)
         _app_uuid = _request.get("app_uuid")
         _user_uuid = _request.get("user_uuid")
-        if _app_uuid == None or _user_uuid == None:
+        _device_uuid = _request.get("device_uuid")
+        
+        if _app_uuid == None or _user_uuid == None or _device_uuid == None:
             self.setErrorCode(API_ERR.NO_PARA)
             return
 
@@ -148,14 +150,16 @@ class PPComGetDefaultConversationHandler(BaseHandler):
         # client check uuid field to check
         if _conversations == None or len(_conversations) == 0:
             _key = REDIS_AMD_KEY + ".app_uuid." + _app_uuid
-            _now = datetime.datetime.now()
-            _time = time.mktime(_now.timetuple())*1000*1000 + _now.microsecond
-            self.application.redis.zadd(_key, _user_uuid, _time)
+            _value = {"user_uuid":_user_uuid, "device_uuid":_device_uuid}
+            self.application.redis.rpush(_key, json.dumps(_value))
+            logging.info("waiting for AMD to allocate service user to create conversation")
             return
 
         _conversation = self._lastest_conversation(_conversations)
         _users = self._conversation_users(_conversation)
         if _users == None or len(_users) == 0:
+            self.setErrorCode(API_ERR.NO_CONVERSATION_MEMBER)
+            logging.error("Existed conversation but no users: %s" % str(_conversation))
             return
         _users = self._get_users(_users)
         _users = self._sort_users(_users)
