@@ -1,7 +1,10 @@
 Service.$app = (function() {
 
-    var POLICY_BROADCAST = 'broadcast',
-        POLICY_GROUP = 'group',
+    var POLICY = { GROUP: 'GROUP',
+                   ALL: 'ALL',
+                   SMART: 'SMART' },
+
+        DEFAULT_POLICY = POLICY.ALL,
 
         appInfo,
         
@@ -15,13 +18,12 @@ Service.$app = (function() {
     
     return {
 
-        POLICY_BROADCAST: POLICY_BROADCAST,
-        POLICY_GROUP: POLICY_GROUP,
+        POLICY: POLICY,
         
         set: set,
 
         policy: function() { // policy
-            return POLICY_BROADCAST; // ( get() && get().app_route_policy ) || POLICY_BROADCAST; 
+            return ( get() && get().app_route_policy ) || DEFAULT_POLICY; 
         },
 
         app: get, // appInfo

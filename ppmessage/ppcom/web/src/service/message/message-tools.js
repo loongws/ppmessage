@@ -48,12 +48,16 @@
                 
                 switch (Service.$app.policy()) {
                     
-                case Service.$app.POLICY_BROADCAST:
+                case Service.$app.POLICY.ALL:
                     _toType = Service.PPMessage.TO_TYPE.AP;
                     break;
 
-                case Service.$app.POLICY_GROUP:
+                case Service.$app.POLICY.GROUP:
                     _toType = Service.PPMessage.TO_TYPE.OG;
+                    break;
+
+                default:
+                    _toType = Service.PPMessage.TO_TYPE.AP;
                     break;
                 }
                 
