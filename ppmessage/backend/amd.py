@@ -71,11 +71,11 @@ class AmdApp(tornado.web.Application):
         self.redis.lpush(_key, json.dumps(_value))
         return
     
-    def _ack_error(self, _device_uuid):
+    def _ack_error(self, _device_uuid, _code=DIS_ERR.CONVERSATION):
         _body = {
             "device_uuid": _device_uuid,
             "what": DIS_WHAT.CONVERSATION,
-            "code": DIS_ERR.CONVERSATION,
+            "code": _code,
             "extra": {},
         }
         _pcsocket_dict = self._pcsocket(_device_uuid)
@@ -137,14 +137,14 @@ class AmdApp(tornado.web.Application):
 
         if _group_uuid == None:
             logging.error("no distributor group in app: %s" % _app_uuid)
-            self._ack_error(_device_uuid)
+            self._ack_error(_device_uuid, DIS_ERR.CONVERSATION_NO_GROUP)
             return True
 
         _key = OrgUserGroupData.__tablename__ + ".group_uuid." + _group_uuid
         _users = self.reids.smembers(_key)
         if _users == None or len(_users) == 0:
             logging.error("no service user in group: %s" % _group_uuid)
-            self._ack_error(_device_uuid)
+            self._ack_error(_device_uuid, DIS_ERR.CONVERSATION_NO_USER)
             return True
 
         _ready_users = []
@@ -206,7 +206,7 @@ class AmdApp(tornado.web.Application):
                ".is_service_user.True"
         _allocated_users = self.redis.smembers(_key)
         if _allocated_users == None or len(_allocated_users) == 0:
-            self._ack_error(_device_uuid)
+            self._ack_error(_device_uuid, DIS_ERR.CONVERSATION_NO_USER)
             return
 
         _key = DeviceUser.__tablename__ + ".uuid." + _user_uuid
@@ -260,7 +260,7 @@ class AmdApp(tornado.web.Application):
                ".is_service_user.True"
         _service_users = self.redis.smembers(_key)
         if _service_users == None or len(_service_users) == 0:
-            self._ack_error(_device_uuid)
+            self._ack_error(_device_uuid, DIS_ERR.CONVERSATION_NO_USER)
             return
 
         _user_hashs = {}
