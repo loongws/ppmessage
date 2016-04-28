@@ -185,15 +185,10 @@ class PPComCreateConversationHandler(BaseHandler):
         _device_uuid = _request.get("device_uuid")
         _group_uuid = _request.get("group_uuid")
         _member_list = _request.get("member_list")
-        _conversation_type = _request.get("conversation_type")
         
-        if _app_uuid == None or _user_uuid == None or _conversation_type == None:
+        if _app_uuid == None or _user_uuid == None:
             self.setErrorCode(API_ERR.NO_PARA)
             return
-
-        if _conversation_type != CONVERSATION_TYPE.P2S:
-            self.setErrorCode(API_ERR.NO_PARA)
-            return None
 
         if self._existed(_request):
             return
