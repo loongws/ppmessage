@@ -51,7 +51,7 @@ class PPComCreateConversationHandler(BaseHandler):
         _app_uuid = _request.get("app_uuid")
         _user_uuid = _request.get("user_uuid")
         
-        _conversation = redis_hash_to_dict(self.application.redis, ConversationInfo, _conversation_uuid)
+        _conversation = redis_hash_to_dict(_redis, ConversationInfo, _conversation_uuid)
         if _conversation == None:
             self.setErrorCode(API_ERR.NO_CONVERSATION)
             return
@@ -64,10 +64,8 @@ class PPComCreateConversationHandler(BaseHandler):
         if _data_uuid != None:
             _key = ConversationUserData.__tablename__ + ".uuid." + _data_uuid
             _data = _redis.hmget(_key, ["conversation_name", "conversation_icon"])
-            if _data[0] != None:
-                _r["conversation_name"] = _data[0]
-            if _data[1] != None:
-                _r["conversation_icon"] = _data[1]
+	    _r["conversation_name"] = _data[0]
+            _r["conversation_icon"] = _data[1]
         return
 
     def _create(self, _member_uuid, _request):
