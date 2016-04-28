@@ -1,0 +1,15 @@
+/* 
+  JSQMessages.strings
+  PPComLib
+
+  Created by Kun Zhao on 10/14/15.
+  Copyright (c) 2015 Yvertical. All rights reserved.
+*/
+
+"load_earlier_messages" = "Load Earlier Messages";
+
+"send" = "Send";
+
+"new_message" = "New Message";
+
+"send_error" = "Send Error";
