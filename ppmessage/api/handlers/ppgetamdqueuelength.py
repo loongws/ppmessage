@@ -16,7 +16,7 @@ import logging
 
 class PPGetAmdQueueLength(BaseHandler):
 
-    def _set(self):
+    def _get(self):
         _request = json.loads(self.request.body)
 
         _app_uuid = _request.get("app_uuid")
