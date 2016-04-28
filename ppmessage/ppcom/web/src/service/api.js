@@ -286,6 +286,26 @@
             this._post( '/PP_GET_CONVERSATION_USER_LIST', $.extend( {}, data ), success, fail );
         };
 
+        // data: { app_uuid: xxx, user_uuid: xxx, device_uuid: xxx, group_uuid: xxx }
+        this.cancelWaitingCreateConversation = function ( data, success, fail ) {
+            this._post( '/PP_CANCEL_WAITING_CREATE_CONVERSATION', $.extend( {}, data ), success, fail );
+        };
+
+        // data: { app_uuid: xxx, user_uuid: xxx, device_uuid: xxx }
+        this.getPPComDefaultConversation = function ( data, success, fail ) {
+            this._post( '/PPCOM_GET_DEFAULT_CONVERSATION', $.extend( {}, data ), success, fail );
+        };
+
+        // data: { app_uuid: xxx, user_uuid: xxx, member_list: [ 'user_uuid' ], group_uuid: xxx }
+        this.createPPComConversation = function ( data, success, fail ) {
+            this._post( '/PPCOM_CREATE_CONVERSATION', $.extend( {}, data ), success, fail );
+        };
+
+        // data: { app_uuid: xxx, user_uuid: xxx, conversation_uuid: xxx }
+        this.getConversationInfo = function ( data, success, fail ) {
+            this._post( '/PP_GET_CONVERSATION_INFO', $.extend( {}, data ), success, fail );
+        };
+
         this.getAppUuid = function() {
             return _appUuid;
         };

@@ -230,6 +230,19 @@
         this.isNull = function ( obj ) {
             return ( obj === null ) || ( obj === undefined );
         };
+
+        // We consider `{error_code: 0, uri: "/XXX_XXX_XXX", error_string: "success."}` obj as empty response
+        this.isApiResponseEmpty = function( response ) {
+            if ( !response ) return true;
+            if ( response.error_code !== 0 ) return false;
+
+            var copy = $.extend( {}, response );
+            delete copy[ 'error_code' ];
+            delete copy[ 'error_string' ];
+            delete copy[ 'uri' ];
+
+            return $.isEmptyObject( copy );
+        };
         
     }
 

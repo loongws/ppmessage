@@ -22,6 +22,7 @@ from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import CONVERSATION_TYPE
 from ppmessage.core.constant import CONVERSATION_STATUS
+from ppmessage.core.constant import REDIS_AMD_KEY
 
 from ppmessage.dispatcher.policy.policy import AbstractPolicy
 from ppmessage.dispatcher.policy.policy import BroadcastPolicy

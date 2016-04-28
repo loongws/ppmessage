@@ -33,7 +33,7 @@ Service.$app = (function() {
         },
 
         appId: function() {
-            return get().app_uuid;
+            return get().app_uuid || get().uuid;
         }
     }
     

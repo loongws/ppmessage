@@ -1,17 +1,18 @@
 Service.$notifyFactory = ( function() {
 
-    var TYPE = {
-        AUTH: 'AUTH',
-        ACK: 'ACK', // ack
-        MSG: 'MSG', // message arrived
-        ONLINE : 'ONLINE',
-        SYS: 'SYS',
-        TYPING : 'TYPING'
-    },
+    var TYPE = { AUTH: 'AUTH',
+                 ACK: 'ACK', // ack
+                 MSG: 'MSG', // message arrived
+                 ONLINE : 'ONLINE',
+                 SYS: 'SYS',
+                 TYPING : 'TYPING',
+                 CONVERSATION: 'CONVERSATION'
+               },
 
         WHAT = {
             AUTH: "AUTH",
-            SEND: 'SEND'
+            SEND: 'SEND',
+            CONVERSATION: 'CONVERSATION'
         };
 
     //////// API ///////////
@@ -49,6 +50,10 @@ Service.$notifyFactory = ( function() {
             handler = Service.$notifySys;
             break;
 
+        case TYPE.CONVERSATION:
+            handler = Service.$notifyConversation;
+            break;
+
         default:
             handler = Service.$notifyUnknown;
             break;
@@ -67,7 +72,7 @@ Service.$notifyFactory = ( function() {
             if ( msg.msg.mt === TYPE.SYS ) {
                 
                 t = TYPE.SYS;
-            }
+            } 
             
         } else if ( t === TYPE.ACK ) {
 
@@ -79,6 +84,10 @@ Service.$notifyFactory = ( function() {
 
             case WHAT.SEND:
                 t = TYPE.MSG;
+                break;
+
+            case WHAT.CONVERSATION:
+                t = TYPE.CONVERSATION;
                 break;
                 
             }

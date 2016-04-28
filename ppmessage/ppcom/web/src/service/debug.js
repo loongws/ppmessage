@@ -2,7 +2,7 @@
 
     function PPDebug() {
         
-        var _DEBUG_ = true,
+        var _DEBUG_ = false,
             _TEMPORARY_CLOSE_ = false,
             self = this,
 

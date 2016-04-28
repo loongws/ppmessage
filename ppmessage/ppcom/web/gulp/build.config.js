@@ -50,6 +50,7 @@ module.exports = {
         "../src/service/entity/conversation-manager.js",
         "../src/service/entity/sheetheader.js",
         "../src/service/entity/audiocontext.js",
+        "../src/service/entity/conversation-agency.js",
         "../src/service/message/api-message-adapter.js",
         "../src/service/message/api-message.js",
         "../src/service/message/message-sender.js",
@@ -76,6 +77,7 @@ module.exports = {
         "../src/service/websocket/sys.js",
         "../src/service/websocket/typing.js",
         "../src/service/websocket/unknown.js",
+        "../src/service/websocket/conversation.js",
 
         "../src/view/pp-view2.js",
         "../src/view/element.js",

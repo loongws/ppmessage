@@ -81,6 +81,7 @@
             DEFAULT_SERVE_NAME: '\u5ba2\u670d',
             UPLOADING_HINT: '\u6b63\u5728\u4e0a\u4f20',
             SEND: '\u53d1\u9001',
+            WAITTING_AVALIABLE_CONVERSATION: '\u6b63\u5728\u7b49\u5f85\u5ba2\u670d...',
 
             LOAD_HISTORY_HINT: '\u70b9\u51fb\u52a0\u8f7d\u5386\u53f2\u6d88\u606f',
             LOAD_HISTORY_MOBILE_HINT: '\u4e0b\u62c9\u52a0\u8f7d\u5386\u53f2\u6d88\u606f',
@@ -132,6 +133,7 @@
             DEFAULT_SERVE_NAME: 'Service',
             UPLOADING_HINT: 'Uploading',
             SEND: 'Send',
+            WAITTING_AVALIABLE_CONVERSATION: 'Waitting service ...',
 
             LOAD_HISTORY_HINT: 'Click to load history',
             LOAD_HISTORY_MOBILE_HINT: 'Pull to load history',

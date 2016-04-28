@@ -22,9 +22,40 @@
 //     - true
 //     - false
 //
+//     ======================================
+//     |          Get Conversation          |
+//     ======================================
+//
+//     When the following api
+//
+//     - `asyncGetDefaultConversation`
+//     - `asyncGetConversation`
+//
+//     failed to get conversation, it means you should waitting the server to
+//     give you an avaliable `Conversation` after a while, here are two events you may interested on:
+//
+//     - `Event.WAITING` // the server is busy now, and you should waitting
+//     - `Event.AVALIABLE` // Hey, a new conversation is avaliable now, and you can continue to chatting
+//
+//     if you interested in the event `EVENT.WAITING`, please subscribe the event
+//     ```javascript
+//     Service.$subpub.subscribe( Service.$conversationManager.EVENT.WAITING, function( topic, conversation ) {
+//         // we should waiting to get an avaliable conversation now
+//     } };
+//     ```
+//
+//     if you interested in the event `EVENT.AVALIABLE`, please subscribe the event
+//     ```javascript
+//     Service.$subpub.subscribe( Service.$conversationManager.EVENT.AVALIABLE, function( topic, conversation ) {
+//         // the server has give us an avaliable conversation now, so we begin talk now
+//     } };
+//     ```
+//
 Service.$conversationManager = ( function() {
 
     var TYPE = { GROUP: 'GROUP', CONVERSATION: 'CONVERSATION' },
+        EVENT = { WAITING: 'DEFAULT_CONVERSATION_AGENCY/WAITING',
+                  AVALIABLE: 'DEFAULT_CONVERSATION_AGENCY/AVALIABLE' },
         WEIGHT_GROUP = 10000, // let `TYPE.GROUP` has more priority then `TYPE.CONVERSATION` when sort `conversationList`
         conversationList = [],
         activeToken,
@@ -33,8 +64,11 @@ Service.$conversationManager = ( function() {
     ////////// API ///////////
     return {
         TYPE: TYPE,
+        EVENT: EVENT,
 
+        init: init,
         all: all, // ONLY for debug, you should't call this method, instead of call `asyncGetList` to assure fully correct
+        simulateConversationAvaliable, // for debug
         
         asyncGetDefaultConversation: asyncGetDefaultConversation,
         activeConversation: activeConversation, // acts as setter and getter
@@ -42,12 +76,45 @@ Service.$conversationManager = ( function() {
         asyncGetList: asyncGetList,
         find: findByToken,
 
-        asyncGetConversation: asyncGetConversation
+        asyncGetConversation: asyncGetConversation,
+        asyncGetConversationInfo: asyncGetConversationInfo
     }
 
     ///////// all //////////////
+    function init() {
+        var $pubsub = Service.$pubsub;
+        
+        $pubsub.subscribe( Service.$notifyConversation.EVENT.AVALIABLE, function( topics, conversationUUID ) {
+
+            asyncGetConversationInfo( conversationUUID, function( conv ) {
+                
+                if ( conv ) {
+                    // We are waiting `default conversation`
+                    // Now, this `default conversation` become avaliable now
+                    var isDefaultConversation = Service.$conversationAgency.isDefaultConversationAvaliable();
+                    if ( isDefaultConversation ) { 
+                        onDefaultConversationAvaliable( conv );
+                    } else {
+                        push ( conversation( conv ) );
+                    }
+                    $pubsub.publish( EVENT.AVALIABLE, conv );   
+                }
+                
+            } );
+            
+        } );
+    }
+    
     function all() {
         return sort( conversationList );
+    }
+
+    function simulateConversationAvaliable() {
+        Service.$conversationAgency.enableDebug( false );
+        Service.$conversationAgency.request( function( defaultConversation ) {
+            onDefaultConversationAvaliable( defaultConversation );
+            Service.$pubsub.publish( EVENT.AVALIABLE, defaultConversation );
+        } );
     }
 
     //////// asyncGetDefaultConversation /////////////
@@ -58,25 +125,20 @@ Service.$conversationManager = ( function() {
             return;
         }
 
-        Service.$api.getDefaultConversation( {
-            app_uuid: Service.$ppSettings.getAppUuid(),
-            user_uuid: Service.$user.getUser().getInfo().user_uuid
-        } , function ( response ) {
-
-            if ( response && response.error_code === 0 ) {
-                
-                push( conversation( response, true ) );
-
-                active( response[ 'token' ] );
+        Service.$conversationAgency.request( function( defaultConversation ) {
+            if ( defaultConversation ) {
+                onDefaultConversationAvaliable( defaultConversation );
+            } else {
+                notifyToWaiting();                
             }
-
             $onResult( findDefault(), callback );
-            
-        } , function ( error ) {
-
-            $onResult( findDefault(), callback );
-            
         } );
+
+    }
+
+    function onDefaultConversationAvaliable( response ) {
+        push( conversation( response, true ) );
+        active( response[ 'token' ] );
     }
 
     //////// activeConversation ///////////
@@ -159,25 +221,16 @@ Service.$conversationManager = ( function() {
             return;
         }
 
-        Service.$api.createConversation( {
-            user_uuid: Service.$user.getUser().getInfo().user_uuid,
-            app_uuid: Service.$ppSettings.getAppUuid(),
-            conversation_type: Service.Constants.MESSAGE.TO_TYPE,
-            group_uuid: ( config.group_uuid !== undefined ) ? config.group_uuid : undefined,
-            member_list: ( config.user_uuid !== undefined ) ? [ config.user_uuid ] : undefined
-        }, function( r ) {
-            if ( r && r.error_code === 0 ) {
-                
-                push( conversation( r ) );
-
-                $onResult( findByToken( r.uuid ) , callback );
-                
+        Service.$conversationAgency.create( config, function( conv ) {
+            
+            if ( conv ) {
+                push( conversation( conv ) );
+                $onResult( findByToken( conv.uuid ) , callback );
             } else {
                 $onResult( undefined, callback );
+                notifyToWaiting();
             }
             
-        }, function( e ) {
-            $onResult( undefined, callback );
         } );
 
         // try to match `assigned_uuid` to `userId`
@@ -207,7 +260,31 @@ Service.$conversationManager = ( function() {
             return conversationId && findByToken( conversationId );
             
         }
+
+        function shouldWaiting( r ) {
+            return r.error_code !== 0 || Service.$tools.isApiResponseEmpty( r );
+        }
         
+    }
+
+    // Get conversationInfo from server by `conversationUUID`
+    // @param conversationUUID
+    // @param callback
+    function asyncGetConversationInfo( conversationUUID, callback ) {
+        if ( !conversationUUID ) {
+            $onResult( undefined, callback );
+            return;
+        }
+        
+        Service.$api.getConversationInfo( {
+            app_uuid: Service.$app.appId(),
+            user_uuid: Service.$user.quickId(),
+            conversation_uuid: conversationUUID
+        }, function( r ) {
+            $onResult( r , callback );
+        }, function( e ) {
+            $onResult( undefined , callback );
+        } );
     }
 
     ////////// set `token` to active /////////
@@ -349,6 +426,11 @@ Service.$conversationManager = ( function() {
             $.extend( existItem, conversation );
         }
         
+    }
+
+    // === helpers ===
+    function notifyToWaiting() {
+        Service.$pubsub.publish( EVENT.WAITING );
     }
     
 } )();
