@@ -106,10 +106,9 @@ class TestApiCase(unittest.TestCase):
         _device_uuid = self._get_return("device_uuid")
 
         _test_user_uuid = BOOTSTRAP_DATA["user"]["user_uuid"]        
-        _api = "PPCOM_CREATE_CONVERSATION"
+        _api = "PPCOM_GET_DEFAULT_CONVERSATION"
         _data = {
             "user_uuid": _user_uuid,
-            "member_list": [_test_user_uuid],
             "device_uuid": _device_uuid,
             "app_uuid": BOOTSTRAP_DATA["team"]["app_uuid"]
         }
