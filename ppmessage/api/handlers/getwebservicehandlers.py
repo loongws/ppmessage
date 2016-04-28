@@ -116,6 +116,7 @@ from .ppgetpredefinedscriptwithgroup import PPGetPredefinedScriptWithGroup
 from .ppcancelwaitingcreateconversation import PPCancelWaitingCreateConversation
 from .ppcomgetdefaultconversationhandler import PPComGetDefaultConversationHandler
 from .ppcomcreateconversationhandler import PPComCreateConversationHandler
+from .ppgetamdqueuelength import PPGetAmdQueueLength
 
 def getWebServiceHandlers():
     handler_list = []
@@ -248,5 +249,7 @@ def getWebServiceHandlers():
     handler_list.append((r"/PP_CANCEL_WAITING_CREATE_CONVERSATION", PPCancelWaitingCreateConversation))
     handler_list.append((r"/PPCOM_GET_DEFAULT_CONVERSATION", PPComGetDefaultConversationHandler))
     handler_list.append((r"/PPCOM_CREATE_CONVERSATION", PPComCreateConversationHandler))
+    handler_list.append((r"/PP_GET_AMD_QUEUE_LENGTH", PPGetAmdQueueLength))
+
     return handler_list
 
