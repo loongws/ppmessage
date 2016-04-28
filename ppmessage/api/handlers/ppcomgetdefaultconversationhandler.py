@@ -24,6 +24,7 @@ from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import PPCOM_WELCOME
 from ppmessage.core.constant import DATETIME_FORMAT
 from ppmessage.core.constant import CONVERSATION_TYPE
+from ppmessage.core.constant import REDIS_AMD_KEY
 
 from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 
