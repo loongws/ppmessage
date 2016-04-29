@@ -166,7 +166,7 @@ PPHome.Device = ( function() {
 
 PPHome.PPCom = ( function() {
     var PPMESSAGE_APP = {
-        uuid: "6ee0511e-0db3-11e6-832a-985aebe0f03a"
+        uuid: "{app_uuid}"
     };
 
     $(document).ready(function(){
