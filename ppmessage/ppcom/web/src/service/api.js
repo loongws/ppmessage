@@ -129,28 +129,8 @@
             });
         };
 
-        /*
-         * @param data: 
-         *     {
-         *         email: xxx@xxx.com,
-         *         fullname: xxx,
-         *     }
-         */
-        this.createUser = function(data, success, fail) {
-            this._post("/PP_CREATE_USER", {
-                user_email: data.email,
-                user_fullname: data.fullname,
-                user_create_from_browser: true
-            }, success, fail);
-        };
-
         this.updateUser = function(data, success, fail) {
-            this._post("/PP_UPDATE_USER", {
-                user_uuid: data.user_uuid,
-                user_fullname: data.user_fullname,
-                user_email: data.user_email,
-                user_icon: data.user_icon
-            }, success, fail);
+            this._post("/PP_UPDATE_USER", $.extend( {}, data ), success, fail );
         };
 
         this.getConversationList = function(data, success, fail) {
@@ -174,11 +154,7 @@
          * Get unacked messages
          */
         this.getUnackedMessages = function(data, success, fail) {
-            this._post("/GET_UNACKED_MESSAGES", {
-                app_uuid: data.app_uuid,
-                from_uuid: data.user_uuid,
-                device_uuid: data.device_uuid
-            }, success, fail);
+            this._post("/GET_UNACKED_MESSAGES", $.extend( {}, data ), success, fail);
         };
 
         // { list: [ 'xxx', 'xxxx' ] }
@@ -187,10 +163,7 @@
         };
 
         this.createAnonymousUser = function(data, success, fail) {
-            this._post("/PP_CREATE_ANONYMOUS", {
-                app_uuid: data.app_uuid,
-                ppcom_trace_uuid: data.ppcom_trace_uuid
-            }, success, fail);
+            this._post("/PP_CREATE_ANONYMOUS", $.extend( {}, data ), success, fail);
         };
 
         // {
@@ -204,61 +177,41 @@
             this._post("/PP_CREATE_DEVICE", $.extend( true, {}, data ), success, fail);
         };
 
-        //TODO dynamically determine ostype
-        //
         // @device_os_type: `Service.$device.getOSType()`;
         this.updateDevice = function(data, success, fail) {
-            this._post("/PP_UPDATE_DEVICE", {
-                device_uuid: data.device_uuid,
-                device_ostype: data.device_ostype
-            }, success, fail);
+            this._post("/PP_UPDATE_DEVICE", $.extend( {}, data ), success, fail);
         };
 
         /*
          * Get user_uuid by the third-web-site's user_email
          */
         this.getUserUuid = function(data, success, fail) {
-            this._post("/PP_GET_USER_UUID", {
-                user_email: data.user_email,
-                user_fullname: data.user_fullname
-            }, success, fail);
+            this._post("/PP_GET_USER_UUID", $.extend( {}, data ), success, fail);
         };
 
         this.getUserDetailInfo = function(data, success, fail) {
-            this._post("/GET_YVOBJECT_DETAIL", {
-                type: 'DU',
-                uuid: data.user_uuid
-            }, success, fail);
+            this._post("/GET_YVOBJECT_DETAIL", $.extend( {}, data ), success, fail);
         };
 
         /**
          * Get message conversation historys
          */
         this.getMessageHistory = function(data, success, fail) {
-            this._post("/PP_GET_HISTORY_MESSAGE", {
-                conversation_uuid: data.conversation_uuid,
-                page_offset: data.page_offset,
-                page_size: data.page_size,
-                max_id: data.max_id
-            }, success, fail);
+            this._post("/PP_GET_HISTORY_MESSAGE", $.extend( {}, data ), success, fail);
         };
 
         /**
          * Get ImappInfo
          */
         this.getAppInfo = function(data, success, fail) {  
-            this._post("/PP_GET_APP_INFO", {
-                app_uuid: data.app_uuid
-            }, success, fail);
+            this._post("/PP_GET_APP_INFO", $.extend( {}, data ), success, fail);
         };
 
         /**
          * Get welcome team
          */
         this.getWelcomeTeam = function(data, success, fail) {
-            this._post("/PP_GET_WELCOME_TEAM", {
-                language: data.language
-            }, success, fail);
+            this._post("/PP_GET_WELCOME_TEAM", $.extend( {}, data ), success, fail);
         };
 
         // data: { app_uuid: xxx }

@@ -78,7 +78,6 @@ class PPGetUserUUIDHandler(BaseHandler):
         if _uuid == None:
             self._create_third_party(_user_email, _user_fullname, _user_icon)
             return
-
         _key = AppUserData.__tablename__ + ".app_uuid." +  self.app_uuid + ".user_uuid." + _uuid + ".is_service_user.True"
         
         if _redis.exists(_key):
@@ -91,6 +90,7 @@ class PPGetUserUUIDHandler(BaseHandler):
         return
 
     def initialize(self):
+        self.addPermission(app_uuid=True)
         self.addPermission(api_level=API_LEVEL.PPCOM)
         self.addPermission(api_level=API_LEVEL.PPCONSOLE)
         self.addPermission(api_level=API_LEVEL.THIRD_PARTY_CONSOLE)

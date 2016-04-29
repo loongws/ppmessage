@@ -37,6 +37,7 @@
             _updateUserInfo = function(userSettings, response, succCB, failCB) {
                 if (userSettings.user_fullname || userSettings.user_avatar) {
                     var requestObj = {
+                        app_uuid: Service.$ppSettings.getAppUuid(),
                         user_uuid: userSettings.user_uuid,
                         user_fullname: userSettings.user_fullname,
                         user_icon: userSettings.user_avatar,
@@ -152,12 +153,14 @@
                 // 5. update device
                 // 6. create dom
                 $api.getUserUuid({
+                    app_uuid: Service.$ppSettings.getAppUuid(),
                     user_icon: userSettings.user_avatar,
                     user_email: userSettings.user_email,
                     user_fullname: userSettings.user_fullname
                 }, function(response) {
                     $api.getUserDetailInfo({
-                        user_uuid: response.user_uuid
+                        uuid: response.user_uuid,
+                        type: 'DU'
                     }, function(response) {
                         Service.$ppSettings.updateUserSettings({
                             user_uuid : response.uuid
