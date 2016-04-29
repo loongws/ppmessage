@@ -12,49 +12,19 @@
 #import "PPComUtils.h"
 #import "PPFastLog.h"
 
-/*
- ------------------------------------------------------------------------
- Constants
- ------------------------------------------------------------------------
- */
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-// #define DEV "DEV_MODE"
-
-#define HTTP_SCHEME @"https://"
-#define WEBSOCKET_SCHEME @"wss://"
-#define DEFAULT_HOST @"ppmessage.cn"
-
-#ifdef DEV
-#define HTTP_SCHEME @"http://"
-#define WEBSOCKET_SCHEME @"ws://"
-#define DEFAULT_HOST @"192.168.0.216:8080"
-#endif
-
-#define API @"/api"
-#define WS @"/pcsocket/WS"
-#define DOWNLOAD @"/download"
-#define UPLOAD @"/upload"
+#define ENABLE_DEBUG 1
 
 @interface PPComNet ()
 
 @property PPCom *client;
 
-@property NSString *host;
-@property NSString *appKey;
-@property NSString *appSecret;
-@property NSString *apiHost;
-@property NSString *webSocketHost;
-@property NSString *fileDownloadHost;
-@property NSString *fileUploadHost;
-@property NSString *portalHost;
 @property NSMutableURLRequest *request;
 
-- (void) initWithAppKey: (NSString*)appKey withAppSecret:(NSString*)appSecret;
-- (void) initWithHost: (NSString*)host withAppKey:(NSString*)appKey withAppSecret:(NSString*)appSecret;
-- (void) initHosts;
 - (void) initMutableURLRequest;
 - (void) addHeaders;
-- (NSString*) signature:(NSString*) requestUUID;
 - (NSData*) getPostData:(NSDictionary*)data;
 
 @end
@@ -66,7 +36,6 @@
 - (instancetype) initWithClient:(PPCom *)client {
     if (self = [super init]) {
         self.client = client;
-        [self initWithAppKey:client.appKey withAppSecret:client.appSecret];
     }
     return self;
 }
@@ -77,11 +46,75 @@
 
 #pragma mark - Post Methods
 
+- (void)baseAsyncPost:(NSString *)url
+            withParam:(id)params
+               config:(void (^)(NSMutableURLRequest *))configBlock
+            completed:(void (^)(NSDictionary *, NSError *))completedBlock {
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    request.HTTPMethod = @"POST";
+    NSData *postData = nil;
+    
+    if (params) {
+        if ([params isKindOfClass:[NSString class]]) {
+            NSString *str = (NSString*)params;
+            postData = [str dataUsingEncoding:NSUTF8StringEncoding];
+        } else if ([params isKindOfClass:[NSDictionary class]]) {
+            postData = [self getPostData:((NSDictionary*)params)];
+        }
+    }
+    
+    if (!postData) {
+        if (ENABLE_DEBUG) PPFastLog(@"Post data can not be empty, cancelled");
+        return;
+    }
+    
+    [request setURL:[NSURL URLWithString:url]];
+    [request setHTTPBody:postData];
+    
+    if (configBlock) {
+        configBlock(request);
+    }
+    
+    if (ENABLE_DEBUG) PPFastLog(@"async post: %@, %@", url, params);
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+                               
+        NSError *_error = connectionError;
+        NSDictionary *_jsonResponse = nil;
+        if (!connectionError && [data length] > 0) {
+            
+            _jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if (_jsonResponse == nil) {
+                if (_error == nil) {
+                    _error = [[NSError alloc] initWithDomain:@"PPComLibrary" code:10000 userInfo:@{@"reason":@"Response is empty."}];
+                }
+            }
+        }
+        
+        if (completedBlock) {
+            if (!_error) {
+                PPFastLog(@"async response:%@, url:%@", _jsonResponse, url);
+                
+                completedBlock(_jsonResponse, nil);
+            } else {
+                PPFastLog(@"async response error:%@, url:%@", _error, url);
+                
+                completedBlock(nil, _error);
+            }
+        }
+                               
+    }];
+    
+}
+
 - (void) asyncPost:(NSDictionary *)data urlSegment:(NSString*)url delegate:(id<PPComNetDelegate>)theDelegate {
     [self initMutableURLRequest];
     NSData *postData = [self getPostData:data];
     if (postData) {
-        [self.request setURL:[NSURL URLWithString:[self.apiHost stringByAppendingString:url]]];
+        [self.request setURL:[NSURL URLWithString:[PPApiHost stringByAppendingString:url]]];
         [self.request setHTTPBody:postData];
         [NSURLConnection sendAsynchronousRequest:self.request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
             if (!connectionError && [data length] > 0) {
@@ -101,49 +134,21 @@
 }
 
 - (void) asyncPost:(NSDictionary *)data urlSegment:(NSString *)url completionHandler:(void(^)(NSDictionary* response, NSError* error))handler {
-    [self initMutableURLRequest];
-    NSData *postData = [self getPostData:data];
-    if (postData) {
+    
+    NSString *requestURLString = [PPApiHost stringByAppendingString:url];
+    [self baseAsyncPost:requestURLString withParam:data config:^(NSMutableURLRequest *request) {
         
-        PPFastLog(@"async post: %@, %@", url, data);
+        [self addHeadersForRequest:request];
         
-        [self.request setURL:[NSURL URLWithString:[self.apiHost stringByAppendingString:url]]];
-        [self.request setHTTPBody:postData];
-        [NSURLConnection sendAsynchronousRequest:self.request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-            
-            NSError *_error = connectionError;
-            NSDictionary *_jsonResponse = nil;
-            if (!connectionError && [data length] > 0) {
-                
-                _jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                if (_jsonResponse == nil) {
-                    if (_error == nil) {
-                        _error = [[NSError alloc] initWithDomain:@"PPComLibrary" code:10000 userInfo:@{@"reason":@"Response is empty."}];
-                    }
-                }
-            }
-            
-            if (handler) {
-                if (!_error) {
-                    PPFastLog(@"async response:%@", _jsonResponse);
-                    
-                    handler(_jsonResponse, nil);
-                } else {
-                    PPFastLog(@"async response error:%@.", _error);
-                    
-                    handler(nil, _error);
-                }
-            }
-            
-        }];
-    }
+    } completed:handler];
+    
 }
 
 - (NSDictionary*) post: (NSDictionary*) data urlSegment:(NSString*)url {
     [self initMutableURLRequest];
     NSData *postData = [self getPostData:data];
     if (postData) {
-        [self.request setURL:[NSURL URLWithString:[self.apiHost stringByAppendingString:url]]];
+        [self.request setURL:[NSURL URLWithString:[PPApiHost stringByAppendingString:url]]];
         [self.request setHTTPBody:postData];
         NSError *error = [[NSError alloc] init];
         NSHTTPURLResponse *urlResponse = nil;
@@ -191,33 +196,6 @@
 #pragma mark -
 #pragma mark Private methods
 
-- (void) initWithAppKey:(NSString *)appKey withAppSecret:(NSString *)appSecret {
-    [self initWithHost:nil withAppKey:appKey withAppSecret:appSecret];
-}
-
-- (void) initWithHost: (NSString*)host withAppKey:(NSString*)appKey withAppSecret:(NSString*)appSecret {
-    self.appKey = appKey;
-    self.appSecret = appSecret;
-    
-    if (host) {
-        self.host = host;
-    } else {
-        self.host = DEFAULT_HOST;
-    }
-    
-    [self initHosts];
-}
-
-// init hosts
-
-- (void) initHosts {
-    self.apiHost = [NSString stringWithFormat:@"%@%@%@", HTTP_SCHEME, self.host, API];
-    self.webSocketHost = [NSString stringWithFormat:@"%@%@%@", WEBSOCKET_SCHEME, self.host, WS];
-    self.fileDownloadHost = [NSString stringWithFormat:@"%@%@%@", HTTP_SCHEME, self.host, DOWNLOAD];
-    self.fileUploadHost = [NSString stringWithFormat:@"%@%@%@", HTTP_SCHEME, self.host, UPLOAD];
-    self.portalHost = [NSString stringWithFormat:@"%@%@", HTTP_SCHEME, self.host];
-}
-
 // init MutableURLRequest
 
 - (void) initMutableURLRequest {
@@ -231,19 +209,12 @@
 // add headers to request
 
 - (void) addHeaders {
-    [self.request setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    [self.request setValue:@"true" forHTTPHeaderField:@"X-If-IMAPP"];
-    [self.request setValue:self.appKey forHTTPHeaderField:@"X-App-Key"];
-    NSString *requestUUID = [self.client.utils getRandomUUID];
-    [self.request setValue:requestUUID forHTTPHeaderField:@"X-Request-UUID"];
-    [self.request setValue:[self signature:requestUUID] forHTTPHeaderField:@"X-Request-Signature"];
+    [self addHeadersForRequest:self.request];
 }
 
-// signature request
-
-- (NSString*) signature:(NSString*) requestUUID {
-    NSString *sig = [self.appSecret stringByAppendingString:requestUUID];
-    return [sig SHA1String];
+- (void) addHeadersForRequest:(NSMutableURLRequest*)request {
+    [request setValue:@"application/json;charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    [request setValue:[NSString stringWithFormat:@"OAuth %@", self.accessToken] forHTTPHeaderField:@"Authorization"];
 }
 
 // convert request params which in dictionary to NSData

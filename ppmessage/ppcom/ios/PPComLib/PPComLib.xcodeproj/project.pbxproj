@@ -60,12 +60,10 @@
 		355770501BCCEBC000CFF6DF /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3567B0051BCB9DF50053843C /* JSQMessagesCollectionViewCellOutgoing.xib */; };
 		355770511BCCEBC400CFF6DF /* JSQMessagesCollectionViewCellIncoming.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3567B0021BCB9DF50053843C /* JSQMessagesCollectionViewCellIncoming.xib */; };
 		355770521BCCEBCA00CFF6DF /* JSQMessagesTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3567B0161BCB9DF50053843C /* JSQMessagesTypingIndicatorFooterView.xib */; };
-		3559811D1BCCD2D800DCAE33 /* PPConversationItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3567B0681BCB9DF50053843C /* PPConversationItem.xib */; };
 		3567AF961BCB9D860053843C /* PPComLib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3567AF951BCB9D860053843C /* PPComLib.h */; };
 		3567AF9E1BCB9D860053843C /* libPPComLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3567AF921BCB9D860053843C /* libPPComLib.a */; };
 		3567AFAD1BCB9D9E0053843C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3567AFAC1BCB9D9E0053843C /* Security.framework */; };
 		3567AFAF1BCB9DA30053843C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3567AFAE1BCB9DA30053843C /* CFNetwork.framework */; };
-		3567AFB11BCB9DA90053843C /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3567AFB01BCB9DA90053843C /* libicucore.dylib */; };
 		3567AFB31BCB9DD90053843C /* PPComLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AF951BCB9D860053843C /* PPComLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3567B06D1BCB9DF50053843C /* NSBundle+JSQMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFB81BCB9DF50053843C /* NSBundle+JSQMessages.h */; };
 		3567B06E1BCB9DF50053843C /* NSBundle+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFB91BCB9DF50053843C /* NSBundle+JSQMessages.m */; };
@@ -211,14 +209,70 @@
 		3567B1021BCB9DFD0053843C /* PPTxtMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0621BCB9DF50053843C /* PPTxtMediaItem.m */; };
 		3567B1031BCB9DFD0053843C /* PPUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0631BCB9DF50053843C /* PPUser.h */; };
 		3567B1041BCB9DFD0053843C /* PPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0641BCB9DF50053843C /* PPUser.m */; };
-		3567B1051BCB9DFD0053843C /* ConversationCellItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0661BCB9DF50053843C /* ConversationCellItem.h */; };
-		3567B1061BCB9DFD0053843C /* ConversationCellItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0671BCB9DF50053843C /* ConversationCellItem.m */; };
 		3567B1071BCB9DFD0053843C /* SRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B06A1BCB9DF50053843C /* SRWebSocket.h */; };
 		3567B1081BCB9DFD0053843C /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B06B1BCB9DF50053843C /* SRWebSocket.m */; };
 		3567B1091BCB9DFD0053843C /* SocketRocket-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 3567B06C1BCB9DF50053843C /* SocketRocket-Prefix.pch */; };
 		3581D77E1C2A6EC8006372BA /* PPAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 3581D77C1C2A6EC8006372BA /* PPAppInfo.h */; };
 		3581D77F1C2A6EC8006372BA /* PPAppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3581D77D1C2A6EC8006372BA /* PPAppInfo.m */; };
 		3586FE481C2E5372002F58FC /* PPFastLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 3586FE471C2E5372002F58FC /* PPFastLog.m */; };
+		EDA2725B1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272591CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h */; };
+		EDA2725C1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA2725A1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m */; };
+		EDA2725F1CBBA8970038E2B8 /* PPMessagesStore.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA2725D1CBBA8970038E2B8 /* PPMessagesStore.h */; };
+		EDA272601CBBA8970038E2B8 /* PPMessagesStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA2725E1CBBA8970038E2B8 /* PPMessagesStore.m */; };
+		EDA272631CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272611CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.h */; };
+		EDA272641CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272621CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.m */; };
+		EDA2727C1CBDE6590038E2B8 /* PPCreateConversationHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA2727A1CBDE6590038E2B8 /* PPCreateConversationHttpModel.h */; };
+		EDA2727D1CBDE6590038E2B8 /* PPCreateConversationHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA2727B1CBDE6590038E2B8 /* PPCreateConversationHttpModel.m */; };
+		EDA272851CBE34E40038E2B8 /* PPViewUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272831CBE34E40038E2B8 /* PPViewUtils.h */; };
+		EDA272861CBE34E40038E2B8 /* PPViewUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272841CBE34E40038E2B8 /* PPViewUtils.m */; };
+		EDA272911CBF4F8E0038E2B8 /* user_group_man_man.png in Resources */ = {isa = PBXBuildFile; fileRef = EDA2728D1CBF4F820038E2B8 /* user_group_man_man.png */; };
+		EDA272921CBF4F910038E2B8 /* user_group_man_man@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDA2728C1CBF4F820038E2B8 /* user_group_man_man@2x.png */; };
+		EDA272931CBF4F950038E2B8 /* user_group_man_man@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDA2728B1CBF4F820038E2B8 /* user_group_man_man@3x.png */; };
+		EDA272981CBF7B860038E2B8 /* PPGroupMembersViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272961CBF7B860038E2B8 /* PPGroupMembersViewController.h */; };
+		EDA272991CBF7B860038E2B8 /* PPGroupMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272971CBF7B860038E2B8 /* PPGroupMembersViewController.m */; };
+		EDA2729D1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA2729B1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.h */; };
+		EDA2729E1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA2729C1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.m */; };
+		EDA272A11CBF7EC80038E2B8 /* PPGroupMembersStore.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA2729F1CBF7EC80038E2B8 /* PPGroupMembersStore.h */; };
+		EDA272A21CBF7EC80038E2B8 /* PPGroupMembersStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272A01CBF7EC80038E2B8 /* PPGroupMembersStore.m */; };
+		EDA272A51CBF82410038E2B8 /* PPGetConversationUserListHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272A31CBF82410038E2B8 /* PPGetConversationUserListHttpModel.h */; };
+		EDA272A61CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272A41CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m */; };
+		EDA272A91CBF8CC30038E2B8 /* PPGroupMembersDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272A71CBF8CC30038E2B8 /* PPGroupMembersDataSource.h */; };
+		EDA272AA1CBF8CC30038E2B8 /* PPGroupMembersDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272A81CBF8CC30038E2B8 /* PPGroupMembersDataSource.m */; };
+		EDA272AD1CBF91CC0038E2B8 /* PPGroupMemberViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272AB1CBF91CC0038E2B8 /* PPGroupMemberViewCell.h */; };
+		EDA272AE1CBF91CC0038E2B8 /* PPGroupMemberViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272AC1CBF91CC0038E2B8 /* PPGroupMemberViewCell.m */; };
+		EDAC3D3A1CAD05E400BA1066 /* PPComToken.h in Headers */ = {isa = PBXBuildFile; fileRef = EDAC3D381CAD05E400BA1066 /* PPComToken.h */; };
+		EDAC3D3B1CAD05E400BA1066 /* PPComToken.m in Sources */ = {isa = PBXBuildFile; fileRef = EDAC3D391CAD05E400BA1066 /* PPComToken.m */; };
+		EDB590541CAD329800017E7C /* PPGetDefaultConversationHttpModels.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590521CAD329800017E7C /* PPGetDefaultConversationHttpModels.h */; };
+		EDB590551CAD329800017E7C /* PPGetDefaultConversationHttpModels.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590531CAD329800017E7C /* PPGetDefaultConversationHttpModels.m */; };
+		EDB5905B1CAE132D00017E7C /* PPBadgeStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590571CAE132D00017E7C /* PPBadgeStyle.h */; };
+		EDB5905C1CAE132D00017E7C /* PPBadgeStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590581CAE132D00017E7C /* PPBadgeStyle.m */; };
+		EDB5905D1CAE132D00017E7C /* PPCustomBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590591CAE132D00017E7C /* PPCustomBadge.h */; };
+		EDB5905E1CAE132D00017E7C /* PPCustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB5905A1CAE132D00017E7C /* PPCustomBadge.m */; };
+		EDB590621CAE14A800017E7C /* PPConversationItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590601CAE14A800017E7C /* PPConversationItemViewCell.h */; };
+		EDB590631CAE14A800017E7C /* PPConversationItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590611CAE14A800017E7C /* PPConversationItemViewCell.m */; };
+		EDB590661CAE14FE00017E7C /* PPBadgeSquareImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590641CAE14FE00017E7C /* PPBadgeSquareImageView.h */; };
+		EDB590671CAE14FE00017E7C /* PPBadgeSquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590651CAE14FE00017E7C /* PPBadgeSquareImageView.m */; };
+		EDB5906B1CAE164100017E7C /* PPLayoutConstraintsUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590691CAE164100017E7C /* PPLayoutConstraintsUtils.h */; };
+		EDB5906C1CAE164100017E7C /* PPLayoutConstraintsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB5906A1CAE164100017E7C /* PPLayoutConstraintsUtils.m */; };
+		EDB5906F1CAE1DD000017E7C /* PPConversationsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB5906D1CAE1DD000017E7C /* PPConversationsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EDB590701CAE1DD000017E7C /* PPConversationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB5906E1CAE1DD000017E7C /* PPConversationsViewController.m */; };
+		EDB590741CAE20B100017E7C /* PPConversationItemDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590721CAE20B100017E7C /* PPConversationItemDataSource.h */; };
+		EDB590751CAE20B100017E7C /* PPConversationItemDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590731CAE20B100017E7C /* PPConversationItemDataSource.m */; };
+		EDB590791CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590771CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.h */; };
+		EDB5907A1CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590781CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.m */; };
+		EDB5907D1CAE271900017E7C /* PPImageDownloaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB5907B1CAE271900017E7C /* PPImageDownloaderManager.h */; };
+		EDB5907E1CAE271900017E7C /* PPImageDownloaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB5907C1CAE271900017E7C /* PPImageDownloaderManager.m */; };
+		EDB590811CAE2BC300017E7C /* PPImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB5907F1CAE2BC300017E7C /* PPImageView.h */; };
+		EDB590821CAE2BC300017E7C /* PPImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590801CAE2BC300017E7C /* PPImageView.m */; };
+		EDB590861CAE355E00017E7C /* PPConversationsStore.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590841CAE355E00017E7C /* PPConversationsStore.h */; };
+		EDB590871CAE355E00017E7C /* PPConversationsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590851CAE355E00017E7C /* PPConversationsStore.m */; };
+		EDB5908A1CAE376700017E7C /* PPStoreManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590881CAE376700017E7C /* PPStoreManager.h */; };
+		EDB5908B1CAE376700017E7C /* PPStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590891CAE376700017E7C /* PPStoreManager.m */; };
+		EDB5908E1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB5908C1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.h */; };
+		EDB5908F1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB5908D1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.m */; };
+		EDB590911CAE5D7000017E7C /* PPHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590901CAE5D7000017E7C /* PPHttpModel.h */; };
+		EDB590941CAE644600017E7C /* PPGetConversationListHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590921CAE644600017E7C /* PPGetConversationListHttpModel.h */; };
+		EDB590951CAE644600017E7C /* PPGetConversationListHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590931CAE644600017E7C /* PPGetConversationListHttpModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,7 +362,6 @@
 		3567AFA31BCB9D860053843C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3567AFAC1BCB9D9E0053843C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3567AFAE1BCB9DA30053843C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		3567AFB01BCB9DA90053843C /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		3567AFB81BCB9DF50053843C /* NSBundle+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+JSQMessages.h"; sourceTree = "<group>"; };
 		3567AFB91BCB9DF50053843C /* NSBundle+JSQMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+JSQMessages.m"; sourceTree = "<group>"; };
 		3567AFBA1BCB9DF50053843C /* NSString+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JSQMessages.h"; sourceTree = "<group>"; };
@@ -458,9 +511,6 @@
 		3567B0621BCB9DF50053843C /* PPTxtMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTxtMediaItem.m; sourceTree = "<group>"; };
 		3567B0631BCB9DF50053843C /* PPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPUser.h; sourceTree = "<group>"; };
 		3567B0641BCB9DF50053843C /* PPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPUser.m; sourceTree = "<group>"; };
-		3567B0661BCB9DF50053843C /* ConversationCellItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConversationCellItem.h; sourceTree = "<group>"; };
-		3567B0671BCB9DF50053843C /* ConversationCellItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConversationCellItem.m; sourceTree = "<group>"; };
-		3567B0681BCB9DF50053843C /* PPConversationItem.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPConversationItem.xib; sourceTree = "<group>"; };
 		3567B06A1BCB9DF50053843C /* SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRWebSocket.h; sourceTree = "<group>"; };
 		3567B06B1BCB9DF50053843C /* SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRWebSocket.m; sourceTree = "<group>"; };
 		3567B06C1BCB9DF50053843C /* SocketRocket-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SocketRocket-Prefix.pch"; sourceTree = "<group>"; };
@@ -469,6 +519,64 @@
 		3586FE461C2E52FB002F58FC /* PPFastLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPFastLog.h; sourceTree = "<group>"; };
 		3586FE471C2E5372002F58FC /* PPFastLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFastLog.m; sourceTree = "<group>"; };
 		35EB5AC61C2B93FA007842D6 /* PPConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPConstants.h; sourceTree = "<group>"; };
+		EDA272591CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetMessageHistoryHttpModel.h; path = HttpModels/PPGetMessageHistoryHttpModel.h; sourceTree = "<group>"; };
+		EDA2725A1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetMessageHistoryHttpModel.m; path = HttpModels/PPGetMessageHistoryHttpModel.m; sourceTree = "<group>"; };
+		EDA2725D1CBBA8970038E2B8 /* PPMessagesStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPMessagesStore.h; path = Stores/PPMessagesStore.h; sourceTree = "<group>"; };
+		EDA2725E1CBBA8970038E2B8 /* PPMessagesStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPMessagesStore.m; path = Stores/PPMessagesStore.m; sourceTree = "<group>"; };
+		EDA272611CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PPMessagesViewController+PPCellTopLabel.h"; path = "category/PPMessagesViewController+PPCellTopLabel.h"; sourceTree = "<group>"; };
+		EDA272621CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PPMessagesViewController+PPCellTopLabel.m"; path = "category/PPMessagesViewController+PPCellTopLabel.m"; sourceTree = "<group>"; };
+		EDA2727A1CBDE6590038E2B8 /* PPCreateConversationHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPCreateConversationHttpModel.h; path = HttpModels/PPCreateConversationHttpModel.h; sourceTree = "<group>"; };
+		EDA2727B1CBDE6590038E2B8 /* PPCreateConversationHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPCreateConversationHttpModel.m; path = HttpModels/PPCreateConversationHttpModel.m; sourceTree = "<group>"; };
+		EDA272831CBE34E40038E2B8 /* PPViewUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPViewUtils.h; sourceTree = "<group>"; };
+		EDA272841CBE34E40038E2B8 /* PPViewUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPViewUtils.m; sourceTree = "<group>"; };
+		EDA2728B1CBF4F820038E2B8 /* user_group_man_man@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_group_man_man@3x.png"; sourceTree = "<group>"; };
+		EDA2728C1CBF4F820038E2B8 /* user_group_man_man@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_group_man_man@2x.png"; sourceTree = "<group>"; };
+		EDA2728D1CBF4F820038E2B8 /* user_group_man_man.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_group_man_man.png; sourceTree = "<group>"; };
+		EDA272961CBF7B860038E2B8 /* PPGroupMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPGroupMembersViewController.h; sourceTree = "<group>"; };
+		EDA272971CBF7B860038E2B8 /* PPGroupMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPGroupMembersViewController.m; sourceTree = "<group>"; };
+		EDA2729B1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGroupMembersCollectionViewLayout.h; path = groupmembers/PPGroupMembersCollectionViewLayout.h; sourceTree = "<group>"; };
+		EDA2729C1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGroupMembersCollectionViewLayout.m; path = groupmembers/PPGroupMembersCollectionViewLayout.m; sourceTree = "<group>"; };
+		EDA2729F1CBF7EC80038E2B8 /* PPGroupMembersStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGroupMembersStore.h; path = Stores/PPGroupMembersStore.h; sourceTree = "<group>"; };
+		EDA272A01CBF7EC80038E2B8 /* PPGroupMembersStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGroupMembersStore.m; path = Stores/PPGroupMembersStore.m; sourceTree = "<group>"; };
+		EDA272A31CBF82410038E2B8 /* PPGetConversationUserListHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetConversationUserListHttpModel.h; path = HttpModels/PPGetConversationUserListHttpModel.h; sourceTree = "<group>"; };
+		EDA272A41CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetConversationUserListHttpModel.m; path = HttpModels/PPGetConversationUserListHttpModel.m; sourceTree = "<group>"; };
+		EDA272A71CBF8CC30038E2B8 /* PPGroupMembersDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGroupMembersDataSource.h; path = datasource/PPGroupMembersDataSource.h; sourceTree = "<group>"; };
+		EDA272A81CBF8CC30038E2B8 /* PPGroupMembersDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGroupMembersDataSource.m; path = datasource/PPGroupMembersDataSource.m; sourceTree = "<group>"; };
+		EDA272AB1CBF91CC0038E2B8 /* PPGroupMemberViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGroupMemberViewCell.h; path = groupmembers/PPGroupMemberViewCell.h; sourceTree = "<group>"; };
+		EDA272AC1CBF91CC0038E2B8 /* PPGroupMemberViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGroupMemberViewCell.m; path = groupmembers/PPGroupMemberViewCell.m; sourceTree = "<group>"; };
+		EDAC3D381CAD05E400BA1066 /* PPComToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPComToken.h; sourceTree = "<group>"; };
+		EDAC3D391CAD05E400BA1066 /* PPComToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPComToken.m; sourceTree = "<group>"; };
+		EDB590521CAD329800017E7C /* PPGetDefaultConversationHttpModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetDefaultConversationHttpModels.h; path = HttpModels/PPGetDefaultConversationHttpModels.h; sourceTree = "<group>"; };
+		EDB590531CAD329800017E7C /* PPGetDefaultConversationHttpModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetDefaultConversationHttpModels.m; path = HttpModels/PPGetDefaultConversationHttpModels.m; sourceTree = "<group>"; };
+		EDB590571CAE132D00017E7C /* PPBadgeStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPBadgeStyle.h; path = custombadge/PPBadgeStyle.h; sourceTree = "<group>"; };
+		EDB590581CAE132D00017E7C /* PPBadgeStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPBadgeStyle.m; path = custombadge/PPBadgeStyle.m; sourceTree = "<group>"; };
+		EDB590591CAE132D00017E7C /* PPCustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPCustomBadge.h; path = custombadge/PPCustomBadge.h; sourceTree = "<group>"; };
+		EDB5905A1CAE132D00017E7C /* PPCustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPCustomBadge.m; path = custombadge/PPCustomBadge.m; sourceTree = "<group>"; };
+		EDB590601CAE14A800017E7C /* PPConversationItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPConversationItemViewCell.h; path = conversations/PPConversationItemViewCell.h; sourceTree = "<group>"; };
+		EDB590611CAE14A800017E7C /* PPConversationItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPConversationItemViewCell.m; path = conversations/PPConversationItemViewCell.m; sourceTree = "<group>"; };
+		EDB590641CAE14FE00017E7C /* PPBadgeSquareImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPBadgeSquareImageView.h; path = conversations/PPBadgeSquareImageView.h; sourceTree = "<group>"; };
+		EDB590651CAE14FE00017E7C /* PPBadgeSquareImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPBadgeSquareImageView.m; path = conversations/PPBadgeSquareImageView.m; sourceTree = "<group>"; };
+		EDB590691CAE164100017E7C /* PPLayoutConstraintsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPLayoutConstraintsUtils.h; path = views/PPLayoutConstraintsUtils.h; sourceTree = "<group>"; };
+		EDB5906A1CAE164100017E7C /* PPLayoutConstraintsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPLayoutConstraintsUtils.m; path = views/PPLayoutConstraintsUtils.m; sourceTree = "<group>"; };
+		EDB5906D1CAE1DD000017E7C /* PPConversationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPConversationsViewController.h; sourceTree = "<group>"; };
+		EDB5906E1CAE1DD000017E7C /* PPConversationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPConversationsViewController.m; sourceTree = "<group>"; };
+		EDB590721CAE20B100017E7C /* PPConversationItemDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPConversationItemDataSource.h; path = datasource/PPConversationItemDataSource.h; sourceTree = "<group>"; };
+		EDB590731CAE20B100017E7C /* PPConversationItemDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPConversationItemDataSource.m; path = datasource/PPConversationItemDataSource.m; sourceTree = "<group>"; };
+		EDB590771CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PPConversationItemViewCell+PPConfigureForConversationItem.h"; path = "category/PPConversationItemViewCell+PPConfigureForConversationItem.h"; sourceTree = "<group>"; };
+		EDB590781CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PPConversationItemViewCell+PPConfigureForConversationItem.m"; path = "category/PPConversationItemViewCell+PPConfigureForConversationItem.m"; sourceTree = "<group>"; };
+		EDB5907B1CAE271900017E7C /* PPImageDownloaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPImageDownloaderManager.h; sourceTree = "<group>"; };
+		EDB5907C1CAE271900017E7C /* PPImageDownloaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPImageDownloaderManager.m; sourceTree = "<group>"; };
+		EDB5907F1CAE2BC300017E7C /* PPImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPImageView.h; sourceTree = "<group>"; };
+		EDB590801CAE2BC300017E7C /* PPImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPImageView.m; sourceTree = "<group>"; };
+		EDB590841CAE355E00017E7C /* PPConversationsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPConversationsStore.h; path = Stores/PPConversationsStore.h; sourceTree = "<group>"; };
+		EDB590851CAE355E00017E7C /* PPConversationsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPConversationsStore.m; path = Stores/PPConversationsStore.m; sourceTree = "<group>"; };
+		EDB590881CAE376700017E7C /* PPStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPStoreManager.h; path = Stores/PPStoreManager.h; sourceTree = "<group>"; };
+		EDB590891CAE376700017E7C /* PPStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPStoreManager.m; path = Stores/PPStoreManager.m; sourceTree = "<group>"; };
+		EDB5908C1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetAppOrgGroupListHttpModel.h; path = HttpModels/PPGetAppOrgGroupListHttpModel.h; sourceTree = "<group>"; };
+		EDB5908D1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetAppOrgGroupListHttpModel.m; path = HttpModels/PPGetAppOrgGroupListHttpModel.m; sourceTree = "<group>"; };
+		EDB590901CAE5D7000017E7C /* PPHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPHttpModel.h; path = HttpModels/PPHttpModel.h; sourceTree = "<group>"; };
+		EDB590921CAE644600017E7C /* PPGetConversationListHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetConversationListHttpModel.h; path = HttpModels/PPGetConversationListHttpModel.h; sourceTree = "<group>"; };
+		EDB590931CAE644600017E7C /* PPGetConversationListHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetConversationListHttpModel.m; path = HttpModels/PPGetConversationListHttpModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -484,7 +592,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3541FA0A1BCE0AAA000940EA /* MobileCoreServices.framework in Frameworks */,
-				3567AFB11BCB9DA90053843C /* libicucore.dylib in Frameworks */,
 				3567AFAF1BCB9DA30053843C /* CFNetwork.framework in Frameworks */,
 				3567AFAD1BCB9D9E0053843C /* Security.framework in Frameworks */,
 			);
@@ -539,6 +646,9 @@
 		355770681BCCFFC100CFF6DF /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				EDA2728B1CBF4F820038E2B8 /* user_group_man_man@3x.png */,
+				EDA2728C1CBF4F820038E2B8 /* user_group_man_man@2x.png */,
+				EDA2728D1CBF4F820038E2B8 /* user_group_man_man.png */,
 				355770131BCCE18C00CFF6DF /* pp_icon_avatar.png */,
 			);
 			name = Assets;
@@ -571,7 +681,6 @@
 		3567AF891BCB9D860053843C = {
 			isa = PBXGroup;
 			children = (
-				3567AFB01BCB9DA90053843C /* libicucore.dylib */,
 				3541FA091BCE0AAA000940EA /* MobileCoreServices.framework */,
 				3567AFAE1BCB9DA30053843C /* CFNetwork.framework */,
 				3567AFAC1BCB9D9E0053843C /* Security.framework */,
@@ -777,6 +886,7 @@
 		3567B01E1BCB9DF50053843C /* PPMessagesViewController */ = {
 			isa = PBXGroup;
 			children = (
+				EDB590831CAE353C00017E7C /* Stores */,
 				355770681BCCFFC100CFF6DF /* Assets */,
 				3567B01F1BCB9DF50053843C /* Controllers */,
 				3567B0241BCB9DF50053843C /* Core */,
@@ -790,8 +900,14 @@
 		3567B01F1BCB9DF50053843C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EDB590761CAE240400017E7C /* category */,
+				EDB590711CAE208300017E7C /* datasource */,
 				3567B0201BCB9DF50053843C /* PPMessagesViewController.h */,
 				3567B0211BCB9DF50053843C /* PPMessagesViewController.m */,
+				EDB5906D1CAE1DD000017E7C /* PPConversationsViewController.h */,
+				EDB5906E1CAE1DD000017E7C /* PPConversationsViewController.m */,
+				EDA272961CBF7B860038E2B8 /* PPGroupMembersViewController.h */,
+				EDA272971CBF7B860038E2B8 /* PPGroupMembersViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -811,6 +927,7 @@
 		3567B0291BCB9DF50053843C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EDB590681CAE160D00017E7C /* views */,
 				3567B02A1BCB9DF50053843C /* ImageDownloader.h */,
 				3567B02B1BCB9DF50053843C /* ImageDownloader.m */,
 				3567B02C1BCB9DF50053843C /* NSString+Crypto.h */,
@@ -842,6 +959,10 @@
 				35EB5AC61C2B93FA007842D6 /* PPConstants.h */,
 				3586FE461C2E52FB002F58FC /* PPFastLog.h */,
 				3586FE471C2E5372002F58FC /* PPFastLog.m */,
+				EDAC3D381CAD05E400BA1066 /* PPComToken.h */,
+				EDAC3D391CAD05E400BA1066 /* PPComToken.m */,
+				EDB5907B1CAE271900017E7C /* PPImageDownloaderManager.h */,
+				EDB5907C1CAE271900017E7C /* PPImageDownloaderManager.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -860,6 +981,7 @@
 		3567B04C1BCB9DF50053843C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				EDB590511CAD323900017E7C /* HttpModels */,
 				3567B04D1BCB9DF50053843C /* PPConversationItem.h */,
 				3567B04E1BCB9DF50053843C /* PPConversationItem.m */,
 				3567B0501BCB9DF50053843C /* PPConversationsList.h */,
@@ -891,9 +1013,12 @@
 		3567B0651BCB9DF50053843C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3567B0661BCB9DF50053843C /* ConversationCellItem.h */,
-				3567B0671BCB9DF50053843C /* ConversationCellItem.m */,
-				3567B0681BCB9DF50053843C /* PPConversationItem.xib */,
+				EDA2729A1CBF7CA80038E2B8 /* groupmembers */,
+				EDA2727E1CBDF99E0038E2B8 /* common */,
+				EDB5905F1CAE13CE00017E7C /* conversations */,
+				EDB590561CAE130B00017E7C /* custombadge */,
+				EDB5907F1CAE2BC300017E7C /* PPImageView.h */,
+				EDB590801CAE2BC300017E7C /* PPImageView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -908,6 +1033,114 @@
 			path = SRWebSocket;
 			sourceTree = "<group>";
 		};
+		EDA2727E1CBDF99E0038E2B8 /* common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = common;
+			sourceTree = "<group>";
+		};
+		EDA2729A1CBF7CA80038E2B8 /* groupmembers */ = {
+			isa = PBXGroup;
+			children = (
+				EDA2729B1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.h */,
+				EDA2729C1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.m */,
+				EDA272AB1CBF91CC0038E2B8 /* PPGroupMemberViewCell.h */,
+				EDA272AC1CBF91CC0038E2B8 /* PPGroupMemberViewCell.m */,
+			);
+			name = groupmembers;
+			sourceTree = "<group>";
+		};
+		EDB590511CAD323900017E7C /* HttpModels */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590521CAD329800017E7C /* PPGetDefaultConversationHttpModels.h */,
+				EDB590531CAD329800017E7C /* PPGetDefaultConversationHttpModels.m */,
+				EDB5908C1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.h */,
+				EDB5908D1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.m */,
+				EDB590901CAE5D7000017E7C /* PPHttpModel.h */,
+				EDB590921CAE644600017E7C /* PPGetConversationListHttpModel.h */,
+				EDB590931CAE644600017E7C /* PPGetConversationListHttpModel.m */,
+				EDA272591CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h */,
+				EDA2725A1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m */,
+				EDA2727A1CBDE6590038E2B8 /* PPCreateConversationHttpModel.h */,
+				EDA2727B1CBDE6590038E2B8 /* PPCreateConversationHttpModel.m */,
+				EDA272A31CBF82410038E2B8 /* PPGetConversationUserListHttpModel.h */,
+				EDA272A41CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m */,
+			);
+			name = HttpModels;
+			sourceTree = "<group>";
+		};
+		EDB590561CAE130B00017E7C /* custombadge */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590571CAE132D00017E7C /* PPBadgeStyle.h */,
+				EDB590581CAE132D00017E7C /* PPBadgeStyle.m */,
+				EDB590591CAE132D00017E7C /* PPCustomBadge.h */,
+				EDB5905A1CAE132D00017E7C /* PPCustomBadge.m */,
+			);
+			name = custombadge;
+			sourceTree = "<group>";
+		};
+		EDB5905F1CAE13CE00017E7C /* conversations */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590601CAE14A800017E7C /* PPConversationItemViewCell.h */,
+				EDB590611CAE14A800017E7C /* PPConversationItemViewCell.m */,
+				EDB590641CAE14FE00017E7C /* PPBadgeSquareImageView.h */,
+				EDB590651CAE14FE00017E7C /* PPBadgeSquareImageView.m */,
+			);
+			name = conversations;
+			sourceTree = "<group>";
+		};
+		EDB590681CAE160D00017E7C /* views */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590691CAE164100017E7C /* PPLayoutConstraintsUtils.h */,
+				EDB5906A1CAE164100017E7C /* PPLayoutConstraintsUtils.m */,
+				EDA272831CBE34E40038E2B8 /* PPViewUtils.h */,
+				EDA272841CBE34E40038E2B8 /* PPViewUtils.m */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
+		EDB590711CAE208300017E7C /* datasource */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590721CAE20B100017E7C /* PPConversationItemDataSource.h */,
+				EDB590731CAE20B100017E7C /* PPConversationItemDataSource.m */,
+				EDA272A71CBF8CC30038E2B8 /* PPGroupMembersDataSource.h */,
+				EDA272A81CBF8CC30038E2B8 /* PPGroupMembersDataSource.m */,
+			);
+			name = datasource;
+			sourceTree = "<group>";
+		};
+		EDB590761CAE240400017E7C /* category */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590771CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.h */,
+				EDB590781CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.m */,
+				EDA272611CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.h */,
+				EDA272621CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.m */,
+			);
+			name = category;
+			sourceTree = "<group>";
+		};
+		EDB590831CAE353C00017E7C /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590841CAE355E00017E7C /* PPConversationsStore.h */,
+				EDB590851CAE355E00017E7C /* PPConversationsStore.m */,
+				EDB590881CAE376700017E7C /* PPStoreManager.h */,
+				EDB590891CAE376700017E7C /* PPStoreManager.m */,
+				EDA2725D1CBBA8970038E2B8 /* PPMessagesStore.h */,
+				EDA2725E1CBBA8970038E2B8 /* PPMessagesStore.m */,
+				EDA2729F1CBF7EC80038E2B8 /* PPGroupMembersStore.h */,
+				EDA272A01CBF7EC80038E2B8 /* PPGroupMembersStore.m */,
+			);
+			name = Stores;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -919,72 +1152,98 @@
 				3567B08B1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayout.h in Headers */,
 				3567B0AB1BCB9DF70053843C /* JSQMessagesCollectionView.h in Headers */,
 				3567B07B1BCB9DF60053843C /* JSQMessagesViewController.h in Headers */,
+				EDB5905B1CAE132D00017E7C /* PPBadgeStyle.h in Headers */,
 				3567B0B51BCB9DF70053843C /* JSQMessagesInputToolbar.h in Headers */,
 				3567B0791BCB9DF50053843C /* JSQMessagesKeyboardController.h in Headers */,
 				3567B0A21BCB9DF60053843C /* JSQMessagesCollectionViewDelegateFlowLayout.h in Headers */,
 				3567B0BD1BCB9DF80053843C /* JSQMessagesToolbarContentView.h in Headers */,
 				3567B0B31BCB9DF70053843C /* JSQMessagesComposerTextView.h in Headers */,
+				EDB590791CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.h in Headers */,
 				3567B0A11BCB9DF60053843C /* JSQMessagesCollectionViewDataSource.h in Headers */,
 				3567B0881BCB9DF60053843C /* JSQMessagesBubbleSizeCalculating.h in Headers */,
+				EDA2727C1CBDE6590038E2B8 /* PPCreateConversationHttpModel.h in Headers */,
 				3567B0B71BCB9DF70053843C /* JSQMessagesLabel.h in Headers */,
 				3567B0A91BCB9DF70053843C /* JSQMessagesCellTextView.h in Headers */,
+				EDA272A11CBF7EC80038E2B8 /* PPGroupMembersStore.h in Headers */,
 				3567B0AD1BCB9DF70053843C /* JSQMessagesCollectionViewCell.h in Headers */,
 				3567B0D11BCB9DF90053843C /* NSString+Crypto.h in Headers */,
 				3567B0891BCB9DF60053843C /* JSQMessagesBubblesSizeCalculator.h in Headers */,
+				EDA272981CBF7B860038E2B8 /* PPGroupMembersViewController.h in Headers */,
 				3567B0871BCB9DF60053843C /* JSQMessages.h in Headers */,
 				3567B0CD1BCB9DF90053843C /* PPCom.h in Headers */,
 				3567B0CB1BCB9DF80053843C /* PP.h in Headers */,
 				3567AFB31BCB9DD90053843C /* PPComLib.h in Headers */,
 				3567B0FC1BCB9DFC0053843C /* PPMessageList.h in Headers */,
 				3567B1071BCB9DFD0053843C /* SRWebSocket.h in Headers */,
+				EDB5908E1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.h in Headers */,
+				EDB5905D1CAE132D00017E7C /* PPCustomBadge.h in Headers */,
 				3567B0F51BCB9DFC0053843C /* PPFileMediaItem.h in Headers */,
 				3567B0B91BCB9DF70053843C /* JSQMessagesLoadEarlierHeaderView.h in Headers */,
 				3567B0F91BCB9DFC0053843C /* PPMessage.h in Headers */,
 				3567B07D1BCB9DF60053843C /* JSQMessagesAvatarImageFactory.h in Headers */,
 				3567B0ED1BCB9DFB0053843C /* PPImagePickerDelegate.h in Headers */,
 				3567B09D1BCB9DF60053843C /* JSQMessagesAvatarImage.h in Headers */,
+				EDAC3D3A1CAD05E400BA1066 /* PPComToken.h in Headers */,
+				EDA272631CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.h in Headers */,
 				3567B0FB1BCB9DFC0053843C /* PPMessageData.h in Headers */,
 				3567B09C1BCB9DF60053843C /* JSQMessageMediaData.h in Headers */,
 				3567B09A1BCB9DF60053843C /* JSQMessageBubbleImageDataSource.h in Headers */,
+				EDB5908A1CAE376700017E7C /* PPStoreManager.h in Headers */,
 				3567B0F31BCB9DFB0053843C /* PPDataCache.h in Headers */,
 				3567B0A51BCB9DF70053843C /* JSQTxtMediaItem.h in Headers */,
 				3567B1011BCB9DFD0053843C /* PPTxtMediaItem.h in Headers */,
 				3567B0971BCB9DF60053843C /* JSQMessage.h in Headers */,
 				3567B0EB1BCB9DFB0053843C /* PPCameraViewDelegate.h in Headers */,
+				EDB5906B1CAE164100017E7C /* PPLayoutConstraintsUtils.h in Headers */,
 				3567B06D1BCB9DF50053843C /* NSBundle+JSQMessages.h in Headers */,
 				3567B0D31BCB9DF90053843C /* PPCachebleImageDownloader.h in Headers */,
 				3567B08F1BCB9DF60053843C /* JSQMessagesCollectionViewLayoutAttributes.h in Headers */,
 				3567B0811BCB9DF60053843C /* JSQMessagesMediaViewBubbleImageMasker.h in Headers */,
 				3567B0E91BCB9DFB0053843C /* PPUploader.h in Headers */,
+				EDB590541CAD329800017E7C /* PPGetDefaultConversationHttpModels.h in Headers */,
+				EDB5906F1CAE1DD000017E7C /* PPConversationsViewController.h in Headers */,
 				3567B0F71BCB9DFC0053843C /* PPMediaItem.h in Headers */,
+				EDB5907D1CAE271900017E7C /* PPImageDownloaderManager.h in Headers */,
 				3567B09F1BCB9DF60053843C /* JSQMessagesBubbleImage.h in Headers */,
+				EDB590741CAE20B100017E7C /* PPConversationItemDataSource.h in Headers */,
 				3567B0991BCB9DF60053843C /* JSQMessageAvatarImageDataSource.h in Headers */,
 				3581D77E1C2A6EC8006372BA /* PPAppInfo.h in Headers */,
 				3567B0A31BCB9DF70053843C /* JSQPhotoMediaItem.h in Headers */,
 				3567B0E51BCB9DFA0053843C /* PPMessageSender.h in Headers */,
 				3567B0711BCB9DF50053843C /* UIColor+JSQMessages.h in Headers */,
+				EDA272A91CBF8CC30038E2B8 /* PPGroupMembersDataSource.h in Headers */,
 				3567B0AF1BCB9DF70053843C /* JSQMessagesCollectionViewCellIncoming.h in Headers */,
 				3567B0CF1BCB9DF90053843C /* ImageDownloader.h in Headers */,
 				3567B1031BCB9DFD0053843C /* PPUser.h in Headers */,
 				3567B06F1BCB9DF50053843C /* NSString+JSQMessages.h in Headers */,
 				3567B0BB1BCB9DF80053843C /* JSQMessagesMediaPlaceholderView.h in Headers */,
 				3567B08D1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.h in Headers */,
+				EDB590811CAE2BC300017E7C /* PPImageView.h in Headers */,
 				3567B0D51BCB9DF90053843C /* PPComAPI.h in Headers */,
 				3567B0FE1BCB9DFC0053843C /* PPMessageMediaData.h in Headers */,
+				EDB590941CAE644600017E7C /* PPGetConversationListHttpModel.h in Headers */,
 				3567B0A71BCB9DF70053843C /* JSQVideoMediaItem.h in Headers */,
 				3567B0751BCB9DF50053843C /* UIImage+JSQMessages.h in Headers */,
-				3567B1051BCB9DFD0053843C /* ConversationCellItem.h in Headers */,
+				EDB590661CAE14FE00017E7C /* PPBadgeSquareImageView.h in Headers */,
 				3567B0FF1BCB9DFD0053843C /* PPPhotoMediaItem.h in Headers */,
 				3567B0771BCB9DF50053843C /* UIView+JSQMessages.h in Headers */,
+				EDA2729D1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.h in Headers */,
 				3567B0EF1BCB9DFB0053843C /* PPConversationItem.h in Headers */,
+				EDA272A51CBF82410038E2B8 /* PPGetConversationUserListHttpModel.h in Headers */,
+				EDA272AD1CBF91CC0038E2B8 /* PPGroupMemberViewCell.h in Headers */,
 				3567B0951BCB9DF60053843C /* JSQMediaItem.h in Headers */,
 				3567B0F11BCB9DFB0053843C /* PPConversationsList.h in Headers */,
 				3567B0831BCB9DF60053843C /* JSQMessagesTimestampFormatter.h in Headers */,
+				EDB590911CAE5D7000017E7C /* PPHttpModel.h in Headers */,
 				3567B0851BCB9DF60053843C /* JSQMessagesToolbarButtonFactory.h in Headers */,
 				3567B0BF1BCB9DF80053843C /* JSQMessagesTypingIndicatorFooterView.h in Headers */,
 				3567B0B11BCB9DF70053843C /* JSQMessagesCollectionViewCellOutgoing.h in Headers */,
+				EDB590621CAE14A800017E7C /* PPConversationItemViewCell.h in Headers */,
 				3567B0E11BCB9DFA0053843C /* PPJSQAvatarLoader.h in Headers */,
+				EDA2725F1CBBA8970038E2B8 /* PPMessagesStore.h in Headers */,
 				3567B0E71BCB9DFA0053843C /* PPTxtLoader.h in Headers */,
+				EDA272851CBE34E40038E2B8 /* PPViewUtils.h in Headers */,
+				EDB590861CAE355E00017E7C /* PPConversationsStore.h in Headers */,
 				3567B0E31BCB9DFA0053843C /* PPMessageReceiver.h in Headers */,
 				3567B0911BCB9DF60053843C /* JSQFileMediaItem.h in Headers */,
 				3567B0DD1BCB9DFA0053843C /* PPDownloader.h in Headers */,
@@ -995,6 +1254,7 @@
 				3567B1091BCB9DFD0053843C /* SocketRocket-Prefix.pch in Headers */,
 				3567B0931BCB9DF60053843C /* JSQLocationMediaItem.h in Headers */,
 				3567B09B1BCB9DF60053843C /* JSQMessageData.h in Headers */,
+				EDA2725B1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h in Headers */,
 				3567B0731BCB9DF50053843C /* UIDevice+JSQMessages.h in Headers */,
 				3567B0DB1BCB9DF90053843C /* PPComUtils.h in Headers */,
 			);
@@ -1064,7 +1324,7 @@
 		3567AF8A1BCB9D860053843C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Yvertical;
 				TargetAttributes = {
 					3559804E1BCC9E1A00DCAE33 = {
@@ -1113,6 +1373,7 @@
 				355770411BCCEA9F00CFF6DF /* bubble_stroked_tailless@2x.png in Resources */,
 				355770421BCCEA9F00CFF6DF /* bubble_stroked_tailless@3x.png in Resources */,
 				3557704A1BCCEA9F00CFF6DF /* play@2x.png in Resources */,
+				EDA272931CBF4F950038E2B8 /* user_group_man_man@3x.png in Resources */,
 				355770451BCCEA9F00CFF6DF /* bubble_tailless@3x.png in Resources */,
 				3557703A1BCCEA9F00CFF6DF /* bubble_regular.png in Resources */,
 				3557704D1BCCEA9F00CFF6DF /* typing@2x.png in Resources */,
@@ -1121,9 +1382,10 @@
 				355770511BCCEBC400CFF6DF /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
 				355770471BCCEA9F00CFF6DF /* clip@2x.png in Resources */,
 				3557704C1BCCEA9F00CFF6DF /* typing.png in Resources */,
-				3559811D1BCCD2D800DCAE33 /* PPConversationItem.xib in Resources */,
+				EDA272921CBF4F910038E2B8 /* user_group_man_man@2x.png in Resources */,
 				355770371BCCEA9F00CFF6DF /* bubble_min_tailless.png in Resources */,
 				355770401BCCEA9F00CFF6DF /* bubble_stroked_tailless.png in Resources */,
+				EDA272911CBF4F8E0038E2B8 /* user_group_man_man.png in Resources */,
 				355770461BCCEA9F00CFF6DF /* clip.png in Resources */,
 				3557704F1BCCEBBC00CFF6DF /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
 				3557703C1BCCEA9F00CFF6DF /* bubble_regular@3x.png in Resources */,
@@ -1204,8 +1466,11 @@
 				3567B0E41BCB9DFA0053843C /* PPMessageReceiver.m in Sources */,
 				3567B0E81BCB9DFA0053843C /* PPTxtLoader.m in Sources */,
 				3567B0BA1BCB9DF80053843C /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
+				EDA272A61CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m in Sources */,
+				EDB5908B1CAE376700017E7C /* PPStoreManager.m in Sources */,
 				3567B0EE1BCB9DFB0053843C /* PPImagePickerDelegate.m in Sources */,
 				3567B0DA1BCB9DF90053843C /* PPComNet.m in Sources */,
+				EDB590701CAE1DD000017E7C /* PPConversationsViewController.m in Sources */,
 				3567B0741BCB9DF50053843C /* UIDevice+JSQMessages.m in Sources */,
 				3567B0861BCB9DF60053843C /* JSQMessagesToolbarButtonFactory.m in Sources */,
 				3567B07E1BCB9DF60053843C /* JSQMessagesAvatarImageFactory.m in Sources */,
@@ -1213,14 +1478,21 @@
 				3567B0EC1BCB9DFB0053843C /* PPCameraViewDelegate.m in Sources */,
 				3567B0DE1BCB9DFA0053843C /* PPDownloader.m in Sources */,
 				3567B0981BCB9DF60053843C /* JSQMessage.m in Sources */,
+				EDB5906C1CAE164100017E7C /* PPLayoutConstraintsUtils.m in Sources */,
 				3567B0DC1BCB9DFA0053843C /* PPComUtils.m in Sources */,
+				EDB590951CAE644600017E7C /* PPGetConversationListHttpModel.m in Sources */,
 				3567B0AE1BCB9DF70053843C /* JSQMessagesCollectionViewCell.m in Sources */,
 				3567B0C01BCB9DF80053843C /* JSQMessagesTypingIndicatorFooterView.m in Sources */,
+				EDA2725C1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m in Sources */,
 				3567B0E01BCB9DFA0053843C /* PPFileManager.m in Sources */,
 				3567B0EA1BCB9DFB0053843C /* PPUploader.m in Sources */,
 				3567B0B41BCB9DF70053843C /* JSQMessagesComposerTextView.m in Sources */,
 				3567B0F21BCB9DFB0053843C /* PPConversationsList.m in Sources */,
 				3567B08C1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
+				EDA272601CBBA8970038E2B8 /* PPMessagesStore.m in Sources */,
+				EDA272861CBE34E40038E2B8 /* PPViewUtils.m in Sources */,
+				EDA272A21CBF7EC80038E2B8 /* PPGroupMembersStore.m in Sources */,
+				EDB5907E1CAE271900017E7C /* PPImageDownloaderManager.m in Sources */,
 				3567B0941BCB9DF60053843C /* JSQLocationMediaItem.m in Sources */,
 				3567B0B21BCB9DF70053843C /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
 				3567B0F41BCB9DFB0053843C /* PPDataCache.m in Sources */,
@@ -1236,23 +1508,33 @@
 				3567B08A1BCB9DF60053843C /* JSQMessagesBubblesSizeCalculator.m in Sources */,
 				3567B1081BCB9DFD0053843C /* SRWebSocket.m in Sources */,
 				3567B0701BCB9DF50053843C /* NSString+JSQMessages.m in Sources */,
+				EDA272641CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.m in Sources */,
 				3567B0801BCB9DF60053843C /* JSQMessagesBubbleImageFactory.m in Sources */,
+				EDB590871CAE355E00017E7C /* PPConversationsStore.m in Sources */,
 				3567B0D61BCB9DF90053843C /* PPComAPI.m in Sources */,
 				3567B0A81BCB9DF70053843C /* JSQVideoMediaItem.m in Sources */,
 				3581D77F1C2A6EC8006372BA /* PPAppInfo.m in Sources */,
 				3567B0D81BCB9DF90053843C /* PPComImageCache.m in Sources */,
+				EDB5908F1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.m in Sources */,
+				EDA2729E1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.m in Sources */,
 				3567B07A1BCB9DF50053843C /* JSQMessagesKeyboardController.m in Sources */,
 				3567B0B01BCB9DF70053843C /* JSQMessagesCollectionViewCellIncoming.m in Sources */,
-				3567B1061BCB9DFD0053843C /* ConversationCellItem.m in Sources */,
 				3567B07C1BCB9DF60053843C /* JSQMessagesViewController.m in Sources */,
 				3567B0A41BCB9DF70053843C /* JSQPhotoMediaItem.m in Sources */,
 				3567B0E61BCB9DFA0053843C /* PPMessageSender.m in Sources */,
 				3567B0721BCB9DF50053843C /* UIColor+JSQMessages.m in Sources */,
+				EDB590551CAD329800017E7C /* PPGetDefaultConversationHttpModels.m in Sources */,
+				EDAC3D3B1CAD05E400BA1066 /* PPComToken.m in Sources */,
 				3567B0761BCB9DF50053843C /* UIImage+JSQMessages.m in Sources */,
 				3567B1001BCB9DFD0053843C /* PPPhotoMediaItem.m in Sources */,
 				3567B0D21BCB9DF90053843C /* NSString+Crypto.m in Sources */,
 				3567B0CE1BCB9DF90053843C /* PPCom.m in Sources */,
 				3567B0A01BCB9DF60053843C /* JSQMessagesBubbleImage.m in Sources */,
+				EDB590631CAE14A800017E7C /* PPConversationItemViewCell.m in Sources */,
+				EDA2727D1CBDE6590038E2B8 /* PPCreateConversationHttpModel.m in Sources */,
+				EDB590671CAE14FE00017E7C /* PPBadgeSquareImageView.m in Sources */,
+				EDA272AE1CBF91CC0038E2B8 /* PPGroupMemberViewCell.m in Sources */,
+				EDB5907A1CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.m in Sources */,
 				3567B0F01BCB9DFB0053843C /* PPConversationItem.m in Sources */,
 				3567B0841BCB9DF60053843C /* JSQMessagesTimestampFormatter.m in Sources */,
 				3567B1021BCB9DFD0053843C /* PPTxtMediaItem.m in Sources */,
@@ -1260,18 +1542,24 @@
 				3567B0821BCB9DF60053843C /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,
 				3567B08E1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m in Sources */,
 				3567B0F81BCB9DFC0053843C /* PPMediaItem.m in Sources */,
+				EDB590821CAE2BC300017E7C /* PPImageView.m in Sources */,
+				EDA272991CBF7B860038E2B8 /* PPGroupMembersViewController.m in Sources */,
 				3567B0FA1BCB9DFC0053843C /* PPMessage.m in Sources */,
 				3567B0FD1BCB9DFC0053843C /* PPMessageList.m in Sources */,
+				EDB590751CAE20B100017E7C /* PPConversationItemDataSource.m in Sources */,
 				3567B06E1BCB9DF50053843C /* NSBundle+JSQMessages.m in Sources */,
 				3567B0CC1BCB9DF90053843C /* PP.m in Sources */,
 				3586FE481C2E5372002F58FC /* PPFastLog.m in Sources */,
 				3567B0781BCB9DF50053843C /* UIView+JSQMessages.m in Sources */,
 				3567B0F61BCB9DFC0053843C /* PPFileMediaItem.m in Sources */,
+				EDA272AA1CBF8CC30038E2B8 /* PPGroupMembersDataSource.m in Sources */,
 				3567B0BE1BCB9DF80053843C /* JSQMessagesToolbarContentView.m in Sources */,
 				3567B1041BCB9DFD0053843C /* PPUser.m in Sources */,
 				3567B0901BCB9DF60053843C /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
+				EDB5905C1CAE132D00017E7C /* PPBadgeStyle.m in Sources */,
 				3567B09E1BCB9DF60053843C /* JSQMessagesAvatarImage.m in Sources */,
 				3567B0D41BCB9DF90053843C /* PPCachebleImageDownloader.m in Sources */,
+				EDB5905E1CAE132D00017E7C /* PPCustomBadge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1347,6 +1635,7 @@
 				INFOPLIST_FILE = PPComLibResources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yvertical.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = PPComLib;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
@@ -1361,6 +1650,7 @@
 				INFOPLIST_FILE = PPComLibResources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yvertical.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = PPComLib;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
@@ -1386,6 +1676,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1484,6 +1775,7 @@
 				);
 				INFOPLIST_FILE = PPComLibTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yvertical.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1498,6 +1790,7 @@
 				);
 				INFOPLIST_FILE = PPComLibTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yvertical.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

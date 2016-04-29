@@ -12,6 +12,13 @@
 #import "JSQMessage.h"
 #import "PPMessageMediaData.h"
 
+// 消息体`ms` 可能的结果
+FOUNDATION_EXPORT NSString *const PPMessageApiTypeText;
+FOUNDATION_EXPORT NSString *const PPMessageApiTypeTxt;
+FOUNDATION_EXPORT NSString *const PPMessageApiTypeFile;
+FOUNDATION_EXPORT NSString *const PPMessageApiTypeImage;
+FOUNDATION_EXPORT NSString *const PPMessageApiTypeAudio;
+
 @interface PPMessage : NSObject <PPMessageData>
 
 @property (nonatomic, readonly) NSString *messageId;
@@ -42,6 +49,11 @@
  * 根据client，conversationId和text来创建一个普通的PPMessage，日期默认为当前
  */
 + (instancetype)messageWithClient:(PPCom*)client conversationId:(NSString*)conversationId text:(NSString*)text;
+
+/**
+ * 获取`message`的简要信息
+ */
++ (NSString*)summaryInMessage:(PPMessage*)message;
 
 /**
  * 返回JSQMessage的表达

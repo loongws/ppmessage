@@ -24,6 +24,7 @@
     self = [super init];
     if (self) {
         _appId = appInfo[@"app_uuid"];
+        if (!_appId) _appId = appInfo[@"uuid"];
         _appName = appInfo[@"app_name"];
     }
     return self;
@@ -36,6 +37,14 @@
 
 - (NSString *)appName {
     return _appName != nil ? _appName : @""; // never return `nil`
+}
+
+- (NSString*)description {
+    return [NSString stringWithFormat:@"<%p, %@, %@>",
+            self,
+            self.class,
+            @{ @"app_uuid": self.appId,
+               @"app_name": self.appName }];
 }
 
 @end

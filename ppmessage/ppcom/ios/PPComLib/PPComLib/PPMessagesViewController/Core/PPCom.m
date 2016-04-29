@@ -20,28 +20,25 @@
 #import "PPConstants.h"
 #import "PPAppInfo.h"
 #import "PPFastLog.h"
+#import "PPComToken.h"
+
+#import "PPGetDefaultConversationHttpModels.h"
+
+#import "PPStoreManager.h"
+#import "PPConversationsStore.h"
 
 #define ANONYMOUS_USER_TRACK_ID @"anonymous_track_id"
+#define PPCOM_ENABLE_LOG 1
 
 @class PPComAPI;
 
 @interface PPCom () <PPMessageReceiverDelegate>
 
-typedef NS_ENUM(NSInteger, InitializeState) {
-    
-    // init error or not inited
-    InitializeStateNull = 0,
-    
-    // initing
-    InitializeStateIniting = 1,
-    
-    // inited success
-    InitializeStateInited = 2,
-    
-};
-
-@property InitializeState initState;
 @property PPMessageReceiver *messageReceiver;
+/** 用来获取`accessToken` **/
+@property (nonatomic) PPComToken *tokenStore;
+/** 用来存储第三方开发者提供的appUUID **/
+@property (nonatomic) NSString *appUUID;
 
 - (void) getAppInfo: (NSString *) appKey completionHandler:(void(^)(NSDictionary* response, NSError* error))handler;
 - (void) initWithAnonymousUser;
@@ -50,7 +47,6 @@ typedef NS_ENUM(NSInteger, InitializeState) {
 - (void) storeAnonymousUserTrackId:(NSString*)trackId;
 - (BOOL) isAnonymous:(NSString*)email;
 - (void) updateDeviceAndOnline:(PPUser*)user;
-- (void) asyncGetConversationId: (NSString*)userId withHandler:(void(^)(NSString *conversationId, NSDictionary *response, NSError *error))handler;
 
 - (void) initWebSocket:(PPUser*)user;
 
@@ -111,21 +107,19 @@ typedef NS_ENUM(NSInteger, InitializeState) {
 
 @implementation PPCom
 
-static PPCom* instance = nil;
-
 + (PPCom*)instance {
-    if (!instance) {
-        instance = [[PPCom alloc] init];
-    }
-    return instance;
+    static dispatch_once_t onceToken;
+    static PPCom *client;
+    dispatch_once(&onceToken, ^{
+        client = [[PPCom alloc] init];
+    });
+    return client;
 }
 
-+ (PPCom*)instanceWithAppKey:(NSString*)key withSecret:(NSString*)secret {
-    PPCom *com = [self instance];
-    com.appKey = key;
-    com.appSecret = secret;
-    
-    return com;
++ (PPCom*)instanceWithAppUUID:(NSString *)appUUID {
+    PPCom *client = [self instance];
+    client.appUUID = appUUID;
+    return client;
 }
 
 - (PPCom*) init {
@@ -151,6 +145,7 @@ static PPCom* instance = nil;
 
 // 0. init order
 //
+// before 1: get access token
 // 1. getImappInfo
 // 2. createDevice
 // 3. updateDevice
@@ -172,14 +167,33 @@ static PPCom* instance = nil;
     }
     
     [self publishInitState:InitializeStateIniting];
+    
+    // get ppcom token
+    [self.tokenStore getPPComTokenWithBlock:^(NSString *accessToken, NSError *error, BOOL success) {
+        
+        if (!success && PPCOM_ENABLE_LOG) PPFastLog(@"get access token error: %@", error);
+        
+        self.api.accessToken = accessToken;
+        [self onGetAccessToken:accessToken email:email];
+        
+    }];
 
+}
+
+- (void)initilize:(NSString *)email withDelegate:(id<PPComInitializeDelegate>)delegate {
+    _initDelegate = delegate;
+    [self initilize:email];
+}
+
+- (void)onGetAccessToken:(NSString*)accessToken
+                   email:(NSString*)email {
     // get imapp info first
-    [self getAppInfo:self.appKey completionHandler:^(NSDictionary *response, NSError *error) {
-            
+    [self getAppInfo:self.appUUID completionHandler:^(NSDictionary *response, NSError *error) {
+        
         if ( !error ) {
             // no error
             if ([ response[@"error_code"] integerValue ] == 0) {
-
+                
                 // cache app info
                 self.appInfo = [PPAppInfo app:response];
                 
@@ -196,17 +210,11 @@ static PPCom* instance = nil;
             [self handleError:error with:nil];
         }
     }];
-
 }
 
-- (void)initilize:(NSString *)email withDelegate:(id<PPComInitializeDelegate>)delegate {
-    _initDelegate = delegate;
-    [self initilize:email];
-}
-
-- (void) getAppInfo: (NSString *) appKey completionHandler:(void(^)(NSDictionary* response, NSError* error))handler {
+- (void) getAppInfo: (NSString *) appUUID completionHandler:(void(^)(NSDictionary* response, NSError* error))handler {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-    params[@"app_key"] = appKey;
+    params[@"app_uuid"] = appUUID;
     [ self.api getAppInfo:params completionHandler:handler ];
 }
 
@@ -262,6 +270,7 @@ static PPCom* instance = nil;
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     params[@"ppcom_trace_uuid"] = trackId;
+    params[@"app_uuid"] = self.appUUID;
     
     PPComAPI *api = self.api;
     [api createAnonymousUser:params completionHandler:^(NSDictionary *response, NSError *error) {
@@ -283,7 +292,6 @@ static PPCom* instance = nil;
 }
 
 - (void) initWebSocket:(PPUser*)user {
-    
     if (!_messageReceiver) {
         _messageReceiver = [ [PPMessageReceiver alloc] init:self appInfo:self.appInfo ];
     }
@@ -312,6 +320,7 @@ static PPCom* instance = nil;
     
     NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
     
+    params[@"app_uuid"] = self.appUUID;
     params[@"device_id"] = [self.utils getDeviceUUID];
     params[@"user_uuid"] = user.uuid;
     params[@"device_ostype"] = @"IOS"; // TODO get OS Type
@@ -328,19 +337,23 @@ static PPCom* instance = nil;
             [params removeAllObjects];
             [params setObject:user.deviceUuid forKey:@"device_uuid"];
             [params setObject:@"IOS" forKey:@"device_ostype"];
+            [params setObject:[NSNumber numberWithBool:YES] forKey:@"device_is_online"];
             
             [api updateDevice:params completionHandler:^(NSDictionary *response, NSError *error) {
                 if (!error) {
                     
-                    // try get conversation
-                    [self asyncGetConversationId:user.uuid withHandler:^(NSString *conversationId, NSDictionary *response, NSError *error) {
-                        if ( conversationId != nil ) {
-                            self.conversationId = conversationId;
-                            [ self handleSuccess:user conversationId:conversationId ];
+                    // 获取默认`conversation`
+                    PPGetDefaultConversationHttpModels *fetchDefaultConversation = [PPGetDefaultConversationHttpModels modelWithClient:self];
+                    [fetchDefaultConversation requestWithBlock:^(PPConversationItem *conversation, NSDictionary *response, NSError *error) {
+                        if (conversation) {
+                            [[PPStoreManager instanceWithClient:self].conversationStore addConversation:conversation];
+                            self.conversationId = conversation.uuid;
+                            [self handleSuccess:user conversationId:self.conversationId];
                         } else {
-                            [ self handleError:error with:response ];
+                            [self handleError:error with:response];
                         }
                     }];
+                    
                     
                 } else {
                     [self handleError:error with:nil];
@@ -354,56 +367,6 @@ static PPCom* instance = nil;
     }];
 }
 
-- (void) asyncGetConversationId:(NSString *)userId withHandler:(void (^)(NSString *, NSDictionary *response, NSError *error))handler {
-    
-    NSMutableDictionary *params = [ NSMutableDictionary dictionaryWithCapacity:(NSUInteger)4 ];
-    params[@"user_uuid"] = userId;
-    params[@"app_uuid"] = self.appInfo.appId;
-    
-    [self.api getConversationList:params completionHandler:^(NSDictionary *response, NSError *error) {
-
-            if ( error ) {
-                if (handler != nil) handler ( nil, nil, error );
-                return;
-            }
-        
-            // no error
-            if ( [ response[@"error_code"] integerValue ] == 0) {
-
-                NSArray *conversationList = response[@"list"];
-                if ( conversationList.count > 0 ) { // get the first conversation as our conversation
-                
-                    if ( handler != nil ) handler ( conversationList[0][@"uuid"], response, nil );
-                
-                } else {
-                
-                    // we have to create a new one
-                    params[@"conversation_type"] = @"P2S";
-                    [self.api createConversation:params completionHandler:^(NSDictionary *response, NSError *error) {
-
-                            if (!error) {
-                                if ( [response[@"error_code"] integerValue] == 0 ) {
-                                    if ( handler != nil ) handler ( response[@"conversation_uuid"], response, nil );
-                                } else {
-                                    if ( handler != nil ) handler ( nil, response, nil );
-                                }
-                            } else {
-                                if ( handler != nil) handler ( nil, nil, error );
-                            }
-
-                        }];
-                }
-            
-            } else {
-
-                if ( handler != nil ) handler ( nil, response, nil );
-                
-            }
-        
-    }];
-    
-}
-
 - (void) publishInitState:(InitializeState)state {
     self.initState = state;
 }
@@ -415,7 +378,7 @@ static PPCom* instance = nil;
 }
 
 - (NSString*)description {
-    return [NSString stringWithFormat:@"appKey:%@, appSecret:%@", self.appKey, self.appSecret];
+    return [NSString stringWithFormat:@"appUUID:%@, initState:%@", self.appUUID, [NSNumber numberWithInteger:self.initState]];
 }
 
 #pragma mark - MessageReceiverDelegate Methods
@@ -434,7 +397,10 @@ static PPCom* instance = nil;
 -(void)didWebSocketOpen {
     [self online];
     //get unacked messages
-    [self.api getUnackedMessages:@{@"from_uuid":self.user.uuid, @"device_uuid":self.user.deviceUuid} completionHandler:^(NSDictionary *response, NSError *error) {
+    [self.api getUnackedMessages:@{ @"from_uuid":self.user.uuid,
+                                    @"device_uuid":self.user.deviceUuid,
+                                    @"app_uuid":self.appUUID }
+               completionHandler:^(NSDictionary *response, NSError *error) {
         if (!error) {
 
             // the messages order in `msgIdsArray` is sort by `createtime` by serverside
@@ -485,24 +451,16 @@ static PPCom* instance = nil;
     }
     
     PPComAPI *api = self.api;
-    NSDictionary *params = @{@"uuid":message.messagePushId};
+    NSDictionary *params = @{ @"list": @[ message.messagePushId ] };
     [api ackMessage:params completionHandler:nil];
 }
 
 - (void)online {
-    if (self.user) {
-        NSDictionary *params = @{@"user_uuid":self.user.uuid, @"device_uuid":self.user.deviceUuid};
-        [self.api online:params completionHandler:^(NSDictionary *response, NSError *error) {
-        }];
-    }
+    // No need to call `PP_ONLINE` api
 }
 
 - (void)offline {
-    if (self.user) {
-        NSDictionary *params = @{@"user_uuid":self.user.uuid, @"device_uuid":self.user.deviceUuid};
-        [self.api offline:params completionHandler:^(NSDictionary *response, NSError *error) {
-        }];
-    }
+    // No need to call `PP_OFFLINE` api
 }
 
 /////////////////////
@@ -553,18 +511,18 @@ static PPCom* instance = nil;
     return _uploader;
 }
 
-- (PPDataCache*)dataStorage {
-    if (!_dataStorage) {
-        _dataStorage = [[PPDataCache alloc] init];
-    }
-    return _dataStorage;
-}
-
 - (PPJSQAvatarLoader*)jsqAvatarLoader {
     if (!_jsqAvatarLoader) {
         _jsqAvatarLoader = [[PPJSQAvatarLoader alloc] init];
     }
     return _jsqAvatarLoader;
+}
+
+- (PPComToken*)tokenStore {
+    if (!_tokenStore) {
+        _tokenStore = [PPComToken tokenWithClient:self];
+    }
+    return _tokenStore;
 }
 
 @end

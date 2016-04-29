@@ -106,7 +106,6 @@
 
 - (void)updateMessageIdSetWith:(NSString *)messageId {
     if (messageId) {
-        PPFastLog(@"add new messageId %@ to messageIdSet.", messageId);
         [self.ppMessageIdSet addObject:messageId];        
     }
 }

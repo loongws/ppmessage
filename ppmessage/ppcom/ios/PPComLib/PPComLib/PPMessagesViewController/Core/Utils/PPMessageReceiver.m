@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, AutoReconnectState) {
         _autoReconnectState = AutoReconnectStateNull;
         _user = client.user;
         _srWebSocket = [[SRWebSocket alloc] init];
-        _wsHost = client.api.webSocketHost;
+        _wsHost = PPWebSocketHost;
         _autoReconnecting = NO;
     }
     return self;
@@ -159,6 +159,8 @@ typedef NS_ENUM(NSInteger, AutoReconnectState) {
 }
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket {
+    PPFastLog(@"webSocketOpen");
+    
     self.autoReconnectState = AutoReconnectStateDone;
     [self stopAutoReconnect];
 
@@ -166,6 +168,7 @@ typedef NS_ENUM(NSInteger, AutoReconnectState) {
     NSDictionary *params = @{
         @"type": @"auth",
         @"app_uuid": self.appInfo.appId,
+        @"api_token": self.client.api.accessToken,
         @"user_uuid": _user.uuid,
         @"device_uuid": _user.deviceUuid,
         @"is_service_user": @YES

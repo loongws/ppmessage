@@ -7,8 +7,11 @@
 //
 
 #import "PPDownloader.h"
+#import "PPComUtils.h"
 
 @interface PPDownloader ()
+
+@property (nonatomic) PPCom *client;
 
 @end
 
@@ -18,7 +21,7 @@
 
 - (instancetype)initWithClient:(PPCom *)client {
     if (self = [super initWithClient:client]) {
-        
+        self.client = client;
     }
     return self;
 }
@@ -41,9 +44,7 @@
 #pragma mark - Private Method
 
 - (NSString*) getResourceDownloadUrl:(NSString*)resourceId {
-    assert(self.fileDownloadHost != nil);
-    NSString *url = [[self.fileDownloadHost stringByAppendingString:@"/"] stringByAppendingString:resourceId];
-    return url;
+    return [self.client.utils getFileURL:resourceId];
 }
 
 @end

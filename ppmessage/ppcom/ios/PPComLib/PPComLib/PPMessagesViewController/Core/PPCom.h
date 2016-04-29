@@ -18,8 +18,20 @@
 @class PPMessage;
 @class PPMessageReceiver;
 @class PPUploader;
-@class PPDataCache;
 @class PPAppInfo;
+
+typedef NS_ENUM(NSInteger, InitializeState) {
+    
+    // init error or not inited
+    InitializeStateNull = 0,
+    
+    // initing
+    InitializeStateIniting = 1,
+    
+    // inited success
+    InitializeStateInited = 2,
+    
+};
 
 /** PPCom Message Delegate **/
 
@@ -51,10 +63,10 @@
 @property (nonatomic, weak) id<PPComInitializeDelegate> initDelegate;
 @property (nonatomic, weak) id<PPComMessageDelegate> messageDelegate;
 
-@property NSString *appKey;
-@property NSString *appSecret;
 @property PPUser *user;
 @property NSString *conversationId;
+
+@property (nonatomic) InitializeState initState;
 
 @property (nonatomic) PPTxtLoader *txtLoader;
 @property (nonatomic) PPComAPI *api;
@@ -62,11 +74,10 @@
 @property (nonatomic) PPDownloader *downloader;
 @property (nonatomic) PPMessageSender *messageSender;
 @property (nonatomic) PPUploader *uploader;
-@property (nonatomic) PPDataCache *dataStorage;
 @property (nonatomic) PPJSQAvatarLoader *jsqAvatarLoader;
 
 + (PPCom*)instance;
-+ (PPCom*)instanceWithAppKey:(NSString*)key withSecret:(NSString*)secret;
++ (PPCom*)instanceWithAppUUID:(NSString*)appUUID;
 
 - (void)initilize:(NSString*)email;
 - (void)initilize:(NSString *)email withDelegate:(id<PPComInitializeDelegate>)delegate;

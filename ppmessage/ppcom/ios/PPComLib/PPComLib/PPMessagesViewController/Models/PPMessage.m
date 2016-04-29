@@ -18,9 +18,16 @@
 #import "NSString+Crypto.h"
 #import "PPAppInfo.h"
 #import "NSBundle+JSQMessages.h"
+#import "PPFastLog.h"
 
 #define MAX_TEXT_LENGTH 128
 #define TXT_MESSAGE_PLACEHOLDER @"..."
+
+NSString *const PPMessageApiTypeText = @"TEXT";
+NSString *const PPMessageApiTypeTxt = @"TXT";
+NSString *const PPMessageApiTypeFile = @"FILE";
+NSString *const PPMessageApiTypeImage = @"IMAGE";
+NSString *const PPMessageApiTypeAudio = @"AUDIO";
 
 @interface PPMessage ()
 
@@ -53,6 +60,28 @@
     return [[self alloc] initWithClient:client conversationId:conversationId text:text];
 }
 
++ (NSString*)summaryInMessage:(PPMessage *)message {
+    if ([message.type isEqualToString:PPMessageApiTypeText]) {
+        return message.text;
+    } else if ([message.type isEqualToString:PPMessageApiTypeTxt]) {
+        id mediaData = message.media;
+        if (!mediaData) {
+            return @"[Txt]";
+        }
+        
+        PPTxtMediaItem *txtMediaItem = mediaData;
+        return txtMediaItem.text;
+    } else if ([message.type isEqualToString:PPMessageApiTypeImage]) {
+        return @"[Image]";
+    } else if ([message.type isEqualToString:PPMessageApiTypeFile]) {
+        return @"[File]";
+    } else if ([message.type isEqualToString:PPMessageApiTypeAudio]) {
+        return @"[Audio]";
+    } else {
+        return @"";
+    }
+}
+
 - (instancetype)init {
     if (self = [super init]) {
         _error = NO;
@@ -78,6 +107,8 @@
         if ( [self.client.utils isNotNull:messageBody[@"message_body"]] &&
              [ messageBody[@"message_body"] isKindOfClass:[NSString class] ] ) {
             msgDict = [ self.client.utils jsonStringToDictionary:messageBody[@"message_body"] ];
+        } else if ( [self.client.utils isNotNull:messageBody[@"msg"]] ) {
+            msgDict = messageBody[@"msg"];
         }
 
         _messageId = msgDict[@"id"];
@@ -208,7 +239,14 @@
 }
 
 - (NSString*)description {
-    return [NSString stringWithFormat:@"[PPMessage] type:%@, text:%@, fromId:%@, conversationId:%@", self.type, self.text, self.fromId, self.conversationId];
+    return [NSString stringWithFormat:@"< %p, %@, %@ >",
+            self,
+            self.class,
+            @{ @"type": PPSafeString(self.type),
+               @"text": PPSafeString(self.text),
+               @"fromId": PPSafeString(self.fromId),
+               @"conversationID": PPSafeString(self.conversationId),
+               @"uuid": PPSafeString(self.messageId) }];
 }
 
 @end

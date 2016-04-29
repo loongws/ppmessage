@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		352381F21C32330F009FA5BF /* PPComLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 352381F01C32330F009FA5BF /* PPComLib.framework */; };
-		352381F31C32330F009FA5BF /* PPComLib.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 352381F11C32330F009FA5BF /* PPComLib.bundle */; };
 		3541F9D31BCE08B7000940EA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3541F9D21BCE08B7000940EA /* main.m */; };
 		3541F9D61BCE08B7000940EA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3541F9D51BCE08B7000940EA /* AppDelegate.m */; };
 		3541F9DE1BCE08B8000940EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3541F9DD1BCE08B8000940EA /* Images.xcassets */; };
@@ -17,7 +15,9 @@
 		3541F9FD1BCE09AF000940EA /* DemoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3541F9F71BCE09AF000940EA /* DemoTableViewController.m */; };
 		3541F9FE1BCE09AF000940EA /* FeedbackMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3541F9F91BCE09AF000940EA /* FeedbackMessagesViewController.m */; };
 		3541FA001BCE09AF000940EA /* PPDemo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3541F9FC1BCE09AF000940EA /* PPDemo.storyboard */; };
-		3541FA1D1BCE1FD7000940EA /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3541FA1C1BCE1FD7000940EA /* libicucore.dylib */; };
+		EDAC3D371CACF80600BA1066 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EDAC3D361CACF80600BA1066 /* libicucore.tbd */; };
+		EDBB0AA11CC9CA1800E79F04 /* libPPComLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EDBB0A9C1CC9C9FA00E79F04 /* libPPComLib.a */; };
+		EDBB0AA51CC9CB6500E79F04 /* PPComLib.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EDBB0AA41CC9CB6500E79F04 /* PPComLib.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,23 +28,23 @@
 			remoteGlobalIDString = 3541F9CC1BCE08B7000940EA;
 			remoteInfo = PPComDemo;
 		};
-		3581D7661C2A4A41006372BA /* PBXContainerItemProxy */ = {
+		EDBB0A9B1CC9C9FA00E79F04 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3581D75F1C2A4A41006372BA /* PPComLib.xcodeproj */;
+			containerPortal = EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3567AF921BCB9D860053843C;
 			remoteInfo = PPComLib;
 		};
-		3581D7681C2A4A41006372BA /* PBXContainerItemProxy */ = {
+		EDBB0A9D1CC9C9FA00E79F04 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3581D75F1C2A4A41006372BA /* PPComLib.xcodeproj */;
+			containerPortal = EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3567AF9D1BCB9D860053843C;
 			remoteInfo = PPComLibTests;
 		};
-		3581D76A1C2A4A41006372BA /* PBXContainerItemProxy */ = {
+		EDBB0A9F1CC9C9FA00E79F04 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3581D75F1C2A4A41006372BA /* PPComLib.xcodeproj */;
+			containerPortal = EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 355980651BCCB00A00DCAE33;
 			remoteInfo = PPComLibResources;
@@ -52,8 +52,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		352381F01C32330F009FA5BF /* PPComLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PPComLib.framework; sourceTree = "<group>"; };
-		352381F11C32330F009FA5BF /* PPComLib.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PPComLib.bundle; sourceTree = "<group>"; };
 		3541F9CD1BCE08B7000940EA /* PPComDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPComDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3541F9D11BCE08B7000940EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3541F9D21BCE08B7000940EA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -69,8 +67,9 @@
 		3541F9F81BCE09AF000940EA /* FeedbackMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackMessagesViewController.h; sourceTree = "<group>"; };
 		3541F9F91BCE09AF000940EA /* FeedbackMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackMessagesViewController.m; sourceTree = "<group>"; };
 		3541F9FC1BCE09AF000940EA /* PPDemo.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PPDemo.storyboard; sourceTree = "<group>"; };
-		3541FA1C1BCE1FD7000940EA /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
-		3581D75F1C2A4A41006372BA /* PPComLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PPComLib.xcodeproj; path = ../../PPComLib/PPComLib.xcodeproj; sourceTree = "<group>"; };
+		EDAC3D361CACF80600BA1066 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PPComLib.xcodeproj; path = ../../PPComLib/PPComLib.xcodeproj; sourceTree = "<group>"; };
+		EDBB0AA41CC9CB6500E79F04 /* PPComLib.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PPComLib.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,8 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				352381F21C32330F009FA5BF /* PPComLib.framework in Frameworks */,
-				3541FA1D1BCE1FD7000940EA /* libicucore.dylib in Frameworks */,
+				EDBB0AA11CC9CA1800E79F04 /* libPPComLib.a in Frameworks */,
+				EDAC3D371CACF80600BA1066 /* libicucore.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,9 +95,8 @@
 		3541F9C41BCE08B7000940EA = {
 			isa = PBXGroup;
 			children = (
-				352381F01C32330F009FA5BF /* PPComLib.framework */,
-				352381F11C32330F009FA5BF /* PPComLib.bundle */,
-				3541FA1C1BCE1FD7000940EA /* libicucore.dylib */,
+				EDAC3D361CACF80600BA1066 /* libicucore.tbd */,
+				EDBB0AA41CC9CB6500E79F04 /* PPComLib.bundle */,
 				3541F9CF1BCE08B7000940EA /* PPComDemo */,
 				3541F9E91BCE08B8000940EA /* PPComDemoTests */,
 				3541F9CE1BCE08B7000940EA /* Products */,
@@ -117,7 +115,7 @@
 		3541F9CF1BCE08B7000940EA /* PPComDemo */ = {
 			isa = PBXGroup;
 			children = (
-				3581D75F1C2A4A41006372BA /* PPComLib.xcodeproj */,
+				EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */,
 				3541F9F61BCE09AF000940EA /* DemoTableViewController.h */,
 				3541F9F71BCE09AF000940EA /* DemoTableViewController.m */,
 				3541F9F81BCE09AF000940EA /* FeedbackMessagesViewController.h */,
@@ -158,12 +156,12 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		3581D7601C2A4A41006372BA /* Products */ = {
+		EDBB0A951CC9C9FA00E79F04 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3581D7671C2A4A41006372BA /* libPPComLib.a */,
-				3581D7691C2A4A41006372BA /* PPComLibTests.xctest */,
-				3581D76B1C2A4A41006372BA /* PPComLib.bundle */,
+				EDBB0A9C1CC9C9FA00E79F04 /* libPPComLib.a */,
+				EDBB0A9E1CC9C9FA00E79F04 /* PPComLibTests.xctest */,
+				EDBB0AA01CC9C9FA00E79F04 /* PPComLib.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -238,8 +236,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 3581D7601C2A4A41006372BA /* Products */;
-					ProjectRef = 3581D75F1C2A4A41006372BA /* PPComLib.xcodeproj */;
+					ProductGroup = EDBB0A951CC9C9FA00E79F04 /* Products */;
+					ProjectRef = EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -251,25 +249,25 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		3581D7671C2A4A41006372BA /* libPPComLib.a */ = {
+		EDBB0A9C1CC9C9FA00E79F04 /* libPPComLib.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libPPComLib.a;
-			remoteRef = 3581D7661C2A4A41006372BA /* PBXContainerItemProxy */;
+			remoteRef = EDBB0A9B1CC9C9FA00E79F04 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3581D7691C2A4A41006372BA /* PPComLibTests.xctest */ = {
+		EDBB0A9E1CC9C9FA00E79F04 /* PPComLibTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = PPComLibTests.xctest;
-			remoteRef = 3581D7681C2A4A41006372BA /* PBXContainerItemProxy */;
+			remoteRef = EDBB0A9D1CC9C9FA00E79F04 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3581D76B1C2A4A41006372BA /* PPComLib.bundle */ = {
+		EDBB0AA01CC9C9FA00E79F04 /* PPComLib.bundle */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = PPComLib.bundle;
-			remoteRef = 3581D76A1C2A4A41006372BA /* PBXContainerItemProxy */;
+			remoteRef = EDBB0A9F1CC9C9FA00E79F04 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -280,7 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3541F9E11BCE08B8000940EA /* LaunchScreen.xib in Resources */,
-				352381F31C32330F009FA5BF /* PPComLib.bundle in Resources */,
+				EDBB0AA51CC9CB6500E79F04 /* PPComLib.bundle in Resources */,
 				3541FA001BCE09AF000940EA /* PPDemo.storyboard in Resources */,
 				3541F9DE1BCE08B8000940EA /* Images.xcassets in Resources */,
 			);
@@ -423,7 +421,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PPComLib",
 					"$(PROJECT_DIR)/PPComDemo",
-					/Users/zhaokun/Desktop,
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = PPComDemo/Info.plist;
@@ -447,7 +444,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/PPComLib",
 					"$(PROJECT_DIR)/PPComDemo",
-					/Users/zhaokun/Desktop,
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = PPComDemo/Info.plist;

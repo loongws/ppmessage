@@ -56,7 +56,7 @@
 
 -(void)uploadFile:(NSString *)fileUrl withDelegate:(void (^)(NSError *, NSDictionary *))delegate {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *jsonResponse = [self uploadFile:fileUrl host:self.fileUploadHost];
+        NSString *jsonResponse = [self uploadFile:fileUrl host:PPFileUploadHost];
         dispatch_async(dispatch_get_main_queue(), ^{
             if (delegate) {
                 delegate(nil, [self.client.utils jsonStringToDictionary:jsonResponse]);
@@ -84,7 +84,6 @@
     
     NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
     NSString *returnString = [[NSString alloc] initWithData:returnData encoding:NSUTF8StringEncoding];
-    NSLog(@"%@", returnString);
     return returnString;
 }
 
