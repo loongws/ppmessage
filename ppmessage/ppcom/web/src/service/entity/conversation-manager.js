@@ -68,7 +68,7 @@ Service.$conversationManager = ( function() {
 
         init: init,
         all: all, // ONLY for debug, you should't call this method, instead of call `asyncGetList` to assure fully correct
-        simulateConversationAvaliable, // for debug
+        simulateConversationAvaliable: simulateConversationAvaliable, // for debug
         
         asyncGetDefaultConversation: asyncGetDefaultConversation,
         activeConversation: activeConversation, // acts as setter and getter
@@ -76,8 +76,7 @@ Service.$conversationManager = ( function() {
         asyncGetList: asyncGetList,
         find: findByToken,
 
-        asyncGetConversation: asyncGetConversation,
-        asyncGetConversationInfo: asyncGetConversationInfo
+        asyncGetConversation: asyncGetConversation
     }
 
     ///////// all //////////////
@@ -86,7 +85,7 @@ Service.$conversationManager = ( function() {
         
         $pubsub.subscribe( Service.$notifyConversation.EVENT.AVALIABLE, function( topics, conversationUUID ) {
 
-            asyncGetConversationInfo( conversationUUID, function( conv ) {
+            Service.$conversationAgency.requestInfo( conversationUUID, function( conv ) {
                 
                 if ( conv ) {
                     // We are waiting `default conversation`
@@ -265,26 +264,6 @@ Service.$conversationManager = ( function() {
             return r.error_code !== 0 || Service.$tools.isApiResponseEmpty( r );
         }
         
-    }
-
-    // Get conversationInfo from server by `conversationUUID`
-    // @param conversationUUID
-    // @param callback
-    function asyncGetConversationInfo( conversationUUID, callback ) {
-        if ( !conversationUUID ) {
-            $onResult( undefined, callback );
-            return;
-        }
-        
-        Service.$api.getConversationInfo( {
-            app_uuid: Service.$app.appId(),
-            user_uuid: Service.$user.quickId(),
-            conversation_uuid: conversationUUID
-        }, function( r ) {
-            $onResult( r , callback );
-        }, function( e ) {
-            $onResult( undefined , callback );
-        } );
     }
 
     ////////// set `token` to active /////////

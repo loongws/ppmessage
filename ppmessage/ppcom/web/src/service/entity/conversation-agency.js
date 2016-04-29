@@ -31,6 +31,7 @@ Service.$conversationAgency = ( function() {
         enableDebug: enableDebug, // Only for debug
         
         request: asyncGetDefaultConversation,
+        requestInfo: asyncGetConversationInfo,
         create: asyncCreateConversation,
         cancel: cancelWaitingCreateConversation,
 
@@ -67,6 +68,26 @@ Service.$conversationAgency = ( function() {
             $onResult( defaultConversation, callback );
             
         } );
+    }
+
+    // Get conversationInfo from server by `conversationUUID`
+    // @param conversationUUID
+    // @param callback
+    function asyncGetConversationInfo( conversationUUID, callback ) {
+        if ( !conversationUUID ) {
+            $onResult( undefined, callback );
+            return;
+        }
+        
+        Service.$api.getConversationInfo( {
+            app_uuid: Service.$app.appId(),
+            user_uuid: Service.$user.quickId(),
+            conversation_uuid: conversationUUID
+        }, function( r ) {
+            $onResult( r , callback );
+        }, function( e ) {
+            $onResult( undefined , callback );
+        } );        
     }
 
     // @param config {

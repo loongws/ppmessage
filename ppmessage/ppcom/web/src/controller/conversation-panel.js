@@ -8,7 +8,8 @@
 Ctrl.$conversationPanel = ( function() {
 
     var MODE = { LIST: 'LIST', CONTENT: 'CONTENT', WAITING: 'WAITING' },
-        cMode = MODE.CONTENT;
+        cMode = MODE.CONTENT,
+        POLLING_QUEUE_LENGTH_EVENT_ID = 'POLLING_QUEUE_LENGTH_EVENT_ID';
 
     subscribeEvent();
 
@@ -31,6 +32,7 @@ Ctrl.$conversationPanel = ( function() {
         switch ( cMode ) {
         case MODE.LIST:
             modeList();
+            stopPollingWaitingQueueLength();
             break;
 
         case MODE.CONTENT:
@@ -38,6 +40,7 @@ Ctrl.$conversationPanel = ( function() {
             // for simply, we always show it here, the count of conversation's members seldom not > 1
             View.$sheetHeader.showDropDownButton();
             View.$sheetHeader.showGroupButton(); // show group button
+            stopPollingWaitingQueueLength();
             break;
 
         case MODE.WAITING:
@@ -45,7 +48,8 @@ Ctrl.$conversationPanel = ( function() {
             View.$groupContent.hide();
             Ctrl.$conversationContent.hide();
             View.$loading.show();
-            Ctrl.$sheetheader.setHeaderTitle( Service.Constants.i18n( 'WAITTING_AVALIABLE_CONVERSATION' ) );
+            Ctrl.$sheetheader.setHeaderTitle( Service.Constants.i18n( 'WAITING_AVALIABLE_CONVERSATION' ) );
+            startPollingWaitingQueueLength();
             break;
         }
     }
@@ -84,6 +88,24 @@ Ctrl.$conversationPanel = ( function() {
                     View.$composerContainer.focus();
                 } );
         } );
+    }
+
+    function startPollingWaitingQueueLength() {
+        Service.$polling.run( { eventID: POLLING_QUEUE_LENGTH_EVENT_ID,
+                                apiFunc: Service.$api.getWaitingQueueLength,
+                                apiRequestParams: { app_uuid: Service.$app.appId() },
+                                onGet: onGet } );
+    }
+
+    function stopPollingWaitingQueueLength() {
+        Service.$polling.cancel( { eventID: POLLING_QUEUE_LENGTH_EVENT_ID } );
+    }
+
+    function onGet( response, success ) {
+        if ( success ) {
+            var text = Service.$tools.format( Service.Constants.i18n( 'WAITING_LENGTH_HINT' ), response.length );
+            View.$loading.text( text );
+        }
     }
     
 } )();

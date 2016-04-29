@@ -11,16 +11,19 @@ View.$loading = (function() {
             'class': id + ' pp-box-sizing'
         });
 
-        this.add(new PPDiv({
-            id: 'pp-loading-spinner',
-            style: 'background-image:url(' + Configuration.assets_path + 'img/spinner.png)'
-        }));
+        this
+            .add(new PPDiv({
+                id: 'pp-loading-spinner',
+                style: 'background-image:url(' + Configuration.assets_path + 'img/spinner.png)'
+            }))
+            .add( new View.P( { className: 'pp-loading-text' } ) );
 
     }
     extend(PPLoading, View.PPDiv);
 
     var id = 'pp-loading',
         elSelector = '#' + id,
+        textSelector = '.pp-loading-text',
 
         show = function() {
             $(elSelector).fadeIn();
@@ -28,6 +31,11 @@ View.$loading = (function() {
 
         hide = function() {
             $(elSelector).fadeOut();
+            $( textSelector ).hide().text( '' );
+        },
+
+        text = function( text ) {
+            text && $( textSelector ).show().text( text );
         },
 
         build = function() {
@@ -38,7 +46,8 @@ View.$loading = (function() {
         build: build,
 
         show: show,
-        hide: hide
+        hide: hide,
+        text: text
     }
     
 })();

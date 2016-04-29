@@ -243,6 +243,23 @@
 
             return $.isEmptyObject( copy );
         };
+
+        // format string
+        //
+        // ```javascript
+        // var formattedStr = Service.$tools.format( 'Hello, %s and %s.', 'Tom', 'Jenny' );
+        // ```
+        //
+        // `formattedStr` will be 'Hello, Tom and Jenny'
+        //
+        this.format = function( str ) {
+            var args = [].slice.call(arguments, 1),
+                i = 0;
+
+            return str.replace(/%s/g, function() {
+                return args[i++];
+            });
+        };
         
     }
 

@@ -92,7 +92,9 @@ Ctrl.$sheetheader = (function() {
         $timeout( function() {
             setHeaderTitle();
             // resume to `MODE.LIST` mode if we are waiting group conversations
-            inRequestingGroupConversation && Ctrl.$conversationList.show(); 
+            inRequestingGroupConversation && Ctrl.$conversationList.show();
+            // resume to `MODE.CONTENT` mode if we are waiting default conversations
+            !inRequestingGroupConversation && Ctrl.$conversationPanel.mode( Ctrl.$conversationPanel.MODE.CONTENT );
         }, DELAY_TIME );
     }
     

@@ -41,6 +41,7 @@ module.exports = {
         "../src/service/monitor.js",
         "../src/service/gb2312-utf8-convert.js",
         "../src/service/publishsubscribe.js",
+        "../src/service/polling.js",
         "../src/service/entity/app.js",
         "../src/service/entity/org_groups.js",
         "../src/service/entity/hovercard-welcome.js",
