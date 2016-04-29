@@ -152,6 +152,7 @@
                 // 5. update device
                 // 6. create dom
                 $api.getUserUuid({
+                    user_icon: userSettings.user_avatar,
                     user_email: userSettings.user_email,
                     user_fullname: userSettings.user_fullname
                 }, function(response) {

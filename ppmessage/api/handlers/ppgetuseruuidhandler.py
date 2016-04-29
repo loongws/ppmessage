@@ -91,6 +91,7 @@ class PPGetUserUUIDHandler(BaseHandler):
         return
 
     def initialize(self):
+        self.addPermission(api_level=API_LEVEL.PPCOM)
         self.addPermission(api_level=API_LEVEL.PPCONSOLE)
         self.addPermission(api_level=API_LEVEL.THIRD_PARTY_CONSOLE)
         return
@@ -99,8 +100,8 @@ class PPGetUserUUIDHandler(BaseHandler):
         super(PPGetUserUUIDHandler, self)._Task()
         _request = json.loads(self.request.body)
         _user_email = _request.get("user_email")
-        _user_fullname = _request.get("user_fullname")
         _user_icon = _request.get("user_icon")
+        _user_fullname = _request.get("user_fullname")
         
         if _user_email == None:
             logging.error("no user_eamil provided.")
