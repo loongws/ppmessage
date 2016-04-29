@@ -260,6 +260,7 @@ function ppmessage_gulp()
     cd ppmessage/ppkefu/ppkefu; gulp; cd -;
     cd ppmessage/ppcom/web/gulp; gulp; cd -;
     cd ppmessage/ppconsole/gulp; gulp; cd -;
+    cd ppmessage/pphome; gulp; cd -;
 }
 
 function ppmessage_bower()
@@ -277,6 +278,7 @@ function ppmessage_npm()
     cd ppmessage/ppcom/web/gulp; npm install; cd -;
     cd ppmessage/ppkefu/ppkefu; npm install; cd -;
     cd ppmessage/ppconsole/gulp; npm install; cd -;
+    cd ppmessage/pphome; npm install; cd -;
 }
 
 function ppmessage_bootstrap()

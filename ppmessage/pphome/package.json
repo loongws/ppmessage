@@ -1,0 +1,14 @@
+{
+  "name": "pphome",
+  "version": "1.0.0",
+  "description": "The pphome of ppmessage",
+  "dependencies": {
+    "get-gulp-args": "^0.0.1",
+    "gulp": "^3.5.6",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4"
+  },
+  "devDependencies": {
+    "gulp-util": "^2.2.14"
+  }
+}
