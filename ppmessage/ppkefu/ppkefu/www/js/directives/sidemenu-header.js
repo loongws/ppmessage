@@ -11,7 +11,41 @@ ppmessageModule.directive("yvSidemenuHeader", [
 function ($rootScope, yvSys, yvAPI, yvLink, yvUser, yvBase, yvLogin, yvLogout, yvConstants) {
 
     function link($scope, $element, $attrs) {
+        
+        $scope.page = {"show_popover": false};
 
+        $scope.status = {
+            options: [
+                {
+                    id: "1",
+                    class: "bg-ready",
+                    status: yvConstants.USER_STATUS.READY
+                },
+                {
+                    id: "2",
+                    class: "bg-busy",
+                    status: yvConstants.USER_STATUS.BUSY
+                },
+                {
+                    id: "3",
+                    class: "bg-rest",
+                    status: yvConstants.USER_STATUS.REST
+                }
+            ],
+            selected: {
+                id: "1",
+                class: "bg-ready",
+                status: yvConstants.USER_STATUS.READY
+            }
+        };
+
+        $scope.search = {
+            searchKey: "",
+            conversations: [],
+            contacts: []
+        };
+
+        
         $scope.getUserIcon = function () {
             var _icon = yvUser.get("icon");
             return yvLink.get_user_icon(_icon);
@@ -40,6 +74,27 @@ function ($rootScope, yvSys, yvAPI, yvLink, yvUser, yvBase, yvLogin, yvLogout, y
         
         $scope.clickItem = function () {
             $scope.clearSearchKey();
+        };
+
+        
+        $scope.onStatusChange = function () {
+            console.log($scope.status.selected);
+            var status = $scope.status.selected.status;
+            yvAPI.set_user_status(status, function (res) {
+                console.log(res);
+            });
+        };
+
+        
+        $scope.selectStatus = function () {       
+            var elem = angular.element("#user-status");
+            if (document.createEvent) {
+                var e = document.createEvent("MouseEvents");
+                e.initMouseEvent("mousedown", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                elem[0].dispatchEvent(e);
+            } else if (element.fireEvent) {
+                elem[0].fireEvent("onmousedown");
+            }
         };
 
         
@@ -73,15 +128,6 @@ function ($rootScope, yvSys, yvAPI, yvLink, yvUser, yvBase, yvLogin, yvLogout, y
         
         $scope.clearSearchKey = function () {
             $scope.search.searchKey = "";
-        };
-
-        
-        $scope.page = {"show_popover": false};
-        
-        $scope.search = {
-            searchKey: "",
-            conversations: [],
-            contacts: []
         };
     }
     

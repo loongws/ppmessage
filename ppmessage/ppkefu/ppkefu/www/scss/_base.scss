@@ -302,3 +302,15 @@ body, p, pre, input, h2, textarea, span {
 .no-tabs.has-tabs-top {
     top: 44px;
 }
+
+.bg-ready {
+    background-color: $balanced;
+}
+
+.bg-busy {
+    background-color: $assertive;
+}
+
+.bg-rest {
+    background-color: $energized;
+}

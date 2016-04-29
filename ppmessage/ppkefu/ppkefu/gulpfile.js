@@ -68,6 +68,9 @@ function load_app_config() {
 
     var data = fs.readFileSync(target, "utf-8");
     var app_config = JSON.parse(data);
+    if (bootstrap_data.PPKEFU.api_key !== app_config.api_key) {
+        console.log(gutil.colors.yellow("app_config.api_key is not equal to bootstrap_data.PPKEFU.api_key"));
+    }
     return app_config;
 }
 
