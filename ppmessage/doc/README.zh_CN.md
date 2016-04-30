@@ -1,4 +1,4 @@
-![PPMessage Logon](ppmessage/doc/PPMessage-Logo.png)
+![PPMessage Logo](/ppmessage/doc/PPMessage-Logo.png)
 
 [In English](README.md)
 
