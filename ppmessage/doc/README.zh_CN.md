@@ -2,6 +2,7 @@
 
 [In English](README.md)
 
+# PPMessage - 皮皮消息，即插即用，在线客服，移动应用内即时通讯，私有的·微信·，自建的·钉钉·，开源，纯Python实现。
 # PPMessage - Online Customer Communication, iOS/Android In-app Instant Message SDK, Intercom Alternative, Open Source WeChat. 
 An Open Source Plug & Play Online Customer Communication Platform. On PPMessage, you can chat with your customer via Web or mobile App. As open source [Intercom](http://intercom.io) alternative, nothing needs change, you can start a SAAS with PPMessage.
 
