@@ -1,6 +1,6 @@
 ![PPMessage Logo](/ppmessage/doc/PPMessage-Logo.png)
 
-[In English](README.md)
+[In English](/README.md)
 
 # PPMessage - 皮皮消息，即插即用，在线客服，移动应用内即时通讯，私有的·微信·，自建的·钉钉·，开源，纯Python实现。
 
