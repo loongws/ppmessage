@@ -22,8 +22,10 @@ PPConsole is Web user interface of PPMessage and open sourced as well. After PPM
 
 * [Install PPMessage on Mac OS X](/ppmessage/doc/en-us/install-ppmessage-on-mac-os-x.md)
 
-* [User manual](/ppmessage/doc/en-us/user-manual.md)
+<!-- * [User manual](/ppmessage/doc/en-us/user-manual.md) 
 
-* [Developer manual](/ppmessage/doc/en-us/developer-manual.md)
+* [Developer manual](/ppmessage/doc/en-us/developer-manual.md) 
+
+-->
 
 
