@@ -16,9 +16,9 @@ PPKefu run on service user side, service user can use PPKefu application to comm
 PPConsole is Web user interface of PPMessage and open sourced as well. After PPMessage backend running, PPConsole provided a Web interface to help the service team leader to setup the PPMessage system. 
 
 
-> In the following, list some document to use and develope PPMessage. Detail visit [PPMessage Site](https://ppmessage.com).
+> In the following, list some document to use and develope PPMessage. More on [PPMessage Site](https://ppmessage.com).
 
-* [Using online PPMessage](/ppmessage/doc/en-us/using-online-ppmessage.md)
+<!-- * [Using online PPMessage](/ppmessage/doc/en-us/using-online-ppmessage.md) -->
 
 * [Install PPMessage on Mac OS X](/ppmessage/doc/en-us/install-ppmessage-on-mac-os-x.md)
 
