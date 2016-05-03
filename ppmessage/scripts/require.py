@@ -66,15 +66,24 @@ def _check_debian():
         _color_print("not Debian or Ubuntu, ppmessage needs Debian or Ubuntu")
         sys.exit()
 
+    _is_debian = False
+    if linux_distribution[0].upper() == "DEBIAN":
+        _is_debian = True
+
     which_cmd = "which dpkg"
     try:
         cmd_res = subprocess.check_output(which_cmd, shell=True)
     except:
         _color_print("no dpkg command installed, try `aptitude install dpkg`")
         sys.exit()
-
-    dpkg_list = ["apt-file", "git", "mysql-server", "pkg-config", "python-pip", "wget", "gcc", "libffi-dev", "python-dev", "redis-server", "libpng12-dev", "libfreetype6-dev", "mercurial", "g++", "libopencore-amrwb-dev", "libopencore-amrnb-dev", "libmp3lame-dev", "libopus-dev", "libmagic1", "libpcre3", "libpcre3-dev", "openssl", "libssl-dev"]
     
+    dpkg_list = ["apt-file", "git", "mysql-server", "pkg-config", "python-pip", "wget", "gcc", "libffi-dev", "python-dev", "redis-server", "libpng12-dev", "libfreetype6-dev", "mercurial", "g++", "libopencore-amrwb-dev", "libopencore-amrnb-dev", "libmp3lame-dev", "libopus-dev", "libmagic1", "libpcre3", "libpcre3-dev", "openssl", "libssl-dev"]
+
+    if _is_debian == True:
+        dpkg_list.append("libjpeg62-turbo-dev")
+    else:
+        dpkg_list.append("libjpeg8-dev")
+
     for dpkg_item in dpkg_list:
         dpkg_cmd = "dpkg -s " + dpkg_item
         try:
