@@ -26,6 +26,7 @@ from ppmessage.core.constant import PCSOCKET_SRV
 from ppmessage.core.constant import ONLINE_STATUS
 from ppmessage.core.constant import MESSAGE_SUBTYPE
 from ppmessage.core.constant import REDIS_PPKEFU_ONLINE_KEY
+from ppmessage.core.constant import SERVICE_USER_STATUS
 
 from ppmessage.pcsocket.pcsocketapp import pcsocket_user_online
 from ppmessage.core.redis import redis_hash_to_dict
@@ -128,6 +129,20 @@ class PPKefuLoginHandler(BaseHandler):
             _values["browser_device_uuid"] = _device_uuid
         else:
             _values["mobile_device_uuid"] = _device_uuid
+        _row = DeviceUser(**_values)
+        _row.async_update()
+        _row.update_redis_keys(self.application.redis)
+        return
+
+    def _update_user_status(self, _user_uuid):
+        _values = {"uuid": _user_uuid}
+        _user_status = self.input_data.get("user_status")
+
+        # NULL, READY, BUSY, REST
+        if _user_status in SERVICE_USER_STATUS:
+            _values["service_user_status"] = _user_status
+        else:
+            _values["service_user_status"] = SERVICE_USER_STATUS.READY
         _row = DeviceUser(**_values)
         _row.async_update()
         _row.update_redis_keys(self.application.redis)
@@ -374,6 +389,7 @@ class PPKefuLoginHandler(BaseHandler):
         self._update_device_with_user(self.device.get("uuid"), self.user.get("uuid"))        
         self._kick()
         self._update_user_with_device(self.user.get("uuid"), self.device.get("uuid"))
+        self._update_user_status(self.user.get("uuid"))
         self._update_device_online()
         self._user_online_status()
         self._return()

@@ -15,6 +15,7 @@ from ppmessage.core.constant import OS
 from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import ONLINE_STATUS
 from ppmessage.core.constant import REDIS_PPKEFU_ONLINE_KEY
+from ppmessage.core.constant import SERVICE_USER_STATUS
 
 from ppmessage.core.redis import redis_hash_to_dict
 from ppmessage.db.models import UserOnlineStatusLog
@@ -56,6 +57,16 @@ class PPKefuLogoutHandler(BaseHandler):
         _row = DeviceInfo(**_values)
         _row.update_redis_keys(self.application.redis)
         _row.async_update()
+        return
+
+    def _update_user_status(self):        
+        _values = {
+            "uuid": self.user_uuid,
+            "service_user_status": SERVICE_USER_STATUS.NULL
+        }        
+        _row = DeviceUser(**_values)
+        _row.async_update()        
+        _row.update_redis_keys(self.application.redis)
         return
 
     def _send_online(self):
@@ -100,6 +111,7 @@ class PPKefuLogoutHandler(BaseHandler):
         
         logging.info("DEVICEUSERLOGOUT with: %s." % str(self.request_body))
         self._update_device()
+        self._update_user_status()
         self._user_online_status()
         self._send_online()
         return
