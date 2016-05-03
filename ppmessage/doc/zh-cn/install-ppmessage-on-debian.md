@@ -52,16 +52,19 @@ LICENSE    README.md  dist.sh*   ppmessage/
 ```
 
 > 下载 bower 管理的 javascript 组件，这些 javascript 组件用于 PPMessage 的 前端界面。
+
 ```bash
 # bash dist.sh bower
 ```
 
 > 执行 gulp 任务，gulp 任务用来打包 PPMessage 的前端应用
+
 ```bash
 # bash dist.sh gulp
 ```
 
 > 启动 PPMessage 后台服务
+
 ```bash
 # bash dist.sh start
 ```
