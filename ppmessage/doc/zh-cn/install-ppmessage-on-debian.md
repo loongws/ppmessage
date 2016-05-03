@@ -31,10 +31,10 @@ LICENSE    README.md  dist.sh*   ppmessage/
 
 ```
 
-> 执行 requirs.py 这个脚本用来检查 PPMessage 所需要的环境是否 OK？
+> 执行 requir.py 这个脚本用来检查 PPMessage 所需要的环境是否 OK？
 
 ```bash
-# python ppmessage/scripts/requires.py
+# python ppmessage/scripts/require.py
 
 ```
 
