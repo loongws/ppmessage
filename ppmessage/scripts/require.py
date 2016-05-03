@@ -62,7 +62,7 @@ def _check_brew():
 
 def _check_debian():
     linux_distribution = platform.linux_distribution()
-    if linux_distribution[0] != "Debian" and linux_distribution[0] != "Ubuntu":
+    if linux_distribution[0].upper() != "DEBIAN" and linux_distribution[0].upper() != "UBUNTU":
         _color_print("not Debian or Ubuntu, ppmessage needs Debian or Ubuntu")
         sys.exit()
 
