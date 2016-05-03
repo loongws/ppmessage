@@ -168,6 +168,7 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
         if (_session.user_email) {
             _data.user_email = _session.user_email;
             _data.user_password = _session.user_password;
+            _data.user_status = _session.user_status;
             return _api_post(_url, _data, _config, _success, _error, _api_error);
         }
 
@@ -585,7 +586,6 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
         },
 
         set_user_status: function (_user_status, _success, _error, _api_error) {
-            console.log("--------------000");
             var _url = "/PPKEFU_SET_SERVICE_USER_STATUS";
             var _data = { "user_status": _user_status };
             _api_post(_url, _data, null, _success, _error, _api_error);

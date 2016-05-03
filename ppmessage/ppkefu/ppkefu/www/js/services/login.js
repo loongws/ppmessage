@@ -23,7 +23,7 @@ function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvLog, yvNoti, y
         this.user_email = null;
         this.user_password = null;
         this.access_token = null;
-        this.ready_after_login = true;
+        this.user_status = null;
         
         // make sure init one time
         if (typeof this.device_token !== "string") {
@@ -60,9 +60,6 @@ function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvLog, yvNoti, y
             
             LoginSession.prototype._login_success = function (data) {
                 data.access_token = this.access_token;
-                // if (this.ready_after_login && data.service_user_stattus !== ) {
-                    
-                // }
                 yvMain.add_login_user(data, _enter_app);
             };
         }
@@ -145,6 +142,8 @@ function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvLog, yvNoti, y
    
         session.user_email = user.user_email;
         session.user_password = user.user_password;
+        session.user_status = user.user_status;
+        console.log("-------user status", user.user_status);
         
         if (!server || server.id === -1) {
             session._login_error("app.GLOBAL.ERR_NO_SERVER");
