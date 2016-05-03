@@ -522,6 +522,8 @@ ppmessageModule.config([
                 READY: "Ready",
                 BUSY: "Busy",
                 REST: "Rest",
+
+                USER_STATUS_AFTER_LOGIN: "User status after login",
             }
         }
     },
@@ -1032,6 +1034,8 @@ ppmessageModule.config([
                 READY: "空闲",
                 BUSY: "忙碌",
                 REST: "休息",
+
+                USER_STATUS_AFTER_LOGIN: "登录后用户状态",
             }
         }
     }

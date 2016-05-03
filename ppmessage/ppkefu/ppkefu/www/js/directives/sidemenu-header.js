@@ -47,13 +47,11 @@ function ($rootScope, yvSys, yvAPI, yvLink, yvUser, yvBase, yvLogin, yvLogout, y
         setSelectedStatus(yvUser.get("status"));
 
         function setSelectedStatus(status) {
-            console.log("-------111", status);
             var option = null, i;
             var len = $scope.status.options.length;
             for (i = 0; i < len; i++) {
                 option = $scope.status.options[i];
                 if (option.status === status) {
-                    console.log("-------status", option);
                     $scope.status.selected = option;
                     break;
                 }
@@ -61,7 +59,6 @@ function ($rootScope, yvSys, yvAPI, yvLink, yvUser, yvBase, yvLogin, yvLogout, y
         }
 
         $rootScope.$on("$translateChangeSuccess", function (event) {
-            console.log("----------translate change success");
             angular.forEach($scope.status.options, function (option) {
                 option.content = yvLocal.translate(option.origin);
             });

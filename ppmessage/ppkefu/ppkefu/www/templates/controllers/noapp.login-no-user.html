@@ -16,6 +16,13 @@
           <i class="icon ion-ios-locked placeholder-icon"></i>
           <input type="password" placeholder="{{ 'noapp.PASSWORD_TAG' | translate }}" ng-model="user.user_password" name="password">
         </label>
+
+        <label class="item item-input item-select">
+          <div class="input-label">{{ "app.GLOBAL.USER_STATUS_AFTER_LOGIN" | translate }}</div>
+          <select ng-model="user.user_status">
+            <option ng-repeat="option in statusOptions" value="{{ option.status }}">{{ option.origin | translate }}</option>
+          </select>
+        </label>
         
         <button type="submit" class="button button-block button-balanced" ng-disabled="disableLogin()">
           {{ "noapp.LOGIN_TAG" | translate }}
