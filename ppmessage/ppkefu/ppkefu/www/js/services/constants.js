@@ -20,6 +20,13 @@ ppmessageModule.factory("yvConstants", [function () {
             OFFLINE: "OFFLINE",
             UNCHANGED: "UNCHANGED"
         },
+
+        USER_STATUS: {
+            READY: "READY",
+            REST: "REST",
+            BUSY: "BUSY",
+            NULL: "NULL"
+        },
         
         ADDING_TYPE: {
             FILE: "FILE",

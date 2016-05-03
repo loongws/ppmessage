@@ -582,6 +582,13 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
             var _url = "/PP_VALIDATE_ONLINE_DEVICE";
             var _data = {};
             _api_post(_url, _data, null, _success, _error, _api_error);
-        }
+        },
+
+        set_user_status: function (_user_status, _success, _error, _api_error) {
+            console.log("--------------000");
+            var _url = "/PPKEFU_SET_SERVICE_USER_STATUS";
+            var _data = { "user_status": _user_status };
+            _api_post(_url, _data, null, _success, _error, _api_error);
+        } 
     };
 }]);

@@ -1,0 +1,1849 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		3559804E1BCC9E1A00DCAE33 /* Framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3559804F1BCC9E1B00DCAE33 /* Build configuration list for PBXAggregateTarget "Framework" */;
+			buildPhases = (
+				355980541BCC9E5300DCAE33 /* MultiPlatform Build */,
+			);
+			dependencies = (
+				3559806D1BCCB06400DCAE33 /* PBXTargetDependency */,
+				355980531BCC9E4300DCAE33 /* PBXTargetDependency */,
+			);
+			name = Framework;
+			productName = Framework;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		3541B9081C2CE0FE005134AB /* JSQMessagesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3541B9071C2CE0FE005134AB /* JSQMessagesViewController.xib */; };
+		3541B9121C2CE85E005134AB /* JSQMessagesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3541B9071C2CE0FE005134AB /* JSQMessagesViewController.xib */; };
+		3541F9381BCDEE74000940EA /* JSQMessages.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3541F9341BCDEE16000940EA /* JSQMessages.strings */; };
+		3541FA0A1BCE0AAA000940EA /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3541FA091BCE0AAA000940EA /* MobileCoreServices.framework */; };
+		355770141BCCE18C00CFF6DF /* pp_icon_avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770131BCCE18C00CFF6DF /* pp_icon_avatar.png */; };
+		355770171BCCE78700CFF6DF /* JSQMessagesToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3567B0131BCB9DF50053843C /* JSQMessagesToolbarContentView.xib */; };
+		355770341BCCEA9F00CFF6DF /* bubble_min.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770191BCCEA1000CFF6DF /* bubble_min.png */; };
+		355770351BCCEA9F00CFF6DF /* bubble_min@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3557701A1BCCEA1000CFF6DF /* bubble_min@2x.png */; };
+		355770361BCCEA9F00CFF6DF /* bubble_min@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3557701B1BCCEA1000CFF6DF /* bubble_min@3x.png */; };
+		355770371BCCEA9F00CFF6DF /* bubble_min_tailless.png in Resources */ = {isa = PBXBuildFile; fileRef = 3557701C1BCCEA1000CFF6DF /* bubble_min_tailless.png */; };
+		355770381BCCEA9F00CFF6DF /* bubble_min_tailless@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3557701D1BCCEA1000CFF6DF /* bubble_min_tailless@2x.png */; };
+		355770391BCCEA9F00CFF6DF /* bubble_min_tailless@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3557701E1BCCEA1000CFF6DF /* bubble_min_tailless@3x.png */; };
+		3557703A1BCCEA9F00CFF6DF /* bubble_regular.png in Resources */ = {isa = PBXBuildFile; fileRef = 3557701F1BCCEA1000CFF6DF /* bubble_regular.png */; };
+		3557703B1BCCEA9F00CFF6DF /* bubble_regular@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770201BCCEA1000CFF6DF /* bubble_regular@2x.png */; };
+		3557703C1BCCEA9F00CFF6DF /* bubble_regular@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770211BCCEA1000CFF6DF /* bubble_regular@3x.png */; };
+		3557703D1BCCEA9F00CFF6DF /* bubble_stroked.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770221BCCEA1000CFF6DF /* bubble_stroked.png */; };
+		3557703E1BCCEA9F00CFF6DF /* bubble_stroked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770231BCCEA1000CFF6DF /* bubble_stroked@2x.png */; };
+		3557703F1BCCEA9F00CFF6DF /* bubble_stroked@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770241BCCEA1000CFF6DF /* bubble_stroked@3x.png */; };
+		355770401BCCEA9F00CFF6DF /* bubble_stroked_tailless.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770251BCCEA1000CFF6DF /* bubble_stroked_tailless.png */; };
+		355770411BCCEA9F00CFF6DF /* bubble_stroked_tailless@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770261BCCEA1000CFF6DF /* bubble_stroked_tailless@2x.png */; };
+		355770421BCCEA9F00CFF6DF /* bubble_stroked_tailless@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770271BCCEA1000CFF6DF /* bubble_stroked_tailless@3x.png */; };
+		355770431BCCEA9F00CFF6DF /* bubble_tailless.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770281BCCEA1000CFF6DF /* bubble_tailless.png */; };
+		355770441BCCEA9F00CFF6DF /* bubble_tailless@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770291BCCEA1000CFF6DF /* bubble_tailless@2x.png */; };
+		355770451BCCEA9F00CFF6DF /* bubble_tailless@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3557702A1BCCEA1000CFF6DF /* bubble_tailless@3x.png */; };
+		355770461BCCEA9F00CFF6DF /* clip.png in Resources */ = {isa = PBXBuildFile; fileRef = 3557702B1BCCEA1000CFF6DF /* clip.png */; };
+		355770471BCCEA9F00CFF6DF /* clip@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3557702C1BCCEA1000CFF6DF /* clip@2x.png */; };
+		355770481BCCEA9F00CFF6DF /* clip@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3557702D1BCCEA1000CFF6DF /* clip@3x.png */; };
+		355770491BCCEA9F00CFF6DF /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 3557702E1BCCEA1000CFF6DF /* play.png */; };
+		3557704A1BCCEA9F00CFF6DF /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3557702F1BCCEA1000CFF6DF /* play@2x.png */; };
+		3557704B1BCCEA9F00CFF6DF /* play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770301BCCEA1000CFF6DF /* play@3x.png */; };
+		3557704C1BCCEA9F00CFF6DF /* typing.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770311BCCEA1000CFF6DF /* typing.png */; };
+		3557704D1BCCEA9F00CFF6DF /* typing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770321BCCEA1000CFF6DF /* typing@2x.png */; };
+		3557704E1BCCEA9F00CFF6DF /* typing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 355770331BCCEA1000CFF6DF /* typing@3x.png */; };
+		3557704F1BCCEBBC00CFF6DF /* JSQMessagesLoadEarlierHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3567B00E1BCB9DF50053843C /* JSQMessagesLoadEarlierHeaderView.xib */; };
+		355770501BCCEBC000CFF6DF /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3567B0051BCB9DF50053843C /* JSQMessagesCollectionViewCellOutgoing.xib */; };
+		355770511BCCEBC400CFF6DF /* JSQMessagesCollectionViewCellIncoming.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3567B0021BCB9DF50053843C /* JSQMessagesCollectionViewCellIncoming.xib */; };
+		355770521BCCEBCA00CFF6DF /* JSQMessagesTypingIndicatorFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3567B0161BCB9DF50053843C /* JSQMessagesTypingIndicatorFooterView.xib */; };
+		3567AF961BCB9D860053843C /* PPComLib.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3567AF951BCB9D860053843C /* PPComLib.h */; };
+		3567AF9E1BCB9D860053843C /* libPPComLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3567AF921BCB9D860053843C /* libPPComLib.a */; };
+		3567AFAD1BCB9D9E0053843C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3567AFAC1BCB9D9E0053843C /* Security.framework */; };
+		3567AFAF1BCB9DA30053843C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3567AFAE1BCB9DA30053843C /* CFNetwork.framework */; };
+		3567AFB31BCB9DD90053843C /* PPComLib.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AF951BCB9D860053843C /* PPComLib.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B06D1BCB9DF50053843C /* NSBundle+JSQMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFB81BCB9DF50053843C /* NSBundle+JSQMessages.h */; };
+		3567B06E1BCB9DF50053843C /* NSBundle+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFB91BCB9DF50053843C /* NSBundle+JSQMessages.m */; };
+		3567B06F1BCB9DF50053843C /* NSString+JSQMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFBA1BCB9DF50053843C /* NSString+JSQMessages.h */; };
+		3567B0701BCB9DF50053843C /* NSString+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFBB1BCB9DF50053843C /* NSString+JSQMessages.m */; };
+		3567B0711BCB9DF50053843C /* UIColor+JSQMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFBC1BCB9DF50053843C /* UIColor+JSQMessages.h */; };
+		3567B0721BCB9DF50053843C /* UIColor+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFBD1BCB9DF50053843C /* UIColor+JSQMessages.m */; };
+		3567B0731BCB9DF50053843C /* UIDevice+JSQMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFBE1BCB9DF50053843C /* UIDevice+JSQMessages.h */; };
+		3567B0741BCB9DF50053843C /* UIDevice+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFBF1BCB9DF50053843C /* UIDevice+JSQMessages.m */; };
+		3567B0751BCB9DF50053843C /* UIImage+JSQMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFC01BCB9DF50053843C /* UIImage+JSQMessages.h */; };
+		3567B0761BCB9DF50053843C /* UIImage+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFC11BCB9DF50053843C /* UIImage+JSQMessages.m */; };
+		3567B0771BCB9DF50053843C /* UIView+JSQMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFC21BCB9DF50053843C /* UIView+JSQMessages.h */; };
+		3567B0781BCB9DF50053843C /* UIView+JSQMessages.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFC31BCB9DF50053843C /* UIView+JSQMessages.m */; };
+		3567B0791BCB9DF50053843C /* JSQMessagesKeyboardController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFC51BCB9DF50053843C /* JSQMessagesKeyboardController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B07A1BCB9DF50053843C /* JSQMessagesKeyboardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFC61BCB9DF50053843C /* JSQMessagesKeyboardController.m */; };
+		3567B07B1BCB9DF60053843C /* JSQMessagesViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFC71BCB9DF50053843C /* JSQMessagesViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B07C1BCB9DF60053843C /* JSQMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFC81BCB9DF50053843C /* JSQMessagesViewController.m */; };
+		3567B07D1BCB9DF60053843C /* JSQMessagesAvatarImageFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFCB1BCB9DF50053843C /* JSQMessagesAvatarImageFactory.h */; };
+		3567B07E1BCB9DF60053843C /* JSQMessagesAvatarImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFCC1BCB9DF50053843C /* JSQMessagesAvatarImageFactory.m */; };
+		3567B07F1BCB9DF60053843C /* JSQMessagesBubbleImageFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFCD1BCB9DF50053843C /* JSQMessagesBubbleImageFactory.h */; };
+		3567B0801BCB9DF60053843C /* JSQMessagesBubbleImageFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFCE1BCB9DF50053843C /* JSQMessagesBubbleImageFactory.m */; };
+		3567B0811BCB9DF60053843C /* JSQMessagesMediaViewBubbleImageMasker.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFCF1BCB9DF50053843C /* JSQMessagesMediaViewBubbleImageMasker.h */; };
+		3567B0821BCB9DF60053843C /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFD01BCB9DF50053843C /* JSQMessagesMediaViewBubbleImageMasker.m */; };
+		3567B0831BCB9DF60053843C /* JSQMessagesTimestampFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFD11BCB9DF50053843C /* JSQMessagesTimestampFormatter.h */; };
+		3567B0841BCB9DF60053843C /* JSQMessagesTimestampFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFD21BCB9DF50053843C /* JSQMessagesTimestampFormatter.m */; };
+		3567B0851BCB9DF60053843C /* JSQMessagesToolbarButtonFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFD31BCB9DF50053843C /* JSQMessagesToolbarButtonFactory.h */; };
+		3567B0861BCB9DF60053843C /* JSQMessagesToolbarButtonFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFD41BCB9DF50053843C /* JSQMessagesToolbarButtonFactory.m */; };
+		3567B0871BCB9DF60053843C /* JSQMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFD51BCB9DF50053843C /* JSQMessages.h */; };
+		3567B0881BCB9DF60053843C /* JSQMessagesBubbleSizeCalculating.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFD71BCB9DF50053843C /* JSQMessagesBubbleSizeCalculating.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B0891BCB9DF60053843C /* JSQMessagesBubblesSizeCalculator.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFD81BCB9DF50053843C /* JSQMessagesBubblesSizeCalculator.h */; };
+		3567B08A1BCB9DF60053843C /* JSQMessagesBubblesSizeCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFD91BCB9DF50053843C /* JSQMessagesBubblesSizeCalculator.m */; };
+		3567B08B1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFDA1BCB9DF50053843C /* JSQMessagesCollectionViewFlowLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B08C1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFDB1BCB9DF50053843C /* JSQMessagesCollectionViewFlowLayout.m */; };
+		3567B08D1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFDC1BCB9DF50053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.h */; };
+		3567B08E1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFDD1BCB9DF50053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m */; };
+		3567B08F1BCB9DF60053843C /* JSQMessagesCollectionViewLayoutAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFDE1BCB9DF50053843C /* JSQMessagesCollectionViewLayoutAttributes.h */; };
+		3567B0901BCB9DF60053843C /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFDF1BCB9DF50053843C /* JSQMessagesCollectionViewLayoutAttributes.m */; };
+		3567B0911BCB9DF60053843C /* JSQFileMediaItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFE11BCB9DF50053843C /* JSQFileMediaItem.h */; };
+		3567B0921BCB9DF60053843C /* JSQFileMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFE21BCB9DF50053843C /* JSQFileMediaItem.m */; };
+		3567B0931BCB9DF60053843C /* JSQLocationMediaItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFE31BCB9DF50053843C /* JSQLocationMediaItem.h */; };
+		3567B0941BCB9DF60053843C /* JSQLocationMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFE41BCB9DF50053843C /* JSQLocationMediaItem.m */; };
+		3567B0951BCB9DF60053843C /* JSQMediaItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFE51BCB9DF50053843C /* JSQMediaItem.h */; };
+		3567B0961BCB9DF60053843C /* JSQMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFE61BCB9DF50053843C /* JSQMediaItem.m */; };
+		3567B0971BCB9DF60053843C /* JSQMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFE71BCB9DF50053843C /* JSQMessage.h */; };
+		3567B0981BCB9DF60053843C /* JSQMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFE81BCB9DF50053843C /* JSQMessage.m */; };
+		3567B0991BCB9DF60053843C /* JSQMessageAvatarImageDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFE91BCB9DF50053843C /* JSQMessageAvatarImageDataSource.h */; };
+		3567B09A1BCB9DF60053843C /* JSQMessageBubbleImageDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFEA1BCB9DF50053843C /* JSQMessageBubbleImageDataSource.h */; };
+		3567B09B1BCB9DF60053843C /* JSQMessageData.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFEB1BCB9DF50053843C /* JSQMessageData.h */; };
+		3567B09C1BCB9DF60053843C /* JSQMessageMediaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFEC1BCB9DF50053843C /* JSQMessageMediaData.h */; };
+		3567B09D1BCB9DF60053843C /* JSQMessagesAvatarImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFED1BCB9DF50053843C /* JSQMessagesAvatarImage.h */; };
+		3567B09E1BCB9DF60053843C /* JSQMessagesAvatarImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFEE1BCB9DF50053843C /* JSQMessagesAvatarImage.m */; };
+		3567B09F1BCB9DF60053843C /* JSQMessagesBubbleImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFEF1BCB9DF50053843C /* JSQMessagesBubbleImage.h */; };
+		3567B0A01BCB9DF60053843C /* JSQMessagesBubbleImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFF01BCB9DF50053843C /* JSQMessagesBubbleImage.m */; };
+		3567B0A11BCB9DF60053843C /* JSQMessagesCollectionViewDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFF11BCB9DF50053843C /* JSQMessagesCollectionViewDataSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B0A21BCB9DF60053843C /* JSQMessagesCollectionViewDelegateFlowLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFF21BCB9DF50053843C /* JSQMessagesCollectionViewDelegateFlowLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B0A31BCB9DF70053843C /* JSQPhotoMediaItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFF31BCB9DF50053843C /* JSQPhotoMediaItem.h */; };
+		3567B0A41BCB9DF70053843C /* JSQPhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFF41BCB9DF50053843C /* JSQPhotoMediaItem.m */; };
+		3567B0A51BCB9DF70053843C /* JSQTxtMediaItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFF51BCB9DF50053843C /* JSQTxtMediaItem.h */; };
+		3567B0A61BCB9DF70053843C /* JSQTxtMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFF61BCB9DF50053843C /* JSQTxtMediaItem.m */; };
+		3567B0A71BCB9DF70053843C /* JSQVideoMediaItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFF71BCB9DF50053843C /* JSQVideoMediaItem.h */; };
+		3567B0A81BCB9DF70053843C /* JSQVideoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFF81BCB9DF50053843C /* JSQVideoMediaItem.m */; };
+		3567B0A91BCB9DF70053843C /* JSQMessagesCellTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFFA1BCB9DF50053843C /* JSQMessagesCellTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B0AA1BCB9DF70053843C /* JSQMessagesCellTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFFB1BCB9DF50053843C /* JSQMessagesCellTextView.m */; };
+		3567B0AB1BCB9DF70053843C /* JSQMessagesCollectionView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFFC1BCB9DF50053843C /* JSQMessagesCollectionView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B0AC1BCB9DF70053843C /* JSQMessagesCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFFD1BCB9DF50053843C /* JSQMessagesCollectionView.m */; };
+		3567B0AD1BCB9DF70053843C /* JSQMessagesCollectionViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567AFFE1BCB9DF50053843C /* JSQMessagesCollectionViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B0AE1BCB9DF70053843C /* JSQMessagesCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567AFFF1BCB9DF50053843C /* JSQMessagesCollectionViewCell.m */; };
+		3567B0AF1BCB9DF70053843C /* JSQMessagesCollectionViewCellIncoming.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0001BCB9DF50053843C /* JSQMessagesCollectionViewCellIncoming.h */; };
+		3567B0B01BCB9DF70053843C /* JSQMessagesCollectionViewCellIncoming.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0011BCB9DF50053843C /* JSQMessagesCollectionViewCellIncoming.m */; };
+		3567B0B11BCB9DF70053843C /* JSQMessagesCollectionViewCellOutgoing.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0031BCB9DF50053843C /* JSQMessagesCollectionViewCellOutgoing.h */; };
+		3567B0B21BCB9DF70053843C /* JSQMessagesCollectionViewCellOutgoing.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0041BCB9DF50053843C /* JSQMessagesCollectionViewCellOutgoing.m */; };
+		3567B0B31BCB9DF70053843C /* JSQMessagesComposerTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0061BCB9DF50053843C /* JSQMessagesComposerTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B0B41BCB9DF70053843C /* JSQMessagesComposerTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0071BCB9DF50053843C /* JSQMessagesComposerTextView.m */; };
+		3567B0B51BCB9DF70053843C /* JSQMessagesInputToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0081BCB9DF50053843C /* JSQMessagesInputToolbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B0B61BCB9DF70053843C /* JSQMessagesInputToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0091BCB9DF50053843C /* JSQMessagesInputToolbar.m */; };
+		3567B0B71BCB9DF70053843C /* JSQMessagesLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B00A1BCB9DF50053843C /* JSQMessagesLabel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B0B81BCB9DF70053843C /* JSQMessagesLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B00B1BCB9DF50053843C /* JSQMessagesLabel.m */; };
+		3567B0B91BCB9DF70053843C /* JSQMessagesLoadEarlierHeaderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B00C1BCB9DF50053843C /* JSQMessagesLoadEarlierHeaderView.h */; };
+		3567B0BA1BCB9DF80053843C /* JSQMessagesLoadEarlierHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B00D1BCB9DF50053843C /* JSQMessagesLoadEarlierHeaderView.m */; };
+		3567B0BB1BCB9DF80053843C /* JSQMessagesMediaPlaceholderView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B00F1BCB9DF50053843C /* JSQMessagesMediaPlaceholderView.h */; };
+		3567B0BC1BCB9DF80053843C /* JSQMessagesMediaPlaceholderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0101BCB9DF50053843C /* JSQMessagesMediaPlaceholderView.m */; };
+		3567B0BD1BCB9DF80053843C /* JSQMessagesToolbarContentView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0111BCB9DF50053843C /* JSQMessagesToolbarContentView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B0BE1BCB9DF80053843C /* JSQMessagesToolbarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0121BCB9DF50053843C /* JSQMessagesToolbarContentView.m */; };
+		3567B0BF1BCB9DF80053843C /* JSQMessagesTypingIndicatorFooterView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0141BCB9DF50053843C /* JSQMessagesTypingIndicatorFooterView.h */; };
+		3567B0C01BCB9DF80053843C /* JSQMessagesTypingIndicatorFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0151BCB9DF50053843C /* JSQMessagesTypingIndicatorFooterView.m */; };
+		3567B0C71BCB9DF80053843C /* PPMessagesViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0201BCB9DF50053843C /* PPMessagesViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3567B0C81BCB9DF80053843C /* PPMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0211BCB9DF50053843C /* PPMessagesViewController.m */; };
+		3567B0CB1BCB9DF80053843C /* PP.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0251BCB9DF50053843C /* PP.h */; };
+		3567B0CC1BCB9DF90053843C /* PP.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0261BCB9DF50053843C /* PP.m */; };
+		3567B0CD1BCB9DF90053843C /* PPCom.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0271BCB9DF50053843C /* PPCom.h */; };
+		3567B0CE1BCB9DF90053843C /* PPCom.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0281BCB9DF50053843C /* PPCom.m */; };
+		3567B0CF1BCB9DF90053843C /* ImageDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B02A1BCB9DF50053843C /* ImageDownloader.h */; };
+		3567B0D01BCB9DF90053843C /* ImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B02B1BCB9DF50053843C /* ImageDownloader.m */; };
+		3567B0D11BCB9DF90053843C /* NSString+Crypto.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B02C1BCB9DF50053843C /* NSString+Crypto.h */; };
+		3567B0D21BCB9DF90053843C /* NSString+Crypto.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B02D1BCB9DF50053843C /* NSString+Crypto.m */; };
+		3567B0D31BCB9DF90053843C /* PPCachebleImageDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B02E1BCB9DF50053843C /* PPCachebleImageDownloader.h */; };
+		3567B0D41BCB9DF90053843C /* PPCachebleImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B02F1BCB9DF50053843C /* PPCachebleImageDownloader.m */; };
+		3567B0D51BCB9DF90053843C /* PPComAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0301BCB9DF50053843C /* PPComAPI.h */; };
+		3567B0D61BCB9DF90053843C /* PPComAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0311BCB9DF50053843C /* PPComAPI.m */; };
+		3567B0D71BCB9DF90053843C /* PPComImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0321BCB9DF50053843C /* PPComImageCache.h */; };
+		3567B0D81BCB9DF90053843C /* PPComImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0331BCB9DF50053843C /* PPComImageCache.m */; };
+		3567B0D91BCB9DF90053843C /* PPComNet.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0341BCB9DF50053843C /* PPComNet.h */; };
+		3567B0DA1BCB9DF90053843C /* PPComNet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0351BCB9DF50053843C /* PPComNet.m */; };
+		3567B0DB1BCB9DF90053843C /* PPComUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0361BCB9DF50053843C /* PPComUtils.h */; };
+		3567B0DC1BCB9DFA0053843C /* PPComUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0371BCB9DF50053843C /* PPComUtils.m */; };
+		3567B0DD1BCB9DFA0053843C /* PPDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0381BCB9DF50053843C /* PPDownloader.h */; };
+		3567B0DE1BCB9DFA0053843C /* PPDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0391BCB9DF50053843C /* PPDownloader.m */; };
+		3567B0DF1BCB9DFA0053843C /* PPFileManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B03A1BCB9DF50053843C /* PPFileManager.h */; };
+		3567B0E01BCB9DFA0053843C /* PPFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B03B1BCB9DF50053843C /* PPFileManager.m */; };
+		3567B0E11BCB9DFA0053843C /* PPJSQAvatarLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B03C1BCB9DF50053843C /* PPJSQAvatarLoader.h */; };
+		3567B0E21BCB9DFA0053843C /* PPJSQAvatarLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B03D1BCB9DF50053843C /* PPJSQAvatarLoader.m */; };
+		3567B0E31BCB9DFA0053843C /* PPMessageReceiver.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B03E1BCB9DF50053843C /* PPMessageReceiver.h */; };
+		3567B0E41BCB9DFA0053843C /* PPMessageReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B03F1BCB9DF50053843C /* PPMessageReceiver.m */; };
+		3567B0E51BCB9DFA0053843C /* PPMessageSender.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0401BCB9DF50053843C /* PPMessageSender.h */; };
+		3567B0E61BCB9DFA0053843C /* PPMessageSender.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0411BCB9DF50053843C /* PPMessageSender.m */; };
+		3567B0E71BCB9DFA0053843C /* PPTxtLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0421BCB9DF50053843C /* PPTxtLoader.h */; };
+		3567B0E81BCB9DFA0053843C /* PPTxtLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0431BCB9DF50053843C /* PPTxtLoader.m */; };
+		3567B0E91BCB9DFB0053843C /* PPUploader.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0441BCB9DF50053843C /* PPUploader.h */; };
+		3567B0EA1BCB9DFB0053843C /* PPUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0451BCB9DF50053843C /* PPUploader.m */; };
+		3567B0EB1BCB9DFB0053843C /* PPCameraViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0471BCB9DF50053843C /* PPCameraViewDelegate.h */; };
+		3567B0EC1BCB9DFB0053843C /* PPCameraViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0481BCB9DF50053843C /* PPCameraViewDelegate.m */; };
+		3567B0ED1BCB9DFB0053843C /* PPImagePickerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0491BCB9DF50053843C /* PPImagePickerDelegate.h */; };
+		3567B0EE1BCB9DFB0053843C /* PPImagePickerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B04A1BCB9DF50053843C /* PPImagePickerDelegate.m */; };
+		3567B0EF1BCB9DFB0053843C /* PPConversationItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B04D1BCB9DF50053843C /* PPConversationItem.h */; };
+		3567B0F01BCB9DFB0053843C /* PPConversationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B04E1BCB9DF50053843C /* PPConversationItem.m */; };
+		3567B0F11BCB9DFB0053843C /* PPConversationsList.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0501BCB9DF50053843C /* PPConversationsList.h */; };
+		3567B0F21BCB9DFB0053843C /* PPConversationsList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0511BCB9DF50053843C /* PPConversationsList.m */; };
+		3567B0F31BCB9DFB0053843C /* PPDataCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0521BCB9DF50053843C /* PPDataCache.h */; };
+		3567B0F41BCB9DFB0053843C /* PPDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0531BCB9DF50053843C /* PPDataCache.m */; };
+		3567B0F51BCB9DFC0053843C /* PPFileMediaItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0541BCB9DF50053843C /* PPFileMediaItem.h */; };
+		3567B0F61BCB9DFC0053843C /* PPFileMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0551BCB9DF50053843C /* PPFileMediaItem.m */; };
+		3567B0F71BCB9DFC0053843C /* PPMediaItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0561BCB9DF50053843C /* PPMediaItem.h */; };
+		3567B0F81BCB9DFC0053843C /* PPMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0571BCB9DF50053843C /* PPMediaItem.m */; };
+		3567B0F91BCB9DFC0053843C /* PPMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0581BCB9DF50053843C /* PPMessage.h */; };
+		3567B0FA1BCB9DFC0053843C /* PPMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0591BCB9DF50053843C /* PPMessage.m */; };
+		3567B0FB1BCB9DFC0053843C /* PPMessageData.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B05B1BCB9DF50053843C /* PPMessageData.h */; };
+		3567B0FC1BCB9DFC0053843C /* PPMessageList.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B05C1BCB9DF50053843C /* PPMessageList.h */; };
+		3567B0FD1BCB9DFC0053843C /* PPMessageList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B05D1BCB9DF50053843C /* PPMessageList.m */; };
+		3567B0FE1BCB9DFC0053843C /* PPMessageMediaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B05E1BCB9DF50053843C /* PPMessageMediaData.h */; };
+		3567B0FF1BCB9DFD0053843C /* PPPhotoMediaItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B05F1BCB9DF50053843C /* PPPhotoMediaItem.h */; };
+		3567B1001BCB9DFD0053843C /* PPPhotoMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0601BCB9DF50053843C /* PPPhotoMediaItem.m */; };
+		3567B1011BCB9DFD0053843C /* PPTxtMediaItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0611BCB9DF50053843C /* PPTxtMediaItem.h */; };
+		3567B1021BCB9DFD0053843C /* PPTxtMediaItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0621BCB9DF50053843C /* PPTxtMediaItem.m */; };
+		3567B1031BCB9DFD0053843C /* PPUser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B0631BCB9DF50053843C /* PPUser.h */; };
+		3567B1041BCB9DFD0053843C /* PPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B0641BCB9DF50053843C /* PPUser.m */; };
+		3567B1071BCB9DFD0053843C /* SRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 3567B06A1BCB9DF50053843C /* SRWebSocket.h */; };
+		3567B1081BCB9DFD0053843C /* SRWebSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 3567B06B1BCB9DF50053843C /* SRWebSocket.m */; };
+		3567B1091BCB9DFD0053843C /* SocketRocket-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 3567B06C1BCB9DF50053843C /* SocketRocket-Prefix.pch */; };
+		3581D77E1C2A6EC8006372BA /* PPAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 3581D77C1C2A6EC8006372BA /* PPAppInfo.h */; };
+		3581D77F1C2A6EC8006372BA /* PPAppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3581D77D1C2A6EC8006372BA /* PPAppInfo.m */; };
+		3586FE481C2E5372002F58FC /* PPFastLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 3586FE471C2E5372002F58FC /* PPFastLog.m */; };
+		EDA2725B1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272591CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h */; };
+		EDA2725C1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA2725A1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m */; };
+		EDA2725F1CBBA8970038E2B8 /* PPMessagesStore.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA2725D1CBBA8970038E2B8 /* PPMessagesStore.h */; };
+		EDA272601CBBA8970038E2B8 /* PPMessagesStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA2725E1CBBA8970038E2B8 /* PPMessagesStore.m */; };
+		EDA272631CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272611CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.h */; };
+		EDA272641CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272621CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.m */; };
+		EDA2727C1CBDE6590038E2B8 /* PPCreateConversationHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA2727A1CBDE6590038E2B8 /* PPCreateConversationHttpModel.h */; };
+		EDA2727D1CBDE6590038E2B8 /* PPCreateConversationHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA2727B1CBDE6590038E2B8 /* PPCreateConversationHttpModel.m */; };
+		EDA272851CBE34E40038E2B8 /* PPViewUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272831CBE34E40038E2B8 /* PPViewUtils.h */; };
+		EDA272861CBE34E40038E2B8 /* PPViewUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272841CBE34E40038E2B8 /* PPViewUtils.m */; };
+		EDA272911CBF4F8E0038E2B8 /* user_group_man_man.png in Resources */ = {isa = PBXBuildFile; fileRef = EDA2728D1CBF4F820038E2B8 /* user_group_man_man.png */; };
+		EDA272921CBF4F910038E2B8 /* user_group_man_man@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDA2728C1CBF4F820038E2B8 /* user_group_man_man@2x.png */; };
+		EDA272931CBF4F950038E2B8 /* user_group_man_man@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EDA2728B1CBF4F820038E2B8 /* user_group_man_man@3x.png */; };
+		EDA272981CBF7B860038E2B8 /* PPGroupMembersViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272961CBF7B860038E2B8 /* PPGroupMembersViewController.h */; };
+		EDA272991CBF7B860038E2B8 /* PPGroupMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272971CBF7B860038E2B8 /* PPGroupMembersViewController.m */; };
+		EDA2729D1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA2729B1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.h */; };
+		EDA2729E1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA2729C1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.m */; };
+		EDA272A11CBF7EC80038E2B8 /* PPGroupMembersStore.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA2729F1CBF7EC80038E2B8 /* PPGroupMembersStore.h */; };
+		EDA272A21CBF7EC80038E2B8 /* PPGroupMembersStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272A01CBF7EC80038E2B8 /* PPGroupMembersStore.m */; };
+		EDA272A51CBF82410038E2B8 /* PPGetConversationUserListHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272A31CBF82410038E2B8 /* PPGetConversationUserListHttpModel.h */; };
+		EDA272A61CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272A41CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m */; };
+		EDA272A91CBF8CC30038E2B8 /* PPGroupMembersDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272A71CBF8CC30038E2B8 /* PPGroupMembersDataSource.h */; };
+		EDA272AA1CBF8CC30038E2B8 /* PPGroupMembersDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272A81CBF8CC30038E2B8 /* PPGroupMembersDataSource.m */; };
+		EDA272AD1CBF91CC0038E2B8 /* PPGroupMemberViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272AB1CBF91CC0038E2B8 /* PPGroupMemberViewCell.h */; };
+		EDA272AE1CBF91CC0038E2B8 /* PPGroupMemberViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA272AC1CBF91CC0038E2B8 /* PPGroupMemberViewCell.m */; };
+		EDAC3D3A1CAD05E400BA1066 /* PPComToken.h in Headers */ = {isa = PBXBuildFile; fileRef = EDAC3D381CAD05E400BA1066 /* PPComToken.h */; };
+		EDAC3D3B1CAD05E400BA1066 /* PPComToken.m in Sources */ = {isa = PBXBuildFile; fileRef = EDAC3D391CAD05E400BA1066 /* PPComToken.m */; };
+		EDB590541CAD329800017E7C /* PPGetDefaultConversationHttpModels.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590521CAD329800017E7C /* PPGetDefaultConversationHttpModels.h */; };
+		EDB590551CAD329800017E7C /* PPGetDefaultConversationHttpModels.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590531CAD329800017E7C /* PPGetDefaultConversationHttpModels.m */; };
+		EDB5905B1CAE132D00017E7C /* PPBadgeStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590571CAE132D00017E7C /* PPBadgeStyle.h */; };
+		EDB5905C1CAE132D00017E7C /* PPBadgeStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590581CAE132D00017E7C /* PPBadgeStyle.m */; };
+		EDB5905D1CAE132D00017E7C /* PPCustomBadge.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590591CAE132D00017E7C /* PPCustomBadge.h */; };
+		EDB5905E1CAE132D00017E7C /* PPCustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB5905A1CAE132D00017E7C /* PPCustomBadge.m */; };
+		EDB590621CAE14A800017E7C /* PPConversationItemViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590601CAE14A800017E7C /* PPConversationItemViewCell.h */; };
+		EDB590631CAE14A800017E7C /* PPConversationItemViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590611CAE14A800017E7C /* PPConversationItemViewCell.m */; };
+		EDB590661CAE14FE00017E7C /* PPBadgeSquareImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590641CAE14FE00017E7C /* PPBadgeSquareImageView.h */; };
+		EDB590671CAE14FE00017E7C /* PPBadgeSquareImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590651CAE14FE00017E7C /* PPBadgeSquareImageView.m */; };
+		EDB5906B1CAE164100017E7C /* PPLayoutConstraintsUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590691CAE164100017E7C /* PPLayoutConstraintsUtils.h */; };
+		EDB5906C1CAE164100017E7C /* PPLayoutConstraintsUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB5906A1CAE164100017E7C /* PPLayoutConstraintsUtils.m */; };
+		EDB5906F1CAE1DD000017E7C /* PPConversationsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB5906D1CAE1DD000017E7C /* PPConversationsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EDB590701CAE1DD000017E7C /* PPConversationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB5906E1CAE1DD000017E7C /* PPConversationsViewController.m */; };
+		EDB590741CAE20B100017E7C /* PPConversationItemDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590721CAE20B100017E7C /* PPConversationItemDataSource.h */; };
+		EDB590751CAE20B100017E7C /* PPConversationItemDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590731CAE20B100017E7C /* PPConversationItemDataSource.m */; };
+		EDB590791CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590771CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.h */; };
+		EDB5907A1CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590781CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.m */; };
+		EDB5907D1CAE271900017E7C /* PPImageDownloaderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB5907B1CAE271900017E7C /* PPImageDownloaderManager.h */; };
+		EDB5907E1CAE271900017E7C /* PPImageDownloaderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB5907C1CAE271900017E7C /* PPImageDownloaderManager.m */; };
+		EDB590811CAE2BC300017E7C /* PPImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB5907F1CAE2BC300017E7C /* PPImageView.h */; };
+		EDB590821CAE2BC300017E7C /* PPImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590801CAE2BC300017E7C /* PPImageView.m */; };
+		EDB590861CAE355E00017E7C /* PPConversationsStore.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590841CAE355E00017E7C /* PPConversationsStore.h */; };
+		EDB590871CAE355E00017E7C /* PPConversationsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590851CAE355E00017E7C /* PPConversationsStore.m */; };
+		EDB5908A1CAE376700017E7C /* PPStoreManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590881CAE376700017E7C /* PPStoreManager.h */; };
+		EDB5908B1CAE376700017E7C /* PPStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590891CAE376700017E7C /* PPStoreManager.m */; };
+		EDB5908E1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB5908C1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.h */; };
+		EDB5908F1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB5908D1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.m */; };
+		EDB590911CAE5D7000017E7C /* PPHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590901CAE5D7000017E7C /* PPHttpModel.h */; };
+		EDB590941CAE644600017E7C /* PPGetConversationListHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590921CAE644600017E7C /* PPGetConversationListHttpModel.h */; };
+		EDB590951CAE644600017E7C /* PPGetConversationListHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590931CAE644600017E7C /* PPGetConversationListHttpModel.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		355980521BCC9E4300DCAE33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3567AF8A1BCB9D860053843C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3567AF911BCB9D860053843C;
+			remoteInfo = PPComLib;
+		};
+		3559806C1BCCB06400DCAE33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3567AF8A1BCB9D860053843C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 355980641BCCB00A00DCAE33;
+			remoteInfo = PPComLibResources;
+		};
+		355981231BCCDBC800DCAE33 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3567AF8A1BCB9D860053843C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3567AF911BCB9D860053843C;
+			remoteInfo = PPComLib;
+		};
+		3567AF9F1BCB9D860053843C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3567AF8A1BCB9D860053843C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3567AF911BCB9D860053843C;
+			remoteInfo = PPComLib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3567AF901BCB9D860053843C /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				3567AF961BCB9D860053843C /* PPComLib.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3541B9071C2CE0FE005134AB /* JSQMessagesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQMessagesViewController.xib; sourceTree = "<group>"; };
+		3541F9331BCDEE16000940EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/JSQMessages.strings; sourceTree = "<group>"; };
+		3541F9351BCDEE1C000940EA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/JSQMessages.strings; sourceTree = "<group>"; };
+		3541F9361BCDEE37000940EA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/JSQMessages.strings"; sourceTree = "<group>"; };
+		3541F9371BCDEE55000940EA /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/JSQMessages.strings"; sourceTree = "<group>"; };
+		3541FA091BCE0AAA000940EA /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		355770131BCCE18C00CFF6DF /* pp_icon_avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pp_icon_avatar.png; sourceTree = "<group>"; };
+		355770191BCCEA1000CFF6DF /* bubble_min.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble_min.png; sourceTree = "<group>"; };
+		3557701A1BCCEA1000CFF6DF /* bubble_min@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_min@2x.png"; sourceTree = "<group>"; };
+		3557701B1BCCEA1000CFF6DF /* bubble_min@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_min@3x.png"; sourceTree = "<group>"; };
+		3557701C1BCCEA1000CFF6DF /* bubble_min_tailless.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble_min_tailless.png; sourceTree = "<group>"; };
+		3557701D1BCCEA1000CFF6DF /* bubble_min_tailless@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_min_tailless@2x.png"; sourceTree = "<group>"; };
+		3557701E1BCCEA1000CFF6DF /* bubble_min_tailless@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_min_tailless@3x.png"; sourceTree = "<group>"; };
+		3557701F1BCCEA1000CFF6DF /* bubble_regular.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble_regular.png; sourceTree = "<group>"; };
+		355770201BCCEA1000CFF6DF /* bubble_regular@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_regular@2x.png"; sourceTree = "<group>"; };
+		355770211BCCEA1000CFF6DF /* bubble_regular@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_regular@3x.png"; sourceTree = "<group>"; };
+		355770221BCCEA1000CFF6DF /* bubble_stroked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble_stroked.png; sourceTree = "<group>"; };
+		355770231BCCEA1000CFF6DF /* bubble_stroked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_stroked@2x.png"; sourceTree = "<group>"; };
+		355770241BCCEA1000CFF6DF /* bubble_stroked@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_stroked@3x.png"; sourceTree = "<group>"; };
+		355770251BCCEA1000CFF6DF /* bubble_stroked_tailless.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble_stroked_tailless.png; sourceTree = "<group>"; };
+		355770261BCCEA1000CFF6DF /* bubble_stroked_tailless@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_stroked_tailless@2x.png"; sourceTree = "<group>"; };
+		355770271BCCEA1000CFF6DF /* bubble_stroked_tailless@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_stroked_tailless@3x.png"; sourceTree = "<group>"; };
+		355770281BCCEA1000CFF6DF /* bubble_tailless.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble_tailless.png; sourceTree = "<group>"; };
+		355770291BCCEA1000CFF6DF /* bubble_tailless@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_tailless@2x.png"; sourceTree = "<group>"; };
+		3557702A1BCCEA1000CFF6DF /* bubble_tailless@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble_tailless@3x.png"; sourceTree = "<group>"; };
+		3557702B1BCCEA1000CFF6DF /* clip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clip.png; sourceTree = "<group>"; };
+		3557702C1BCCEA1000CFF6DF /* clip@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clip@2x.png"; sourceTree = "<group>"; };
+		3557702D1BCCEA1000CFF6DF /* clip@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clip@3x.png"; sourceTree = "<group>"; };
+		3557702E1BCCEA1000CFF6DF /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		3557702F1BCCEA1000CFF6DF /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@2x.png"; sourceTree = "<group>"; };
+		355770301BCCEA1000CFF6DF /* play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play@3x.png"; sourceTree = "<group>"; };
+		355770311BCCEA1000CFF6DF /* typing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = typing.png; sourceTree = "<group>"; };
+		355770321BCCEA1000CFF6DF /* typing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "typing@2x.png"; sourceTree = "<group>"; };
+		355770331BCCEA1000CFF6DF /* typing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "typing@3x.png"; sourceTree = "<group>"; };
+		355980651BCCB00A00DCAE33 /* PPComLib.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPComLib.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		355980681BCCB00A00DCAE33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3567AF921BCB9D860053843C /* libPPComLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPPComLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		3567AF951BCB9D860053843C /* PPComLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPComLib.h; sourceTree = "<group>"; };
+		3567AF9D1BCB9D860053843C /* PPComLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPComLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3567AFA31BCB9D860053843C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3567AFAC1BCB9D9E0053843C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		3567AFAE1BCB9DA30053843C /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		3567AFB81BCB9DF50053843C /* NSBundle+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+JSQMessages.h"; sourceTree = "<group>"; };
+		3567AFB91BCB9DF50053843C /* NSBundle+JSQMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+JSQMessages.m"; sourceTree = "<group>"; };
+		3567AFBA1BCB9DF50053843C /* NSString+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+JSQMessages.h"; sourceTree = "<group>"; };
+		3567AFBB1BCB9DF50053843C /* NSString+JSQMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+JSQMessages.m"; sourceTree = "<group>"; };
+		3567AFBC1BCB9DF50053843C /* UIColor+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+JSQMessages.h"; sourceTree = "<group>"; };
+		3567AFBD1BCB9DF50053843C /* UIColor+JSQMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+JSQMessages.m"; sourceTree = "<group>"; };
+		3567AFBE1BCB9DF50053843C /* UIDevice+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+JSQMessages.h"; sourceTree = "<group>"; };
+		3567AFBF1BCB9DF50053843C /* UIDevice+JSQMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+JSQMessages.m"; sourceTree = "<group>"; };
+		3567AFC01BCB9DF50053843C /* UIImage+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JSQMessages.h"; sourceTree = "<group>"; };
+		3567AFC11BCB9DF50053843C /* UIImage+JSQMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JSQMessages.m"; sourceTree = "<group>"; };
+		3567AFC21BCB9DF50053843C /* UIView+JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+JSQMessages.h"; sourceTree = "<group>"; };
+		3567AFC31BCB9DF50053843C /* UIView+JSQMessages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+JSQMessages.m"; sourceTree = "<group>"; };
+		3567AFC51BCB9DF50053843C /* JSQMessagesKeyboardController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesKeyboardController.h; sourceTree = "<group>"; };
+		3567AFC61BCB9DF50053843C /* JSQMessagesKeyboardController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesKeyboardController.m; sourceTree = "<group>"; };
+		3567AFC71BCB9DF50053843C /* JSQMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesViewController.h; sourceTree = "<group>"; };
+		3567AFC81BCB9DF50053843C /* JSQMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesViewController.m; sourceTree = "<group>"; };
+		3567AFCB1BCB9DF50053843C /* JSQMessagesAvatarImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesAvatarImageFactory.h; sourceTree = "<group>"; };
+		3567AFCC1BCB9DF50053843C /* JSQMessagesAvatarImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesAvatarImageFactory.m; sourceTree = "<group>"; };
+		3567AFCD1BCB9DF50053843C /* JSQMessagesBubbleImageFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesBubbleImageFactory.h; sourceTree = "<group>"; };
+		3567AFCE1BCB9DF50053843C /* JSQMessagesBubbleImageFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesBubbleImageFactory.m; sourceTree = "<group>"; };
+		3567AFCF1BCB9DF50053843C /* JSQMessagesMediaViewBubbleImageMasker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesMediaViewBubbleImageMasker.h; sourceTree = "<group>"; };
+		3567AFD01BCB9DF50053843C /* JSQMessagesMediaViewBubbleImageMasker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesMediaViewBubbleImageMasker.m; sourceTree = "<group>"; };
+		3567AFD11BCB9DF50053843C /* JSQMessagesTimestampFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesTimestampFormatter.h; sourceTree = "<group>"; };
+		3567AFD21BCB9DF50053843C /* JSQMessagesTimestampFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesTimestampFormatter.m; sourceTree = "<group>"; };
+		3567AFD31BCB9DF50053843C /* JSQMessagesToolbarButtonFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesToolbarButtonFactory.h; sourceTree = "<group>"; };
+		3567AFD41BCB9DF50053843C /* JSQMessagesToolbarButtonFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesToolbarButtonFactory.m; sourceTree = "<group>"; };
+		3567AFD51BCB9DF50053843C /* JSQMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessages.h; sourceTree = "<group>"; };
+		3567AFD71BCB9DF50053843C /* JSQMessagesBubbleSizeCalculating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesBubbleSizeCalculating.h; sourceTree = "<group>"; };
+		3567AFD81BCB9DF50053843C /* JSQMessagesBubblesSizeCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesBubblesSizeCalculator.h; sourceTree = "<group>"; };
+		3567AFD91BCB9DF50053843C /* JSQMessagesBubblesSizeCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesBubblesSizeCalculator.m; sourceTree = "<group>"; };
+		3567AFDA1BCB9DF50053843C /* JSQMessagesCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		3567AFDB1BCB9DF50053843C /* JSQMessagesCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		3567AFDC1BCB9DF50053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesCollectionViewFlowLayoutInvalidationContext.h; sourceTree = "<group>"; };
+		3567AFDD1BCB9DF50053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesCollectionViewFlowLayoutInvalidationContext.m; sourceTree = "<group>"; };
+		3567AFDE1BCB9DF50053843C /* JSQMessagesCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
+		3567AFDF1BCB9DF50053843C /* JSQMessagesCollectionViewLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesCollectionViewLayoutAttributes.m; sourceTree = "<group>"; };
+		3567AFE11BCB9DF50053843C /* JSQFileMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQFileMediaItem.h; sourceTree = "<group>"; };
+		3567AFE21BCB9DF50053843C /* JSQFileMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQFileMediaItem.m; sourceTree = "<group>"; };
+		3567AFE31BCB9DF50053843C /* JSQLocationMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQLocationMediaItem.h; sourceTree = "<group>"; };
+		3567AFE41BCB9DF50053843C /* JSQLocationMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQLocationMediaItem.m; sourceTree = "<group>"; };
+		3567AFE51BCB9DF50053843C /* JSQMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMediaItem.h; sourceTree = "<group>"; };
+		3567AFE61BCB9DF50053843C /* JSQMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMediaItem.m; sourceTree = "<group>"; };
+		3567AFE71BCB9DF50053843C /* JSQMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessage.h; sourceTree = "<group>"; };
+		3567AFE81BCB9DF50053843C /* JSQMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessage.m; sourceTree = "<group>"; };
+		3567AFE91BCB9DF50053843C /* JSQMessageAvatarImageDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessageAvatarImageDataSource.h; sourceTree = "<group>"; };
+		3567AFEA1BCB9DF50053843C /* JSQMessageBubbleImageDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessageBubbleImageDataSource.h; sourceTree = "<group>"; };
+		3567AFEB1BCB9DF50053843C /* JSQMessageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessageData.h; sourceTree = "<group>"; };
+		3567AFEC1BCB9DF50053843C /* JSQMessageMediaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessageMediaData.h; sourceTree = "<group>"; };
+		3567AFED1BCB9DF50053843C /* JSQMessagesAvatarImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesAvatarImage.h; sourceTree = "<group>"; };
+		3567AFEE1BCB9DF50053843C /* JSQMessagesAvatarImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesAvatarImage.m; sourceTree = "<group>"; };
+		3567AFEF1BCB9DF50053843C /* JSQMessagesBubbleImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesBubbleImage.h; sourceTree = "<group>"; };
+		3567AFF01BCB9DF50053843C /* JSQMessagesBubbleImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesBubbleImage.m; sourceTree = "<group>"; };
+		3567AFF11BCB9DF50053843C /* JSQMessagesCollectionViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesCollectionViewDataSource.h; sourceTree = "<group>"; };
+		3567AFF21BCB9DF50053843C /* JSQMessagesCollectionViewDelegateFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesCollectionViewDelegateFlowLayout.h; sourceTree = "<group>"; };
+		3567AFF31BCB9DF50053843C /* JSQPhotoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQPhotoMediaItem.h; sourceTree = "<group>"; };
+		3567AFF41BCB9DF50053843C /* JSQPhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQPhotoMediaItem.m; sourceTree = "<group>"; };
+		3567AFF51BCB9DF50053843C /* JSQTxtMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQTxtMediaItem.h; sourceTree = "<group>"; };
+		3567AFF61BCB9DF50053843C /* JSQTxtMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQTxtMediaItem.m; sourceTree = "<group>"; };
+		3567AFF71BCB9DF50053843C /* JSQVideoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQVideoMediaItem.h; sourceTree = "<group>"; };
+		3567AFF81BCB9DF50053843C /* JSQVideoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQVideoMediaItem.m; sourceTree = "<group>"; };
+		3567AFFA1BCB9DF50053843C /* JSQMessagesCellTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesCellTextView.h; sourceTree = "<group>"; };
+		3567AFFB1BCB9DF50053843C /* JSQMessagesCellTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesCellTextView.m; sourceTree = "<group>"; };
+		3567AFFC1BCB9DF50053843C /* JSQMessagesCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesCollectionView.h; sourceTree = "<group>"; };
+		3567AFFD1BCB9DF50053843C /* JSQMessagesCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesCollectionView.m; sourceTree = "<group>"; };
+		3567AFFE1BCB9DF50053843C /* JSQMessagesCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesCollectionViewCell.h; sourceTree = "<group>"; };
+		3567AFFF1BCB9DF50053843C /* JSQMessagesCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesCollectionViewCell.m; sourceTree = "<group>"; };
+		3567B0001BCB9DF50053843C /* JSQMessagesCollectionViewCellIncoming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesCollectionViewCellIncoming.h; sourceTree = "<group>"; };
+		3567B0011BCB9DF50053843C /* JSQMessagesCollectionViewCellIncoming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesCollectionViewCellIncoming.m; sourceTree = "<group>"; };
+		3567B0021BCB9DF50053843C /* JSQMessagesCollectionViewCellIncoming.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQMessagesCollectionViewCellIncoming.xib; sourceTree = "<group>"; };
+		3567B0031BCB9DF50053843C /* JSQMessagesCollectionViewCellOutgoing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesCollectionViewCellOutgoing.h; sourceTree = "<group>"; };
+		3567B0041BCB9DF50053843C /* JSQMessagesCollectionViewCellOutgoing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesCollectionViewCellOutgoing.m; sourceTree = "<group>"; };
+		3567B0051BCB9DF50053843C /* JSQMessagesCollectionViewCellOutgoing.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQMessagesCollectionViewCellOutgoing.xib; sourceTree = "<group>"; };
+		3567B0061BCB9DF50053843C /* JSQMessagesComposerTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesComposerTextView.h; sourceTree = "<group>"; };
+		3567B0071BCB9DF50053843C /* JSQMessagesComposerTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesComposerTextView.m; sourceTree = "<group>"; };
+		3567B0081BCB9DF50053843C /* JSQMessagesInputToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesInputToolbar.h; sourceTree = "<group>"; };
+		3567B0091BCB9DF50053843C /* JSQMessagesInputToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesInputToolbar.m; sourceTree = "<group>"; };
+		3567B00A1BCB9DF50053843C /* JSQMessagesLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesLabel.h; sourceTree = "<group>"; };
+		3567B00B1BCB9DF50053843C /* JSQMessagesLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesLabel.m; sourceTree = "<group>"; };
+		3567B00C1BCB9DF50053843C /* JSQMessagesLoadEarlierHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesLoadEarlierHeaderView.h; sourceTree = "<group>"; };
+		3567B00D1BCB9DF50053843C /* JSQMessagesLoadEarlierHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesLoadEarlierHeaderView.m; sourceTree = "<group>"; };
+		3567B00E1BCB9DF50053843C /* JSQMessagesLoadEarlierHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQMessagesLoadEarlierHeaderView.xib; sourceTree = "<group>"; };
+		3567B00F1BCB9DF50053843C /* JSQMessagesMediaPlaceholderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesMediaPlaceholderView.h; sourceTree = "<group>"; };
+		3567B0101BCB9DF50053843C /* JSQMessagesMediaPlaceholderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesMediaPlaceholderView.m; sourceTree = "<group>"; };
+		3567B0111BCB9DF50053843C /* JSQMessagesToolbarContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesToolbarContentView.h; sourceTree = "<group>"; };
+		3567B0121BCB9DF50053843C /* JSQMessagesToolbarContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesToolbarContentView.m; sourceTree = "<group>"; };
+		3567B0131BCB9DF50053843C /* JSQMessagesToolbarContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQMessagesToolbarContentView.xib; sourceTree = "<group>"; };
+		3567B0141BCB9DF50053843C /* JSQMessagesTypingIndicatorFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSQMessagesTypingIndicatorFooterView.h; sourceTree = "<group>"; };
+		3567B0151BCB9DF50053843C /* JSQMessagesTypingIndicatorFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSQMessagesTypingIndicatorFooterView.m; sourceTree = "<group>"; };
+		3567B0161BCB9DF50053843C /* JSQMessagesTypingIndicatorFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JSQMessagesTypingIndicatorFooterView.xib; sourceTree = "<group>"; };
+		3567B0201BCB9DF50053843C /* PPMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMessagesViewController.h; sourceTree = "<group>"; };
+		3567B0211BCB9DF50053843C /* PPMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMessagesViewController.m; sourceTree = "<group>"; };
+		3567B0251BCB9DF50053843C /* PP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PP.h; sourceTree = "<group>"; };
+		3567B0261BCB9DF50053843C /* PP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PP.m; sourceTree = "<group>"; };
+		3567B0271BCB9DF50053843C /* PPCom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPCom.h; sourceTree = "<group>"; };
+		3567B0281BCB9DF50053843C /* PPCom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPCom.m; sourceTree = "<group>"; };
+		3567B02A1BCB9DF50053843C /* ImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDownloader.h; sourceTree = "<group>"; };
+		3567B02B1BCB9DF50053843C /* ImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageDownloader.m; sourceTree = "<group>"; };
+		3567B02C1BCB9DF50053843C /* NSString+Crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Crypto.h"; sourceTree = "<group>"; };
+		3567B02D1BCB9DF50053843C /* NSString+Crypto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Crypto.m"; sourceTree = "<group>"; };
+		3567B02E1BCB9DF50053843C /* PPCachebleImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPCachebleImageDownloader.h; sourceTree = "<group>"; };
+		3567B02F1BCB9DF50053843C /* PPCachebleImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPCachebleImageDownloader.m; sourceTree = "<group>"; };
+		3567B0301BCB9DF50053843C /* PPComAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPComAPI.h; sourceTree = "<group>"; };
+		3567B0311BCB9DF50053843C /* PPComAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPComAPI.m; sourceTree = "<group>"; };
+		3567B0321BCB9DF50053843C /* PPComImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPComImageCache.h; sourceTree = "<group>"; };
+		3567B0331BCB9DF50053843C /* PPComImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPComImageCache.m; sourceTree = "<group>"; };
+		3567B0341BCB9DF50053843C /* PPComNet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPComNet.h; sourceTree = "<group>"; };
+		3567B0351BCB9DF50053843C /* PPComNet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPComNet.m; sourceTree = "<group>"; };
+		3567B0361BCB9DF50053843C /* PPComUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPComUtils.h; sourceTree = "<group>"; };
+		3567B0371BCB9DF50053843C /* PPComUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPComUtils.m; sourceTree = "<group>"; };
+		3567B0381BCB9DF50053843C /* PPDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDownloader.h; sourceTree = "<group>"; };
+		3567B0391BCB9DF50053843C /* PPDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDownloader.m; sourceTree = "<group>"; };
+		3567B03A1BCB9DF50053843C /* PPFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFileManager.h; sourceTree = "<group>"; };
+		3567B03B1BCB9DF50053843C /* PPFileManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFileManager.m; sourceTree = "<group>"; };
+		3567B03C1BCB9DF50053843C /* PPJSQAvatarLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPJSQAvatarLoader.h; sourceTree = "<group>"; };
+		3567B03D1BCB9DF50053843C /* PPJSQAvatarLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPJSQAvatarLoader.m; sourceTree = "<group>"; };
+		3567B03E1BCB9DF50053843C /* PPMessageReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMessageReceiver.h; sourceTree = "<group>"; };
+		3567B03F1BCB9DF50053843C /* PPMessageReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMessageReceiver.m; sourceTree = "<group>"; };
+		3567B0401BCB9DF50053843C /* PPMessageSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMessageSender.h; sourceTree = "<group>"; };
+		3567B0411BCB9DF50053843C /* PPMessageSender.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMessageSender.m; sourceTree = "<group>"; };
+		3567B0421BCB9DF50053843C /* PPTxtLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTxtLoader.h; sourceTree = "<group>"; };
+		3567B0431BCB9DF50053843C /* PPTxtLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTxtLoader.m; sourceTree = "<group>"; };
+		3567B0441BCB9DF50053843C /* PPUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPUploader.h; sourceTree = "<group>"; };
+		3567B0451BCB9DF50053843C /* PPUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPUploader.m; sourceTree = "<group>"; };
+		3567B0471BCB9DF50053843C /* PPCameraViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPCameraViewDelegate.h; sourceTree = "<group>"; };
+		3567B0481BCB9DF50053843C /* PPCameraViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPCameraViewDelegate.m; sourceTree = "<group>"; };
+		3567B0491BCB9DF50053843C /* PPImagePickerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPImagePickerDelegate.h; sourceTree = "<group>"; };
+		3567B04A1BCB9DF50053843C /* PPImagePickerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPImagePickerDelegate.m; sourceTree = "<group>"; };
+		3567B04D1BCB9DF50053843C /* PPConversationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPConversationItem.h; sourceTree = "<group>"; };
+		3567B04E1BCB9DF50053843C /* PPConversationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPConversationItem.m; sourceTree = "<group>"; };
+		3567B0501BCB9DF50053843C /* PPConversationsList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPConversationsList.h; sourceTree = "<group>"; };
+		3567B0511BCB9DF50053843C /* PPConversationsList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPConversationsList.m; sourceTree = "<group>"; };
+		3567B0521BCB9DF50053843C /* PPDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDataCache.h; sourceTree = "<group>"; };
+		3567B0531BCB9DF50053843C /* PPDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDataCache.m; sourceTree = "<group>"; };
+		3567B0541BCB9DF50053843C /* PPFileMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFileMediaItem.h; sourceTree = "<group>"; };
+		3567B0551BCB9DF50053843C /* PPFileMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFileMediaItem.m; sourceTree = "<group>"; };
+		3567B0561BCB9DF50053843C /* PPMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMediaItem.h; sourceTree = "<group>"; };
+		3567B0571BCB9DF50053843C /* PPMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMediaItem.m; sourceTree = "<group>"; };
+		3567B0581BCB9DF50053843C /* PPMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMessage.h; sourceTree = "<group>"; };
+		3567B0591BCB9DF50053843C /* PPMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMessage.m; sourceTree = "<group>"; };
+		3567B05B1BCB9DF50053843C /* PPMessageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMessageData.h; sourceTree = "<group>"; };
+		3567B05C1BCB9DF50053843C /* PPMessageList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMessageList.h; sourceTree = "<group>"; };
+		3567B05D1BCB9DF50053843C /* PPMessageList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMessageList.m; sourceTree = "<group>"; };
+		3567B05E1BCB9DF50053843C /* PPMessageMediaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMessageMediaData.h; sourceTree = "<group>"; };
+		3567B05F1BCB9DF50053843C /* PPPhotoMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPhotoMediaItem.h; sourceTree = "<group>"; };
+		3567B0601BCB9DF50053843C /* PPPhotoMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPhotoMediaItem.m; sourceTree = "<group>"; };
+		3567B0611BCB9DF50053843C /* PPTxtMediaItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTxtMediaItem.h; sourceTree = "<group>"; };
+		3567B0621BCB9DF50053843C /* PPTxtMediaItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTxtMediaItem.m; sourceTree = "<group>"; };
+		3567B0631BCB9DF50053843C /* PPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPUser.h; sourceTree = "<group>"; };
+		3567B0641BCB9DF50053843C /* PPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPUser.m; sourceTree = "<group>"; };
+		3567B06A1BCB9DF50053843C /* SRWebSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRWebSocket.h; sourceTree = "<group>"; };
+		3567B06B1BCB9DF50053843C /* SRWebSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRWebSocket.m; sourceTree = "<group>"; };
+		3567B06C1BCB9DF50053843C /* SocketRocket-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SocketRocket-Prefix.pch"; sourceTree = "<group>"; };
+		3581D77C1C2A6EC8006372BA /* PPAppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAppInfo.h; sourceTree = "<group>"; };
+		3581D77D1C2A6EC8006372BA /* PPAppInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAppInfo.m; sourceTree = "<group>"; };
+		3586FE461C2E52FB002F58FC /* PPFastLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPFastLog.h; sourceTree = "<group>"; };
+		3586FE471C2E5372002F58FC /* PPFastLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFastLog.m; sourceTree = "<group>"; };
+		35EB5AC61C2B93FA007842D6 /* PPConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPConstants.h; sourceTree = "<group>"; };
+		EDA272591CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetMessageHistoryHttpModel.h; path = HttpModels/PPGetMessageHistoryHttpModel.h; sourceTree = "<group>"; };
+		EDA2725A1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetMessageHistoryHttpModel.m; path = HttpModels/PPGetMessageHistoryHttpModel.m; sourceTree = "<group>"; };
+		EDA2725D1CBBA8970038E2B8 /* PPMessagesStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPMessagesStore.h; path = Stores/PPMessagesStore.h; sourceTree = "<group>"; };
+		EDA2725E1CBBA8970038E2B8 /* PPMessagesStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPMessagesStore.m; path = Stores/PPMessagesStore.m; sourceTree = "<group>"; };
+		EDA272611CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PPMessagesViewController+PPCellTopLabel.h"; path = "category/PPMessagesViewController+PPCellTopLabel.h"; sourceTree = "<group>"; };
+		EDA272621CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PPMessagesViewController+PPCellTopLabel.m"; path = "category/PPMessagesViewController+PPCellTopLabel.m"; sourceTree = "<group>"; };
+		EDA2727A1CBDE6590038E2B8 /* PPCreateConversationHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPCreateConversationHttpModel.h; path = HttpModels/PPCreateConversationHttpModel.h; sourceTree = "<group>"; };
+		EDA2727B1CBDE6590038E2B8 /* PPCreateConversationHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPCreateConversationHttpModel.m; path = HttpModels/PPCreateConversationHttpModel.m; sourceTree = "<group>"; };
+		EDA272831CBE34E40038E2B8 /* PPViewUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPViewUtils.h; sourceTree = "<group>"; };
+		EDA272841CBE34E40038E2B8 /* PPViewUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPViewUtils.m; sourceTree = "<group>"; };
+		EDA2728B1CBF4F820038E2B8 /* user_group_man_man@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_group_man_man@3x.png"; sourceTree = "<group>"; };
+		EDA2728C1CBF4F820038E2B8 /* user_group_man_man@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user_group_man_man@2x.png"; sourceTree = "<group>"; };
+		EDA2728D1CBF4F820038E2B8 /* user_group_man_man.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_group_man_man.png; sourceTree = "<group>"; };
+		EDA272961CBF7B860038E2B8 /* PPGroupMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPGroupMembersViewController.h; sourceTree = "<group>"; };
+		EDA272971CBF7B860038E2B8 /* PPGroupMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPGroupMembersViewController.m; sourceTree = "<group>"; };
+		EDA2729B1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGroupMembersCollectionViewLayout.h; path = groupmembers/PPGroupMembersCollectionViewLayout.h; sourceTree = "<group>"; };
+		EDA2729C1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGroupMembersCollectionViewLayout.m; path = groupmembers/PPGroupMembersCollectionViewLayout.m; sourceTree = "<group>"; };
+		EDA2729F1CBF7EC80038E2B8 /* PPGroupMembersStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGroupMembersStore.h; path = Stores/PPGroupMembersStore.h; sourceTree = "<group>"; };
+		EDA272A01CBF7EC80038E2B8 /* PPGroupMembersStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGroupMembersStore.m; path = Stores/PPGroupMembersStore.m; sourceTree = "<group>"; };
+		EDA272A31CBF82410038E2B8 /* PPGetConversationUserListHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetConversationUserListHttpModel.h; path = HttpModels/PPGetConversationUserListHttpModel.h; sourceTree = "<group>"; };
+		EDA272A41CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetConversationUserListHttpModel.m; path = HttpModels/PPGetConversationUserListHttpModel.m; sourceTree = "<group>"; };
+		EDA272A71CBF8CC30038E2B8 /* PPGroupMembersDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGroupMembersDataSource.h; path = datasource/PPGroupMembersDataSource.h; sourceTree = "<group>"; };
+		EDA272A81CBF8CC30038E2B8 /* PPGroupMembersDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGroupMembersDataSource.m; path = datasource/PPGroupMembersDataSource.m; sourceTree = "<group>"; };
+		EDA272AB1CBF91CC0038E2B8 /* PPGroupMemberViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGroupMemberViewCell.h; path = groupmembers/PPGroupMemberViewCell.h; sourceTree = "<group>"; };
+		EDA272AC1CBF91CC0038E2B8 /* PPGroupMemberViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGroupMemberViewCell.m; path = groupmembers/PPGroupMemberViewCell.m; sourceTree = "<group>"; };
+		EDAC3D381CAD05E400BA1066 /* PPComToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPComToken.h; sourceTree = "<group>"; };
+		EDAC3D391CAD05E400BA1066 /* PPComToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPComToken.m; sourceTree = "<group>"; };
+		EDB590521CAD329800017E7C /* PPGetDefaultConversationHttpModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetDefaultConversationHttpModels.h; path = HttpModels/PPGetDefaultConversationHttpModels.h; sourceTree = "<group>"; };
+		EDB590531CAD329800017E7C /* PPGetDefaultConversationHttpModels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetDefaultConversationHttpModels.m; path = HttpModels/PPGetDefaultConversationHttpModels.m; sourceTree = "<group>"; };
+		EDB590571CAE132D00017E7C /* PPBadgeStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPBadgeStyle.h; path = custombadge/PPBadgeStyle.h; sourceTree = "<group>"; };
+		EDB590581CAE132D00017E7C /* PPBadgeStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPBadgeStyle.m; path = custombadge/PPBadgeStyle.m; sourceTree = "<group>"; };
+		EDB590591CAE132D00017E7C /* PPCustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPCustomBadge.h; path = custombadge/PPCustomBadge.h; sourceTree = "<group>"; };
+		EDB5905A1CAE132D00017E7C /* PPCustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPCustomBadge.m; path = custombadge/PPCustomBadge.m; sourceTree = "<group>"; };
+		EDB590601CAE14A800017E7C /* PPConversationItemViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPConversationItemViewCell.h; path = conversations/PPConversationItemViewCell.h; sourceTree = "<group>"; };
+		EDB590611CAE14A800017E7C /* PPConversationItemViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPConversationItemViewCell.m; path = conversations/PPConversationItemViewCell.m; sourceTree = "<group>"; };
+		EDB590641CAE14FE00017E7C /* PPBadgeSquareImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPBadgeSquareImageView.h; path = conversations/PPBadgeSquareImageView.h; sourceTree = "<group>"; };
+		EDB590651CAE14FE00017E7C /* PPBadgeSquareImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPBadgeSquareImageView.m; path = conversations/PPBadgeSquareImageView.m; sourceTree = "<group>"; };
+		EDB590691CAE164100017E7C /* PPLayoutConstraintsUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPLayoutConstraintsUtils.h; path = views/PPLayoutConstraintsUtils.h; sourceTree = "<group>"; };
+		EDB5906A1CAE164100017E7C /* PPLayoutConstraintsUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPLayoutConstraintsUtils.m; path = views/PPLayoutConstraintsUtils.m; sourceTree = "<group>"; };
+		EDB5906D1CAE1DD000017E7C /* PPConversationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPConversationsViewController.h; sourceTree = "<group>"; };
+		EDB5906E1CAE1DD000017E7C /* PPConversationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPConversationsViewController.m; sourceTree = "<group>"; };
+		EDB590721CAE20B100017E7C /* PPConversationItemDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPConversationItemDataSource.h; path = datasource/PPConversationItemDataSource.h; sourceTree = "<group>"; };
+		EDB590731CAE20B100017E7C /* PPConversationItemDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPConversationItemDataSource.m; path = datasource/PPConversationItemDataSource.m; sourceTree = "<group>"; };
+		EDB590771CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PPConversationItemViewCell+PPConfigureForConversationItem.h"; path = "category/PPConversationItemViewCell+PPConfigureForConversationItem.h"; sourceTree = "<group>"; };
+		EDB590781CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "PPConversationItemViewCell+PPConfigureForConversationItem.m"; path = "category/PPConversationItemViewCell+PPConfigureForConversationItem.m"; sourceTree = "<group>"; };
+		EDB5907B1CAE271900017E7C /* PPImageDownloaderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPImageDownloaderManager.h; sourceTree = "<group>"; };
+		EDB5907C1CAE271900017E7C /* PPImageDownloaderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPImageDownloaderManager.m; sourceTree = "<group>"; };
+		EDB5907F1CAE2BC300017E7C /* PPImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPImageView.h; sourceTree = "<group>"; };
+		EDB590801CAE2BC300017E7C /* PPImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPImageView.m; sourceTree = "<group>"; };
+		EDB590841CAE355E00017E7C /* PPConversationsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPConversationsStore.h; path = Stores/PPConversationsStore.h; sourceTree = "<group>"; };
+		EDB590851CAE355E00017E7C /* PPConversationsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPConversationsStore.m; path = Stores/PPConversationsStore.m; sourceTree = "<group>"; };
+		EDB590881CAE376700017E7C /* PPStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPStoreManager.h; path = Stores/PPStoreManager.h; sourceTree = "<group>"; };
+		EDB590891CAE376700017E7C /* PPStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPStoreManager.m; path = Stores/PPStoreManager.m; sourceTree = "<group>"; };
+		EDB5908C1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetAppOrgGroupListHttpModel.h; path = HttpModels/PPGetAppOrgGroupListHttpModel.h; sourceTree = "<group>"; };
+		EDB5908D1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetAppOrgGroupListHttpModel.m; path = HttpModels/PPGetAppOrgGroupListHttpModel.m; sourceTree = "<group>"; };
+		EDB590901CAE5D7000017E7C /* PPHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPHttpModel.h; path = HttpModels/PPHttpModel.h; sourceTree = "<group>"; };
+		EDB590921CAE644600017E7C /* PPGetConversationListHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetConversationListHttpModel.h; path = HttpModels/PPGetConversationListHttpModel.h; sourceTree = "<group>"; };
+		EDB590931CAE644600017E7C /* PPGetConversationListHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetConversationListHttpModel.m; path = HttpModels/PPGetConversationListHttpModel.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		355980621BCCB00A00DCAE33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3567AF8F1BCB9D860053843C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3541FA0A1BCE0AAA000940EA /* MobileCoreServices.framework in Frameworks */,
+				3567AFAF1BCB9DA30053843C /* CFNetwork.framework in Frameworks */,
+				3567AFAD1BCB9D9E0053843C /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3567AF9A1BCB9D860053843C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3567AF9E1BCB9D860053843C /* libPPComLib.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		355770181BCCEA1000CFF6DF /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				355770191BCCEA1000CFF6DF /* bubble_min.png */,
+				3557701A1BCCEA1000CFF6DF /* bubble_min@2x.png */,
+				3557701B1BCCEA1000CFF6DF /* bubble_min@3x.png */,
+				3557701C1BCCEA1000CFF6DF /* bubble_min_tailless.png */,
+				3557701D1BCCEA1000CFF6DF /* bubble_min_tailless@2x.png */,
+				3557701E1BCCEA1000CFF6DF /* bubble_min_tailless@3x.png */,
+				3557701F1BCCEA1000CFF6DF /* bubble_regular.png */,
+				355770201BCCEA1000CFF6DF /* bubble_regular@2x.png */,
+				355770211BCCEA1000CFF6DF /* bubble_regular@3x.png */,
+				355770221BCCEA1000CFF6DF /* bubble_stroked.png */,
+				355770231BCCEA1000CFF6DF /* bubble_stroked@2x.png */,
+				355770241BCCEA1000CFF6DF /* bubble_stroked@3x.png */,
+				355770251BCCEA1000CFF6DF /* bubble_stroked_tailless.png */,
+				355770261BCCEA1000CFF6DF /* bubble_stroked_tailless@2x.png */,
+				355770271BCCEA1000CFF6DF /* bubble_stroked_tailless@3x.png */,
+				355770281BCCEA1000CFF6DF /* bubble_tailless.png */,
+				355770291BCCEA1000CFF6DF /* bubble_tailless@2x.png */,
+				3557702A1BCCEA1000CFF6DF /* bubble_tailless@3x.png */,
+				3557702B1BCCEA1000CFF6DF /* clip.png */,
+				3557702C1BCCEA1000CFF6DF /* clip@2x.png */,
+				3557702D1BCCEA1000CFF6DF /* clip@3x.png */,
+				3557702E1BCCEA1000CFF6DF /* play.png */,
+				3557702F1BCCEA1000CFF6DF /* play@2x.png */,
+				355770301BCCEA1000CFF6DF /* play@3x.png */,
+				355770311BCCEA1000CFF6DF /* typing.png */,
+				355770321BCCEA1000CFF6DF /* typing@2x.png */,
+				355770331BCCEA1000CFF6DF /* typing@3x.png */,
+			);
+			name = Images;
+			path = JSQMessagesAssets.bundle/Images;
+			sourceTree = "<group>";
+		};
+		355770681BCCFFC100CFF6DF /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				EDA2728B1CBF4F820038E2B8 /* user_group_man_man@3x.png */,
+				EDA2728C1CBF4F820038E2B8 /* user_group_man_man@2x.png */,
+				EDA2728D1CBF4F820038E2B8 /* user_group_man_man.png */,
+				355770131BCCE18C00CFF6DF /* pp_icon_avatar.png */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		355770691BCD001C00CFF6DF /* Strings */ = {
+			isa = PBXGroup;
+			children = (
+				3541F9341BCDEE16000940EA /* JSQMessages.strings */,
+			);
+			name = Strings;
+			sourceTree = "<group>";
+		};
+		355980661BCCB00A00DCAE33 /* PPComLibResources */ = {
+			isa = PBXGroup;
+			children = (
+				355980671BCCB00A00DCAE33 /* Supporting Files */,
+			);
+			path = PPComLibResources;
+			sourceTree = "<group>";
+		};
+		355980671BCCB00A00DCAE33 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				355980681BCCB00A00DCAE33 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3567AF891BCB9D860053843C = {
+			isa = PBXGroup;
+			children = (
+				3541FA091BCE0AAA000940EA /* MobileCoreServices.framework */,
+				3567AFAE1BCB9DA30053843C /* CFNetwork.framework */,
+				3567AFAC1BCB9D9E0053843C /* Security.framework */,
+				3567AF941BCB9D860053843C /* PPComLib */,
+				3567AFA11BCB9D860053843C /* PPComLibTests */,
+				355980661BCCB00A00DCAE33 /* PPComLibResources */,
+				3567AF931BCB9D860053843C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3567AF931BCB9D860053843C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3567AF921BCB9D860053843C /* libPPComLib.a */,
+				3567AF9D1BCB9D860053843C /* PPComLibTests.xctest */,
+				355980651BCCB00A00DCAE33 /* PPComLib.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3567AF941BCB9D860053843C /* PPComLib */ = {
+			isa = PBXGroup;
+			children = (
+				3567AF951BCB9D860053843C /* PPComLib.h */,
+				3567AFB41BCB9DF50053843C /* JSQMessagesViewController */,
+				3567B01E1BCB9DF50053843C /* PPMessagesViewController */,
+				3567B0691BCB9DF50053843C /* SRWebSocket */,
+			);
+			path = PPComLib;
+			sourceTree = "<group>";
+		};
+		3567AFA11BCB9D860053843C /* PPComLibTests */ = {
+			isa = PBXGroup;
+			children = (
+				3567AFA21BCB9D860053843C /* Supporting Files */,
+			);
+			path = PPComLibTests;
+			sourceTree = "<group>";
+		};
+		3567AFA21BCB9D860053843C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3567AFA31BCB9D860053843C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3567AFB41BCB9DF50053843C /* JSQMessagesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3567AFB51BCB9DF50053843C /* Assets */,
+				3567AFB71BCB9DF50053843C /* Categories */,
+				3567AFC41BCB9DF50053843C /* Controllers */,
+				3567AFCA1BCB9DF50053843C /* Factories */,
+				3567AFD51BCB9DF50053843C /* JSQMessages.h */,
+				3567AFD61BCB9DF50053843C /* Layout */,
+				3567AFE01BCB9DF50053843C /* Model */,
+				3567AFF91BCB9DF50053843C /* Views */,
+			);
+			path = JSQMessagesViewController;
+			sourceTree = "<group>";
+		};
+		3567AFB51BCB9DF50053843C /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				355770691BCD001C00CFF6DF /* Strings */,
+				355770181BCCEA1000CFF6DF /* Images */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		3567AFB71BCB9DF50053843C /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				3567AFB81BCB9DF50053843C /* NSBundle+JSQMessages.h */,
+				3567AFB91BCB9DF50053843C /* NSBundle+JSQMessages.m */,
+				3567AFBA1BCB9DF50053843C /* NSString+JSQMessages.h */,
+				3567AFBB1BCB9DF50053843C /* NSString+JSQMessages.m */,
+				3567AFBC1BCB9DF50053843C /* UIColor+JSQMessages.h */,
+				3567AFBD1BCB9DF50053843C /* UIColor+JSQMessages.m */,
+				3567AFBE1BCB9DF50053843C /* UIDevice+JSQMessages.h */,
+				3567AFBF1BCB9DF50053843C /* UIDevice+JSQMessages.m */,
+				3567AFC01BCB9DF50053843C /* UIImage+JSQMessages.h */,
+				3567AFC11BCB9DF50053843C /* UIImage+JSQMessages.m */,
+				3567AFC21BCB9DF50053843C /* UIView+JSQMessages.h */,
+				3567AFC31BCB9DF50053843C /* UIView+JSQMessages.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		3567AFC41BCB9DF50053843C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3541B9071C2CE0FE005134AB /* JSQMessagesViewController.xib */,
+				3567AFC51BCB9DF50053843C /* JSQMessagesKeyboardController.h */,
+				3567AFC61BCB9DF50053843C /* JSQMessagesKeyboardController.m */,
+				3567AFC71BCB9DF50053843C /* JSQMessagesViewController.h */,
+				3567AFC81BCB9DF50053843C /* JSQMessagesViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		3567AFCA1BCB9DF50053843C /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				3567AFCB1BCB9DF50053843C /* JSQMessagesAvatarImageFactory.h */,
+				3567AFCC1BCB9DF50053843C /* JSQMessagesAvatarImageFactory.m */,
+				3567AFCD1BCB9DF50053843C /* JSQMessagesBubbleImageFactory.h */,
+				3567AFCE1BCB9DF50053843C /* JSQMessagesBubbleImageFactory.m */,
+				3567AFCF1BCB9DF50053843C /* JSQMessagesMediaViewBubbleImageMasker.h */,
+				3567AFD01BCB9DF50053843C /* JSQMessagesMediaViewBubbleImageMasker.m */,
+				3567AFD11BCB9DF50053843C /* JSQMessagesTimestampFormatter.h */,
+				3567AFD21BCB9DF50053843C /* JSQMessagesTimestampFormatter.m */,
+				3567AFD31BCB9DF50053843C /* JSQMessagesToolbarButtonFactory.h */,
+				3567AFD41BCB9DF50053843C /* JSQMessagesToolbarButtonFactory.m */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
+		3567AFD61BCB9DF50053843C /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				3567AFD71BCB9DF50053843C /* JSQMessagesBubbleSizeCalculating.h */,
+				3567AFD81BCB9DF50053843C /* JSQMessagesBubblesSizeCalculator.h */,
+				3567AFD91BCB9DF50053843C /* JSQMessagesBubblesSizeCalculator.m */,
+				3567AFDA1BCB9DF50053843C /* JSQMessagesCollectionViewFlowLayout.h */,
+				3567AFDB1BCB9DF50053843C /* JSQMessagesCollectionViewFlowLayout.m */,
+				3567AFDC1BCB9DF50053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.h */,
+				3567AFDD1BCB9DF50053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m */,
+				3567AFDE1BCB9DF50053843C /* JSQMessagesCollectionViewLayoutAttributes.h */,
+				3567AFDF1BCB9DF50053843C /* JSQMessagesCollectionViewLayoutAttributes.m */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		3567AFE01BCB9DF50053843C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3567AFE11BCB9DF50053843C /* JSQFileMediaItem.h */,
+				3567AFE21BCB9DF50053843C /* JSQFileMediaItem.m */,
+				3567AFE31BCB9DF50053843C /* JSQLocationMediaItem.h */,
+				3567AFE41BCB9DF50053843C /* JSQLocationMediaItem.m */,
+				3567AFE51BCB9DF50053843C /* JSQMediaItem.h */,
+				3567AFE61BCB9DF50053843C /* JSQMediaItem.m */,
+				3567AFE71BCB9DF50053843C /* JSQMessage.h */,
+				3567AFE81BCB9DF50053843C /* JSQMessage.m */,
+				3567AFE91BCB9DF50053843C /* JSQMessageAvatarImageDataSource.h */,
+				3567AFEA1BCB9DF50053843C /* JSQMessageBubbleImageDataSource.h */,
+				3567AFEB1BCB9DF50053843C /* JSQMessageData.h */,
+				3567AFEC1BCB9DF50053843C /* JSQMessageMediaData.h */,
+				3567AFED1BCB9DF50053843C /* JSQMessagesAvatarImage.h */,
+				3567AFEE1BCB9DF50053843C /* JSQMessagesAvatarImage.m */,
+				3567AFEF1BCB9DF50053843C /* JSQMessagesBubbleImage.h */,
+				3567AFF01BCB9DF50053843C /* JSQMessagesBubbleImage.m */,
+				3567AFF11BCB9DF50053843C /* JSQMessagesCollectionViewDataSource.h */,
+				3567AFF21BCB9DF50053843C /* JSQMessagesCollectionViewDelegateFlowLayout.h */,
+				3567AFF31BCB9DF50053843C /* JSQPhotoMediaItem.h */,
+				3567AFF41BCB9DF50053843C /* JSQPhotoMediaItem.m */,
+				3567AFF51BCB9DF50053843C /* JSQTxtMediaItem.h */,
+				3567AFF61BCB9DF50053843C /* JSQTxtMediaItem.m */,
+				3567AFF71BCB9DF50053843C /* JSQVideoMediaItem.h */,
+				3567AFF81BCB9DF50053843C /* JSQVideoMediaItem.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3567AFF91BCB9DF50053843C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3567AFFA1BCB9DF50053843C /* JSQMessagesCellTextView.h */,
+				3567AFFB1BCB9DF50053843C /* JSQMessagesCellTextView.m */,
+				3567AFFC1BCB9DF50053843C /* JSQMessagesCollectionView.h */,
+				3567AFFD1BCB9DF50053843C /* JSQMessagesCollectionView.m */,
+				3567AFFE1BCB9DF50053843C /* JSQMessagesCollectionViewCell.h */,
+				3567AFFF1BCB9DF50053843C /* JSQMessagesCollectionViewCell.m */,
+				3567B0001BCB9DF50053843C /* JSQMessagesCollectionViewCellIncoming.h */,
+				3567B0011BCB9DF50053843C /* JSQMessagesCollectionViewCellIncoming.m */,
+				3567B0021BCB9DF50053843C /* JSQMessagesCollectionViewCellIncoming.xib */,
+				3567B0031BCB9DF50053843C /* JSQMessagesCollectionViewCellOutgoing.h */,
+				3567B0041BCB9DF50053843C /* JSQMessagesCollectionViewCellOutgoing.m */,
+				3567B0051BCB9DF50053843C /* JSQMessagesCollectionViewCellOutgoing.xib */,
+				3567B0061BCB9DF50053843C /* JSQMessagesComposerTextView.h */,
+				3567B0071BCB9DF50053843C /* JSQMessagesComposerTextView.m */,
+				3567B0081BCB9DF50053843C /* JSQMessagesInputToolbar.h */,
+				3567B0091BCB9DF50053843C /* JSQMessagesInputToolbar.m */,
+				3567B00A1BCB9DF50053843C /* JSQMessagesLabel.h */,
+				3567B00B1BCB9DF50053843C /* JSQMessagesLabel.m */,
+				3567B00C1BCB9DF50053843C /* JSQMessagesLoadEarlierHeaderView.h */,
+				3567B00D1BCB9DF50053843C /* JSQMessagesLoadEarlierHeaderView.m */,
+				3567B00E1BCB9DF50053843C /* JSQMessagesLoadEarlierHeaderView.xib */,
+				3567B00F1BCB9DF50053843C /* JSQMessagesMediaPlaceholderView.h */,
+				3567B0101BCB9DF50053843C /* JSQMessagesMediaPlaceholderView.m */,
+				3567B0111BCB9DF50053843C /* JSQMessagesToolbarContentView.h */,
+				3567B0121BCB9DF50053843C /* JSQMessagesToolbarContentView.m */,
+				3567B0131BCB9DF50053843C /* JSQMessagesToolbarContentView.xib */,
+				3567B0141BCB9DF50053843C /* JSQMessagesTypingIndicatorFooterView.h */,
+				3567B0151BCB9DF50053843C /* JSQMessagesTypingIndicatorFooterView.m */,
+				3567B0161BCB9DF50053843C /* JSQMessagesTypingIndicatorFooterView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3567B01E1BCB9DF50053843C /* PPMessagesViewController */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590831CAE353C00017E7C /* Stores */,
+				355770681BCCFFC100CFF6DF /* Assets */,
+				3567B01F1BCB9DF50053843C /* Controllers */,
+				3567B0241BCB9DF50053843C /* Core */,
+				3567B0461BCB9DF50053843C /* Delegates */,
+				3567B04C1BCB9DF50053843C /* Models */,
+				3567B0651BCB9DF50053843C /* Views */,
+			);
+			path = PPMessagesViewController;
+			sourceTree = "<group>";
+		};
+		3567B01F1BCB9DF50053843C /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590761CAE240400017E7C /* category */,
+				EDB590711CAE208300017E7C /* datasource */,
+				3567B0201BCB9DF50053843C /* PPMessagesViewController.h */,
+				3567B0211BCB9DF50053843C /* PPMessagesViewController.m */,
+				EDB5906D1CAE1DD000017E7C /* PPConversationsViewController.h */,
+				EDB5906E1CAE1DD000017E7C /* PPConversationsViewController.m */,
+				EDA272961CBF7B860038E2B8 /* PPGroupMembersViewController.h */,
+				EDA272971CBF7B860038E2B8 /* PPGroupMembersViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		3567B0241BCB9DF50053843C /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				3567B0251BCB9DF50053843C /* PP.h */,
+				3567B0261BCB9DF50053843C /* PP.m */,
+				3567B0271BCB9DF50053843C /* PPCom.h */,
+				3567B0281BCB9DF50053843C /* PPCom.m */,
+				3567B0291BCB9DF50053843C /* Utils */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		3567B0291BCB9DF50053843C /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590681CAE160D00017E7C /* views */,
+				3567B02A1BCB9DF50053843C /* ImageDownloader.h */,
+				3567B02B1BCB9DF50053843C /* ImageDownloader.m */,
+				3567B02C1BCB9DF50053843C /* NSString+Crypto.h */,
+				3567B02D1BCB9DF50053843C /* NSString+Crypto.m */,
+				3567B02E1BCB9DF50053843C /* PPCachebleImageDownloader.h */,
+				3567B02F1BCB9DF50053843C /* PPCachebleImageDownloader.m */,
+				3567B0301BCB9DF50053843C /* PPComAPI.h */,
+				3567B0311BCB9DF50053843C /* PPComAPI.m */,
+				3567B0321BCB9DF50053843C /* PPComImageCache.h */,
+				3567B0331BCB9DF50053843C /* PPComImageCache.m */,
+				3567B0341BCB9DF50053843C /* PPComNet.h */,
+				3567B0351BCB9DF50053843C /* PPComNet.m */,
+				3567B0361BCB9DF50053843C /* PPComUtils.h */,
+				3567B0371BCB9DF50053843C /* PPComUtils.m */,
+				3567B0381BCB9DF50053843C /* PPDownloader.h */,
+				3567B0391BCB9DF50053843C /* PPDownloader.m */,
+				3567B03A1BCB9DF50053843C /* PPFileManager.h */,
+				3567B03B1BCB9DF50053843C /* PPFileManager.m */,
+				3567B03C1BCB9DF50053843C /* PPJSQAvatarLoader.h */,
+				3567B03D1BCB9DF50053843C /* PPJSQAvatarLoader.m */,
+				3567B03E1BCB9DF50053843C /* PPMessageReceiver.h */,
+				3567B03F1BCB9DF50053843C /* PPMessageReceiver.m */,
+				3567B0401BCB9DF50053843C /* PPMessageSender.h */,
+				3567B0411BCB9DF50053843C /* PPMessageSender.m */,
+				3567B0421BCB9DF50053843C /* PPTxtLoader.h */,
+				3567B0431BCB9DF50053843C /* PPTxtLoader.m */,
+				3567B0441BCB9DF50053843C /* PPUploader.h */,
+				3567B0451BCB9DF50053843C /* PPUploader.m */,
+				35EB5AC61C2B93FA007842D6 /* PPConstants.h */,
+				3586FE461C2E52FB002F58FC /* PPFastLog.h */,
+				3586FE471C2E5372002F58FC /* PPFastLog.m */,
+				EDAC3D381CAD05E400BA1066 /* PPComToken.h */,
+				EDAC3D391CAD05E400BA1066 /* PPComToken.m */,
+				EDB5907B1CAE271900017E7C /* PPImageDownloaderManager.h */,
+				EDB5907C1CAE271900017E7C /* PPImageDownloaderManager.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		3567B0461BCB9DF50053843C /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				3567B0471BCB9DF50053843C /* PPCameraViewDelegate.h */,
+				3567B0481BCB9DF50053843C /* PPCameraViewDelegate.m */,
+				3567B0491BCB9DF50053843C /* PPImagePickerDelegate.h */,
+				3567B04A1BCB9DF50053843C /* PPImagePickerDelegate.m */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		3567B04C1BCB9DF50053843C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590511CAD323900017E7C /* HttpModels */,
+				3567B04D1BCB9DF50053843C /* PPConversationItem.h */,
+				3567B04E1BCB9DF50053843C /* PPConversationItem.m */,
+				3567B0501BCB9DF50053843C /* PPConversationsList.h */,
+				3567B0511BCB9DF50053843C /* PPConversationsList.m */,
+				3567B0521BCB9DF50053843C /* PPDataCache.h */,
+				3567B0531BCB9DF50053843C /* PPDataCache.m */,
+				3567B0541BCB9DF50053843C /* PPFileMediaItem.h */,
+				3567B0551BCB9DF50053843C /* PPFileMediaItem.m */,
+				3567B0561BCB9DF50053843C /* PPMediaItem.h */,
+				3567B0571BCB9DF50053843C /* PPMediaItem.m */,
+				3567B0581BCB9DF50053843C /* PPMessage.h */,
+				3567B0591BCB9DF50053843C /* PPMessage.m */,
+				3567B05B1BCB9DF50053843C /* PPMessageData.h */,
+				3567B05C1BCB9DF50053843C /* PPMessageList.h */,
+				3567B05D1BCB9DF50053843C /* PPMessageList.m */,
+				3567B05E1BCB9DF50053843C /* PPMessageMediaData.h */,
+				3567B05F1BCB9DF50053843C /* PPPhotoMediaItem.h */,
+				3567B0601BCB9DF50053843C /* PPPhotoMediaItem.m */,
+				3567B0611BCB9DF50053843C /* PPTxtMediaItem.h */,
+				3567B0621BCB9DF50053843C /* PPTxtMediaItem.m */,
+				3567B0631BCB9DF50053843C /* PPUser.h */,
+				3567B0641BCB9DF50053843C /* PPUser.m */,
+				3581D77C1C2A6EC8006372BA /* PPAppInfo.h */,
+				3581D77D1C2A6EC8006372BA /* PPAppInfo.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3567B0651BCB9DF50053843C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EDA2729A1CBF7CA80038E2B8 /* groupmembers */,
+				EDA2727E1CBDF99E0038E2B8 /* common */,
+				EDB5905F1CAE13CE00017E7C /* conversations */,
+				EDB590561CAE130B00017E7C /* custombadge */,
+				EDB5907F1CAE2BC300017E7C /* PPImageView.h */,
+				EDB590801CAE2BC300017E7C /* PPImageView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3567B0691BCB9DF50053843C /* SRWebSocket */ = {
+			isa = PBXGroup;
+			children = (
+				3567B06A1BCB9DF50053843C /* SRWebSocket.h */,
+				3567B06B1BCB9DF50053843C /* SRWebSocket.m */,
+				3567B06C1BCB9DF50053843C /* SocketRocket-Prefix.pch */,
+			);
+			path = SRWebSocket;
+			sourceTree = "<group>";
+		};
+		EDA2727E1CBDF99E0038E2B8 /* common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = common;
+			sourceTree = "<group>";
+		};
+		EDA2729A1CBF7CA80038E2B8 /* groupmembers */ = {
+			isa = PBXGroup;
+			children = (
+				EDA2729B1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.h */,
+				EDA2729C1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.m */,
+				EDA272AB1CBF91CC0038E2B8 /* PPGroupMemberViewCell.h */,
+				EDA272AC1CBF91CC0038E2B8 /* PPGroupMemberViewCell.m */,
+			);
+			name = groupmembers;
+			sourceTree = "<group>";
+		};
+		EDB590511CAD323900017E7C /* HttpModels */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590521CAD329800017E7C /* PPGetDefaultConversationHttpModels.h */,
+				EDB590531CAD329800017E7C /* PPGetDefaultConversationHttpModels.m */,
+				EDB5908C1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.h */,
+				EDB5908D1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.m */,
+				EDB590901CAE5D7000017E7C /* PPHttpModel.h */,
+				EDB590921CAE644600017E7C /* PPGetConversationListHttpModel.h */,
+				EDB590931CAE644600017E7C /* PPGetConversationListHttpModel.m */,
+				EDA272591CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h */,
+				EDA2725A1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m */,
+				EDA2727A1CBDE6590038E2B8 /* PPCreateConversationHttpModel.h */,
+				EDA2727B1CBDE6590038E2B8 /* PPCreateConversationHttpModel.m */,
+				EDA272A31CBF82410038E2B8 /* PPGetConversationUserListHttpModel.h */,
+				EDA272A41CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m */,
+			);
+			name = HttpModels;
+			sourceTree = "<group>";
+		};
+		EDB590561CAE130B00017E7C /* custombadge */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590571CAE132D00017E7C /* PPBadgeStyle.h */,
+				EDB590581CAE132D00017E7C /* PPBadgeStyle.m */,
+				EDB590591CAE132D00017E7C /* PPCustomBadge.h */,
+				EDB5905A1CAE132D00017E7C /* PPCustomBadge.m */,
+			);
+			name = custombadge;
+			sourceTree = "<group>";
+		};
+		EDB5905F1CAE13CE00017E7C /* conversations */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590601CAE14A800017E7C /* PPConversationItemViewCell.h */,
+				EDB590611CAE14A800017E7C /* PPConversationItemViewCell.m */,
+				EDB590641CAE14FE00017E7C /* PPBadgeSquareImageView.h */,
+				EDB590651CAE14FE00017E7C /* PPBadgeSquareImageView.m */,
+			);
+			name = conversations;
+			sourceTree = "<group>";
+		};
+		EDB590681CAE160D00017E7C /* views */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590691CAE164100017E7C /* PPLayoutConstraintsUtils.h */,
+				EDB5906A1CAE164100017E7C /* PPLayoutConstraintsUtils.m */,
+				EDA272831CBE34E40038E2B8 /* PPViewUtils.h */,
+				EDA272841CBE34E40038E2B8 /* PPViewUtils.m */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
+		EDB590711CAE208300017E7C /* datasource */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590721CAE20B100017E7C /* PPConversationItemDataSource.h */,
+				EDB590731CAE20B100017E7C /* PPConversationItemDataSource.m */,
+				EDA272A71CBF8CC30038E2B8 /* PPGroupMembersDataSource.h */,
+				EDA272A81CBF8CC30038E2B8 /* PPGroupMembersDataSource.m */,
+			);
+			name = datasource;
+			sourceTree = "<group>";
+		};
+		EDB590761CAE240400017E7C /* category */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590771CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.h */,
+				EDB590781CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.m */,
+				EDA272611CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.h */,
+				EDA272621CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.m */,
+			);
+			name = category;
+			sourceTree = "<group>";
+		};
+		EDB590831CAE353C00017E7C /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				EDB590841CAE355E00017E7C /* PPConversationsStore.h */,
+				EDB590851CAE355E00017E7C /* PPConversationsStore.m */,
+				EDB590881CAE376700017E7C /* PPStoreManager.h */,
+				EDB590891CAE376700017E7C /* PPStoreManager.m */,
+				EDA2725D1CBBA8970038E2B8 /* PPMessagesStore.h */,
+				EDA2725E1CBBA8970038E2B8 /* PPMessagesStore.m */,
+				EDA2729F1CBF7EC80038E2B8 /* PPGroupMembersStore.h */,
+				EDA272A01CBF7EC80038E2B8 /* PPGroupMembersStore.m */,
+			);
+			name = Stores;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		3567AFB21BCB9DD70053843C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3567B0C71BCB9DF80053843C /* PPMessagesViewController.h in Headers */,
+				3567B08B1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayout.h in Headers */,
+				3567B0AB1BCB9DF70053843C /* JSQMessagesCollectionView.h in Headers */,
+				3567B07B1BCB9DF60053843C /* JSQMessagesViewController.h in Headers */,
+				EDB5905B1CAE132D00017E7C /* PPBadgeStyle.h in Headers */,
+				3567B0B51BCB9DF70053843C /* JSQMessagesInputToolbar.h in Headers */,
+				3567B0791BCB9DF50053843C /* JSQMessagesKeyboardController.h in Headers */,
+				3567B0A21BCB9DF60053843C /* JSQMessagesCollectionViewDelegateFlowLayout.h in Headers */,
+				3567B0BD1BCB9DF80053843C /* JSQMessagesToolbarContentView.h in Headers */,
+				3567B0B31BCB9DF70053843C /* JSQMessagesComposerTextView.h in Headers */,
+				EDB590791CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.h in Headers */,
+				3567B0A11BCB9DF60053843C /* JSQMessagesCollectionViewDataSource.h in Headers */,
+				3567B0881BCB9DF60053843C /* JSQMessagesBubbleSizeCalculating.h in Headers */,
+				EDA2727C1CBDE6590038E2B8 /* PPCreateConversationHttpModel.h in Headers */,
+				3567B0B71BCB9DF70053843C /* JSQMessagesLabel.h in Headers */,
+				3567B0A91BCB9DF70053843C /* JSQMessagesCellTextView.h in Headers */,
+				EDA272A11CBF7EC80038E2B8 /* PPGroupMembersStore.h in Headers */,
+				3567B0AD1BCB9DF70053843C /* JSQMessagesCollectionViewCell.h in Headers */,
+				3567B0D11BCB9DF90053843C /* NSString+Crypto.h in Headers */,
+				3567B0891BCB9DF60053843C /* JSQMessagesBubblesSizeCalculator.h in Headers */,
+				EDA272981CBF7B860038E2B8 /* PPGroupMembersViewController.h in Headers */,
+				3567B0871BCB9DF60053843C /* JSQMessages.h in Headers */,
+				3567B0CD1BCB9DF90053843C /* PPCom.h in Headers */,
+				3567B0CB1BCB9DF80053843C /* PP.h in Headers */,
+				3567AFB31BCB9DD90053843C /* PPComLib.h in Headers */,
+				3567B0FC1BCB9DFC0053843C /* PPMessageList.h in Headers */,
+				3567B1071BCB9DFD0053843C /* SRWebSocket.h in Headers */,
+				EDB5908E1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.h in Headers */,
+				EDB5905D1CAE132D00017E7C /* PPCustomBadge.h in Headers */,
+				3567B0F51BCB9DFC0053843C /* PPFileMediaItem.h in Headers */,
+				3567B0B91BCB9DF70053843C /* JSQMessagesLoadEarlierHeaderView.h in Headers */,
+				3567B0F91BCB9DFC0053843C /* PPMessage.h in Headers */,
+				3567B07D1BCB9DF60053843C /* JSQMessagesAvatarImageFactory.h in Headers */,
+				3567B0ED1BCB9DFB0053843C /* PPImagePickerDelegate.h in Headers */,
+				3567B09D1BCB9DF60053843C /* JSQMessagesAvatarImage.h in Headers */,
+				EDAC3D3A1CAD05E400BA1066 /* PPComToken.h in Headers */,
+				EDA272631CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.h in Headers */,
+				3567B0FB1BCB9DFC0053843C /* PPMessageData.h in Headers */,
+				3567B09C1BCB9DF60053843C /* JSQMessageMediaData.h in Headers */,
+				3567B09A1BCB9DF60053843C /* JSQMessageBubbleImageDataSource.h in Headers */,
+				EDB5908A1CAE376700017E7C /* PPStoreManager.h in Headers */,
+				3567B0F31BCB9DFB0053843C /* PPDataCache.h in Headers */,
+				3567B0A51BCB9DF70053843C /* JSQTxtMediaItem.h in Headers */,
+				3567B1011BCB9DFD0053843C /* PPTxtMediaItem.h in Headers */,
+				3567B0971BCB9DF60053843C /* JSQMessage.h in Headers */,
+				3567B0EB1BCB9DFB0053843C /* PPCameraViewDelegate.h in Headers */,
+				EDB5906B1CAE164100017E7C /* PPLayoutConstraintsUtils.h in Headers */,
+				3567B06D1BCB9DF50053843C /* NSBundle+JSQMessages.h in Headers */,
+				3567B0D31BCB9DF90053843C /* PPCachebleImageDownloader.h in Headers */,
+				3567B08F1BCB9DF60053843C /* JSQMessagesCollectionViewLayoutAttributes.h in Headers */,
+				3567B0811BCB9DF60053843C /* JSQMessagesMediaViewBubbleImageMasker.h in Headers */,
+				3567B0E91BCB9DFB0053843C /* PPUploader.h in Headers */,
+				EDB590541CAD329800017E7C /* PPGetDefaultConversationHttpModels.h in Headers */,
+				EDB5906F1CAE1DD000017E7C /* PPConversationsViewController.h in Headers */,
+				3567B0F71BCB9DFC0053843C /* PPMediaItem.h in Headers */,
+				EDB5907D1CAE271900017E7C /* PPImageDownloaderManager.h in Headers */,
+				3567B09F1BCB9DF60053843C /* JSQMessagesBubbleImage.h in Headers */,
+				EDB590741CAE20B100017E7C /* PPConversationItemDataSource.h in Headers */,
+				3567B0991BCB9DF60053843C /* JSQMessageAvatarImageDataSource.h in Headers */,
+				3581D77E1C2A6EC8006372BA /* PPAppInfo.h in Headers */,
+				3567B0A31BCB9DF70053843C /* JSQPhotoMediaItem.h in Headers */,
+				3567B0E51BCB9DFA0053843C /* PPMessageSender.h in Headers */,
+				3567B0711BCB9DF50053843C /* UIColor+JSQMessages.h in Headers */,
+				EDA272A91CBF8CC30038E2B8 /* PPGroupMembersDataSource.h in Headers */,
+				3567B0AF1BCB9DF70053843C /* JSQMessagesCollectionViewCellIncoming.h in Headers */,
+				3567B0CF1BCB9DF90053843C /* ImageDownloader.h in Headers */,
+				3567B1031BCB9DFD0053843C /* PPUser.h in Headers */,
+				3567B06F1BCB9DF50053843C /* NSString+JSQMessages.h in Headers */,
+				3567B0BB1BCB9DF80053843C /* JSQMessagesMediaPlaceholderView.h in Headers */,
+				3567B08D1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.h in Headers */,
+				EDB590811CAE2BC300017E7C /* PPImageView.h in Headers */,
+				3567B0D51BCB9DF90053843C /* PPComAPI.h in Headers */,
+				3567B0FE1BCB9DFC0053843C /* PPMessageMediaData.h in Headers */,
+				EDB590941CAE644600017E7C /* PPGetConversationListHttpModel.h in Headers */,
+				3567B0A71BCB9DF70053843C /* JSQVideoMediaItem.h in Headers */,
+				3567B0751BCB9DF50053843C /* UIImage+JSQMessages.h in Headers */,
+				EDB590661CAE14FE00017E7C /* PPBadgeSquareImageView.h in Headers */,
+				3567B0FF1BCB9DFD0053843C /* PPPhotoMediaItem.h in Headers */,
+				3567B0771BCB9DF50053843C /* UIView+JSQMessages.h in Headers */,
+				EDA2729D1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.h in Headers */,
+				3567B0EF1BCB9DFB0053843C /* PPConversationItem.h in Headers */,
+				EDA272A51CBF82410038E2B8 /* PPGetConversationUserListHttpModel.h in Headers */,
+				EDA272AD1CBF91CC0038E2B8 /* PPGroupMemberViewCell.h in Headers */,
+				3567B0951BCB9DF60053843C /* JSQMediaItem.h in Headers */,
+				3567B0F11BCB9DFB0053843C /* PPConversationsList.h in Headers */,
+				3567B0831BCB9DF60053843C /* JSQMessagesTimestampFormatter.h in Headers */,
+				EDB590911CAE5D7000017E7C /* PPHttpModel.h in Headers */,
+				3567B0851BCB9DF60053843C /* JSQMessagesToolbarButtonFactory.h in Headers */,
+				3567B0BF1BCB9DF80053843C /* JSQMessagesTypingIndicatorFooterView.h in Headers */,
+				3567B0B11BCB9DF70053843C /* JSQMessagesCollectionViewCellOutgoing.h in Headers */,
+				EDB590621CAE14A800017E7C /* PPConversationItemViewCell.h in Headers */,
+				3567B0E11BCB9DFA0053843C /* PPJSQAvatarLoader.h in Headers */,
+				EDA2725F1CBBA8970038E2B8 /* PPMessagesStore.h in Headers */,
+				3567B0E71BCB9DFA0053843C /* PPTxtLoader.h in Headers */,
+				EDA272851CBE34E40038E2B8 /* PPViewUtils.h in Headers */,
+				EDB590861CAE355E00017E7C /* PPConversationsStore.h in Headers */,
+				3567B0E31BCB9DFA0053843C /* PPMessageReceiver.h in Headers */,
+				3567B0911BCB9DF60053843C /* JSQFileMediaItem.h in Headers */,
+				3567B0DD1BCB9DFA0053843C /* PPDownloader.h in Headers */,
+				3567B0D71BCB9DF90053843C /* PPComImageCache.h in Headers */,
+				3567B07F1BCB9DF60053843C /* JSQMessagesBubbleImageFactory.h in Headers */,
+				3567B0D91BCB9DF90053843C /* PPComNet.h in Headers */,
+				3567B0DF1BCB9DFA0053843C /* PPFileManager.h in Headers */,
+				3567B1091BCB9DFD0053843C /* SocketRocket-Prefix.pch in Headers */,
+				3567B0931BCB9DF60053843C /* JSQLocationMediaItem.h in Headers */,
+				3567B09B1BCB9DF60053843C /* JSQMessageData.h in Headers */,
+				EDA2725B1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h in Headers */,
+				3567B0731BCB9DF50053843C /* UIDevice+JSQMessages.h in Headers */,
+				3567B0DB1BCB9DF90053843C /* PPComUtils.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		355980641BCCB00A00DCAE33 /* PPComLibResources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 355980691BCCB00A00DCAE33 /* Build configuration list for PBXNativeTarget "PPComLibResources" */;
+			buildPhases = (
+				355980611BCCB00A00DCAE33 /* Sources */,
+				355980621BCCB00A00DCAE33 /* Frameworks */,
+				355980631BCCB00A00DCAE33 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				355981241BCCDBC800DCAE33 /* PBXTargetDependency */,
+			);
+			name = PPComLibResources;
+			productName = PPComLibResources;
+			productReference = 355980651BCCB00A00DCAE33 /* PPComLib.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+		3567AF911BCB9D860053843C /* PPComLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3567AFA61BCB9D860053843C /* Build configuration list for PBXNativeTarget "PPComLib" */;
+			buildPhases = (
+				3567AF8E1BCB9D860053843C /* Sources */,
+				3567AF8F1BCB9D860053843C /* Frameworks */,
+				3567AF901BCB9D860053843C /* CopyFiles */,
+				3567AFB21BCB9DD70053843C /* Headers */,
+				3559804D1BCC9C5400DCAE33 /* Build Framework */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PPComLib;
+			productName = PPComLib;
+			productReference = 3567AF921BCB9D860053843C /* libPPComLib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		3567AF9C1BCB9D860053843C /* PPComLibTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3567AFA91BCB9D860053843C /* Build configuration list for PBXNativeTarget "PPComLibTests" */;
+			buildPhases = (
+				3567AF991BCB9D860053843C /* Sources */,
+				3567AF9A1BCB9D860053843C /* Frameworks */,
+				3567AF9B1BCB9D860053843C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3567AFA01BCB9D860053843C /* PBXTargetDependency */,
+			);
+			name = PPComLibTests;
+			productName = PPComLibTests;
+			productReference = 3567AF9D1BCB9D860053843C /* PPComLibTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3567AF8A1BCB9D860053843C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = Yvertical;
+				TargetAttributes = {
+					3559804E1BCC9E1A00DCAE33 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					355980641BCCB00A00DCAE33 = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					3567AF911BCB9D860053843C = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+					3567AF9C1BCB9D860053843C = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
+			};
+			buildConfigurationList = 3567AF8D1BCB9D860053843C /* Build configuration list for PBXProject "PPComLib" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+				"zh-Hans",
+				"zh-Hant",
+			);
+			mainGroup = 3567AF891BCB9D860053843C;
+			productRefGroup = 3567AF931BCB9D860053843C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3567AF911BCB9D860053843C /* PPComLib */,
+				3567AF9C1BCB9D860053843C /* PPComLibTests */,
+				3559804E1BCC9E1A00DCAE33 /* Framework */,
+				355980641BCCB00A00DCAE33 /* PPComLibResources */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		355980631BCCB00A00DCAE33 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3541B9121C2CE85E005134AB /* JSQMessagesViewController.xib in Resources */,
+				355770411BCCEA9F00CFF6DF /* bubble_stroked_tailless@2x.png in Resources */,
+				355770421BCCEA9F00CFF6DF /* bubble_stroked_tailless@3x.png in Resources */,
+				3557704A1BCCEA9F00CFF6DF /* play@2x.png in Resources */,
+				EDA272931CBF4F950038E2B8 /* user_group_man_man@3x.png in Resources */,
+				355770451BCCEA9F00CFF6DF /* bubble_tailless@3x.png in Resources */,
+				3557703A1BCCEA9F00CFF6DF /* bubble_regular.png in Resources */,
+				3557704D1BCCEA9F00CFF6DF /* typing@2x.png in Resources */,
+				355770341BCCEA9F00CFF6DF /* bubble_min.png in Resources */,
+				3557703F1BCCEA9F00CFF6DF /* bubble_stroked@3x.png in Resources */,
+				355770511BCCEBC400CFF6DF /* JSQMessagesCollectionViewCellIncoming.xib in Resources */,
+				355770471BCCEA9F00CFF6DF /* clip@2x.png in Resources */,
+				3557704C1BCCEA9F00CFF6DF /* typing.png in Resources */,
+				EDA272921CBF4F910038E2B8 /* user_group_man_man@2x.png in Resources */,
+				355770371BCCEA9F00CFF6DF /* bubble_min_tailless.png in Resources */,
+				355770401BCCEA9F00CFF6DF /* bubble_stroked_tailless.png in Resources */,
+				EDA272911CBF4F8E0038E2B8 /* user_group_man_man.png in Resources */,
+				355770461BCCEA9F00CFF6DF /* clip.png in Resources */,
+				3557704F1BCCEBBC00CFF6DF /* JSQMessagesLoadEarlierHeaderView.xib in Resources */,
+				3557703C1BCCEA9F00CFF6DF /* bubble_regular@3x.png in Resources */,
+				355770521BCCEBCA00CFF6DF /* JSQMessagesTypingIndicatorFooterView.xib in Resources */,
+				355770361BCCEA9F00CFF6DF /* bubble_min@3x.png in Resources */,
+				355770351BCCEA9F00CFF6DF /* bubble_min@2x.png in Resources */,
+				355770431BCCEA9F00CFF6DF /* bubble_tailless.png in Resources */,
+				355770501BCCEBC000CFF6DF /* JSQMessagesCollectionViewCellOutgoing.xib in Resources */,
+				3557703E1BCCEA9F00CFF6DF /* bubble_stroked@2x.png in Resources */,
+				355770141BCCE18C00CFF6DF /* pp_icon_avatar.png in Resources */,
+				355770481BCCEA9F00CFF6DF /* clip@3x.png in Resources */,
+				3541F9381BCDEE74000940EA /* JSQMessages.strings in Resources */,
+				355770381BCCEA9F00CFF6DF /* bubble_min_tailless@2x.png in Resources */,
+				355770441BCCEA9F00CFF6DF /* bubble_tailless@2x.png in Resources */,
+				3557703B1BCCEA9F00CFF6DF /* bubble_regular@2x.png in Resources */,
+				3557704E1BCCEA9F00CFF6DF /* typing@3x.png in Resources */,
+				355770491BCCEA9F00CFF6DF /* play.png in Resources */,
+				3557704B1BCCEA9F00CFF6DF /* play@3x.png in Resources */,
+				3557703D1BCCEA9F00CFF6DF /* bubble_stroked.png in Resources */,
+				355770391BCCEA9F00CFF6DF /* bubble_min_tailless@3x.png in Resources */,
+				355770171BCCE78700CFF6DF /* JSQMessagesToolbarContentView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3567AF9B1BCB9D860053843C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3541B9081C2CE0FE005134AB /* JSQMessagesViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3559804D1BCC9C5400DCAE33 /* Build Framework */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build Framework";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\nexport FRAMEWORK_LOCN=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.framework\"\n\n# Create the path to the real Headers die\nmkdir -p \"${FRAMEWORK_LOCN}/Versions/A/Headers\"\n\n# Create the required symlinks\n/bin/ln -sfh A \"${FRAMEWORK_LOCN}/Versions/Current\"\n/bin/ln -sfh Versions/Current/Headers \"${FRAMEWORK_LOCN}/Headers\"\n/bin/ln -sfh \"Versions/Current/${PRODUCT_NAME}\" \\\n\"${FRAMEWORK_LOCN}/${PRODUCT_NAME}\"\n\n# Copy the public headers into the framework\n/bin/cp -a \"${TARGET_BUILD_DIR}/${PUBLIC_HEADERS_FOLDER_PATH}/\" \\\n\"${FRAMEWORK_LOCN}/Versions/A/Headers\"";
+		};
+		355980541BCC9E5300DCAE33 /* MultiPlatform Build */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "MultiPlatform Build";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -e\n\n# If we're already inside this script then die\nif [ -n \"$RW_MULTIPLATFORM_BUILD_IN_PROGRESS\" ]; then\nexit 0\nfi\nexport RW_MULTIPLATFORM_BUILD_IN_PROGRESS=1\n\nRW_FRAMEWORK_NAME=${PROJECT_NAME}\nRW_INPUT_STATIC_LIB=\"lib${PROJECT_NAME}.a\"\nRW_FRAMEWORK_LOCATION=\"${BUILT_PRODUCTS_DIR}/${RW_FRAMEWORK_NAME}.framework\"\n\nfunction build_static_library {\n    # Will rebuild the static library as specified\n    #     build_static_library sdk\n    xcrun xcodebuild -project \"${PROJECT_FILE_PATH}\" \\\n    -target \"${TARGET_NAME}\" \\\n    -configuration \"${CONFIGURATION}\" \\\n    -sdk \"${1}\" \\\n    ONLY_ACTIVE_ARCH=NO \\\n    BUILD_DIR=\"${BUILD_DIR}\" \\\n    OBJROOT=\"${OBJROOT}\" \\\n    BUILD_ROOT=\"${BUILD_ROOT}\" \\\n    SYMROOT=\"${SYMROOT}\" $ACTION\n}\n\nfunction make_fat_library {\n    # Will smash 2 static libs together\n    #     make_fat_library in1 in2 out\n    xcrun lipo -create \"${1}\" \"${2}\" -output \"${3}\"\n}\n\n# Extract the platform (iphoneos/iphonesimulator) from the SDK name\nif [[ \"$SDK_NAME\" =~ ([A-Za-z]+) ]]; then\nRW_SDK_PLATFORM=${BASH_REMATCH[1]}\nelse\necho \"Could not find platform name from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\n# Extract the version from the SDK\nif [[ \"$SDK_NAME\" =~ ([0-9]+.*$) ]]; then\nRW_SDK_VERSION=${BASH_REMATCH[1]}\nelse\necho \"Could not find sdk version from SDK_NAME: $SDK_NAME\"\nexit 1\nfi\n\n# Determine the other platform\nif [ \"$RW_SDK_PLATFORM\" == \"iphoneos\" ]; then\nRW_OTHER_PLATFORM=iphonesimulator\nelse\nRW_OTHER_PLATFORM=iphoneos\nfi\n\n# Find the build directory\nif [[ \"$BUILT_PRODUCTS_DIR\" =~ (.*)$RW_SDK_PLATFORM$ ]]; then\nRW_OTHER_BUILT_PRODUCTS_DIR=\"${BASH_REMATCH[1]}${RW_OTHER_PLATFORM}\"\nelse\necho \"Could not find other platform build directory.\"\nexit 1\nfi\n\n\n# Build the other platform.\nbuild_static_library \"${RW_OTHER_PLATFORM}${RW_SDK_VERSION}\"\n\n# If we're currently building for iphonesimulator, then need to rebuild\n#   to ensure that we get both i386 and x86_64\nif [ \"$RW_SDK_PLATFORM\" == \"iphonesimulator\" ]; then\nbuild_static_library \"${SDK_NAME}\"\nfi\n\n# Join the 2 static libs into 1 and push into the .framework\nmake_fat_library \"${BUILT_PRODUCTS_DIR}/${RW_INPUT_STATIC_LIB}\" \\\n\"${RW_OTHER_BUILT_PRODUCTS_DIR}/${RW_INPUT_STATIC_LIB}\" \\\n\"${RW_FRAMEWORK_LOCATION}/Versions/A/${RW_FRAMEWORK_NAME}\"\n\n\n# Ensure that the framework is present in both platorm's build directories\ncp -a \"${RW_FRAMEWORK_LOCATION}/Versions/A/${RW_FRAMEWORK_NAME}\" \\\n\"${RW_OTHER_BUILT_PRODUCTS_DIR}/${RW_FRAMEWORK_NAME}.framework/Versions/A/${RW_FRAMEWORK_NAME}\"\n\necho '-------------'\n\n# Copy the framework to the user's desktop\nditto \"${RW_FRAMEWORK_LOCATION}\" \"${HOME}/Desktop/${RW_FRAMEWORK_NAME}.framework\"\n\n# Copy the resources bundle to the user's desktop\nditto \"${BUILT_PRODUCTS_DIR}/${RW_FRAMEWORK_NAME}.bundle\" \\\n\"${HOME}/Desktop/${RW_FRAMEWORK_NAME}.bundle\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		355980611BCCB00A00DCAE33 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3567AF8E1BCB9D860053843C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3567B0E41BCB9DFA0053843C /* PPMessageReceiver.m in Sources */,
+				3567B0E81BCB9DFA0053843C /* PPTxtLoader.m in Sources */,
+				3567B0BA1BCB9DF80053843C /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
+				EDA272A61CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m in Sources */,
+				EDB5908B1CAE376700017E7C /* PPStoreManager.m in Sources */,
+				3567B0EE1BCB9DFB0053843C /* PPImagePickerDelegate.m in Sources */,
+				3567B0DA1BCB9DF90053843C /* PPComNet.m in Sources */,
+				EDB590701CAE1DD000017E7C /* PPConversationsViewController.m in Sources */,
+				3567B0741BCB9DF50053843C /* UIDevice+JSQMessages.m in Sources */,
+				3567B0861BCB9DF60053843C /* JSQMessagesToolbarButtonFactory.m in Sources */,
+				3567B07E1BCB9DF60053843C /* JSQMessagesAvatarImageFactory.m in Sources */,
+				3567B0AA1BCB9DF70053843C /* JSQMessagesCellTextView.m in Sources */,
+				3567B0EC1BCB9DFB0053843C /* PPCameraViewDelegate.m in Sources */,
+				3567B0DE1BCB9DFA0053843C /* PPDownloader.m in Sources */,
+				3567B0981BCB9DF60053843C /* JSQMessage.m in Sources */,
+				EDB5906C1CAE164100017E7C /* PPLayoutConstraintsUtils.m in Sources */,
+				3567B0DC1BCB9DFA0053843C /* PPComUtils.m in Sources */,
+				EDB590951CAE644600017E7C /* PPGetConversationListHttpModel.m in Sources */,
+				3567B0AE1BCB9DF70053843C /* JSQMessagesCollectionViewCell.m in Sources */,
+				3567B0C01BCB9DF80053843C /* JSQMessagesTypingIndicatorFooterView.m in Sources */,
+				EDA2725C1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m in Sources */,
+				3567B0E01BCB9DFA0053843C /* PPFileManager.m in Sources */,
+				3567B0EA1BCB9DFB0053843C /* PPUploader.m in Sources */,
+				3567B0B41BCB9DF70053843C /* JSQMessagesComposerTextView.m in Sources */,
+				3567B0F21BCB9DFB0053843C /* PPConversationsList.m in Sources */,
+				3567B08C1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
+				EDA272601CBBA8970038E2B8 /* PPMessagesStore.m in Sources */,
+				EDA272861CBE34E40038E2B8 /* PPViewUtils.m in Sources */,
+				EDA272A21CBF7EC80038E2B8 /* PPGroupMembersStore.m in Sources */,
+				EDB5907E1CAE271900017E7C /* PPImageDownloaderManager.m in Sources */,
+				3567B0941BCB9DF60053843C /* JSQLocationMediaItem.m in Sources */,
+				3567B0B21BCB9DF70053843C /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
+				3567B0F41BCB9DFB0053843C /* PPDataCache.m in Sources */,
+				3567B0AC1BCB9DF70053843C /* JSQMessagesCollectionView.m in Sources */,
+				3567B0BC1BCB9DF80053843C /* JSQMessagesMediaPlaceholderView.m in Sources */,
+				3567B0A61BCB9DF70053843C /* JSQTxtMediaItem.m in Sources */,
+				3567B0921BCB9DF60053843C /* JSQFileMediaItem.m in Sources */,
+				3567B0B81BCB9DF70053843C /* JSQMessagesLabel.m in Sources */,
+				3567B0E21BCB9DFA0053843C /* PPJSQAvatarLoader.m in Sources */,
+				3567B0B61BCB9DF70053843C /* JSQMessagesInputToolbar.m in Sources */,
+				3567B0C81BCB9DF80053843C /* PPMessagesViewController.m in Sources */,
+				3567B0961BCB9DF60053843C /* JSQMediaItem.m in Sources */,
+				3567B08A1BCB9DF60053843C /* JSQMessagesBubblesSizeCalculator.m in Sources */,
+				3567B1081BCB9DFD0053843C /* SRWebSocket.m in Sources */,
+				3567B0701BCB9DF50053843C /* NSString+JSQMessages.m in Sources */,
+				EDA272641CBCDED40038E2B8 /* PPMessagesViewController+PPCellTopLabel.m in Sources */,
+				3567B0801BCB9DF60053843C /* JSQMessagesBubbleImageFactory.m in Sources */,
+				EDB590871CAE355E00017E7C /* PPConversationsStore.m in Sources */,
+				3567B0D61BCB9DF90053843C /* PPComAPI.m in Sources */,
+				3567B0A81BCB9DF70053843C /* JSQVideoMediaItem.m in Sources */,
+				3581D77F1C2A6EC8006372BA /* PPAppInfo.m in Sources */,
+				3567B0D81BCB9DF90053843C /* PPComImageCache.m in Sources */,
+				EDB5908F1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.m in Sources */,
+				EDA2729E1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.m in Sources */,
+				3567B07A1BCB9DF50053843C /* JSQMessagesKeyboardController.m in Sources */,
+				3567B0B01BCB9DF70053843C /* JSQMessagesCollectionViewCellIncoming.m in Sources */,
+				3567B07C1BCB9DF60053843C /* JSQMessagesViewController.m in Sources */,
+				3567B0A41BCB9DF70053843C /* JSQPhotoMediaItem.m in Sources */,
+				3567B0E61BCB9DFA0053843C /* PPMessageSender.m in Sources */,
+				3567B0721BCB9DF50053843C /* UIColor+JSQMessages.m in Sources */,
+				EDB590551CAD329800017E7C /* PPGetDefaultConversationHttpModels.m in Sources */,
+				EDAC3D3B1CAD05E400BA1066 /* PPComToken.m in Sources */,
+				3567B0761BCB9DF50053843C /* UIImage+JSQMessages.m in Sources */,
+				3567B1001BCB9DFD0053843C /* PPPhotoMediaItem.m in Sources */,
+				3567B0D21BCB9DF90053843C /* NSString+Crypto.m in Sources */,
+				3567B0CE1BCB9DF90053843C /* PPCom.m in Sources */,
+				3567B0A01BCB9DF60053843C /* JSQMessagesBubbleImage.m in Sources */,
+				EDB590631CAE14A800017E7C /* PPConversationItemViewCell.m in Sources */,
+				EDA2727D1CBDE6590038E2B8 /* PPCreateConversationHttpModel.m in Sources */,
+				EDB590671CAE14FE00017E7C /* PPBadgeSquareImageView.m in Sources */,
+				EDA272AE1CBF91CC0038E2B8 /* PPGroupMemberViewCell.m in Sources */,
+				EDB5907A1CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.m in Sources */,
+				3567B0F01BCB9DFB0053843C /* PPConversationItem.m in Sources */,
+				3567B0841BCB9DF60053843C /* JSQMessagesTimestampFormatter.m in Sources */,
+				3567B1021BCB9DFD0053843C /* PPTxtMediaItem.m in Sources */,
+				3567B0D01BCB9DF90053843C /* ImageDownloader.m in Sources */,
+				3567B0821BCB9DF60053843C /* JSQMessagesMediaViewBubbleImageMasker.m in Sources */,
+				3567B08E1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.m in Sources */,
+				3567B0F81BCB9DFC0053843C /* PPMediaItem.m in Sources */,
+				EDB590821CAE2BC300017E7C /* PPImageView.m in Sources */,
+				EDA272991CBF7B860038E2B8 /* PPGroupMembersViewController.m in Sources */,
+				3567B0FA1BCB9DFC0053843C /* PPMessage.m in Sources */,
+				3567B0FD1BCB9DFC0053843C /* PPMessageList.m in Sources */,
+				EDB590751CAE20B100017E7C /* PPConversationItemDataSource.m in Sources */,
+				3567B06E1BCB9DF50053843C /* NSBundle+JSQMessages.m in Sources */,
+				3567B0CC1BCB9DF90053843C /* PP.m in Sources */,
+				3586FE481C2E5372002F58FC /* PPFastLog.m in Sources */,
+				3567B0781BCB9DF50053843C /* UIView+JSQMessages.m in Sources */,
+				3567B0F61BCB9DFC0053843C /* PPFileMediaItem.m in Sources */,
+				EDA272AA1CBF8CC30038E2B8 /* PPGroupMembersDataSource.m in Sources */,
+				3567B0BE1BCB9DF80053843C /* JSQMessagesToolbarContentView.m in Sources */,
+				3567B1041BCB9DFD0053843C /* PPUser.m in Sources */,
+				3567B0901BCB9DF60053843C /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
+				EDB5905C1CAE132D00017E7C /* PPBadgeStyle.m in Sources */,
+				3567B09E1BCB9DF60053843C /* JSQMessagesAvatarImage.m in Sources */,
+				3567B0D41BCB9DF90053843C /* PPCachebleImageDownloader.m in Sources */,
+				EDB5905E1CAE132D00017E7C /* PPCustomBadge.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3567AF991BCB9D860053843C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		355980531BCC9E4300DCAE33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3567AF911BCB9D860053843C /* PPComLib */;
+			targetProxy = 355980521BCC9E4300DCAE33 /* PBXContainerItemProxy */;
+		};
+		3559806D1BCCB06400DCAE33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 355980641BCCB00A00DCAE33 /* PPComLibResources */;
+			targetProxy = 3559806C1BCCB06400DCAE33 /* PBXContainerItemProxy */;
+		};
+		355981241BCCDBC800DCAE33 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3567AF911BCB9D860053843C /* PPComLib */;
+			targetProxy = 355981231BCCDBC800DCAE33 /* PBXContainerItemProxy */;
+		};
+		3567AFA01BCB9D860053843C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3567AF911BCB9D860053843C /* PPComLib */;
+			targetProxy = 3567AF9F1BCB9D860053843C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3541F9341BCDEE16000940EA /* JSQMessages.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3541F9331BCDEE16000940EA /* Base */,
+				3541F9351BCDEE1C000940EA /* en */,
+				3541F9361BCDEE37000940EA /* zh-Hans */,
+				3541F9371BCDEE55000940EA /* zh-Hant */,
+			);
+			name = JSQMessages.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		355980501BCC9E1B00DCAE33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		355980511BCC9E1B00DCAE33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		3559806A1BCCB00A00DCAE33 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PPComLibResources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yvertical.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = PPComLib;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		3559806B1BCCB00A00DCAE33 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				INFOPLIST_FILE = PPComLibResources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yvertical.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = PPComLib;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		3567AFA41BCB9D860053843C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3567AFA51BCB9D860053843C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3567AFA71BCB9D860053843C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PROJECT_NAME)";
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Debug;
+		};
+		3567AFA81BCB9D860053843C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PROJECT_NAME)";
+				SKIP_INSTALL = YES;
+				STRIP_STYLE = "non-global";
+			};
+			name = Release;
+		};
+		3567AFAA1BCB9D860053843C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PPComLibTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yvertical.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3567AFAB1BCB9D860053843C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PPComLibTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yvertical.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3559804F1BCC9E1B00DCAE33 /* Build configuration list for PBXAggregateTarget "Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				355980501BCC9E1B00DCAE33 /* Debug */,
+				355980511BCC9E1B00DCAE33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		355980691BCCB00A00DCAE33 /* Build configuration list for PBXNativeTarget "PPComLibResources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3559806A1BCCB00A00DCAE33 /* Debug */,
+				3559806B1BCCB00A00DCAE33 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3567AF8D1BCB9D860053843C /* Build configuration list for PBXProject "PPComLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3567AFA41BCB9D860053843C /* Debug */,
+				3567AFA51BCB9D860053843C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3567AFA61BCB9D860053843C /* Build configuration list for PBXNativeTarget "PPComLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3567AFA71BCB9D860053843C /* Debug */,
+				3567AFA81BCB9D860053843C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3567AFA91BCB9D860053843C /* Build configuration list for PBXNativeTarget "PPComLibTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3567AFAA1BCB9D860053843C /* Debug */,
+				3567AFAB1BCB9D860053843C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3567AF8A1BCB9D860053843C /* Project object */;
+}

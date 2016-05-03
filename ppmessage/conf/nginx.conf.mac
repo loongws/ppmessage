@@ -32,6 +32,11 @@ http {
 #gzip  on;
     client_max_body_size 4G;
 
+    map $http_upgrade $connection_upgrade {
+        default upgrade;
+        '' close;
+    }
+
     upstream download_backends {
         server 127.0.0.1:20100;
     }
@@ -48,63 +53,24 @@ http {
         server 127.0.0.1:20400;
     }
     
-    upstream dispatcher_backends {
-        server 127.0.0.1:20600;
-    }
-
-    upstream iospush_backends {
-        server 127.0.0.1:20700;
-    }
-
-    upstream userportal_backends {
-        server 127.0.0.1:20900;
-    }
-
     upstream ppcom_backends {
-        server 127.0.0.1:21000;
+        server 127.0.0.1:20500;
     }
 
     upstream pcsocket_backends {
-        server 127.0.0.1:21100;
+        server 127.0.0.1:20600;
     }
 
     upstream pphome_backends {
-       server 127.0.0.1:21300;
+       server 127.0.0.1:20800;
     }
 
     upstream ppauth_backends {
-       server 127.0.0.1:21400;
+       server 127.0.0.1:20900;
     }
 
-    upstream ppconsole_user_backends {
-       server 127.0.0.1:21500;
-    }
-
-    upstream ppconsole_admin_backends {
-       server 127.0.0.1:21600;
-    }
-
-# dispatcher
-    server {
-        listen 8923;
-        location / {
-            proxy_pass http://dispatcher_backends;
-        }
-    }
-
-# iospush
-    server {
-        listen 8932;
-        location / {
-            proxy_pass http://iospush_backends;
-        }
-    }
-
-    server {
-        listen 8941;
-        location / {
-            proxy_pass http://pphome_backends;
-        }
+    upstream ppconsole_backends {
+       server 127.0.0.1:21000;
     }
 
 # portal
@@ -127,19 +93,15 @@ http {
         proxy_set_header Request-Uri $request_uri;
 
         location / {
-            rewrite ^/$ /portal permanent;
+            rewrite ^/$ /home permanent;
         }
 
-        location /portal/ {
-            proxy_pass http://userportal_backends/;
+        location /home/ {
+            proxy_pass http://pphome_backends/;
         }
 
         location /user/ {
-            proxy_pass http://ppconsole_user_backends/;
-        }
-
-        location /admin/ {
-            proxy_pass http://ppconsole_admin_backends/;
+            proxy_pass http://ppconsole_backends/;
         }
 
         location /api/ {
