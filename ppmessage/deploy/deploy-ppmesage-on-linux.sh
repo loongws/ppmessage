@@ -31,7 +31,7 @@ function ppmessage_need_root()
     fi
 }
 
-ppmessage_need_root()
+ppmessage_need_root
 
 apt-get update
 

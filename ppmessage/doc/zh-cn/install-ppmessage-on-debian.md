@@ -26,18 +26,18 @@ LICENSE    README.md  dist.sh*   ppmessage/
 > 执行 deploy-ppmesage-on-linux.sh 这个脚本能够帮助你在 Linux 上安装 PPMessage 所依赖的 Debian 包和 Python 的开发包以及一些必须通过下载源码进行手动编译的过程。
 
 ```bash
-# sh ppmessage/depoly/deploy-ppmesage-on-linux.sh
+# bash ppmessage/depoly/deploy-ppmesage-on-linux.sh
 
 ```
 
 > 执行 dist.sh，这个脚本能够帮助你创建数据库和NGINX的配置文件，安装 PPMessage 所需要的 node 的工具和开发包，以及打包、发布、启动、停止 PPMessage 的应用。
 
 ```bash
-# sh dist.sh bootstrap
-# sh dist.sh bower
-# sh dist.sh npm
-# sh dist.sh gulp
-# sh dist.sh start
+# bash dist.sh bootstrap
+# bash dist.sh bower
+# bash dist.sh npm
+# bash dist.sh gulp
+# bash dist.sh start
 
 ```
 
