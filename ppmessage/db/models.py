@@ -122,13 +122,8 @@ class DeviceUser(CommonMixin, BaseModel):
     )
 
     def __init__(self, *args, **kwargs):
-        self.user_language = "zh_cn"
-        self.user_silence_notification = False
-        self.user_mute_notification = False
-        self.is_email_verified = False
-        self.is_mobile_verified = False
-        self.service_user_status = SERVICE_USER_STATUS.NULL
         super(DeviceUser, self).__init__(*args, **kwargs)
+        return
         
     def create_redis_keys(self, _redis, *args, **kwargs):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
@@ -139,7 +134,6 @@ class DeviceUser(CommonMixin, BaseModel):
         if self.is_anonymous_user:
             _key = DeviceUser.__tablename__ + ".ppcom_trace_uuid." + self.ppcom_trace_uuid
             _redis.set(_key, self.uuid)
-
         return
 
     def delete_redis_keys(self, _redis):
@@ -183,6 +177,7 @@ class AdminUser(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(AdminUser, self).__init__(*args, **kwargs)
+        return
 
     def create_redis_keys(self, _redis, *args, **kwargs):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
@@ -213,6 +208,7 @@ class UserWebSession(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(UserWebSession, self).__init__(*args, **kwargs)
+        return
 
 class AdminWebSession(CommonMixin, BaseModel):
     __tablename__ = "admin_web_sessions"
@@ -225,6 +221,7 @@ class AdminWebSession(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(AdminWebSession, self).__init__(*args, **kwargs)
+        return
         
 class PortalWebSession(CommonMixin, BaseModel):
     __tablename__ = "portal_web_sessions"
@@ -546,11 +543,6 @@ class OrgGroup(CommonMixin, BaseModel):
     )
 
     def __init__(self, *args, **kwargs):
-        self.group_route_algorithm = GROUP_ALGORITHM.SMART
-        self.group_visible_for_ppcom = True
-        self.group_visible_order_for_ppcom = 1
-        self.group_work_time_str="09:00-18:00"
-        self.is_distributor=False
         super(OrgGroup, self).__init__(*args, **kwargs)
         return
 
@@ -660,7 +652,7 @@ class OrgSubGroupData(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(OrgSubGroupData, self).__init__(*args, **kwargs)
-
+        return
 
 class DiscussionGroup(CommonMixin, BaseModel):
     __tablename__ = "discussion_groups"
@@ -680,6 +672,7 @@ class DiscussionGroup(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(DiscussionGroup, self).__init__(*args, **kwargs)
+        return
 
 class DiscussionUserGroupData(CommonMixin, BaseModel):
     __tablename__ = "discussion_user_group_datas"
@@ -694,8 +687,8 @@ class DiscussionUserGroupData(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(DiscussionUserGroupData, self).__init__(*args, **kwargs)
+        return
 
-        
 class AppGroup(CommonMixin, BaseModel):
     __tablename__ = "app_groups"
 
@@ -732,7 +725,7 @@ class AppUserGroupData(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(AppUserGroupData, self).__init__(*args, **kwargs)
-
+        return
 
 class AppMessageAction(CommonMixin, BaseModel):
     __tablename__ = "app_message_actions"
@@ -802,7 +795,6 @@ class AppGroupDefaultRule(CommonMixin, BaseModel):
         super(AppGroupDefaultRule, self).__init__(*args, **kwargs)
         return
 
-
 class MaterialRefInfo(CommonMixin, BaseModel):
     """
     this object will be created when message is acked
@@ -835,6 +827,7 @@ class MaterialRefInfo(CommonMixin, BaseModel):
     
     def __init__(self, *args, **kwargs):
         super(MaterialRefInfo, self).__init__(*args, **kwargs)
+        return
 
     def create_redis_keys(self, _redis, *args, **kwargs):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
@@ -923,7 +916,7 @@ class VideoMaterialInfo(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(VideoMaterialInfo, self).__init__(*args, **kwargs)
-        
+        return
         
 class SingleCardMaterialInfo(CommonMixin, BaseModel):
     __tablename__ = "single_card_material_infos"
@@ -948,6 +941,7 @@ class SingleCardMaterialInfo(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(SingleCardMaterialInfo, self).__init__(*args, **kwargs)
+        return
 
 class MultipleCardMaterialInfo(CommonMixin, BaseModel):
     """
@@ -964,7 +958,8 @@ class MultipleCardMaterialInfo(CommonMixin, BaseModel):
     user_uuid = Column("user_uuid", String(64))
     
     def __init__(self, *args, **kwargs):
-        super(MultipleCardMaterialInfo, self).__init__(*args, **kwargs)        
+        super(MultipleCardMaterialInfo, self).__init__(*args, **kwargs)
+        return
         
 class MessageAudioFileInfo(CommonMixin, BaseModel):
     """
@@ -988,6 +983,7 @@ class MessageAudioFileInfo(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(MessageAudioFileInfo, self).__init__(*args, **kwargs)
+        return
         
 class APNSSetting(CommonMixin, BaseModel):
     """
@@ -1010,6 +1006,7 @@ class APNSSetting(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(APNSSetting, self).__init__(*args, **kwargs)
+        return
 
     def create_redis_keys(self, _redis, *args, **kwargs):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
@@ -1109,6 +1106,7 @@ class UserAppInfo(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(UserAppInfo, self).__init__(*args, **kwargs)
+        return
 
 class LicenseInfo(CommonMixin, BaseModel):
 
@@ -1127,6 +1125,7 @@ class LicenseInfo(CommonMixin, BaseModel):
         
     def __init__(self, *args, **kwargs):
         super(LicenseInfo, self).__init__(*args, **kwargs)
+        return
 
 class OAuthSetting(CommonMixin, BaseModel):
     __tablename__ = "oauth_settings"
@@ -1150,6 +1149,7 @@ class OAuthInfo(CommonMixin, BaseModel):
     
     def __init__(self, *args, **kwargs):
         super(OAuthInfo, self).__init__(*args, **kwargs)
+        return
 
 # for PPMESSAGE
 class AppBillingData(CommonMixin, BaseModel):
@@ -1185,10 +1185,8 @@ class AppBillingData(CommonMixin, BaseModel):
     
     def create_redis_keys(self, _redis, *args, **kwargs):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
-        _key = self.__tablename__ + \
-               ".app_uuid." + self.app_uuid + \
-               ".uuid." + self.uuid
-        _redis.set(_key, self.uuid)            
+        _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".uuid." + self.uuid
+        _redis.set(_key, self.uuid)
         return
 
     def delete_redis_keys(self, _redis):
@@ -1253,8 +1251,6 @@ class AppInfo(CommonMixin, BaseModel):
     )
 
     def __init__(self, *args, **kwargs):
-        self.show_ppcom_hover = "ALWAYS"
-        self.ppcom_launcher_color = '#54c6d6'
         super(AppInfo, self).__init__(*args, **kwargs)
         return
     
@@ -1442,6 +1438,7 @@ class ConversationInfo(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(ConversationInfo, self).__init__(*args, **kwargs)
+        return
         
     def create_redis_keys(self, _redis, *args, **kwargs):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
