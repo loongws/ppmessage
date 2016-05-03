@@ -76,6 +76,7 @@ head.appendChild(ppcom);
             $elDebugContainer.append( _buildInputViewHtml( 'add-duplicate-ppcom-script', '在已有的情况下添加一个新的scripts' ) );
             $elDebugContainer.append( _buildInputViewHtml( 'simulate-one-conversation-avaliable', '模拟一个Conversation Avaliable' ) );
             $elDebugContainer.append( _buildInputViewHtml( 'check-current-messagepanel-mode', '查看当前MessagePanel所在的Mode' ) );
+            $elDebugContainer.append( _buildInputViewHtml( 'snapshot', '快照' ) );
             
             $elDebugContainer.append( '<br/><select class="drop-down"><option>None</option></select><br/>' );
             $elDebugContainer.append( _buildInputViewHtml( 'clear', '清空' ) );
@@ -104,6 +105,7 @@ head.appendChild(ppcom);
             _bindViewClickEvent( 'add-duplicate-ppcom-script', test.addDuplicatePPComScripts );
             _bindViewClickEvent( 'simulate-one-conversation-avaliable', test.simulateOneConversationAvaliable );
             _bindViewClickEvent( 'check-current-messagepanel-mode', test.checkCurrentMessagePanelMode );
+            _bindViewClickEvent( 'snapshot', test.snapshot );
             
         }
 
@@ -168,6 +170,7 @@ head.appendChild(ppcom);
             addDuplicatePPComScripts: addDuplicatePPComScripts,
             simulateOneConversationAvaliable: simulateOneConversationAvaliable,
             checkCurrentMessagePanelMode: checkCurrentMessagePanelMode,
+            snapshot: snapshot,
 
             clear: clear
         }
@@ -369,6 +372,14 @@ head.appendChild(ppcom);
 
         function checkCurrentMessagePanelMode() {
             append( 'Current MessagePanel Mode: ' + Ctrl.$conversationPanel.mode() + '\n' );
+        }
+
+        function snapshot() {
+            var info = '';
+            info += 'app route policy: ' + Service.$app.app().app_route_policy + '\n';
+            info += 'is webSocket OK: ' + Service.$notification.isWsOk() + '\n';
+            info += 'current mode: ' + Ctrl.$conversationPanel.mode() + '\n';
+            append( info );
         }
         
         function onChattingMessage() {

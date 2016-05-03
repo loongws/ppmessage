@@ -69,10 +69,23 @@ Ctrl.$conversationPanel = ( function() {
         var $pubsub = Service.$pubsub,
             $conversationManager = Service.$conversationManager,
             WAITING_TOPIC = $conversationManager.EVENT.WAITING,
-            AVALIABLE_TOPIC = $conversationManager.EVENT.AVALIABLE;
+            AVALIABLE_TOPIC = $conversationManager.EVENT.AVALIABLE,
+            TIMEOUT_DELAY = 200;
         
         $pubsub.subscribe( WAITING_TOPIC, function( topics, data ) {
-            mode( MODE.WAITING );
+            //
+            // Only when the launcher is not showing ( that is: messagePanel is showing ),
+            // we enter to `MODE.WAITING` mode.
+            //
+            // We should call the api `Ctrl.$launcher.get().isLauncherShow` after
+            // the ( hide launcher && show messagePanel ) css animation finished ( about 300ms ) here, otherwise,
+            // we may get a wrong value here ( because the css animation is executing )
+            //
+            $timeout( function() {
+
+                !Ctrl.$launcher.get().isLauncherShow() && mode( MODE.WAITING );
+                
+            }, TIMEOUT_DELAY );            
         } );
 
         $pubsub.subscribe( AVALIABLE_TOPIC, function( topics, data ) {
