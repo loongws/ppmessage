@@ -4,7 +4,7 @@
 # maintainer: Jin He <jin.he@ppmessage.com>
 # description: a shell script to deploy PPMessage on Debian and Ubuntu
 
-NODE_VERSION="v4.4.3"
+NODE_VERSION="v6.0.0"
 NGINX_VERSION="1.8.0"
 FFMPEG_VERSION="3.0.2"
 MYSQL_CONNECTOR_PYTHON_VERSION="2.1.3"
@@ -87,46 +87,6 @@ cd libmaxminddb
 make && make install
 cd -
 
-# "pip install -i http://pypi.douban.com/simple xxx" might be faster
-pip install \
-    axmlparserpy \
-    beautifulsoup4 \
-    biplist \
-    cffi \
-    cryptography \
-    evernote \
-    filemagic \
-    geoip2 \
-    green \
-    identicon \
-    ipython \
-    jieba \
-    paramiko \
-    paho-mqtt \
-    pillow \
-    ppmessage-mqtt \
-    pyipa \
-    pypinyin \
-    pyparsing \
-    python-dateutil \
-    python-gcm \
-    python-magic \
-    qiniu \
-    qrcode \
-    readline \
-    redis \
-    rq \
-    supervisor \
-    sqlalchemy \
-    tornado \
-    xlrd \
-    numpy \
-    matplotlib \
-    scipy \
-    scikit-learn \
-    git+https://github.com/senko/python-video-converter.git \
-    hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
-
 cd /tmp
 wget -c http://cdn.mysql.com//Downloads/Connector-Python/mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz
 tar -xzvf mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz
@@ -167,5 +127,46 @@ cd node-$NODE_VERSION
 ./configure
 make && make install
 cd -
+
+# "pip install -i http://pypi.douban.com/simple xxx" might be faster
+pip install \
+    axmlparserpy \
+    beautifulsoup4 \
+    biplist \
+    cffi \
+    cryptography \
+    evernote \
+    filemagic \
+    geoip2 \
+    green \
+    identicon \
+    ipython \
+    jieba \
+    paramiko \
+    paho-mqtt \
+    pillow \
+    ppmessage-mqtt \
+    pyipa \
+    pypinyin \
+    pyparsing \
+    python-dateutil \
+    python-gcm \
+    python-magic \
+    qiniu \
+    qrcode \
+    readline \
+    redis \
+    rq \
+    supervisor \
+    sqlalchemy \
+    tornado \
+    xlrd \
+    numpy \
+    matplotlib \
+    scipy \
+    scikit-learn
+
+pip install git+https://github.com/senko/python-video-converter.git \
+    hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
 
 echo "Finish install the requirements of PPMessage, next to run dist.sh with different arguments to start PPMessage."

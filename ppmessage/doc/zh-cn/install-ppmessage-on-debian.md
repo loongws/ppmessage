@@ -31,20 +31,25 @@ LICENSE    README.md  dist.sh*   ppmessage/
 
 ```
 
-> 执行 requir.py 这个脚本用来检查 PPMessage 所需要的环境是否 OK？
+> 执行 dist.sh，这个脚本根据参数不同能够执行很多 PPMessage 相关的批处理操作。注册 PPMessage 模块到 Python 系统中，建数据库表，生成 nginx 配置文件，安装 PPMessage 所需要的 node 的工具和开发包，以及打包、发布、启动、停止 PPMessage 的应用。
 
 ```bash
-# python ppmessage/scripts/require.py
+> 注册 Python 模块
+# bash dist.sh dev
 
-```
-
-> 执行 dist.sh，这个脚本能够帮助你创建数据库和NGINX的配置文件，安装 PPMessage 所需要的 node 的工具和开发包，以及打包、发布、启动、停止 PPMessage 的应用。
-
-```bash
+> 根据 bootstrap/config.py 创建数据库和 nginx 配置文件，生成 bootstrap/data.py
 # bash dist.sh bootstrap
-# bash dist.sh bower
+
+> 下载 node 包
 # bash dist.sh npm
+
+> 下载 javascript bower 管理的组件
+# bash dist.sh bower
+
+> 执行 gulp 任务
 # bash dist.sh gulp
+
+> 启动 PPMessage 后台服务
 # bash dist.sh start
 
 ```
