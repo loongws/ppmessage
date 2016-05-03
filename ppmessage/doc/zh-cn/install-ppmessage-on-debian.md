@@ -1,6 +1,13 @@
 # 在 Debian Linux 上安装 PPMessage
 
-> 假设你已经安装了Debian Linux 8.4的操作系统，并且已经通过Github clone了PPMessage的源代码。
+> 假设你已经安装了Debian Linux 8.4的操作系统，并且已经通过Github clone了PPMessage的源代码。需要注意的是在安装基本的 Debian 系统后，往往需要更改 /etc/apt/sources.list 才能下载 Debian 的软件包。在中国大陆推荐使用 163 镜像。
+
+```python
+deb http://mirrors.163.com/debian jessie-updates main non-free contrib
+deb http://mirrors.163.com/debian jessie main non-free contrib
+
+```
+
 
 ```bash
 # git clone https://github.com/PPMESSAGE/ppmessage.git
