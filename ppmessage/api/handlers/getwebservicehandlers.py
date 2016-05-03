@@ -102,6 +102,7 @@ from .ppvalidateonlinedevicehandler import PPValidateOnlineDeviceHandler
 from .ppkefusetbusy import PPKefuSetBusy
 from .ppkefusetready import PPKefuSetReady
 from .ppkefusetrest import PPKefuSetRest
+from .ppkefusetserviceuserstatus import PPKefuSetServiceUserStatus
 
 from .ppaddpredefinedscript import PPAddPredefinedScript
 from .ppremovepredefinedscript import PPRemovePredefinedScript
@@ -235,7 +236,8 @@ def getWebServiceHandlers():
     handler_list.append((r"/PPKEFU_SET_BUSY", PPKefuSetBusy))
     handler_list.append((r"/PPKEFU_SET_READY", PPKefuSetReady))
     handler_list.append((r"/PPKEFU_SET_REST", PPKefuSetRest))
-
+    handler_list.append((r"/PPKEFU_SET_SERVICE_USER_STATUS", PPKefuSetServiceUserStatus))
+    
     handler_list.append((r"/PP_ADD_PREDEFINED_SCRIPT", PPAddPredefinedScript))
     handler_list.append((r"/PP_REMOVE_PREDEFINED_SCRIPT", PPRemovePredefinedScript))
     handler_list.append((r"/PP_ADD_PREDEFINED_SCRIPT_GROUP", PPAddPredefinedScriptGroup))

@@ -1,5 +1,2 @@
-static/releases/*
-!static/releases/README.md
-!static/releases/robosoft-resources
 static/bower_components
-.DS_Store
+node_modules

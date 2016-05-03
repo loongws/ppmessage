@@ -1,0 +1,527 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3541F9D31BCE08B7000940EA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3541F9D21BCE08B7000940EA /* main.m */; };
+		3541F9D61BCE08B7000940EA /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3541F9D51BCE08B7000940EA /* AppDelegate.m */; };
+		3541F9DE1BCE08B8000940EA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3541F9DD1BCE08B8000940EA /* Images.xcassets */; };
+		3541F9E11BCE08B8000940EA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3541F9DF1BCE08B8000940EA /* LaunchScreen.xib */; };
+		3541F9ED1BCE08B8000940EA /* PPComDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3541F9EC1BCE08B8000940EA /* PPComDemoTests.m */; };
+		3541F9FD1BCE09AF000940EA /* DemoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3541F9F71BCE09AF000940EA /* DemoTableViewController.m */; };
+		3541F9FE1BCE09AF000940EA /* FeedbackMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3541F9F91BCE09AF000940EA /* FeedbackMessagesViewController.m */; };
+		3541FA001BCE09AF000940EA /* PPDemo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3541F9FC1BCE09AF000940EA /* PPDemo.storyboard */; };
+		EDAC3D371CACF80600BA1066 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EDAC3D361CACF80600BA1066 /* libicucore.tbd */; };
+		EDBB0AA11CC9CA1800E79F04 /* libPPComLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EDBB0A9C1CC9C9FA00E79F04 /* libPPComLib.a */; };
+		EDBB0AA51CC9CB6500E79F04 /* PPComLib.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EDBB0AA41CC9CB6500E79F04 /* PPComLib.bundle */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3541F9E71BCE08B8000940EA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3541F9C51BCE08B7000940EA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3541F9CC1BCE08B7000940EA;
+			remoteInfo = PPComDemo;
+		};
+		EDBB0A9B1CC9C9FA00E79F04 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3567AF921BCB9D860053843C;
+			remoteInfo = PPComLib;
+		};
+		EDBB0A9D1CC9C9FA00E79F04 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3567AF9D1BCB9D860053843C;
+			remoteInfo = PPComLibTests;
+		};
+		EDBB0A9F1CC9C9FA00E79F04 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 355980651BCCB00A00DCAE33;
+			remoteInfo = PPComLibResources;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3541F9CD1BCE08B7000940EA /* PPComDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PPComDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3541F9D11BCE08B7000940EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3541F9D21BCE08B7000940EA /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3541F9D41BCE08B7000940EA /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3541F9D51BCE08B7000940EA /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3541F9DD1BCE08B8000940EA /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		3541F9E01BCE08B8000940EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		3541F9E61BCE08B8000940EA /* PPComDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPComDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3541F9EB1BCE08B8000940EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3541F9EC1BCE08B8000940EA /* PPComDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPComDemoTests.m; sourceTree = "<group>"; };
+		3541F9F61BCE09AF000940EA /* DemoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DemoTableViewController.h; sourceTree = "<group>"; };
+		3541F9F71BCE09AF000940EA /* DemoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DemoTableViewController.m; sourceTree = "<group>"; };
+		3541F9F81BCE09AF000940EA /* FeedbackMessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackMessagesViewController.h; sourceTree = "<group>"; };
+		3541F9F91BCE09AF000940EA /* FeedbackMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackMessagesViewController.m; sourceTree = "<group>"; };
+		3541F9FC1BCE09AF000940EA /* PPDemo.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PPDemo.storyboard; sourceTree = "<group>"; };
+		EDAC3D361CACF80600BA1066 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PPComLib.xcodeproj; path = ../../PPComLib/PPComLib.xcodeproj; sourceTree = "<group>"; };
+		EDBB0AA41CC9CB6500E79F04 /* PPComLib.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = PPComLib.bundle; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3541F9CA1BCE08B7000940EA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDBB0AA11CC9CA1800E79F04 /* libPPComLib.a in Frameworks */,
+				EDAC3D371CACF80600BA1066 /* libicucore.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3541F9E31BCE08B8000940EA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3541F9C41BCE08B7000940EA = {
+			isa = PBXGroup;
+			children = (
+				EDAC3D361CACF80600BA1066 /* libicucore.tbd */,
+				EDBB0AA41CC9CB6500E79F04 /* PPComLib.bundle */,
+				3541F9CF1BCE08B7000940EA /* PPComDemo */,
+				3541F9E91BCE08B8000940EA /* PPComDemoTests */,
+				3541F9CE1BCE08B7000940EA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3541F9CE1BCE08B7000940EA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3541F9CD1BCE08B7000940EA /* PPComDemo.app */,
+				3541F9E61BCE08B8000940EA /* PPComDemoTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3541F9CF1BCE08B7000940EA /* PPComDemo */ = {
+			isa = PBXGroup;
+			children = (
+				EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */,
+				3541F9F61BCE09AF000940EA /* DemoTableViewController.h */,
+				3541F9F71BCE09AF000940EA /* DemoTableViewController.m */,
+				3541F9F81BCE09AF000940EA /* FeedbackMessagesViewController.h */,
+				3541F9F91BCE09AF000940EA /* FeedbackMessagesViewController.m */,
+				3541F9FC1BCE09AF000940EA /* PPDemo.storyboard */,
+				3541F9D41BCE08B7000940EA /* AppDelegate.h */,
+				3541F9D51BCE08B7000940EA /* AppDelegate.m */,
+				3541F9DD1BCE08B8000940EA /* Images.xcassets */,
+				3541F9DF1BCE08B8000940EA /* LaunchScreen.xib */,
+				3541F9D01BCE08B7000940EA /* Supporting Files */,
+			);
+			path = PPComDemo;
+			sourceTree = "<group>";
+		};
+		3541F9D01BCE08B7000940EA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3541F9D11BCE08B7000940EA /* Info.plist */,
+				3541F9D21BCE08B7000940EA /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3541F9E91BCE08B8000940EA /* PPComDemoTests */ = {
+			isa = PBXGroup;
+			children = (
+				3541F9EC1BCE08B8000940EA /* PPComDemoTests.m */,
+				3541F9EA1BCE08B8000940EA /* Supporting Files */,
+			);
+			path = PPComDemoTests;
+			sourceTree = "<group>";
+		};
+		3541F9EA1BCE08B8000940EA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3541F9EB1BCE08B8000940EA /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		EDBB0A951CC9C9FA00E79F04 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EDBB0A9C1CC9C9FA00E79F04 /* libPPComLib.a */,
+				EDBB0A9E1CC9C9FA00E79F04 /* PPComLibTests.xctest */,
+				EDBB0AA01CC9C9FA00E79F04 /* PPComLib.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3541F9CC1BCE08B7000940EA /* PPComDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3541F9F01BCE08B8000940EA /* Build configuration list for PBXNativeTarget "PPComDemo" */;
+			buildPhases = (
+				3541F9C91BCE08B7000940EA /* Sources */,
+				3541F9CA1BCE08B7000940EA /* Frameworks */,
+				3541F9CB1BCE08B7000940EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PPComDemo;
+			productName = PPComDemo;
+			productReference = 3541F9CD1BCE08B7000940EA /* PPComDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3541F9E51BCE08B8000940EA /* PPComDemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3541F9F31BCE08B8000940EA /* Build configuration list for PBXNativeTarget "PPComDemoTests" */;
+			buildPhases = (
+				3541F9E21BCE08B8000940EA /* Sources */,
+				3541F9E31BCE08B8000940EA /* Frameworks */,
+				3541F9E41BCE08B8000940EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3541F9E81BCE08B8000940EA /* PBXTargetDependency */,
+			);
+			name = PPComDemoTests;
+			productName = PPComDemoTests;
+			productReference = 3541F9E61BCE08B8000940EA /* PPComDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3541F9C51BCE08B7000940EA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = Yvertical;
+				TargetAttributes = {
+					3541F9CC1BCE08B7000940EA = {
+						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 2ADRW6ALVC;
+					};
+					3541F9E51BCE08B8000940EA = {
+						CreatedOnToolsVersion = 6.1.1;
+						TestTargetID = 3541F9CC1BCE08B7000940EA;
+					};
+				};
+			};
+			buildConfigurationList = 3541F9C81BCE08B7000940EA /* Build configuration list for PBXProject "PPComDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3541F9C41BCE08B7000940EA;
+			productRefGroup = 3541F9CE1BCE08B7000940EA /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = EDBB0A951CC9C9FA00E79F04 /* Products */;
+					ProjectRef = EDBB0A941CC9C9FA00E79F04 /* PPComLib.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				3541F9CC1BCE08B7000940EA /* PPComDemo */,
+				3541F9E51BCE08B8000940EA /* PPComDemoTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		EDBB0A9C1CC9C9FA00E79F04 /* libPPComLib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPPComLib.a;
+			remoteRef = EDBB0A9B1CC9C9FA00E79F04 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		EDBB0A9E1CC9C9FA00E79F04 /* PPComLibTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PPComLibTests.xctest;
+			remoteRef = EDBB0A9D1CC9C9FA00E79F04 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		EDBB0AA01CC9C9FA00E79F04 /* PPComLib.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PPComLib.bundle;
+			remoteRef = EDBB0A9F1CC9C9FA00E79F04 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3541F9CB1BCE08B7000940EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3541F9E11BCE08B8000940EA /* LaunchScreen.xib in Resources */,
+				EDBB0AA51CC9CB6500E79F04 /* PPComLib.bundle in Resources */,
+				3541FA001BCE09AF000940EA /* PPDemo.storyboard in Resources */,
+				3541F9DE1BCE08B8000940EA /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3541F9E41BCE08B8000940EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3541F9C91BCE08B7000940EA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3541F9FD1BCE09AF000940EA /* DemoTableViewController.m in Sources */,
+				3541F9D61BCE08B7000940EA /* AppDelegate.m in Sources */,
+				3541F9FE1BCE09AF000940EA /* FeedbackMessagesViewController.m in Sources */,
+				3541F9D31BCE08B7000940EA /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3541F9E21BCE08B8000940EA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3541F9ED1BCE08B8000940EA /* PPComDemoTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3541F9E81BCE08B8000940EA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3541F9CC1BCE08B7000940EA /* PPComDemo */;
+			targetProxy = 3541F9E71BCE08B8000940EA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3541F9DF1BCE08B8000940EA /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3541F9E01BCE08B8000940EA /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3541F9EE1BCE08B8000940EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		3541F9EF1BCE08B8000940EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3541F9F11BCE08B8000940EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PPComLib",
+					"$(PROJECT_DIR)/PPComDemo",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = PPComDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		3541F9F21BCE08B8000940EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PPComLib",
+					"$(PROJECT_DIR)/PPComDemo",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = PPComDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+		3541F9F41BCE08B8000940EA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PPComDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PPComDemo.app/PPComDemo";
+			};
+			name = Debug;
+		};
+		3541F9F51BCE08B8000940EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = PPComDemoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PPComDemo.app/PPComDemo";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3541F9C81BCE08B7000940EA /* Build configuration list for PBXProject "PPComDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3541F9EE1BCE08B8000940EA /* Debug */,
+				3541F9EF1BCE08B8000940EA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3541F9F01BCE08B8000940EA /* Build configuration list for PBXNativeTarget "PPComDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3541F9F11BCE08B8000940EA /* Debug */,
+				3541F9F21BCE08B8000940EA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3541F9F31BCE08B8000940EA /* Build configuration list for PBXNativeTarget "PPComDemoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3541F9F41BCE08B8000940EA /* Debug */,
+				3541F9F51BCE08B8000940EA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3541F9C51BCE08B7000940EA /* Project object */;
+}

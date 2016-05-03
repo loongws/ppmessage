@@ -139,7 +139,8 @@
             // 获取历史消息时候，没有 user_fullname 和 user_avatar
             // Call getUserDetailInfo to get it's detail info
             Service.$api.getUserDetailInfo({
-                user_uuid: options.user_uuid
+                uuid: options.user_uuid,
+                type: 'DU'
             }, function(response) {
 
                 // Merge options info to response options

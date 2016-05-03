@@ -23,8 +23,21 @@
         >h2, >p {
             color: white;
         }
+
+        span.user-status-indicator {
+            cursor: pointer;
+            position: absolute;
+            left: 33px;
+            bottom: 8px;
+            width: 15px;
+            height: 15px;
+            border-width: 1px;
+            border-radius: 50%;            
+            border-style: solid;
+            border-color: white;
+        }
         
-        .button {
+        .button.log-out {
             color: white;
             position: absolute;
             top: 6px;
