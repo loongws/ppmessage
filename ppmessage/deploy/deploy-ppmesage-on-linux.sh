@@ -4,6 +4,7 @@
 # maintainer: Jin He <jin.he@ppmessage.com>
 # description: a shell script to deploy PPMessage on Debian and Ubuntu
 
+NODE_VERSION="v4.4.3"
 NGINX_VERSION="1.8.0"
 FFMPEG_VERSION="3.0.2"
 MYSQL_CONNECTOR_PYTHON_VERSION="2.1.3"
@@ -127,14 +128,14 @@ pip install \
     hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
 
 cd /tmp
-wget http://cdn.mysql.com//Downloads/Connector-Python/mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz
+wget -c http://cdn.mysql.com//Downloads/Connector-Python/mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz
 tar -xzvf mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz
 cd mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION
 python setup.py install
 cd -
 
 cd /tmp
-wget http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz
+wget -c http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz
 git clone https://github.com/vkholodkov/nginx-upload-module.git
 cd nginx-upload-module && git checkout 2.2 && cd ../
 tar -xzvf nginx-$NGINX_VERSION.tar.gz
@@ -145,7 +146,7 @@ ls -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
 cd -
 
 cd /tmp 
-wget http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 
+wget -c http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 
 tar -xjvf ffmpeg-$FFMPEG_VERSION.tar.bz2 
 cd ffmpeg-$FFMPEG_VERSION 
 ./configure --enable-libopencore-amrnb \
@@ -157,6 +158,14 @@ cd ffmpeg-$FFMPEG_VERSION
             --enable-libopus \
             --enable-libfdk-aac
 make && make install 
+cd -
+
+cd /tmp
+wget -c https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION.tar.gz
+tar -zxvf node-$NODE_VERSION.tar.gz
+cd node-$NODE_VERSION
+./configure
+make && make install
 cd -
 
 echo "Finish install the requirements of PPMessage, next to run dist.sh with different arguments to start PPMessage."
