@@ -37,10 +37,12 @@ LICENSE    README.md  dist.sh*   ppmessage/
 > 注册 Python 模块
 # bash dist.sh dev
 
-> 根据 bootstrap/config.py 创建数据库和 nginx 配置文件，生成 bootstrap/data.py
+> 根据 bootstrap/config.py 创建数据库和 nginx 配置文件，生成 bootstrap/data.py，这里稍微有一点点复杂，bootstrap/config.py 是不存在的，需要自己根据需要配置，经常使用的配置模版文件已经放在 bootstrap/ 目录下，如 config.localhost.py 这个模版文件是指本地测试使用的，config.ppmessage.com.py 是给 ppmessage.com 这个网站使用的。可以复制一个预先定义的模板修改成你需要的。
+
 # bash dist.sh bootstrap
 
-> 下载 node 包
+> 下载 node 包，这个过程值得注意的是，nodejs 很多软件包在中国大陆被墙了，我们测试过 taobao 的镜像可以解决问题。[taobao npm 镜像](https://npm.taobao.org/)。
+
 # bash dist.sh npm
 
 > 下载 javascript bower 管理的组件

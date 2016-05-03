@@ -283,7 +283,12 @@ function ppmessage_npm()
 
 function ppmessage_bootstrap()
 {
-    echo "bootstrap will create db tables, config PPMessage, cache db to redis.";
+    if [ ! -f ./ppmessage/bootstrap/config.py ];
+    then
+        ppmessage_err "create ppmessage/bootstrap/config.py first!"
+    fi
+
+    echo "bootstrap will create db tables, config PPMessage, cache db to redis based on config.py.";
     python ppmessage/scripts/table.py;
     python ppmessage/scripts/bootstrap.py;
     python ppmessage/scripts/db2cache.py;
