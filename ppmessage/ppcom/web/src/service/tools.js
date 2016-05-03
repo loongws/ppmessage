@@ -230,6 +230,36 @@
         this.isNull = function ( obj ) {
             return ( obj === null ) || ( obj === undefined );
         };
+
+        // We consider `{error_code: 0, uri: "/XXX_XXX_XXX", error_string: "success."}` obj as empty response
+        this.isApiResponseEmpty = function( response ) {
+            if ( !response ) return true;
+            if ( response.error_code !== 0 ) return false;
+
+            var copy = $.extend( {}, response );
+            delete copy[ 'error_code' ];
+            delete copy[ 'error_string' ];
+            delete copy[ 'uri' ];
+
+            return $.isEmptyObject( copy );
+        };
+
+        // format string
+        //
+        // ```javascript
+        // var formattedStr = Service.$tools.format( 'Hello, %s and %s.', 'Tom', 'Jenny' );
+        // ```
+        //
+        // `formattedStr` will be 'Hello, Tom and Jenny'
+        //
+        this.format = function( str ) {
+            var args = [].slice.call(arguments, 1),
+                i = 0;
+
+            return str.replace(/%s/g, function() {
+                return args[i++];
+            });
+        };
         
     }
 

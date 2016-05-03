@@ -62,7 +62,13 @@ Service.$user = (function() {
         // quick get current user's id
         quickId: function() {
             return user_uuid;
+        },
+
+        quickDeviceUUID: function() {
+            var userInfo = getUserInfo( user_uuid );
+            return userInfo && userInfo.device_uuid;
         }
+        
     }
 
     //////// Implentation /////////

@@ -61,6 +61,21 @@ class PPComGetDefaultConversationHandler(BaseHandler):
         self.addPermission(api_level=API_LEVEL.PPCOM)
         return
 
+    def _return(self, _app_uuid, _user_uuid, _conversation_uuid):
+        _redis = self.application.redis
+        _conversation = redis_hash_to_dict(_redis, ConversationInfo, _conversation_uuid)
+        if _conversation == None:
+            return None
+        _key = ConversationUserData.__tablename__ + ".app_uuid." + _app_uuid + \
+               ".user_uuid." + _user_uuid + ".conversation_uuid." + _conversation_uuid
+        _data_uuid = _redis.get(_key)
+        if _data_uuid != None:
+            _key = ConversationUserData.__tablename__ + ".uuid." + _data_uuid
+            _data = _redis.hmget(_key, ["conversation_name", "conversation_icon"])
+	    _conversation["conversation_name"] = _data[0]
+            _conversation["conversation_icon"] = _data[1]
+        return _conversation
+
     def _get_users(self, _users):
         if _users == None:
             return None
@@ -114,7 +129,7 @@ class PPComGetDefaultConversationHandler(BaseHandler):
         _key = ConversationUserData.__tablename__ + ".conversation_uuid." + _conversation.get("uuid")
         return self.application.redis.smembers(_key)
     
-    def _lastest_conversation(self, _conversations):
+    def _latest_conversation(self, _conversations):
         _pi = self.application.redis.pipeline()
         _pre = ConversationInfo.__tablename__ + ".uuid."
         for _conversation in _conversations:
@@ -156,11 +171,17 @@ class PPComGetDefaultConversationHandler(BaseHandler):
             logging.info("waiting for AMD to allocate service user to create conversation")
             return
 
-        _conversation = self._lastest_conversation(_conversations)
+        _conversation_uuid = self._latest_conversation(_conversations).get('uuid')
+        _conversation = self._return(_app_uuid, _user_uuid, _conversation_uuid)
+        if _conversation == None:
+            self.setErrorCode(API_ERR.NO_CONVERSATION)
+            logging.error("No conversation: %s" % _conversation_uuid)
+            return
+
         _users = self._conversation_users(_conversation)
         if _users == None or len(_users) == 0:
             self.setErrorCode(API_ERR.NO_CONVERSATION_MEMBER)
-            logging.error("Existed conversation but no users: %s" % str(_conversation))
+            logging.error("Existed conversation but no users: %s" % str(_conversation_uuid))
             return
         _users = self._get_users(_users)
         _users = self._sort_users(_users)
