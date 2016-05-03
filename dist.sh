@@ -198,6 +198,7 @@ function ppmessage_supervisord_proc()
 
 function ppmessage_start()
 {
+    ppmessage_exec mkdir -p /usr/local/var/log
     ppmessage_exec supervisord -c ppmessage/conf/supervisord.nginx.conf
 }
 
