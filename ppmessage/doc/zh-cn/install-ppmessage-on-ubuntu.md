@@ -36,10 +36,18 @@ $ sudo bash dist.sh dev
 
 > 根据 bootstrap/config.py 创建数据库和 nginx 配置文件，生成 bootstrap/data.py，这里稍微有一点点复杂，bootstrap/config.py 是不存在的，需要自己根据需要配置，经常使用的配置模版文件已经放在 bootstrap/ 目录下，如 config.localhost.py 这个模版文件是指本地测试使用的，config.ppmessage.com.py 是给 ppmessage.com 这个网站使用的。可以复制一个预先定义的模板修改成你需要的。这个步骤以及这个步骤之前的步骤，一旦成功执行成功，不需要再执行。从 Github 上更新代码后不要再执行 bootstrap。因为执行 bootstrap 会重建数据表。
 
-> 执行 bootstrap 过程中，由于使用的是普通用户权限，可能会遇到权限不够的情况，特别是 /usr/local/opt 是用来放置用户上传的文件目录，/usr/local/var/log 是用来放置 PPMessage 运行的日志文件的。确保这两个目录的权限可以被当前用户写访问。
+> 执行 bootstrap 过程中，由于使用的是普通用户权限，可能会遇到权限不够的情况，特别是 /usr/local/opt 是用来放置用户上传的文件目录，/usr/local/var/log 是用来放置 PPMessage 运行的日志文件的。确保这两个目录的权限可以被当前用户写访问。 /usr/local/nginx/conf/nginx.conf 是 ngnix 的配置文件 PPMessage 会根据 config.py 生成新的 nginx.conf，也要确保这个文件可写
+
+```bash
+$ sudo mkdir -p /user/local/opt; sudo chmod 777 /usr/local/opt
+$ sudo mkdir -p /user/local/var/log; sudo chmod 777 /usr/local/var/log
+$ sudo chmod 777 /usr/local/nginx/conf/nginx.conf
+
+```
 
 ```bash
 $ bash dist.sh bootstrap
+$ nginx -s reload
 ```
 
 > 下载 node 包，这个过程值得注意的是，nodejs 很多软件包在中国大陆被墙了，我们测试过 taobao 的镜像可以解决问题。[taobao npm 镜像](https://npm.taobao.org/)。这个操作以及紧接着的几个操作是可以反复多次执行的。因为在 PPMessage 开发进程中可能依赖新的 node 软件包。
