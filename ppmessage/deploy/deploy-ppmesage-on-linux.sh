@@ -4,10 +4,9 @@
 # maintainer: Jin He <jin.he@ppmessage.com>
 # description: a shell script to deploy PPMessage on Debian and Ubuntu
 
-NGINX_VERSION=1.8.0
-FFMPEG_VERSION=2.8.5
-MYSQL_CONNECTOR_PYTHON_VERSION=2.1.3
-
+NGINX_VERSION="1.8.0"
+FFMPEG_VERSION="2.8.5"
+MYSQL_CONNECTOR_PYTHON_VERSION="2.1.3"
 
 function ppmessage_err()
 {
