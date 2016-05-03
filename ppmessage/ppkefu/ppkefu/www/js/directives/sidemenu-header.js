@@ -7,37 +7,13 @@ ppmessageModule.directive("yvSidemenuHeader", [
     "yvBase",
     "yvLogin",
     "yvLogout",
+    "yvLocal",
     "yvConstants",
-function ($rootScope, yvSys, yvAPI, yvLink, yvUser, yvBase, yvLogin, yvLogout, yvConstants) {
+function ($rootScope, yvSys, yvAPI, yvLink, yvUser, yvBase, yvLogin, yvLogout, yvLocal, yvConstants) {
 
     function link($scope, $element, $attrs) {
         
         $scope.page = {"show_popover": false};
-
-        $scope.status = {
-            options: [
-                {
-                    id: "1",
-                    class: "bg-ready",
-                    status: yvConstants.USER_STATUS.READY
-                },
-                {
-                    id: "2",
-                    class: "bg-busy",
-                    status: yvConstants.USER_STATUS.BUSY
-                },
-                {
-                    id: "3",
-                    class: "bg-rest",
-                    status: yvConstants.USER_STATUS.REST
-                }
-            ],
-            selected: {
-                id: "1",
-                class: "bg-ready",
-                status: yvConstants.USER_STATUS.READY
-            }
-        };
 
         $scope.search = {
             searchKey: "",
@@ -45,6 +21,51 @@ function ($rootScope, yvSys, yvAPI, yvLink, yvUser, yvBase, yvLogin, yvLogout, y
             contacts: []
         };
 
+        $scope.status = {
+            options: [
+                {
+                    class: "bg-ready",
+                    status: yvConstants.USER_STATUS.READY,
+                    origin: "app.GLOBAL.READY",
+                    content: yvLocal.translate("app.GLOBAL.READY")
+                },
+                {
+                    class: "bg-busy",
+                    status: yvConstants.USER_STATUS.BUSY,
+                    origin: "app.GLOBAL.BUSY",
+                    content: yvLocal.translate("app.GLOBAL.BUSY")
+                },
+                {
+                    class: "bg-rest",
+                    status: yvConstants.USER_STATUS.REST,
+                    origin: "app.GLOBAL.REST",
+                    content: yvLocal.translate("app.GLOBAL.REST")
+                }
+            ],
+        };
+        
+        setSelectedStatus(yvUser.get("status"));
+
+        function setSelectedStatus(status) {
+            console.log("-------111", status);
+            var option = null, i;
+            var len = $scope.status.options.length;
+            for (i = 0; i < len; i++) {
+                option = $scope.status.options[i];
+                if (option.status === status) {
+                    console.log("-------status", option);
+                    $scope.status.selected = option;
+                    break;
+                }
+            }
+        }
+
+        $rootScope.$on("$translateChangeSuccess", function (event) {
+            console.log("----------translate change success");
+            angular.forEach($scope.status.options, function (option) {
+                option.content = yvLocal.translate(option.origin);
+            });
+        });
         
         $scope.getUserIcon = function () {
             var _icon = yvUser.get("icon");
@@ -79,12 +100,18 @@ function ($rootScope, yvSys, yvAPI, yvLink, yvUser, yvBase, yvLogin, yvLogout, y
         
         $scope.onStatusChange = function () {
             console.log($scope.status.selected);
-            var status = $scope.status.selected.status;
-            yvAPI.set_user_status(status, function (res) {
+            var old_status = yvUser.get("status");
+            var new_status = $scope.status.selected.status;
+            yvAPI.set_user_status(new_status, function (res) {
+                yvUser.set("status", new_status);
                 console.log(res);
-            });
-        };
+            },__error, __error);
 
+            function __error() {
+                setSelectedStatus(old_status);
+            }
+        };
+        
         
         $scope.selectStatus = function () {       
             var elem = angular.element("#user-status");

@@ -14,6 +14,7 @@ function (yvSys, yvConstants) {
         updatetime: null,
         is_online: false,
         access_token: null,
+        status: yvConstants.USER_STATUS.READY,
         
         app: {
             uuid: "",
@@ -62,6 +63,7 @@ function (yvSys, yvConstants) {
         user.signature = data.user_signature;
         user.updatetime = data.updatetime;
         user.is_online = true;
+        user.status = data.service_user_status || yvConstants.USER_STATUS.READY;
         
         if (yvSys.in_mobile_app()) {
             user.device_uuid = data.mobile_device_uuid;
