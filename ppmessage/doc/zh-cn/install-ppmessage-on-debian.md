@@ -33,27 +33,37 @@ LICENSE    README.md  dist.sh*   ppmessage/
 
 > 执行 dist.sh，这个脚本根据参数不同能够执行很多 PPMessage 相关的批处理操作。注册 PPMessage 模块到 Python 系统中，建数据库表，生成 nginx 配置文件，安装 PPMessage 所需要的 node 的工具和开发包，以及打包、发布、启动、停止 PPMessage 的应用。
 
-```bash
 > 注册 Python 模块
+
+```bash
 # bash dist.sh dev
+```
 
 > 根据 bootstrap/config.py 创建数据库和 nginx 配置文件，生成 bootstrap/data.py，这里稍微有一点点复杂，bootstrap/config.py 是不存在的，需要自己根据需要配置，经常使用的配置模版文件已经放在 bootstrap/ 目录下，如 config.localhost.py 这个模版文件是指本地测试使用的，config.ppmessage.com.py 是给 ppmessage.com 这个网站使用的。可以复制一个预先定义的模板修改成你需要的。这个步骤以及这个步骤之前的步骤，一旦成功执行成功，不需要再执行。从 Github 上更新代码后不要再执行 bootstrap。因为执行 bootstrap 会重建数据表。
 
+```bash
 # bash dist.sh bootstrap
+```
 
 > 下载 node 包，这个过程值得注意的是，nodejs 很多软件包在中国大陆被墙了，我们测试过 taobao 的镜像可以解决问题。[taobao npm 镜像](https://npm.taobao.org/)。这个操作是可以多次执行的。因为在 PPMessage 开发进程中可能依赖新的 node 软件包。
 
+```bash
 # bash dist.sh npm
+```
 
-> 下载 javascript bower 管理的组件
+> 下载 bower 管理的 javascript 组件，这些 javascript 组件用于 PPMessage 的 前端界面。
+```bash
 # bash dist.sh bower
+```
 
-> 执行 gulp 任务
+> 执行 gulp 任务，gulp 任务用来打包 PPMessage 的前端应用
+```bash
 # bash dist.sh gulp
+```
 
 > 启动 PPMessage 后台服务
+```bash
 # bash dist.sh start
-
 ```
 
 

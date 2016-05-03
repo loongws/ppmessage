@@ -266,10 +266,10 @@ function ppmessage_gulp()
 function ppmessage_bower()
 {
     echo "install PPCom/PPKefu/PPConsole js bower depends";
-    cd ppmessage/ppcom/web; bower install; cd -;
-    cd ppmessage/ppkefu/ppkefu; bower install; cd -;
-    cd ppmessage/ppconsole; bower install; cd -;
-    cd ppmessage/pphome; bower install; cd -;
+    cd ppmessage/ppcom/web; bower install --allow-root; cd -;
+    cd ppmessage/ppkefu/ppkefu; bower install --allow-root; cd -;
+    cd ppmessage/ppconsole; bower install --allow-root; cd -;
+    cd ppmessage/pphome; bower install --allow-root; cd -;
 }
 
 function ppmessage_npm()

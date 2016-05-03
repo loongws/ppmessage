@@ -120,6 +120,7 @@ cd ffmpeg-$FFMPEG_VERSION
 make && make install 
 cd -
 
+# install nodejs
 cd /tmp
 wget -c https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION.tar.gz
 tar -zxvf node-$NODE_VERSION.tar.gz
@@ -127,6 +128,10 @@ cd node-$NODE_VERSION
 ./configure
 make && make install
 cd -
+
+# install gulp and bower
+npm install -g bower
+npm install -g gulp
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
 pip install \
