@@ -45,7 +45,7 @@ LICENSE    README.md  dist.sh*   ppmessage/
 # bash dist.sh bootstrap
 ```
 
-> 下载 node 包，这个过程值得注意的是，nodejs 很多软件包在中国大陆被墙了，我们测试过 taobao 的镜像可以解决问题。[taobao npm 镜像](https://npm.taobao.org/)。这个操作是可以多次执行的。因为在 PPMessage 开发进程中可能依赖新的 node 软件包。
+> 下载 node 包，这个过程值得注意的是，nodejs 很多软件包在中国大陆被墙了，我们测试过 taobao 的镜像可以解决问题。[taobao npm 镜像](https://npm.taobao.org/)。这个操作以及后面的几个操作是反复多次执行的。因为在 PPMessage 开发进程中可能依赖新的 node 软件包。
 
 ```bash
 # bash dist.sh npm
