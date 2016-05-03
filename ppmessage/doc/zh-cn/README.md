@@ -14,11 +14,18 @@ PPMessage同时提供了一个Web管理界面，称之为PPConsole，当然也�
  
 > 下面是PPMessage提供的一些文档，详细信息及在线体验PPMessage，请访问[PPMessage Site](https://ppmessage.com)。
 
-* [在线使用PPMessage](/ppmessage/doc/zh-cn/online-ppmessage-guide.md)
+* [在Debian 8.4上安装PPMessage](/ppmessage/doc/zh-cn/install-ppmessage-on-debian.md)
+
+<!--
+
+* [在线使用PPMessage](/ppmessage/doc/zh-cn/online-ppmessage-guide.md) 
 
 * [从源码开始](/ppmessage/doc/zh-cn/install.md)
 
 * [使用手册](/ppmessage/doc/zh-cn/user-manual.md)
 
 * [开发手册](/ppmessage/doc/zh-cn/developer-manual.md)
+
+-->
+
 
