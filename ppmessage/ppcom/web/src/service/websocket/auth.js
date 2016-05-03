@@ -63,7 +63,7 @@ Service.$notifyAuth = (function() {
                 // get unacked messages
                 Service.$api.getUnackedMessages({
                     app_uuid: Service.$ppSettings.getAppUuid(),
-                    user_uuid: wsSettings.user_uuid,
+                    from_uuid: wsSettings.user_uuid,
                     device_uuid: wsSettings.device_uuid
                 }, function(response) {
                     

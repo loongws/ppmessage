@@ -7,6 +7,7 @@
 //
 
 #import "PPMessagesViewController.h"
+#import "PPGroupMembersViewController.h"
 
 #import "PPImagePickerDelegate.h"
 #import "PPCameraViewDelegate.h"
@@ -24,8 +25,16 @@
 
 #import "PPConstants.h"
 #import "PPFastLog.h"
+#import "PPComUtils.h"
 
 #import "JSQMessagesBubbleImage.h"
+
+#import "PPStoreManager.h"
+#import "PPConversationsStore.h"
+#import "PPMessagesStore.h"
+
+#import "PPGetMessageHistoryHttpModel.h"
+#import "PPMessagesViewController+PPCellTopLabel.h"
 
 NSString *const PPVersionString = @"0.0.2";
 
@@ -44,8 +53,12 @@ NSString *const PPVersionString = @"0.0.2";
 @property (strong, nonatomic) JSQMessagesBubbleImage *outgoingBubbleImageData;
 @property (strong, nonatomic) JSQMessagesBubbleImage *incomingBubbleImageData;
 
+@property (nonatomic) PPMessagesStore *messagesStore;
+
+@property (nonatomic) UIBarButtonItem *groupButtonItem;
+@property (nonatomic) UIBarButtonItem *activityIndicatorButtonItem;
+
 - (void)configure;
-- (void)loadHistory:(NSNumber*)pageOffset withBlock:(void(^)(NSDictionary *response))handler;
 - (void)prepareLoadData;
 - (void)notifyLoadDataFinish;
 
@@ -76,28 +89,6 @@ NSString *const PPVersionString = @"0.0.2";
 
 @end
 
-/////////////////////////
-/// Resources Release ///
-/////////////////////////
-@interface PPMessagesViewController (ReleaseResources)
-
-/**
- * Release resources
- */
-- (void)releaseResources;
-
-@end
-
-@implementation PPMessagesViewController (ReleaseResources)
-
-- (void)releaseResources {
-    if (self.client) {
-        [self.client releaseResources];
-    }
-}
-
-@end
-
 #pragma mark - Data Related Methods
 
 @interface PPMessagesViewController (MessageData)
@@ -109,7 +100,8 @@ NSString *const PPVersionString = @"0.0.2";
 @implementation PPMessagesViewController (MessageData)
 
 -(void)updateLocalMessageFromCache: (NSString*) conversationId {
-    PPMessageList *cachedList = [self.client.dataStorage getCachedMessagesList:conversationId autoCreate:YES];
+    PPMessageList *cachedList = [self.messagesStore messagesInCovnersation:conversationId autoCreate:YES];
+    
     self.jsqMessageArray = cachedList.jsqMessageArray;
     self.ppMessageArray = cachedList.ppMessageArray;
 }
@@ -151,23 +143,6 @@ NSString *const PPVersionString = @"0.0.2";
 
 #pragma mark - Public Api Methods
 
-- (void) initialize {
-    [self initializeWithUserEmail:nil];
-}
-
-// 初始化 !!!
-- (void) initializeWithUserEmail:(NSString *)email {
-    NSParameterAssert(self.appKey != nil && self.appKey.length > 0);
-    NSParameterAssert(self.appSecret != nil && self.appSecret.length > 0);
-
-    [self startAnimateLoadingUI];    
-    
-    self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
-    self.client = [PPCom instanceWithAppKey:self.appKey withSecret:self.appSecret];
-    
-    [self.client initilize:email withDelegate:self];
-}
-
 - (void)setInputViewPlaceHolder:(NSString *)hintText {
     if ( hintText && hintText.length > 0 ) {
         self.inputToolbar.contentView.textView.placeHolder = hintText;
@@ -185,27 +160,17 @@ NSString *const PPVersionString = @"0.0.2";
     [super viewWillAppear:animated];
     
     self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    UIBarButtonItem * barButton = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
-    self.navigationItem.rightBarButtonItem = barButton;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-
-    [self releaseResources];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+    self.navigationItem.rightBarButtonItem = self.groupButtonItem;
+    
+    if (!self.conversationUUID) return;
+    if (!([PPCom instance].initState == InitializeStateInited)) return;
+    
+    self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
+    self.client = [PPCom instance];
+    self.client.messageDelegate = self;
+    self.title = PPSafeString(self.conversationName);
+    [self onInitSuccess:[PPCom instance].user conversationId:self.conversationUUID];
+    
 }
 
 #pragma mark - Private Methods
@@ -247,29 +212,14 @@ NSString *const PPVersionString = @"0.0.2";
     [self showLoadEarlierMessageButton];
 }
 
-- (void)loadHistory:(NSNumber*)pageOffset withBlock:(void(^)(NSDictionary *response))handler {
+- (void)loadHistory:(NSNumber*)pageOffset withBlock:(void(^)(PPMessageList *messageList))handler {
     [self prepareLoadData];
-    PPComAPI *api = self.client.api;
-    NSDictionary *params = @{
-        @"conversation_uuid":self.conversationId,
-        @"page_offset":@([pageOffset intValue]),
-        @"page_size":MESSAGE_PAGE_SIZE,
-    };
-    [api getMessageHistory:params completionHandler:^(NSDictionary *response, NSError *error) {
-            if (!error) {
-
-                if ( [response[@"error_code"] integerValue] == 0 ) {
-                    if ( handler ) handler ( response );
-                } else {
-                    if ( handler ) handler ( nil );
-                }
-                
-            } else {
-                PPFastError(@"error:%@", error);
-                if ( handler ) handler ( nil );
-            }
-            [self notifyLoadDataFinish];
-        }];
+    
+    PPGetMessageHistoryHttpModel *fetchMessageHistory = [PPGetMessageHistoryHttpModel modelWithClient:self.client];
+    [fetchMessageHistory requestWithConversationUUID:self.conversationId pageOffset:[pageOffset integerValue] completed:^(id obj, NSDictionary *response, NSError *error) {
+        if (handler) handler(obj);
+        [self notifyLoadDataFinish];
+    }];
 }
 
 #pragma mark - JSQMessageDataSource
@@ -359,9 +309,9 @@ NSString *const PPVersionString = @"0.0.2";
     
     //首先在界面上显示出来消息
     PPMessage *textMessage = [PPMessage messageWithClient:self.client conversationId:self.conversationId text:text];
-    [self.client.dataStorage updateCache:textMessage withClient:self.client];
+    [self.messagesStore updateWithNewMessage:textMessage];
     
-    PPMessageList *messageList = [self.client.dataStorage getCachedMessagesList:self.conversationId autoCreate:YES];
+    PPMessageList *messageList = [self.messagesStore messagesInCovnersation:self.conversationId autoCreate:YES];
     self.jsqMessageArray = messageList.jsqMessageArray;
     self.ppMessageArray = messageList.ppMessageArray;
     
@@ -387,7 +337,7 @@ NSString *const PPVersionString = @"0.0.2";
 {
     CGFloat oldOffset = self.collectionView.contentSize.height - self.collectionView.contentOffset.y;
     
-    [self loadHistory:[NSNumber numberWithInteger:self.nextPageOffset] withBlock:^(NSDictionary *response) {
+    [self loadHistory:[NSNumber numberWithInteger:self.nextPageOffset] withBlock:^(PPMessageList *response) {
 
             // Duplicate Messages Bug
             
@@ -397,14 +347,14 @@ NSString *const PPVersionString = @"0.0.2";
 
             if ( response != nil ) {
 
-                PPMessageList *list = [PPMessageList listWithClient:self.client messageListBody:response];
+                PPMessageList *list = response;
                 NSInteger pageOffset = self.nextPageOffset;
                 
                 //缓存数据
-                PPMessageList *cachedList = [self.client.dataStorage getCachedMessagesList:self.conversationId autoCreate:YES];
+                PPMessageList *cachedList = [self.messagesStore messagesInCovnersation:self.conversationId autoCreate:YES];
                 [cachedList addPPMessageListToHead:list];
                 cachedList.pageOffset = pageOffset;
-                [self.client.dataStorage cacheMessagesList:cachedList withConversationId:self.conversationId];
+                [self.messagesStore setMessageList:cachedList forConversation:self.conversationId];
             
                 //更新nextPageOffset
                 self.nextPageOffset = pageOffset + 1;
@@ -458,52 +408,13 @@ NSString *const PPVersionString = @"0.0.2";
 }
 
 // 什么时候显示时间戳
-- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath
-{
-    JSQMessage *oldMessage = nil;
-    JSQMessage *message = [self.jsqMessageArray objectAtIndex:indexPath.item];
-    
-    if ( self.jsqMessageArray.count > 0 ) {
-        oldMessage = [ self.jsqMessageArray objectAtIndex:(self.jsqMessageArray.count - 1) ];
-    }
-    
-    if ( oldMessage != nil ) {
-        
-        if ( (int)message.date.timeIntervalSince1970 - (int)oldMessage.date.timeIntervalSince1970 >= (int)TIMESTAMP_DELAY ) {
-            return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];
-        }
-            
-    } else {
-        // current message is the first one message that user send or received
-        // show timestamp
-        return [[JSQMessagesTimestampFormatter sharedFormatter] attributedTimestampForDate:message.date];    
-    }
-    
-    return nil;
+- (NSAttributedString *)collectionView:(JSQMessagesCollectionView *)collectionView attributedTextForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
+    return [self PPCellTopLabelStringAtIndexPath:indexPath jsqMesssages:self.jsqMessageArray];
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
                    layout:(JSQMessagesCollectionViewFlowLayout *)collectionViewLayout heightForCellTopLabelAtIndexPath:(NSIndexPath *)indexPath {
-    JSQMessage *oldMessage = nil;
-    JSQMessage *message = [self.jsqMessageArray objectAtIndex:indexPath.item];
-    
-    if ( self.jsqMessageArray.count > 0 ) {
-        oldMessage = [ self.jsqMessageArray objectAtIndex:(self.jsqMessageArray.count - 1) ];
-    }
-    
-    if ( oldMessage != nil ) {
-
-        if ( (int)message.date.timeIntervalSince1970 - (int)oldMessage.date.timeIntervalSince1970 >= (int)TIMESTAMP_DELAY ) {
-            return kJSQMessagesCollectionViewCellLabelHeightDefault;
-        }
-            
-    } else {
-        // current message is the first one message that user send or received
-        // show timestamp
-        return kJSQMessagesCollectionViewCellLabelHeightDefault;    
-    }
-    
-    return 0.0f;
+    return [self PPCellTopLabelHeightAtIndexPath:indexPath jsqMessages:self.jsqMessageArray];
 }
 
 - (CGFloat)collectionView:(JSQMessagesCollectionView *)collectionView
@@ -653,11 +564,13 @@ NSString *const PPVersionString = @"0.0.2";
 #pragma mark - Animate Loading UI
 
 - (void)startAnimateLoadingUI {
+    self.navigationItem.rightBarButtonItem = self.activityIndicatorButtonItem;
     [self.activityIndicator startAnimating];
 }
 
 - (void)stopAnimateLoadingUI {
     [self.activityIndicator stopAnimating];
+    self.navigationItem.rightBarButtonItem = self.groupButtonItem;
 }
 
 - (void)showLoadEarlierMessageButton {
@@ -673,9 +586,9 @@ NSString *const PPVersionString = @"0.0.2";
 -(void)onNewMessageArrived:(PPMessage *)message {
     if (message != nil) {
         //更新缓存
-        if ([self.client.dataStorage updateCache:message withClient:self.client]) {
+        if ([self.messagesStore updateWithNewMessage:message]) {
             //更新本地数据
-            PPMessageList *messageList = [self.client.dataStorage getCachedMessagesList:self.conversationId autoCreate:YES];
+            PPMessageList *messageList = [self.messagesStore messagesInCovnersation:self.conversationId autoCreate:YES];
             self.jsqMessageArray = messageList.jsqMessageArray;
             self.ppMessageArray = messageList.ppMessageArray;
             //通知接受消息完毕
@@ -711,6 +624,7 @@ NSString *const PPVersionString = @"0.0.2";
         self.senderId = user.uuid;
         self.senderDisplayName = user.fullName;
     }
+    
 }
 
 - (void) onInitError:(NSError *)error with:(NSDictionary *)errorResponse {
@@ -720,6 +634,42 @@ NSString *const PPVersionString = @"0.0.2";
     [self.collectionView reloadData];
     [self stopAnimateLoadingUI];
     [self showLoadEarlierMessageButton];
+}
+
+#pragma mark - getter
+
+- (PPMessagesStore*)messagesStore {
+    if (!_messagesStore) {
+        _messagesStore = [PPStoreManager instanceWithClient:self.client].messagesStore;
+    }
+    return _messagesStore;
+}
+
+- (UIBarButtonItem*)groupButtonItem {
+    if (!_groupButtonItem) {
+        _groupButtonItem = [[UIBarButtonItem alloc] initWithImage:PPImageFromAssets(@"user_group_man_man") style:UIBarButtonItemStylePlain target:self action:@selector(onGroupButtonItemClicked:)];
+    }
+    return _groupButtonItem;
+}
+
+- (UIBarButtonItem*)activityIndicatorButtonItem {
+    if (!_activityIndicatorButtonItem) {
+        _activityIndicatorButtonItem = [[UIBarButtonItem alloc] initWithCustomView:self.activityIndicator];
+    }
+    return _activityIndicatorButtonItem;
+}
+
+#pragma mark - 
+
+- (void)onGroupButtonItemClicked:(id)sender {
+    if (!self.conversationId) return;
+    [self gotoGroupMembersViewController];
+}
+
+- (void)gotoGroupMembersViewController {
+    PPGroupMembersViewController *groupMembersViewController = [[PPGroupMembersViewController alloc] initWithConversationUUID:self.conversationId];
+    self.navigationController.view.backgroundColor = [UIColor whiteColor];
+    [self.navigationController pushViewController:groupMembersViewController animated:YES];
 }
 
 @end

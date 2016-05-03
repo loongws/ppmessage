@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "PPFastLog.h"
 
-// #define PP_ENABLE_LOG
+#define PP_ENABLE_LOG
 
 void PPFastLog(NSString *format, ...)  {
 #ifdef PP_ENABLE_LOG

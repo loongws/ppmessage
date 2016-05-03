@@ -470,8 +470,6 @@ static void * kJSQMessagesKeyValueObservingContext = &kJSQMessagesKeyValueObserv
     NSString *messageSenderId = [messageItem senderId];
     NSParameterAssert(messageSenderId != nil);
 
-    NSLog(@"self.senderId:%@, messageSenderId:%@", messageSenderId, self.senderId);
-
     BOOL isOutgoingMessage = [messageSenderId isEqualToString:self.senderId];
     BOOL isMediaMessage = [messageItem isMediaMessage];
 

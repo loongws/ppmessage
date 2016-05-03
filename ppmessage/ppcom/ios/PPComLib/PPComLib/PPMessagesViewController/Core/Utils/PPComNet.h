@@ -21,14 +21,7 @@
 
 @interface PPComNet : NSObject
 
-@property (readonly) NSString *host;
-@property (readonly) NSString *appKey;
-@property (readonly) NSString *appSecret;
-@property (readonly) NSString *apiHost;
-@property (readonly) NSString *webSocketHost;
-@property (readonly) NSString *fileDownloadHost;
-@property (readonly) NSString *fileUploadHost;
-@property (readonly) NSString *portalHost;
+@property (nonatomic) NSString *accessToken;
 
 /**
  * init with PPCom client
@@ -39,6 +32,11 @@
  * init with PPCom client
  */
 + (instancetype) netWithClient:(PPCom*)client;
+
+- (void)baseAsyncPost:(NSString*)url
+            withParam:(id)params
+               config:(void (^)(NSMutableURLRequest *request))configBlock
+            completed:(void (^)(NSDictionary* response, NSError* error))completedBlock;
 
 // post data in async mode
 - (void) asyncPost: (NSDictionary*) data urlSegment:(NSString*)url delegate:(id<PPComNetDelegate>)theDelegate;

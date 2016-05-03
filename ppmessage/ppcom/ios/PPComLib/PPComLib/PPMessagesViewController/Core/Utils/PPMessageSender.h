@@ -12,7 +12,7 @@
 /**
  * Send Message
  */
-@interface PPMessageSender : PPComAPI
+@interface PPMessageSender : NSObject
 
 #pragma mark - Initialize Methods
 

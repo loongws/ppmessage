@@ -78,9 +78,8 @@ class PPGetUserUUIDHandler(BaseHandler):
         if _uuid == None:
             self._create_third_party(_app_uuid, _user_email, _user_fullname, _user_icon)
             return
-
-        _key = AppUserData.__tablename__ + ".app_uuid." +  _app_uuid + ".user_uuid." + _uuid + ".is_service_user.True"
         
+        _key = AppUserData.__tablename__ + ".app_uuid." +  self.app_uuid + ".user_uuid." + _uuid + ".is_service_user.True"        
         if _redis.exists(_key):
             logging.error("user is service user who can not help himself ^_^.")
             self.setErrorCode(API_ERR.NOT_PORTAL)
@@ -101,9 +100,8 @@ class PPGetUserUUIDHandler(BaseHandler):
         super(PPGetUserUUIDHandler, self)._Task()
         _request = json.loads(self.request.body)
         _user_email = _request.get("user_email")
-        _user_fullname = _request.get("user_fullname")
         _user_icon = _request.get("user_icon")
-        _app_uuid = _request.get("app_uuid")
+        _user_fullname = _request.get("user_fullname")
         
         if _user_email == None:
             logging.error("no user_eamil provided.")

@@ -28,13 +28,7 @@
 - (NSString *)getAvatarUrlWith:(NSString*)avatarId {
 
     if (avatarId != nil) {
-        
-        // http link
-        if ([avatarId rangeOfString:@"^(https?|www)" options:NSRegularExpressionSearch].location != NSNotFound) {
-            return avatarId;
-        }
-        
-        return [self.client.downloader getResourceDownloadUrl:avatarId];
+        return PPFileUrl(avatarId);
     }
 
     return avatarId;
