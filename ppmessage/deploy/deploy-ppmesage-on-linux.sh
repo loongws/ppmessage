@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 # version: 0.2
 # maintainer: Jin He <jin.he@ppmessage.com>
