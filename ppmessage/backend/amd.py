@@ -35,6 +35,7 @@ from ppmessage.db.models import ConversationInfo
 from ppmessage.db.models import ConversationUserData
 
 from ppmessage.core.utils.createicon import create_group_icon
+from ppmessage.core.redis import redis_hash_to_dict
 
 import tornado.log
 import tornado.web
@@ -46,6 +47,7 @@ import json
 import redis
 import logging
 import datetime
+import random
 
 class AmdApp(tornado.web.Application):
     def __init__(self):
@@ -82,10 +84,10 @@ class AmdApp(tornado.web.Application):
         if _pcsocket_dict == None:
             logging.error("No pcsocket mapped with device_uuid: %s, %s" % (_device_uuid, _body))
             return
-        _host = self._pcsocket_dict.get("host")
-        _port = self._pcsocket_dict.get("port")
+        _host = _pcsocket_dict.get("host")
+        _port = _pcsocket_dict.get("port")
         _key = REDIS_ACK_NOTIFICATION_KEY + ".host." + _host + ".port." + _port
-        self._redis.rpush(_key, json.dumps(_body))
+        self.redis.rpush(_key, json.dumps(_body))
         return
 
     def _ack_waiting(self, _device_uuid):
@@ -99,8 +101,8 @@ class AmdApp(tornado.web.Application):
         if _pcsocket_dict == None:
             logging.error("No pcsocket mapped with device_uuid: %s, %s" % (_device_uuid, _body))
             return
-        _host = self._pcsocket_dict.get("host")
-        _port = self._pcsocket_dict.get("port")
+        _host = _pcsocket_dict.get("host")
+        _port = _pcsocket_dict.get("port")
         _body = {
             "device_uuid": _device_uuid,
             "what": DIS_WHAT.CONVERSATION,
@@ -108,7 +110,7 @@ class AmdApp(tornado.web.Application):
             "extra": {},
         }
         _key = REDIS_ACK_NOTIFICATION_KEY + ".host." + _host + ".port." + _port
-        self._redis.rpush(_key, json.dumps(_body))
+        self.redis.rpush(_key, json.dumps(_body))
         return
 
     def _ack_success(self, _device_uuid, _conversation_uuid):
@@ -122,10 +124,10 @@ class AmdApp(tornado.web.Application):
         if _pcsocket_dict == None:
             logging.error("No pcsocket mapped with device_uuid: %s, %s" % (_device_uuid, _body))
             return
-        _host = self._pcsocket_dict.get("host")
-        _port = self._pcsocket_dict.get("port")
+        _host = _pcsocket_dict.get("host")
+        _port = _pcsocket_dict.get("port")
         _key = REDIS_ACK_NOTIFICATION_KEY + ".host." + _host + ".port." + _port
-        self._redis.rpush(_key, json.dumps(_body))
+        self.redis.rpush(_key, json.dumps(_body))
         return
     
     def _group(self, _app_uuid, _user_uuid, _device_uuid, _group_uuid):
@@ -141,7 +143,7 @@ class AmdApp(tornado.web.Application):
             return True
 
         _key = OrgUserGroupData.__tablename__ + ".group_uuid." + _group_uuid
-        _users = self.reids.smembers(_key)
+        _users = self.redis.smembers(_key)
         if _users == None or len(_users) == 0:
             logging.error("no service user in group: %s" % _group_uuid)
             self._ack_error(_device_uuid, DIS_ERR.CONVERSATION_NO_USER)
@@ -161,7 +163,7 @@ class AmdApp(tornado.web.Application):
             return False
 
         _allocated_user = random.randint(0, len(_ready_users)-1)
-        _allocated_user = _users[_allocated_user]
+        _allocated_user = list(_users)[_allocated_user]
 
         _allocated_user_dict = redis_hash_to_dict(self.redis, DeviceUser, _allocated_user)
         _portal_user_dict = redis_hash_to_dict(self.redis, DeviceUser, _user_uuid)
@@ -279,7 +281,7 @@ class AmdApp(tornado.web.Application):
                     continue
                 _key = DeviceInfo.__tablename__ + ".uuid." + _user_device_uuid
                 if self.redis.hget(_key, "device_is_online") == "True":
-                    _online_devices.append(_device)
+                    _online_devices.append(_user_device_uuid)
             if len(_online_devices) > 0:
                 _online_users.append(_user)
                 

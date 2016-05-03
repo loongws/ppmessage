@@ -565,7 +565,7 @@ class OrgGroup(CommonMixin, BaseModel):
         
         if _obj["is_distributor"] == True:
             _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
-                   ".is_distributor." + _obj["is_distributor"]
+                   ".is_distributor." + str(_obj["is_distributor"])
             _redis.set(_key, _obj["uuid"])
         return
     

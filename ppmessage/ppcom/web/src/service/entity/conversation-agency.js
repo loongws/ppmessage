@@ -36,7 +36,7 @@ Service.$conversationAgency = ( function() {
         cancel: cancelWaitingCreateConversation,
 
         isDefaultConversationAvaliable: isDefaultConversationAvaliable,
-        isRequestingGroupConversation: isRequestingGroupConversation,
+        isRequestingGroupConversation: isRequestingGroupConversation
         
     }
 

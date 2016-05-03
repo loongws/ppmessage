@@ -90,7 +90,7 @@ Service.$conversationManager = ( function() {
                 if ( conv ) {
                     // We are waiting `default conversation`
                     // Now, this `default conversation` become avaliable now
-                    var isDefaultConversation = Service.$conversationAgency.isDefaultConversationAvaliable();
+                    var isDefaultConversation = !Service.$conversationAgency.isDefaultConversationAvaliable();
                     if ( isDefaultConversation ) { 
                         onDefaultConversationAvaliable( conv );
                     } else {

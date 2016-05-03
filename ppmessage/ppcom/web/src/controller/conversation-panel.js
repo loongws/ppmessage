@@ -115,6 +115,7 @@ Ctrl.$conversationPanel = ( function() {
     function stopPollingWaitingQueueLength() {
         Service.$polling.cancel( { eventID: POLLING_QUEUE_LENGTH_EVENT_ID } );
         Service.$conversationAgency.cancel();
+        View.$loading.hide();
     }
 
     function onGet( response, success ) {
