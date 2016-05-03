@@ -54,8 +54,8 @@
 Service.$conversationManager = ( function() {
 
     var TYPE = { GROUP: 'GROUP', CONVERSATION: 'CONVERSATION' },
-        EVENT = { WAITING: 'DEFAULT_CONVERSATION_AGENCY/WAITING',
-                  AVALIABLE: 'DEFAULT_CONVERSATION_AGENCY/AVALIABLE' },
+        EVENT = { WAITING: 'CONVERSATION_MANAGER/WAITING',
+                  AVALIABLE: 'CONVERSATION_MANAGER/AVALIABLE' },
         WEIGHT_GROUP = 10000, // let `TYPE.GROUP` has more priority then `TYPE.CONVERSATION` when sort `conversationList`
         conversationList = [],
         activeToken,

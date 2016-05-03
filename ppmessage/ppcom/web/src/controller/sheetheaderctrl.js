@@ -87,8 +87,8 @@ Ctrl.$sheetheader = (function() {
         var $conversationAgency = Service.$conversationAgency,
             inRequestingGroupConversation = $conversationAgency.isRequestingGroupConversation(),
             DELAY_TIME = 300; // Waiting the css animation completed
-        
-        $conversationAgency.cancel();
+
+        Ctrl.$conversationPanel.stopPollingWaitingQueueLength();
         $timeout( function() {
             setHeaderTitle();
             // resume to `MODE.LIST` mode if we are waiting group conversations

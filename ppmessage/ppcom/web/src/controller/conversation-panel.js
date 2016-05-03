@@ -16,7 +16,9 @@ Ctrl.$conversationPanel = ( function() {
     //////// API //////////
     return {
         MODE: MODE,
-        mode: mode
+        mode: mode,
+
+        stopPollingWaitingQueueLength: stopPollingWaitingQueueLength
     }
 
     ////// Implementation //
@@ -99,6 +101,7 @@ Ctrl.$conversationPanel = ( function() {
 
     function stopPollingWaitingQueueLength() {
         Service.$polling.cancel( { eventID: POLLING_QUEUE_LENGTH_EVENT_ID } );
+        Service.$conversationAgency.cancel();
     }
 
     function onGet( response, success ) {

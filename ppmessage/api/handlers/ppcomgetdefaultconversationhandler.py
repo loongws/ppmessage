@@ -171,14 +171,14 @@ class PPComGetDefaultConversationHandler(BaseHandler):
             logging.info("waiting for AMD to allocate service user to create conversation")
             return
 
-        _conversation_uuid = self._latest_conversation(_conversations)
+        _conversation_uuid = self._latest_conversation(_conversations).get('uuid')
         _conversation = self._return(_app_uuid, _user_uuid, _conversation_uuid)
         if _conversation == None:
             self.setErrorCode(API_ERR.NO_CONVERSATION)
             logging.error("No conversation: %s" % _conversation_uuid)
             return
 
-        _users = self._conversation_users(_conversation_uuid)
+        _users = self._conversation_users(_conversation)
         if _users == None or len(_users) == 0:
             self.setErrorCode(API_ERR.NO_CONVERSATION_MEMBER)
             logging.error("Existed conversation but no users: %s" % str(_conversation_uuid))
