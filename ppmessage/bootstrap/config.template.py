@@ -43,7 +43,7 @@ BOOTSTRAP_CONFIG = {
     "mysql": {
         "db_host": "127.0.0.1",
         "db_user": "root",
-        "db_pass": "test",
+        "db_pass": "test",    # If you use docker to launch ppmessage, set db_pass to "test"
         "db_name": "ppmessage",
     },
 
