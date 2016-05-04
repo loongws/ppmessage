@@ -102,7 +102,7 @@ tar -xzvf nginx-$NGINX_VERSION.tar.gz
 cd nginx-$NGINX_VERSION
 ./configure --with-http_ssl_module --add-module=../nginx-upload-module 
 make && make install 
-ls -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
+ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
 cd -
 
 cd /tmp 
@@ -120,6 +120,7 @@ cd ffmpeg-$FFMPEG_VERSION
 make && make install 
 cd -
 
+# install nodejs
 cd /tmp
 wget -c https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION.tar.gz
 tar -zxvf node-$NODE_VERSION.tar.gz
@@ -127,6 +128,10 @@ cd node-$NODE_VERSION
 ./configure
 make && make install
 cd -
+
+# install gulp and bower
+npm install -g bower
+npm install -g gulp
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
 pip install \
@@ -168,5 +173,6 @@ pip install \
 
 pip install git+https://github.com/senko/python-video-converter.git \
     hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
+
 
 echo "Finish install the requirements of PPMessage, next to run dist.sh with different arguments to start PPMessage."
