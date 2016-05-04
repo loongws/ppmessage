@@ -8,6 +8,7 @@
 
 #import "PPConversationsStore.h"
 
+#import "PPAppInfo.h"
 #import "PPMessage.h"
 #import "PPConversationItem.h"
 
@@ -83,8 +84,7 @@
     }
     
     // 1. get app orggroup
-    PPGetAppOrgGroupListHttpModel *getAppOrgGroupsTask = [PPGetAppOrgGroupListHttpModel modelWithClient:self.client];
-    [getAppOrgGroupsTask getAppOrgGroupListWithBlock:^(id obj, NSDictionary *response, NSError *error) {
+    [self getAppOrgGroupsWithBlock:^(id obj, NSDictionary *response, NSError *error) {
         
         NSMutableArray *conversations = obj ? obj : self.conversationItems;
         
@@ -168,6 +168,19 @@
 }
 
 #pragma mark - Helper
+
+- (void)getAppOrgGroupsWithBlock:(PPHttpModelCompletedBlock)completedBlock {
+    // Only show groups when `app_route_policy === GROUP`
+    if (![self.client.appInfo.groupPolicy isEqualToString:PPAppInfoGroupPolicyGROUP]) {
+        if (completedBlock) {
+            completedBlock([NSMutableArray array], nil, nil);
+        }
+        return;
+    }
+    
+    PPGetAppOrgGroupListHttpModel *getAppOrgGroupsTask = [PPGetAppOrgGroupListHttpModel modelWithClient:self.client];
+    [getAppOrgGroupsTask getAppOrgGroupListWithBlock:completedBlock];
+}
 
 - (NSInteger)indexForConversation:(NSString*)conversationUUID {
     __block NSInteger findIndex = NSNotFound;
