@@ -102,7 +102,7 @@ tar -xzvf nginx-$NGINX_VERSION.tar.gz
 cd nginx-$NGINX_VERSION
 ./configure --with-http_ssl_module --add-module=../nginx-upload-module 
 make && make install 
-ls -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
+ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
 cd -
 
 cd /tmp 
