@@ -23,6 +23,11 @@ PPMessage 同时提供了一个 Web 管理界面，称之为 PPConsole，当然�
 * [在 Debian 8.4 上安装 PPMessage](/ppmessage/doc/zh-cn/install-ppmessage-on-debian.md)
 * [在 Ubuntu Server 16.04 上安装 PPMessage](/ppmessage/doc/zh-cn/install-ppmessage-on-ubuntu.md)
 
+> 完全参考手册，请关注 PPMessage 在 GitBook 上的持续更新
+
+* [PPMessage Book](https://ppmessage.gitbooks.io/ppbook/content/)
+
+
 <!--
 
 * [在线使用PPMessage](/ppmessage/doc/zh-cn/online-ppmessage-guide.md) 
