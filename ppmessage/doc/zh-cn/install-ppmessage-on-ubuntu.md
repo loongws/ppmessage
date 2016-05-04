@@ -39,8 +39,8 @@ $ sudo bash dist.sh dev
 > 执行 bootstrap 过程中，由于使用的是普通用户权限，可能会遇到权限不够的情况，特别是 /usr/local/opt 是用来放置用户上传的文件目录，/usr/local/var/log 是用来放置 PPMessage 运行的日志文件的。确保这两个目录的权限可以被当前用户写访问。 /usr/local/nginx/conf/nginx.conf 是 ngnix 的配置文件 PPMessage 会根据 config.py 生成新的 nginx.conf，也要确保这个文件可写
 
 ```bash
-$ sudo mkdir -p /user/local/opt; sudo chmod 777 /usr/local/opt
-$ sudo mkdir -p /user/local/var/log; sudo chmod 777 /usr/local/var/log
+$ sudo mkdir -p /usr/local/opt; sudo chmod 777 /usr/local/opt
+$ sudo mkdir -p /usr/local/var/log; sudo chmod 777 /usr/local/var/log
 $ sudo chmod 777 /usr/local/nginx/conf/nginx.conf
 
 ```
