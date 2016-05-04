@@ -215,6 +215,7 @@
 		3581D77E1C2A6EC8006372BA /* PPAppInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 3581D77C1C2A6EC8006372BA /* PPAppInfo.h */; };
 		3581D77F1C2A6EC8006372BA /* PPAppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3581D77D1C2A6EC8006372BA /* PPAppInfo.m */; };
 		3586FE481C2E5372002F58FC /* PPFastLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 3586FE471C2E5372002F58FC /* PPFastLog.m */; };
+		ED1980091CD9A53600C72D3C /* PPComLib.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1980071CD9A53600C72D3C /* PPComLib.m */; };
 		EDA2725B1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272591CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h */; };
 		EDA2725C1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA2725A1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m */; };
 		EDA2725F1CBBA8970038E2B8 /* PPMessagesStore.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA2725D1CBBA8970038E2B8 /* PPMessagesStore.h */; };
@@ -519,6 +520,7 @@
 		3586FE461C2E52FB002F58FC /* PPFastLog.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPFastLog.h; sourceTree = "<group>"; };
 		3586FE471C2E5372002F58FC /* PPFastLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFastLog.m; sourceTree = "<group>"; };
 		35EB5AC61C2B93FA007842D6 /* PPConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPConstants.h; sourceTree = "<group>"; };
+		ED1980071CD9A53600C72D3C /* PPComLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPComLib.m; sourceTree = "<group>"; };
 		EDA272591CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetMessageHistoryHttpModel.h; path = HttpModels/PPGetMessageHistoryHttpModel.h; sourceTree = "<group>"; };
 		EDA2725A1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetMessageHistoryHttpModel.m; path = HttpModels/PPGetMessageHistoryHttpModel.m; sourceTree = "<group>"; };
 		EDA2725D1CBBA8970038E2B8 /* PPMessagesStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPMessagesStore.h; path = Stores/PPMessagesStore.h; sourceTree = "<group>"; };
@@ -705,6 +707,7 @@
 			isa = PBXGroup;
 			children = (
 				3567AF951BCB9D860053843C /* PPComLib.h */,
+				ED1980071CD9A53600C72D3C /* PPComLib.m */,
 				3567AFB41BCB9DF50053843C /* JSQMessagesViewController */,
 				3567B01E1BCB9DF50053843C /* PPMessagesViewController */,
 				3567B0691BCB9DF50053843C /* SRWebSocket */,
@@ -1465,6 +1468,7 @@
 			files = (
 				3567B0E41BCB9DFA0053843C /* PPMessageReceiver.m in Sources */,
 				3567B0E81BCB9DFA0053843C /* PPTxtLoader.m in Sources */,
+				ED1980091CD9A53600C72D3C /* PPComLib.m in Sources */,
 				3567B0BA1BCB9DF80053843C /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
 				EDA272A61CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m in Sources */,
 				EDB5908B1CAE376700017E7C /* PPStoreManager.m in Sources */,

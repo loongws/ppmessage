@@ -228,8 +228,8 @@ NSString *const PPVersionString = @"0.0.2";
     return self.jsqMessageArray[indexPath.item];
 }
 
-- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+// TEXT message bubble
+- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     JSQMessage *message = self.jsqMessageArray[indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
@@ -247,8 +247,19 @@ NSString *const PPVersionString = @"0.0.2";
     
     PPMessage *ppMessage = self.ppMessageArray[indexPath.item];
     NSString *imageUrl = ppMessage.fromUser != nil ? ppMessage.fromUser.avatarUrl : nil;
+    NSString *userUuid = ppMessage.fromId;
     
-    return [self.client.jsqAvatarLoader getJSQAvatarImage:ppMessage.fromId withImageUrlString:imageUrl];
+    PPJSQAvatarLoader *jsqAvatarLoader = self.client.jsqAvatarLoader;
+    JSQMessagesAvatarImage *existAvatarImage = [jsqAvatarLoader getJSQAvatarImage:userUuid withImageUrlString:imageUrl];
+    if (!existAvatarImage) {
+        existAvatarImage = jsqAvatarLoader.defaultAvatarImage;
+        __weak PPMessagesViewController *wself = self;
+        [jsqAvatarLoader loadJSQAvatarImage:ppMessage.fromId withImageUrlString:imageUrl completed:^(JSQMessagesAvatarImage *jsqImage) {
+            [wself.collectionView reloadData];
+        }];
+    }
+    
+    return existAvatarImage;
 }
 
 #pragma mark - UICollectionView DataSource
@@ -430,22 +441,20 @@ NSString *const PPVersionString = @"0.0.2";
 #pragma mark - Load Media Data
 
 - (void)appliesMediaViewMaskAsOutgoing:(JSQMediaItem*)jsqMediaItem message:(PPMessage*)message {
-    if (![message.fromId isEqual:self.client.user.uuid]) {
-        jsqMediaItem.appliesMediaViewMaskAsOutgoing = NO;
-    }
+    jsqMediaItem.appliesMediaViewMaskAsOutgoing = [message.fromId isEqual:self.client.user.uuid];
 }
 
 - (void)loadPhotoItemData:(JSQMessagesCollectionViewCell *)cell mediaData:(id)mediaData indexPath:(NSIndexPath *)indexPath
 {
     JSQPhotoMediaItem *mediaItem = (JSQPhotoMediaItem*)mediaData;
+    PPMessage *ppMessage = self.ppMessageArray[indexPath.item];
+    [self appliesMediaViewMaskAsOutgoing:mediaItem message:ppMessage];
     
     if (mediaItem.image) {
         return;
     }
     
-    PPMessage *ppMessage = self.ppMessageArray[indexPath.item];
     PPPhotoMediaItem *ppPhotoMediaItem = (PPPhotoMediaItem*)ppMessage.media;
-    [self appliesMediaViewMaskAsOutgoing:mediaItem message:ppMessage];
     
     ImageDownloader *downloader = self.imageDownloadsInProgress[indexPath];
     if (downloader == nil) {
@@ -454,9 +463,9 @@ NSString *const PPVersionString = @"0.0.2";
     }
     
     [downloader startDownload:ppPhotoMediaItem.furl completionHandler:^(UIImage *image) {
-            mediaItem.image = image;
-            [self.collectionView reloadData];
-        }];
+        mediaItem.image = image;
+        [self.collectionView reloadData];
+    }];
 }
 
 - (void)loadTxtMediaData:(id)mediaData cell:(JSQMessagesCollectionViewCell *)cell indexPath:(NSIndexPath*)indexPath
@@ -469,13 +478,13 @@ NSString *const PPVersionString = @"0.0.2";
         
         txtMediaData.state = PPTxtMediaItemLoadStateLoading;
         [self.client.txtLoader loadTxt:txtMediaData.txtUrl withBlock:^(NSError *error, NSString *content) {
-                //更新state
-                txtMediaData.state = PPTxtMediaItemLoadStateDone;
-                // 通知刷新
-                JSQMessage *jsqMessage = self.jsqMessageArray[indexPath.row];
-                jsqMessage.text = content;
-                [self.collectionView reloadData];
-            }];
+            //更新state
+            txtMediaData.state = PPTxtMediaItemLoadStateDone;
+            // 通知刷新
+            JSQMessage *jsqMessage = self.jsqMessageArray[indexPath.row];
+            jsqMessage.text = content;
+            [self.collectionView reloadData];
+        }];
     }
 }
 

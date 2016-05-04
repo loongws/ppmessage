@@ -164,6 +164,7 @@ NSString *const PPMessageApiTypeAudio = @"AUDIO";
             _jsqMessage = [[JSQMessage alloc] initWithSenderId:self.fromId senderDisplayName:self.client.user.fullName date:[self.client.utils timestampToDate:self.timestamp]  text:self.text];
         } else if ([_type isEqualToString:@"IMAGE"]) {
             JSQPhotoMediaItem *photoItem = [[JSQPhotoMediaItem alloc] initWithImage:nil];
+            photoItem.appliesMediaViewMaskAsOutgoing = [self.fromId isEqualToString:self.client.user.uuid];
             JSQMessage *photoMessage = [JSQMessage messageWithSenderId:self.fromId
                                                            displayName:self.client.user.fullName
                                                                  media:photoItem];

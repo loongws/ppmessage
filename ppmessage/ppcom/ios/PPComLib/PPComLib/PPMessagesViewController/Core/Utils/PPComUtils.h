@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "PPCom.h"
 
-//#define PP_LOCAL_DEBUG
+#define PP_LOCAL_DEBUG
 
 extern NSString *const PPApiHost;
 extern NSString *const PPFileHost;
