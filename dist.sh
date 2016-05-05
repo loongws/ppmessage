@@ -47,6 +47,7 @@ Commands:
   log                         View the ppmessage logs.
   bower                       Install bower components.
   npm                         Install node components.
+  cnpm                        Install node components, using cnpm.
   gulp                        Run all gulp tasks.
   bootstrap                   Bootstrap PPMessage with config.py.
   app-win32                   Create window desktop app.
@@ -282,6 +283,15 @@ function ppmessage_npm()
     cd ppmessage/pphome; npm install; cd -;
 }
 
+function ppmessage_cnpm()
+{
+    echo "install PPCom/PPKefu/PPConsole js node depends";
+    cd ppmessage/ppcom/web/gulp; cnpm install; cd -;
+    cd ppmessage/ppkefu/ppkefu; cnpm install; cd -;
+    cd ppmessage/ppconsole/gulp; cnpm install; cd -;
+    cd ppmessage/pphome; cnpm install; cd -;
+}
+
 function ppmessage_bootstrap()
 {
     if [ ! -f ./ppmessage/bootstrap/config.py ];
@@ -363,6 +373,10 @@ case "$1" in
 
     npm)
         ppmessage_npm
+        ;;
+
+    cnpm)
+        ppmessage_cnpm
         ;;
 
     app-win32)

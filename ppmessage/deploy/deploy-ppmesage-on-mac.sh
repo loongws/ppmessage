@@ -20,12 +20,18 @@ brew install \
      lame \
      mysql \
      mercurial \
+     nodejs \
      redis
-     
+
 brew tap homebrew/services
 brew tap homebrew/nginx
 brew install nginx-full --with-upload-module
 brew install ffmpeg --with-fdk-aac --with-opencore-amr --with-libvorbis --with-opus
+
+# install cnpm, bower and gulp
+sudo npm install -g cnpm
+sudo npm install -g bower
+sudo npm install -g gulp
 
 # some python modules need libmaxminddb, install it before run 'pip install ...'
 cd /tmp
@@ -47,41 +53,41 @@ make && sudo make install
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
 sudo pip install \
-    axmlparserpy \
-    beautifulsoup4 \
-    biplist \
-    evernote \
-    filemagic \
-    geoip2 \
-    green \
-    git+https://github.com/senko/python-video-converter.git \
-    hg+https://dingguijin@bitbucket.org/dingguijin/apns-client \
-    identicon \
-    ipython \
-    jieba \
-    paramiko \
-    paho-mqtt \
-    pillow \
-    ppmessage-mqtt \
-    pyipa \
-    pypinyin \
-    pyparsing \
-    python-dateutil \
-    python-gcm \
-    python-magic \
-    qiniu \
-    qrcode \
-    readline \
-    redis \
-    rq \
-    supervisor \
-    sqlalchemy \
-    tornado \
-    xlrd \
-    numpy \
-    matplotlib \
-    scipy \
-    scikit-learn
+     axmlparserpy \
+     beautifulsoup4 \
+     biplist \
+     evernote \
+     filemagic \
+     geoip2 \
+     green \
+     git+https://github.com/senko/python-video-converter.git \
+     hg+https://dingguijin@bitbucket.org/dingguijin/apns-client \
+     identicon \
+     ipython \
+     jieba \
+     paramiko \
+     paho-mqtt \
+     pillow \
+     ppmessage-mqtt \
+     pyipa \
+     pypinyin \
+     pyparsing \
+     python-dateutil \
+     python-gcm \
+     python-magic \
+     qiniu \
+     qrcode \
+     readline \
+     redis \
+     rq \
+     supervisor \
+     sqlalchemy \
+     tornado \
+     xlrd \
+     numpy \
+     matplotlib \
+     scipy \
+     scikit-learn
 
 cd /tmp
 wget http://cdn.mysql.com//Downloads/Connector-Python/mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz

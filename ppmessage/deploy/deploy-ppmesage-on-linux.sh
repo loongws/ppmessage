@@ -81,6 +81,11 @@ apt-get install -y \
 curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 apt-get install -y nodejs
 
+# install gulp, cnpm and bower
+npm install -g cnpm
+npm install -g bower
+npm install -g gulp
+
 # some python modules need libmaxminddb, install it before run 'pip install ...'
 cd /tmp
 git clone --recursive https://github.com/maxmind/libmaxminddb
@@ -122,10 +127,6 @@ cd ffmpeg-$FFMPEG_VERSION
             --enable-libfdk-aac
 make && make install 
 cd -
-
-# install gulp and bower
-npm install -g bower
-npm install -g gulp
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
 pip install \
