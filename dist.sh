@@ -198,6 +198,7 @@ function ppmessage_supervisord_proc()
 
 function ppmessage_start()
 {
+    ppmessage_exec mkdir -p /usr/local/var/log
     ppmessage_exec supervisord -c ppmessage/conf/supervisord.nginx.conf
 }
 
@@ -266,10 +267,10 @@ function ppmessage_gulp()
 function ppmessage_bower()
 {
     echo "install PPCom/PPKefu/PPConsole js bower depends";
-    cd ppmessage/ppcom/web; bower install; cd -;
-    cd ppmessage/ppkefu/ppkefu; bower install; cd -;
-    cd ppmessage/ppconsole; bower install; cd -;
-    cd ppmessage/pphome; bower install; cd -;
+    cd ppmessage/ppcom/web; bower install --allow-root; cd -;
+    cd ppmessage/ppkefu/ppkefu; bower install --allow-root; cd -;
+    cd ppmessage/ppconsole; bower install --allow-root; cd -;
+    cd ppmessage/pphome; bower install --allow-root; cd -;
 }
 
 function ppmessage_npm()
@@ -283,7 +284,12 @@ function ppmessage_npm()
 
 function ppmessage_bootstrap()
 {
-    echo "bootstrap will create db tables, config PPMessage, cache db to redis.";
+    if [ ! -f ./ppmessage/bootstrap/config.py ];
+    then
+        ppmessage_err "create ppmessage/bootstrap/config.py first!"
+    fi
+
+    echo "bootstrap will create db tables, config PPMessage, cache db to redis based on config.py.";
     python ppmessage/scripts/table.py;
     python ppmessage/scripts/bootstrap.py;
     python ppmessage/scripts/db2cache.py;
