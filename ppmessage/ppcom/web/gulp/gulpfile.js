@@ -3,7 +3,7 @@ var gutil = require('gulp-util');
 var concat = require('gulp-concat');
 var cleanCss = require('gulp-clean-css');
 var rename = require('gulp-rename');
-var ngmin = require('gulp-ngmin');
+var ngAnnotate = require('gulp-ng-annotate');
 var uglify = require('gulp-uglify');
 var replace = require('gulp-replace');
 var del = require('del');
@@ -105,7 +105,7 @@ gulp.task('scripts', ['merge'], function(done) {
         .pipe(replace('{ppcom_api_key}', bootstrap_data.PPCOM.api_key))
         .pipe(replace('{ppcom_api_secret}', bootstrap_data.PPCOM.api_secret))
         .pipe(gulp.dest(buildConfig.distPath))
-        .pipe(ngmin())
+        .pipe(ngAnnotate())
         .pipe(uglify())
         .on('error', function(e) {
             console.log(e);
