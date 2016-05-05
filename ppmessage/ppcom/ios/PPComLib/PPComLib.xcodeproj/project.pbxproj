@@ -216,6 +216,8 @@
 		3581D77F1C2A6EC8006372BA /* PPAppInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3581D77D1C2A6EC8006372BA /* PPAppInfo.m */; };
 		3586FE481C2E5372002F58FC /* PPFastLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 3586FE471C2E5372002F58FC /* PPFastLog.m */; };
 		ED1980091CD9A53600C72D3C /* PPComLib.m in Sources */ = {isa = PBXBuildFile; fileRef = ED1980071CD9A53600C72D3C /* PPComLib.m */; };
+		ED1980101CD9BD1F00C72D3C /* PPLoadingView.h in Headers */ = {isa = PBXBuildFile; fileRef = ED19800E1CD9BD1F00C72D3C /* PPLoadingView.h */; };
+		ED1980111CD9BD1F00C72D3C /* PPLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = ED19800F1CD9BD1F00C72D3C /* PPLoadingView.m */; };
 		EDA2725B1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA272591CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h */; };
 		EDA2725C1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA2725A1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m */; };
 		EDA2725F1CBBA8970038E2B8 /* PPMessagesStore.h in Headers */ = {isa = PBXBuildFile; fileRef = EDA2725D1CBBA8970038E2B8 /* PPMessagesStore.h */; };
@@ -274,6 +276,27 @@
 		EDB590911CAE5D7000017E7C /* PPHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590901CAE5D7000017E7C /* PPHttpModel.h */; };
 		EDB590941CAE644600017E7C /* PPGetConversationListHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDB590921CAE644600017E7C /* PPGetConversationListHttpModel.h */; };
 		EDB590951CAE644600017E7C /* PPGetConversationListHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDB590931CAE644600017E7C /* PPGetConversationListHttpModel.m */; };
+		EDBAA9921CD9F2C400C2B52F /* PPPolling.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAA9901CD9F2C400C2B52F /* PPPolling.h */; };
+		EDBAA9931CD9F2C400C2B52F /* PPPolling.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBAA9911CD9F2C400C2B52F /* PPPolling.m */; };
+		EDBAA9961CD9FA3700C2B52F /* PPGetWaitingQueueLengthHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAA9941CD9FA3700C2B52F /* PPGetWaitingQueueLengthHttpModel.h */; };
+		EDBAA9971CD9FA3700C2B52F /* PPGetWaitingQueueLengthHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBAA9951CD9FA3700C2B52F /* PPGetWaitingQueueLengthHttpModel.m */; };
+		EDBAA99E1CDAE4FA00C2B52F /* PPWebSocketHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAA99D1CDAE4FA00C2B52F /* PPWebSocketHandler.h */; };
+		EDBAA9A11CDAE52500C2B52F /* PPWebSocketSysHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAA99F1CDAE52500C2B52F /* PPWebSocketSysHandler.h */; };
+		EDBAA9A21CDAE52500C2B52F /* PPWebSocketSysHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBAA9A01CDAE52500C2B52F /* PPWebSocketSysHandler.m */; };
+		EDBAA9A51CDAE5F200C2B52F /* PPWebSocketHandlerFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAA9A31CDAE5F200C2B52F /* PPWebSocketHandlerFactory.h */; };
+		EDBAA9A61CDAE5F200C2B52F /* PPWebSocketHandlerFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBAA9A41CDAE5F200C2B52F /* PPWebSocketHandlerFactory.m */; };
+		EDBAA9A91CDAE7A300C2B52F /* PPWebSocketBaseHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAA9A71CDAE7A300C2B52F /* PPWebSocketBaseHandler.h */; };
+		EDBAA9AA1CDAE7A300C2B52F /* PPWebSocketBaseHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBAA9A81CDAE7A300C2B52F /* PPWebSocketBaseHandler.m */; };
+		EDBAA9AD1CDAEA7800C2B52F /* PPWebSocketUnknownHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAA9AB1CDAEA7800C2B52F /* PPWebSocketUnknownHandler.h */; };
+		EDBAA9AE1CDAEA7800C2B52F /* PPWebSocketUnknownHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBAA9AC1CDAEA7800C2B52F /* PPWebSocketUnknownHandler.m */; };
+		EDBAA9B11CDAF30000C2B52F /* PPWebSocketMsgHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAA9AF1CDAF30000C2B52F /* PPWebSocketMsgHandler.h */; };
+		EDBAA9B21CDAF30000C2B52F /* PPWebSocketMsgHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBAA9B01CDAF30000C2B52F /* PPWebSocketMsgHandler.m */; };
+		EDBAA9B51CDAF50600C2B52F /* PPWebSocketAuthHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAA9B31CDAF50600C2B52F /* PPWebSocketAuthHandler.h */; };
+		EDBAA9B61CDAF50600C2B52F /* PPWebSocketAuthHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBAA9B41CDAF50600C2B52F /* PPWebSocketAuthHandler.m */; };
+		EDBAA9B91CDAF77000C2B52F /* PPWebSocketConversationHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAA9B71CDAF77000C2B52F /* PPWebSocketConversationHandler.h */; };
+		EDBAA9BA1CDAF77000C2B52F /* PPWebSocketConversationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBAA9B81CDAF77000C2B52F /* PPWebSocketConversationHandler.m */; };
+		EDBAA9C11CDB0B4D00C2B52F /* PPGetConversationInfoHttpModel.h in Headers */ = {isa = PBXBuildFile; fileRef = EDBAA9BF1CDB0B4D00C2B52F /* PPGetConversationInfoHttpModel.h */; };
+		EDBAA9C21CDB0B4D00C2B52F /* PPGetConversationInfoHttpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = EDBAA9C01CDB0B4D00C2B52F /* PPGetConversationInfoHttpModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -521,6 +544,8 @@
 		3586FE471C2E5372002F58FC /* PPFastLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFastLog.m; sourceTree = "<group>"; };
 		35EB5AC61C2B93FA007842D6 /* PPConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPConstants.h; sourceTree = "<group>"; };
 		ED1980071CD9A53600C72D3C /* PPComLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPComLib.m; sourceTree = "<group>"; };
+		ED19800E1CD9BD1F00C72D3C /* PPLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLoadingView.h; sourceTree = "<group>"; };
+		ED19800F1CD9BD1F00C72D3C /* PPLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLoadingView.m; sourceTree = "<group>"; };
 		EDA272591CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetMessageHistoryHttpModel.h; path = HttpModels/PPGetMessageHistoryHttpModel.h; sourceTree = "<group>"; };
 		EDA2725A1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetMessageHistoryHttpModel.m; path = HttpModels/PPGetMessageHistoryHttpModel.m; sourceTree = "<group>"; };
 		EDA2725D1CBBA8970038E2B8 /* PPMessagesStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPMessagesStore.h; path = Stores/PPMessagesStore.h; sourceTree = "<group>"; };
@@ -579,6 +604,27 @@
 		EDB590901CAE5D7000017E7C /* PPHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPHttpModel.h; path = HttpModels/PPHttpModel.h; sourceTree = "<group>"; };
 		EDB590921CAE644600017E7C /* PPGetConversationListHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetConversationListHttpModel.h; path = HttpModels/PPGetConversationListHttpModel.h; sourceTree = "<group>"; };
 		EDB590931CAE644600017E7C /* PPGetConversationListHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetConversationListHttpModel.m; path = HttpModels/PPGetConversationListHttpModel.m; sourceTree = "<group>"; };
+		EDBAA9901CD9F2C400C2B52F /* PPPolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPPolling.h; path = task/PPPolling.h; sourceTree = "<group>"; };
+		EDBAA9911CD9F2C400C2B52F /* PPPolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPPolling.m; path = task/PPPolling.m; sourceTree = "<group>"; };
+		EDBAA9941CD9FA3700C2B52F /* PPGetWaitingQueueLengthHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetWaitingQueueLengthHttpModel.h; path = HttpModels/PPGetWaitingQueueLengthHttpModel.h; sourceTree = "<group>"; };
+		EDBAA9951CD9FA3700C2B52F /* PPGetWaitingQueueLengthHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetWaitingQueueLengthHttpModel.m; path = HttpModels/PPGetWaitingQueueLengthHttpModel.m; sourceTree = "<group>"; };
+		EDBAA99D1CDAE4FA00C2B52F /* PPWebSocketHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWebSocketHandler.h; path = wsmessage/PPWebSocketHandler.h; sourceTree = "<group>"; };
+		EDBAA99F1CDAE52500C2B52F /* PPWebSocketSysHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWebSocketSysHandler.h; path = wsmessage/PPWebSocketSysHandler.h; sourceTree = "<group>"; };
+		EDBAA9A01CDAE52500C2B52F /* PPWebSocketSysHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPWebSocketSysHandler.m; path = wsmessage/PPWebSocketSysHandler.m; sourceTree = "<group>"; };
+		EDBAA9A31CDAE5F200C2B52F /* PPWebSocketHandlerFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWebSocketHandlerFactory.h; path = wsmessage/PPWebSocketHandlerFactory.h; sourceTree = "<group>"; };
+		EDBAA9A41CDAE5F200C2B52F /* PPWebSocketHandlerFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPWebSocketHandlerFactory.m; path = wsmessage/PPWebSocketHandlerFactory.m; sourceTree = "<group>"; };
+		EDBAA9A71CDAE7A300C2B52F /* PPWebSocketBaseHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWebSocketBaseHandler.h; path = wsmessage/PPWebSocketBaseHandler.h; sourceTree = "<group>"; };
+		EDBAA9A81CDAE7A300C2B52F /* PPWebSocketBaseHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPWebSocketBaseHandler.m; path = wsmessage/PPWebSocketBaseHandler.m; sourceTree = "<group>"; };
+		EDBAA9AB1CDAEA7800C2B52F /* PPWebSocketUnknownHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWebSocketUnknownHandler.h; path = wsmessage/PPWebSocketUnknownHandler.h; sourceTree = "<group>"; };
+		EDBAA9AC1CDAEA7800C2B52F /* PPWebSocketUnknownHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPWebSocketUnknownHandler.m; path = wsmessage/PPWebSocketUnknownHandler.m; sourceTree = "<group>"; };
+		EDBAA9AF1CDAF30000C2B52F /* PPWebSocketMsgHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWebSocketMsgHandler.h; path = wsmessage/PPWebSocketMsgHandler.h; sourceTree = "<group>"; };
+		EDBAA9B01CDAF30000C2B52F /* PPWebSocketMsgHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPWebSocketMsgHandler.m; path = wsmessage/PPWebSocketMsgHandler.m; sourceTree = "<group>"; };
+		EDBAA9B31CDAF50600C2B52F /* PPWebSocketAuthHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWebSocketAuthHandler.h; path = wsmessage/PPWebSocketAuthHandler.h; sourceTree = "<group>"; };
+		EDBAA9B41CDAF50600C2B52F /* PPWebSocketAuthHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPWebSocketAuthHandler.m; path = wsmessage/PPWebSocketAuthHandler.m; sourceTree = "<group>"; };
+		EDBAA9B71CDAF77000C2B52F /* PPWebSocketConversationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWebSocketConversationHandler.h; path = wsmessage/PPWebSocketConversationHandler.h; sourceTree = "<group>"; };
+		EDBAA9B81CDAF77000C2B52F /* PPWebSocketConversationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPWebSocketConversationHandler.m; path = wsmessage/PPWebSocketConversationHandler.m; sourceTree = "<group>"; };
+		EDBAA9BF1CDB0B4D00C2B52F /* PPGetConversationInfoHttpModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPGetConversationInfoHttpModel.h; path = HttpModels/PPGetConversationInfoHttpModel.h; sourceTree = "<group>"; };
+		EDBAA9C01CDB0B4D00C2B52F /* PPGetConversationInfoHttpModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPGetConversationInfoHttpModel.m; path = HttpModels/PPGetConversationInfoHttpModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -903,6 +949,7 @@
 		3567B01F1BCB9DF50053843C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EDBAA98F1CD9F29B00C2B52F /* task */,
 				EDB590761CAE240400017E7C /* category */,
 				EDB590711CAE208300017E7C /* datasource */,
 				3567B0201BCB9DF50053843C /* PPMessagesViewController.h */,
@@ -930,6 +977,7 @@
 		3567B0291BCB9DF50053843C /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EDBAA9981CDAE2E500C2B52F /* wsmessage */,
 				EDB590681CAE160D00017E7C /* views */,
 				3567B02A1BCB9DF50053843C /* ImageDownloader.h */,
 				3567B02B1BCB9DF50053843C /* ImageDownloader.m */,
@@ -1022,6 +1070,8 @@
 				EDB590561CAE130B00017E7C /* custombadge */,
 				EDB5907F1CAE2BC300017E7C /* PPImageView.h */,
 				EDB590801CAE2BC300017E7C /* PPImageView.m */,
+				ED19800E1CD9BD1F00C72D3C /* PPLoadingView.h */,
+				ED19800F1CD9BD1F00C72D3C /* PPLoadingView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1057,6 +1107,8 @@
 		EDB590511CAD323900017E7C /* HttpModels */ = {
 			isa = PBXGroup;
 			children = (
+				EDBAA9BF1CDB0B4D00C2B52F /* PPGetConversationInfoHttpModel.h */,
+				EDBAA9C01CDB0B4D00C2B52F /* PPGetConversationInfoHttpModel.m */,
 				EDB590521CAD329800017E7C /* PPGetDefaultConversationHttpModels.h */,
 				EDB590531CAD329800017E7C /* PPGetDefaultConversationHttpModels.m */,
 				EDB5908C1CAE5D3000017E7C /* PPGetAppOrgGroupListHttpModel.h */,
@@ -1070,6 +1122,8 @@
 				EDA2727B1CBDE6590038E2B8 /* PPCreateConversationHttpModel.m */,
 				EDA272A31CBF82410038E2B8 /* PPGetConversationUserListHttpModel.h */,
 				EDA272A41CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m */,
+				EDBAA9941CD9FA3700C2B52F /* PPGetWaitingQueueLengthHttpModel.h */,
+				EDBAA9951CD9FA3700C2B52F /* PPGetWaitingQueueLengthHttpModel.m */,
 			);
 			name = HttpModels;
 			sourceTree = "<group>";
@@ -1144,6 +1198,37 @@
 			name = Stores;
 			sourceTree = "<group>";
 		};
+		EDBAA98F1CD9F29B00C2B52F /* task */ = {
+			isa = PBXGroup;
+			children = (
+				EDBAA9901CD9F2C400C2B52F /* PPPolling.h */,
+				EDBAA9911CD9F2C400C2B52F /* PPPolling.m */,
+			);
+			name = task;
+			sourceTree = "<group>";
+		};
+		EDBAA9981CDAE2E500C2B52F /* wsmessage */ = {
+			isa = PBXGroup;
+			children = (
+				EDBAA99D1CDAE4FA00C2B52F /* PPWebSocketHandler.h */,
+				EDBAA99F1CDAE52500C2B52F /* PPWebSocketSysHandler.h */,
+				EDBAA9A01CDAE52500C2B52F /* PPWebSocketSysHandler.m */,
+				EDBAA9A31CDAE5F200C2B52F /* PPWebSocketHandlerFactory.h */,
+				EDBAA9A41CDAE5F200C2B52F /* PPWebSocketHandlerFactory.m */,
+				EDBAA9A71CDAE7A300C2B52F /* PPWebSocketBaseHandler.h */,
+				EDBAA9A81CDAE7A300C2B52F /* PPWebSocketBaseHandler.m */,
+				EDBAA9AB1CDAEA7800C2B52F /* PPWebSocketUnknownHandler.h */,
+				EDBAA9AC1CDAEA7800C2B52F /* PPWebSocketUnknownHandler.m */,
+				EDBAA9AF1CDAF30000C2B52F /* PPWebSocketMsgHandler.h */,
+				EDBAA9B01CDAF30000C2B52F /* PPWebSocketMsgHandler.m */,
+				EDBAA9B31CDAF50600C2B52F /* PPWebSocketAuthHandler.h */,
+				EDBAA9B41CDAF50600C2B52F /* PPWebSocketAuthHandler.m */,
+				EDBAA9B71CDAF77000C2B52F /* PPWebSocketConversationHandler.h */,
+				EDBAA9B81CDAF77000C2B52F /* PPWebSocketConversationHandler.m */,
+			);
+			name = wsmessage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1156,9 +1241,11 @@
 				3567B0AB1BCB9DF70053843C /* JSQMessagesCollectionView.h in Headers */,
 				3567B07B1BCB9DF60053843C /* JSQMessagesViewController.h in Headers */,
 				EDB5905B1CAE132D00017E7C /* PPBadgeStyle.h in Headers */,
+				EDBAA9C11CDB0B4D00C2B52F /* PPGetConversationInfoHttpModel.h in Headers */,
 				3567B0B51BCB9DF70053843C /* JSQMessagesInputToolbar.h in Headers */,
 				3567B0791BCB9DF50053843C /* JSQMessagesKeyboardController.h in Headers */,
 				3567B0A21BCB9DF60053843C /* JSQMessagesCollectionViewDelegateFlowLayout.h in Headers */,
+				EDBAA9A51CDAE5F200C2B52F /* PPWebSocketHandlerFactory.h in Headers */,
 				3567B0BD1BCB9DF80053843C /* JSQMessagesToolbarContentView.h in Headers */,
 				3567B0B31BCB9DF70053843C /* JSQMessagesComposerTextView.h in Headers */,
 				EDB590791CAE244B00017E7C /* PPConversationItemViewCell+PPConfigureForConversationItem.h in Headers */,
@@ -1170,11 +1257,13 @@
 				EDA272A11CBF7EC80038E2B8 /* PPGroupMembersStore.h in Headers */,
 				3567B0AD1BCB9DF70053843C /* JSQMessagesCollectionViewCell.h in Headers */,
 				3567B0D11BCB9DF90053843C /* NSString+Crypto.h in Headers */,
+				EDBAA9B91CDAF77000C2B52F /* PPWebSocketConversationHandler.h in Headers */,
 				3567B0891BCB9DF60053843C /* JSQMessagesBubblesSizeCalculator.h in Headers */,
 				EDA272981CBF7B860038E2B8 /* PPGroupMembersViewController.h in Headers */,
 				3567B0871BCB9DF60053843C /* JSQMessages.h in Headers */,
 				3567B0CD1BCB9DF90053843C /* PPCom.h in Headers */,
 				3567B0CB1BCB9DF80053843C /* PP.h in Headers */,
+				ED1980101CD9BD1F00C72D3C /* PPLoadingView.h in Headers */,
 				3567AFB31BCB9DD90053843C /* PPComLib.h in Headers */,
 				3567B0FC1BCB9DFC0053843C /* PPMessageList.h in Headers */,
 				3567B1071BCB9DFD0053843C /* SRWebSocket.h in Headers */,
@@ -1197,11 +1286,14 @@
 				3567B1011BCB9DFD0053843C /* PPTxtMediaItem.h in Headers */,
 				3567B0971BCB9DF60053843C /* JSQMessage.h in Headers */,
 				3567B0EB1BCB9DFB0053843C /* PPCameraViewDelegate.h in Headers */,
+				EDBAA9961CD9FA3700C2B52F /* PPGetWaitingQueueLengthHttpModel.h in Headers */,
 				EDB5906B1CAE164100017E7C /* PPLayoutConstraintsUtils.h in Headers */,
+				EDBAA9B51CDAF50600C2B52F /* PPWebSocketAuthHandler.h in Headers */,
 				3567B06D1BCB9DF50053843C /* NSBundle+JSQMessages.h in Headers */,
 				3567B0D31BCB9DF90053843C /* PPCachebleImageDownloader.h in Headers */,
 				3567B08F1BCB9DF60053843C /* JSQMessagesCollectionViewLayoutAttributes.h in Headers */,
 				3567B0811BCB9DF60053843C /* JSQMessagesMediaViewBubbleImageMasker.h in Headers */,
+				EDBAA9A11CDAE52500C2B52F /* PPWebSocketSysHandler.h in Headers */,
 				3567B0E91BCB9DFB0053843C /* PPUploader.h in Headers */,
 				EDB590541CAD329800017E7C /* PPGetDefaultConversationHttpModels.h in Headers */,
 				EDB5906F1CAE1DD000017E7C /* PPConversationsViewController.h in Headers */,
@@ -1220,12 +1312,15 @@
 				3567B1031BCB9DFD0053843C /* PPUser.h in Headers */,
 				3567B06F1BCB9DF50053843C /* NSString+JSQMessages.h in Headers */,
 				3567B0BB1BCB9DF80053843C /* JSQMessagesMediaPlaceholderView.h in Headers */,
+				EDBAA9B11CDAF30000C2B52F /* PPWebSocketMsgHandler.h in Headers */,
 				3567B08D1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayoutInvalidationContext.h in Headers */,
 				EDB590811CAE2BC300017E7C /* PPImageView.h in Headers */,
 				3567B0D51BCB9DF90053843C /* PPComAPI.h in Headers */,
+				EDBAA9921CD9F2C400C2B52F /* PPPolling.h in Headers */,
 				3567B0FE1BCB9DFC0053843C /* PPMessageMediaData.h in Headers */,
 				EDB590941CAE644600017E7C /* PPGetConversationListHttpModel.h in Headers */,
 				3567B0A71BCB9DF70053843C /* JSQVideoMediaItem.h in Headers */,
+				EDBAA9AD1CDAEA7800C2B52F /* PPWebSocketUnknownHandler.h in Headers */,
 				3567B0751BCB9DF50053843C /* UIImage+JSQMessages.h in Headers */,
 				EDB590661CAE14FE00017E7C /* PPBadgeSquareImageView.h in Headers */,
 				3567B0FF1BCB9DFD0053843C /* PPPhotoMediaItem.h in Headers */,
@@ -1244,11 +1339,13 @@
 				EDB590621CAE14A800017E7C /* PPConversationItemViewCell.h in Headers */,
 				3567B0E11BCB9DFA0053843C /* PPJSQAvatarLoader.h in Headers */,
 				EDA2725F1CBBA8970038E2B8 /* PPMessagesStore.h in Headers */,
+				EDBAA9A91CDAE7A300C2B52F /* PPWebSocketBaseHandler.h in Headers */,
 				3567B0E71BCB9DFA0053843C /* PPTxtLoader.h in Headers */,
 				EDA272851CBE34E40038E2B8 /* PPViewUtils.h in Headers */,
 				EDB590861CAE355E00017E7C /* PPConversationsStore.h in Headers */,
 				3567B0E31BCB9DFA0053843C /* PPMessageReceiver.h in Headers */,
 				3567B0911BCB9DF60053843C /* JSQFileMediaItem.h in Headers */,
+				EDBAA99E1CDAE4FA00C2B52F /* PPWebSocketHandler.h in Headers */,
 				3567B0DD1BCB9DFA0053843C /* PPDownloader.h in Headers */,
 				3567B0D71BCB9DF90053843C /* PPComImageCache.h in Headers */,
 				3567B07F1BCB9DF60053843C /* JSQMessagesBubbleImageFactory.h in Headers */,
@@ -1468,6 +1565,7 @@
 			files = (
 				3567B0E41BCB9DFA0053843C /* PPMessageReceiver.m in Sources */,
 				3567B0E81BCB9DFA0053843C /* PPTxtLoader.m in Sources */,
+				EDBAA9AE1CDAEA7800C2B52F /* PPWebSocketUnknownHandler.m in Sources */,
 				ED1980091CD9A53600C72D3C /* PPComLib.m in Sources */,
 				3567B0BA1BCB9DF80053843C /* JSQMessagesLoadEarlierHeaderView.m in Sources */,
 				EDA272A61CBF82410038E2B8 /* PPGetConversationUserListHttpModel.m in Sources */,
@@ -1490,14 +1588,17 @@
 				EDA2725C1CBBA1410038E2B8 /* PPGetMessageHistoryHttpModel.m in Sources */,
 				3567B0E01BCB9DFA0053843C /* PPFileManager.m in Sources */,
 				3567B0EA1BCB9DFB0053843C /* PPUploader.m in Sources */,
+				ED1980111CD9BD1F00C72D3C /* PPLoadingView.m in Sources */,
 				3567B0B41BCB9DF70053843C /* JSQMessagesComposerTextView.m in Sources */,
 				3567B0F21BCB9DFB0053843C /* PPConversationsList.m in Sources */,
+				EDBAA9971CD9FA3700C2B52F /* PPGetWaitingQueueLengthHttpModel.m in Sources */,
 				3567B08C1BCB9DF60053843C /* JSQMessagesCollectionViewFlowLayout.m in Sources */,
 				EDA272601CBBA8970038E2B8 /* PPMessagesStore.m in Sources */,
 				EDA272861CBE34E40038E2B8 /* PPViewUtils.m in Sources */,
 				EDA272A21CBF7EC80038E2B8 /* PPGroupMembersStore.m in Sources */,
 				EDB5907E1CAE271900017E7C /* PPImageDownloaderManager.m in Sources */,
 				3567B0941BCB9DF60053843C /* JSQLocationMediaItem.m in Sources */,
+				EDBAA9C21CDB0B4D00C2B52F /* PPGetConversationInfoHttpModel.m in Sources */,
 				3567B0B21BCB9DF70053843C /* JSQMessagesCollectionViewCellOutgoing.m in Sources */,
 				3567B0F41BCB9DFB0053843C /* PPDataCache.m in Sources */,
 				3567B0AC1BCB9DF70053843C /* JSQMessagesCollectionView.m in Sources */,
@@ -1506,7 +1607,9 @@
 				3567B0921BCB9DF60053843C /* JSQFileMediaItem.m in Sources */,
 				3567B0B81BCB9DF70053843C /* JSQMessagesLabel.m in Sources */,
 				3567B0E21BCB9DFA0053843C /* PPJSQAvatarLoader.m in Sources */,
+				EDBAA9B61CDAF50600C2B52F /* PPWebSocketAuthHandler.m in Sources */,
 				3567B0B61BCB9DF70053843C /* JSQMessagesInputToolbar.m in Sources */,
+				EDBAA9AA1CDAE7A300C2B52F /* PPWebSocketBaseHandler.m in Sources */,
 				3567B0C81BCB9DF80053843C /* PPMessagesViewController.m in Sources */,
 				3567B0961BCB9DF60053843C /* JSQMediaItem.m in Sources */,
 				3567B08A1BCB9DF60053843C /* JSQMessagesBubblesSizeCalculator.m in Sources */,
@@ -1523,11 +1626,14 @@
 				EDA2729E1CBF7CCD0038E2B8 /* PPGroupMembersCollectionViewLayout.m in Sources */,
 				3567B07A1BCB9DF50053843C /* JSQMessagesKeyboardController.m in Sources */,
 				3567B0B01BCB9DF70053843C /* JSQMessagesCollectionViewCellIncoming.m in Sources */,
+				EDBAA9A61CDAE5F200C2B52F /* PPWebSocketHandlerFactory.m in Sources */,
+				EDBAA9931CD9F2C400C2B52F /* PPPolling.m in Sources */,
 				3567B07C1BCB9DF60053843C /* JSQMessagesViewController.m in Sources */,
 				3567B0A41BCB9DF70053843C /* JSQPhotoMediaItem.m in Sources */,
 				3567B0E61BCB9DFA0053843C /* PPMessageSender.m in Sources */,
 				3567B0721BCB9DF50053843C /* UIColor+JSQMessages.m in Sources */,
 				EDB590551CAD329800017E7C /* PPGetDefaultConversationHttpModels.m in Sources */,
+				EDBAA9B21CDAF30000C2B52F /* PPWebSocketMsgHandler.m in Sources */,
 				EDAC3D3B1CAD05E400BA1066 /* PPComToken.m in Sources */,
 				3567B0761BCB9DF50053843C /* UIImage+JSQMessages.m in Sources */,
 				3567B1001BCB9DFD0053843C /* PPPhotoMediaItem.m in Sources */,
@@ -1560,7 +1666,9 @@
 				3567B0BE1BCB9DF80053843C /* JSQMessagesToolbarContentView.m in Sources */,
 				3567B1041BCB9DFD0053843C /* PPUser.m in Sources */,
 				3567B0901BCB9DF60053843C /* JSQMessagesCollectionViewLayoutAttributes.m in Sources */,
+				EDBAA9BA1CDAF77000C2B52F /* PPWebSocketConversationHandler.m in Sources */,
 				EDB5905C1CAE132D00017E7C /* PPBadgeStyle.m in Sources */,
+				EDBAA9A21CDAE52500C2B52F /* PPWebSocketSysHandler.m in Sources */,
 				3567B09E1BCB9DF60053843C /* JSQMessagesAvatarImage.m in Sources */,
 				3567B0D41BCB9DF90053843C /* PPCachebleImageDownloader.m in Sources */,
 				EDB5905E1CAE132D00017E7C /* PPCustomBadge.m in Sources */,

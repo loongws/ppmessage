@@ -8,4 +8,4 @@
 
 #import "PPComLib.h"
 
-NSString *const PPComLibVersion = @"0.0.5";
+NSString *const PPComLibVersion = @"0.0.6";

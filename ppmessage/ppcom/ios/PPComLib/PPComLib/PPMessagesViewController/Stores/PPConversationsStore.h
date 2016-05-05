@@ -24,7 +24,16 @@
 + (instancetype)storeWithClient:(PPCom*)client;
 
 - (void)setWithConversations:(NSArray*)conversations;
+
+/**
+ * Add conversation
+ */
 - (void)addConversation:(PPConversationItem*)conversation;
+
+/**
+ * Add a default conversation
+ */
+- (void)addDefaultConversation:(PPConversationItem*)defaultConversation;
 
 /**
  * 从`cache`拿去
@@ -54,5 +63,15 @@
  */
 - (void)findConversationAssociatedWithUserUUID:(NSString*)userUUID
                                  findCompleted:(void (^)(PPConversationItem *conversationItem, BOOL success))completedBlock;
+
+/**
+ * Async get default conversation with completed block
+ */
+- (void)asyncGetDefaultConversationWithCompletedBlock:(void (^)(PPConversationItem *conversation))completedBlock;
+
+/**
+ * Is default conversation avaliable now
+ */
+- (BOOL)isDefaultConversationAvaliable;
 
 @end

@@ -18,6 +18,7 @@
 #import "PPGetConversationListHttpModel.h"
 #import "PPGetAppOrgGroupListHttpModel.h"
 #import "PPCreateConversationHttpModel.h"
+#import "PPGetDefaultConversationHttpModels.h"
 
 #define PP_ENABLE_LOG 1
 
@@ -26,6 +27,8 @@
 @property (nonatomic) NSMutableArray *conversationItems;
 @property (nonatomic) PPCom *client;
 @property (nonatomic) BOOL fetchedFromServer; // 是否从服务器下载过conversation_list
+
+@property (nonatomic) PPConversationItem *defaultConversation;
 
 @end
 
@@ -68,6 +71,11 @@
             }
         }
     }
+}
+
+- (void)addDefaultConversation:(PPConversationItem *)defaultConversation {
+    self.defaultConversation = defaultConversation;
+    [self addConversation:defaultConversation];
 }
 
 - (NSArray*)sortedConversations {
@@ -165,6 +173,26 @@
         
     }];
     
+}
+
+- (void)asyncGetDefaultConversationWithCompletedBlock:(void (^)(PPConversationItem *))completedBlock {
+    if ([self isDefaultConversationAvaliable]) {
+        if (completedBlock) completedBlock(self.defaultConversation);
+        return;
+    }
+    
+    PPGetDefaultConversationHttpModels *fetchDefaultConversation = [PPGetDefaultConversationHttpModels modelWithClient:self.client];
+    [fetchDefaultConversation requestWithBlock:^(PPConversationItem *conversation, NSDictionary *response, NSError *error) {
+        if (conversation) {
+            [self addConversation:conversation];
+            self.defaultConversation = conversation;
+        }
+        if (completedBlock) completedBlock(self.defaultConversation);
+    }];
+}
+
+- (BOOL)isDefaultConversationAvaliable {
+    return self.defaultConversation != nil;
 }
 
 #pragma mark - Helper

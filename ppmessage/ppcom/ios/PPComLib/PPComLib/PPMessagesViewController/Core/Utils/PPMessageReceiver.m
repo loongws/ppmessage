@@ -15,6 +15,8 @@
 #import "PPTxtLoader.h"
 #import "PPFastLog.h"
 
+#import "PPWebSocketHandlerFactory.h"
+
 @interface PPMessageReceiver () <SRWebSocketDelegate>
 
 typedef NS_ENUM(NSInteger, AutoReconnectState) {
@@ -46,48 +48,6 @@ typedef NS_ENUM(NSInteger, AutoReconnectState) {
 -(void)autoReconnectSelector;
 
 @end
-
-//////////////////////////
-// LOGOUT MESSAGE BEGIN //
-//////////////////////////
-@interface PPMessageReceiver (PPLogoutMessage)
-
-// check message is a `LOGOUT` message
-- (BOOL)pp_isLogoutMessage:(NSString *)message;
-// dispatch `LOGOUT` message
-- (void)pp_onLogoutMessageRecevied:(NSString *)message;
-
-@end
-
-@implementation PPMessageReceiver (PPLogoutMessage)
-
-- (BOOL)pp_isLogoutMessage:(NSString *)message {
-    // user not exist
-    if (self.client.user == nil || self.client.user.deviceUuid == nil) {
-        return NO;
-    }
-
-    if ([self.client.utils isNotNull:message]) {
-        NSDictionary *messageBody = [self.client.utils jsonStringToDictionary:message];
-        // {mt: "SYS", bo: "4590857d-aae1-11e5-9fbd-0c4de9b21073", ms: "LOGOUT"}
-        return messageBody != nil &&
-            [messageBody[@"mt"] isEqual:@"SYS"] &&
-            [messageBody[@"ms"] isEqual:@"LOGOUT"] &&
-            [messageBody[@"bo"] isEqual:self.client.user.deviceUuid];
-    }
-
-    return NO;
-    
-}
-
-- (void)pp_onLogoutMessageRecevied:(NSString *)message {
-    [self close];
-}
-
-@end
-//////////////////////////
-// LOGOUT MESSAGE END //
-//////////////////////////
 
 @implementation PPMessageReceiver
 
@@ -143,19 +103,7 @@ typedef NS_ENUM(NSInteger, AutoReconnectState) {
 #pragma mark - SRWebSocketDelegate
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message {
-    PPFastLog(@"WebSocket: receiveMessage: %@", message);
-
-    if ([self pp_isLogoutMessage:message]) {
-        [self pp_onLogoutMessageRecevied:message];
-    } else {
-        PPMessage *ppMessage = [self parseMessage:(NSString*)message];
-        if (ppMessage) {
-            if (self.delegate) {
-                [self.delegate didReceiveMessage:ppMessage];
-            }
-        }      
-    }
-
+    [[PPWebSocketHandlerFactory sharedInstance] handle:message];
 }
 
 - (void)webSocketDidOpen:(SRWebSocket *)webSocket {
@@ -210,21 +158,6 @@ typedef NS_ENUM(NSInteger, AutoReconnectState) {
     if (!self.socketClose) {
         [self tryAutoReconnect];
     }
-}
-
-#pragma mark - Receive PPMessage
-
--(PPMessage*)parseMessage:(NSString*)message {
-    if ([self.client.utils isNull:message]) {
-        return nil;
-    }
-    
-    NSDictionary *messageDict = [self.client.utils jsonStringToDictionary:message];
-    if ([messageDict count] < 2) {
-        return nil;
-    }
-    
-    return [PPMessage messageWithClient:self.client body:messageDict];
 }
 
 #pragma mark - Auto Reconnect

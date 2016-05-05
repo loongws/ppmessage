@@ -227,4 +227,16 @@ UIImage* PPDefaultAvatarImage() {
     return PPImageFromAssets(@"pp_icon_avatar");
 }
 
+BOOL PPIsApiResponseEmpty(NSDictionary* apiResponse) {
+    if (!apiResponse) return YES;
+    if ([apiResponse[@"error_code"] integerValue] != 0) return NO;
+    
+    NSMutableDictionary *copied = [NSMutableDictionary dictionaryWithDictionary:[apiResponse copy]];
+    [copied removeObjectForKey:@"error_code"];
+    [copied removeObjectForKey:@"error_string"];
+    [copied removeObjectForKey:@"uri"];
+    
+    return copied.count == 0;
+}
+
 @end
