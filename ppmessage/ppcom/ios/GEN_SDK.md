@@ -1,11 +1,11 @@
-## 生成`SDK-Download-Zip`文件
+## Generate `PPComLib.sdk`
 
-所有供开发者下载的都放在`SDK-V0.0.3`下面，调用如下命令生成`PPComLibSDK-V0.0.3.zip`包:
+- Open `PPComLib.xcodeproj`
 
-```bash
-zip -r PPComLibSDK-V0.0.3.zip ./SDK-V0.0.3/
-```
+- Select `Framework` scheme, then press `Command + B` to build it. Your desktop will generated two files when build finished, one is named `PPComLib.framework`, another is `PPComLib.bundle`.
 
-## 关于如何生成`Framework`，请参考如下文章：
+- Drag `PPComLib.framework` and `PPComLib.bundle` to your project, and it should work well now. Here is [another article](https://github.com/PPMESSAGE/ppbook/blob/master/part2/ppcom/ios-sdk.md) to help you integrate with `PPCom iOS SDK` to your project.
 
-![iOS开发--创建你自己的Framework](http://www.cocoachina.com/ios/20150127/11022.html)
+## How to make your own `Framework`, please reference this article:
+
+[iOS开发--创建你自己的Framework](http://www.cocoachina.com/ios/20150127/11022.html)
