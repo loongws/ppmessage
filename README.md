@@ -2,7 +2,7 @@
 
 [In Chinese 中文版](ppmessage/doc/zh-cn/README.md)
 
-# PPMessage - Plug and Play Online Customer Service, iOS/Android In-App Instant Message SDK, Intercom Alternative, Implemented with Python. 
+# PPMessage - Plug and Play Online Customer Service, iOS/Android In-App Messaging SDK, Intercom Alternative, Implemented with Python. 
 An Open Source Plug & Play Online Customer Communication Platform. On PPMessage, you can chat with your customer via Web or mobile App. As open source [Intercom](http://intercom.io) alternative, nothing needs change, you can start a SAAS with PPMessage.
 
 PPMessage targets to be deployed on Linux, Mac OS X and Windows systems. And PPMessage is a clearly API system which could be integrated with any open source Content Management System like Wordpress, Drupal and any commercial system even a e-commerce system.
