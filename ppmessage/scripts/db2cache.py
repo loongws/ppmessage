@@ -113,7 +113,8 @@ def load():
         OrgUserGroupData,        
 
         ApiInfo,
-
+        ApiTokenData,
+        
         PredefinedScript,
         PredefinedScriptGroup,
         
