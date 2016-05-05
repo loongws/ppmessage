@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var concat = require('gulp-concat');
-var minifyCss = require('gulp-minify-css');
+var cleanCss = require('gulp-clean-css');
 var rename = require('gulp-rename');
 var ngmin = require('gulp-ngmin');
 var uglify = require('gulp-uglify');
@@ -49,7 +49,7 @@ gulp.task('user-css', function(done) {
     gulp.src(buildConfig.cssFiles.user)
         .pipe(concat('ppconsole-user.css'))
         .pipe(gulp.dest(buildConfig.buildPath))
-        .pipe(minifyCss())
+        .pipe(cleanCss())
         .on('error', function(e) {
             console.log(e);        
             done();
@@ -63,7 +63,7 @@ gulp.task('admin-css', function(done) {
     gulp.src(buildConfig.cssFiles.admin)
         .pipe(concat('ppconsole-admin.css'))
         .pipe(gulp.dest(buildConfig.buildPath))
-        .pipe(minifyCss())
+        .pipe(cleanCss())
         .on('error', function(e) {
             console.log(e);        
             done();

@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var concat = require('gulp-concat');
-var minifyCss = require('gulp-minify-css');
+var cleanCss = require('gulp-clean-css');
 var rename = require('gulp-rename');
 var ngmin = require('gulp-ngmin');
 var uglify = require('gulp-uglify');
@@ -55,7 +55,7 @@ gulp.task('css', function(done) {
     gulp.src(buildConfig.cssFiles)
         .pipe(concat('pp-lib.css'))
         .pipe(gulp.dest(buildConfig.distPath))
-        .pipe(minifyCss())
+        .pipe(cleanCss())
         .pipe(replace('"', '\''))
         .pipe(replace('\n', ''))
         .pipe(rename({ extname: '.min.css' }))

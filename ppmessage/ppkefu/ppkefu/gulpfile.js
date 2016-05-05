@@ -4,7 +4,7 @@ var gutil = require("gulp-util");
 var bower = require("bower");
 var concat = require("gulp-concat");
 var sass = require("gulp-sass");
-var minifyCss = require("gulp-minify-css");
+var cleanCss = require("gulp-clean-css");
 var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
 var replace = require("gulp-replace");
@@ -158,7 +158,7 @@ function generate_sass (done) {
     gulp.src(src)
         .pipe(sass({errLogToConsole: true}))
         .pipe(gulp.dest(dest))
-        .pipe(minifyCss({ keepSpecialComments: 0 }))
+        .pipe(cleanCss({ keepSpecialComments: 0 }))
         .pipe(rename({ extname: ".min.css" }))
         .pipe(gulp.dest(dest))
         .on("end", done);
@@ -185,7 +185,7 @@ function generate_lib_css (done) {
     gulp.src(src)
         .pipe(concat("lib.css"))
         .pipe(gulp.dest(dest))
-        .pipe(minifyCss({ keepSpecialComments: 0 }))
+        .pipe(cleanCss({ keepSpecialComments: 0 }))
         .pipe(rename({ extname: ".min.css" }))
         .pipe(gulp.dest(dest))
         .on("end", done);
