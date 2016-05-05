@@ -4,7 +4,6 @@
 # maintainer: Jin He <jin.he@ppmessage.com>
 # description: a shell script to deploy PPMessage on Debian and Ubuntu
 
-NODE_VERSION="v6.0.0"
 NGINX_VERSION="1.8.0"
 FFMPEG_VERSION="3.0.2"
 MYSQL_CONNECTOR_PYTHON_VERSION="2.1.3"
@@ -78,6 +77,10 @@ apt-get install -y \
     redis-server \
     wget
 
+# nodejs 4.x
+curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+apt-get install -y nodejs
+
 # some python modules need libmaxminddb, install it before run 'pip install ...'
 cd /tmp
 git clone --recursive https://github.com/maxmind/libmaxminddb
@@ -120,13 +123,6 @@ cd ffmpeg-$FFMPEG_VERSION
 make && make install 
 cd -
 
-cd /tmp
-wget -c https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION.tar.gz
-tar -zxvf node-$NODE_VERSION.tar.gz
-cd node-$NODE_VERSION
-./configure
-make && make install
-cd -
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
 pip install \
