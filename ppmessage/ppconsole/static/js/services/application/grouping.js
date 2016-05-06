@@ -219,12 +219,6 @@
                 
                 var groupLists = data.list.sort( compare ) || [];
                 angular.forEach( groupLists, function( value, index ) {
-                    
-                    var workTimes = workTime( value );
-                    
-                    value.start_time = workTimes.start_time;
-                    value.end_time = workTimes.end_time;
-                    
                     // store group info to local
                     groups [ value.uuid ] = value;
                     
@@ -246,13 +240,6 @@
                 errorCallback && errorCallback( {} );
             }
 
-            function workTime( item ) {
-                var serviceTime = item.group_work_time_str;
-                return {
-                    start_time: serviceTime.split( '-' )[ 0 ].split( ':' )[0],
-                    end_time: serviceTime.split( '-' )[ 1 ].split( ':' )[0]
-                };
-            }
         }
 
         //// getTeamServiceUserList /////
