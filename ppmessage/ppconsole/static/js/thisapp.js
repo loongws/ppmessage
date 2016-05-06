@@ -5,6 +5,8 @@ angular.module("this_app", [
     "720kb.tooltips",
     "base64",
     "ngCookies",
+    "ngAnimate",
+    "toastr",
     "angularUtils.directives.dirPagination",
     "angularFileUpload",
     "blockUI",

@@ -31,13 +31,13 @@ module.exports = {
             "../static/js/controllers/login.js",
             "../static/js/controllers/forget.js",
             "../static/js/controllers/signup.js",
+            "../static/js/controllers/signupmd.js",
             "../static/js/controllers/checkinbox.js",
             "../static/js/controllers/app.js",
             "../static/js/controllers/createteam.js",
             "../static/js/controllers/startteam.js",
             "../static/js/controllers/recoverpassword.js",
             "../static/js/controllers/createaccount.js",
-
 
             "../static/js/controllers/policy/policy.js",
             "../static/js/controllers/policy/termofservice.js",

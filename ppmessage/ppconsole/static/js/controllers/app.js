@@ -1,5 +1,5 @@
 angular.module("this_app")
-    .controller("AppCtrl", function($window, $scope, $rootScope, $location, $state, $translate, $timeout, $cookies, yvAjax, yvUser, yvUtil, yvDebug, yvLogin, yvAppService, yvConstants, yvLoginedUser) {
+    .controller("AppCtrl", function($window, $scope, $rootScope, $location, $state, $translate, $timeout, $cookies, $filter, toastr, yvAjax, yvUser, yvUtil, yvDebug, yvLogin, yvAppService, yvConstants, yvLoginedUser, yvTransTags) {
 
         $scope._languages = [
             {
@@ -40,6 +40,8 @@ angular.module("this_app")
             }
             return _l;
         };
+
+        
         
         $scope.toggle_mobile_menu = function($event) {
             if ($(".mobile-menu").hasClass("active")) {
@@ -64,7 +66,8 @@ angular.module("this_app")
         };
         
         $scope.main = function() {
-            $state.go("app.main");
+            window.open("https://www.ppmessage.com");
+            //$state.go("app.main");
         };
 
         $scope.blog = function() {
@@ -134,44 +137,49 @@ angular.module("this_app")
         
         $scope.logout = function() {
             var _logout = yvAjax.logout("user");
-            
             $timeout(function() {
-
                 yvLogin.logout();
                 isLogin = false;
                 yvAppService.clear();
-                
                 $scope.menuStyle[ 'margin-top' ] = '24px';
                 $scope.isAdminUser = false;
-                
             });
-            
             $timeout(function() {
-                $state.go("app.signin");
+                $state.go("app.signup-md", {sign_what: "signin"});
             });
         };
-        
+
+        $scope.toast_error_string = function(str) {
+            var _local_str = $filter("translate")("global." + str);
+            console.log(_local_str);
+            $timeout( function() {
+                toastr.error(_local_str);
+            });
+        };
+
+        $scope.toast_success_string = function(str) {
+            var _local_str = $filter("translate")("global." + str);
+            console.log(_local_str);
+            $timeout( function() {
+                toastr.success(_local_str);
+            });
+        };
+
         $scope.$on("$destroy", function() {
             
         });
 
         var _init = function() {
-
             // Event: login successful
             $rootScope.$on( yvConstants.BROADCAST_EVENT_KEY.LOGIN_FINISHED , function( event, args ) {
 
                 isLogin = true;
                 $scope.isAdminUser = args.isAdmin;
-                if ( $scope.isAdminUser === true ) {
-                    
+                if ( $scope.isAdminUser === true ) {                    
                     $scope.menuStyle[ 'margin-top' ] = '12px';
-
                     refreshApps();
-                    
                 }
-                
-            } );
-            
+            } );            
         };
 
         _init();

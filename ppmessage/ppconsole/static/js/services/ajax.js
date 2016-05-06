@@ -221,6 +221,10 @@ function $yvAjaxService($state, $timeout, $http, $cookieStore, yvUser, yvConstan
             return _apiPostWithToken('/PPCONSOLE_SIGNUP', requestParams, credentials_token);
         },
 
+        send_new_password: function(requestParams, credentials_token) {
+            return _apiPostWithToken('/PPCONSOLE_SEND_NEW_PASSWORD', requestParams, credentials_token);
+        },
+
         get_all_apps: function(requestParams) {
             return _apiPost('/PP_GET_ALL_APP_LIST', requestParams);            
         },
