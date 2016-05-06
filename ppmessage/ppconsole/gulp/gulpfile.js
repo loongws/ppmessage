@@ -17,7 +17,7 @@ var watching_paths = {
     scripts: [
         '../static/js/*.js',
         '../static/js/**/*.js',
-	'../static/js/**/**/*.js',
+        '../static/js/**/**/*.js'
     ],
     css: [
         '../static/css/*.css'
