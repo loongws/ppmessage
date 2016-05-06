@@ -205,35 +205,27 @@
             // 1. get group list
             yvAjax.get_group_list( { app_uuid: yvUser.get_team().uuid } )
                 .success( function( data ) {
-
                     if ( noError( data ) ) {
                         onSuccessGetGroupList( data );
                     } else {
                         onErrorGetGroupList( data );
                     }
-
                 })
                 .error( onErrorGetGroupList );
 
             function onSuccessGetGroupList( data ) {
-                
                 var groupLists = data.list.sort( compare ) || [];
                 angular.forEach( groupLists, function( value, index ) {
                     // store group info to local
                     groups [ value.uuid ] = value;
-                    
                 } );
                 
                 // 2. get all users
                 getTeamServiceUserList( function( users ) {
                     successCallback && successCallback( groups );
-                    
                 }, function( error ) {
-
                     onErrorGetGroupList( error );
-                    
                 } );
-
             }
 
             function onErrorGetGroupList( data ) {
