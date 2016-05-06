@@ -85,13 +85,13 @@ var paths = {
         "./www/js/*.js",
         "./www/js/**/*.js"
     ],
-    config: ["./build.config.js"],
+    config: ["./build.config.js"]
 };
 
 var version = get_ppkefu_version();
 var appConfig = load_app_config();
 
-console.log("------------- app config --------------")
+console.log("------------- app config --------------");
 console.log("server name      \t", colorfulText(appConfig.server.name));
 console.log("server protocol  \t", colorfulText(appConfig.server.protocol));
 console.log("server host      \t", colorfulText(appConfig.server.host));
@@ -100,7 +100,7 @@ console.log("developer mode   \t", colorfulText(appConfig.developer_mode));
 console.log("app version      \t", colorfulText(version));
 console.log("api key          \t", colorfulText(appConfig.api_key));
 console.log("gcm sender id    \t", colorfulText(appConfig.sender_id));
-console.log("------------- app config --------------")
+console.log("------------- app config --------------");
 
 gulp.task("sass", generate_sass);
 gulp.task("lib-css", generate_lib_css);

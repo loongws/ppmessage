@@ -122,7 +122,7 @@ gulp.task('clean:src', [ mode ], function(done) {
         return del([
             buildConfig.distPath + '/pp-library.js',
             buildConfig.distPath + '/pp-lib.css',
-            buildConfig.distPath + '/pp-lib.min.css',
+            buildConfig.distPath + '/pp-lib.min.css'
         ], {
             force: true
         });
