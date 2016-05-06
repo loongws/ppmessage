@@ -42,6 +42,7 @@ apt-get install -y libjpeg62-turbo-dev
 apt-get install -y libjpeg8-dev
 
 apt-get install -y \
+    sudo \
     apt-file \
     apt-utils \
     autoconf \
