@@ -39,6 +39,7 @@ class MailGunWorker():
         return email_config
     
     def work(self, email_request):
+        logging.info("email_request: %s" % str(email_request))
         _to = email_request.get("to")
         if not isinstance(_to, list):
             logging.error("email to should be a list: %s" % str(type(_to)))
