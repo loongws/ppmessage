@@ -131,6 +131,7 @@ cd -
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
 pip install \
+    StringGenerator \
     axmlparserpy \
     beautifulsoup4 \
     biplist \

@@ -30,6 +30,12 @@ angular.module("this_app.route", ["ui.router", "this_app.constants"])
                 controller: "SignupCtrl"
             })
 
+            .state("app.signup-md", {
+                url: "/signup-md/:sign_what",
+                templateUrl: yvConstants.STATIC_PREFIX + "html/signup-md.html",
+                controller: "SignupMdCtrl"
+            })
+
             .state("app.createteam", {
                 url: "/createteam",
                 templateUrl: yvConstants.STATIC_PREFIX + "html/createteam.html",
