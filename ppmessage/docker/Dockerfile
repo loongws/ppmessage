@@ -86,6 +86,7 @@ redis \
 rq \
 supervisor \
 sqlalchemy \
+stringgenerator \
 tornado \
 xlrd \
 numpy \
