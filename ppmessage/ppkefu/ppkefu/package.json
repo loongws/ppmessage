@@ -86,7 +86,7 @@
     "cordova-plugin-app-version",
     "ionic-plugin-keyboard",
     {
-      "locator": "https://github.com/PPMESSAGE/cordova-plugin-mqtt.git",
+      "locator": "https://github.com/dingguijin/cordova-plugin-mqtt.git",
       "id": "cordova-plugin-mqtt"
     },
     {
