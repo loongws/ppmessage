@@ -117,7 +117,7 @@ class PPCreateUserHandler(BaseHandler):
             return
 
         _key = DeviceUser.__tablename__ + ".user_email." + _user_email
-        if _redis.exists(_key):
+        if self.application.redis.exists(_key):
             self.setErrorCode(API_ERR.EX_USER)
             return
 
