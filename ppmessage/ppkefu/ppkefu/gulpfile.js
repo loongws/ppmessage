@@ -203,7 +203,7 @@ function create_app_config(bootstrap_data) {
 function load_app_config() {
     var app_config = get_app_config();
     var bootstrap_data = get_bootstrap_data();
-    if (app_config ===  null || app_config.overwrite === true) {
+    if (app_config ===  null || app_config.overwrite !== false) {
         if (bootstrap_data === null) {
             throw gutil.colors.red("Please bootstrap PPMessage before run gulp task");
         }
