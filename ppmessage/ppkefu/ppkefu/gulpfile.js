@@ -1,26 +1,20 @@
 var fs = require("fs");
 var gulp = require("gulp");
 var gutil = require("gulp-util");
-var bower = require("bower");
 var concat = require("gulp-concat");
 var sass = require("gulp-sass");
 var cleanCss = require("gulp-clean-css");
 var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
 var replace = require("gulp-replace");
-var sh = require("shelljs");
-var buildConfig = require("./build.config.js");
-var jslint = require("gulp-jslint");
+var buildConfig = require("./config/build.config.js");
 var path = require("path");
-var args = require("get-gulp-args")();
 var os = require("os");
-var xmlParser = require("xml2json");
 
 function get_ppkefu_version () {
-    var xml = fs.readFileSync("./config.xml", "utf-8");
-    var json = xmlParser.toJson(xml);
-    var object = JSON.parse(json);
-    return object.widget.version;
+    var data = fs.readFileSync("./package.json", "utf-8");
+    var package = JSON.parse(data);
+    return package.version;
 }
 
 function get_bootstrap_data () {
@@ -54,7 +48,7 @@ function create_app_config(target, bootstrap_data) {
 }
 
 function load_app_config() {
-    var target = "./app.config.json";
+    var target = "./config/app.config.json";
     var bootstrap_data = get_bootstrap_data();
 
     try {
@@ -68,6 +62,11 @@ function load_app_config() {
 
     var data = fs.readFileSync(target, "utf-8");
     var app_config = JSON.parse(data);
+
+    if (app_config.api_key !== bootstrap_data.PPKEFU.api_key) {
+        gutil.colors.yellow("WARNING: api_key in config/app.config.json is different from PPKEFU.api_key in bootstrap_data. Unless you are using a custom app.config.json, you should remove config/app.config.json, and run gulp again");
+    }
+
     return app_config;
 }
 
@@ -85,7 +84,7 @@ var paths = {
         "./www/js/*.js",
         "./www/js/**/*.js"
     ],
-    config: ["./build.config.js"]
+    config: ["./config/build.config.js"]
 };
 
 var version = get_ppkefu_version();
@@ -192,9 +191,9 @@ function generate_lib_css (done) {
 }
 
 function refresh_config (done) {
-    var pwd = path.resolve() + "/build.config.js";
+    var pwd = path.resolve() + "/config/build.config.js";
     delete require.cache[pwd];
-    buildConfig = require("./build.config.js");
+    buildConfig = require("./config/build.config.js");
     done();
 }
 
@@ -209,43 +208,3 @@ function copy_jcrop_gif (done) {
         .pipe(gulp.dest("www/build/css/"))
         .on("end", done);
 }
-
-
-gulp.task("jslint", function (done) {
-    gulp.src(buildConfig.ppmessageScripts)
-        .pipe(jslint())
-        .on("end", done);
-});
-
-gulp.task("lint", function (done) {
-    gulp.src("www/js/services/db.js")
-        .pipe(jslint({
-            node: true,
-            nomen: true,
-            sloppy: true,
-            plusplus: true,
-            unparam: true,
-            stupid: true
-        }))
-        .on("end", done);
-});
-
-gulp.task("install", ["git-check"], function() {
-    return bower.commands.install()
-        .on("log", function(data) {
-            gutil.log("bower", gutil.colors.cyan(data.id), data.message);
-        });
-});
-
-gulp.task("git-check", function(done) {
-    if (!sh.which("git")) {
-        console.log(
-            "  " + gutil.colors.red("Git is not installed."),
-            "\n  Git, the version control system, is required to download Ionic.",
-            "\n  Download git here:", gutil.colors.cyan("http://git-scm.com/downloads") + ".",
-            "\n  Once git is installed, run \"" + gutil.colors.cyan("gulp install") + "\" again."
-        );
-        process.exit(1);
-    }
-    done();
-});
