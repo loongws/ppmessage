@@ -86,7 +86,6 @@ redis \
 rq \
 supervisor \
 sqlalchemy \
-stringgenerator \
 tornado \
 xlrd \
 numpy \
@@ -95,7 +94,7 @@ scipy \
 scikit-learn
 
 # wget install
-# mysql-connector-python, nginx, ffmpeg, libmaxmindb 
+# mysql-connector-python, nginx, ffmpeg, libmaxmindb
 WORKDIR /tmp
 
 RUN wget http://cdn.mysql.com//Downloads/Connector-Python/mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz \
@@ -136,6 +135,11 @@ RUN wget http://cdn.mysql.com//Downloads/Connector-Python/mysql-connector-python
 && make && make install \
 
 && rm -fr /tmp/*
+
+# to use docker cache, don't edit above lines.
+# If you want to intall new packages, put it here.
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple \
+stringgenerator
 
 # others
 EXPOSE 8080 80
