@@ -2,25 +2,17 @@ var fs = require("fs");
 var gulp = require("gulp");
 var gutil = require("gulp-util");
 var concat = require("gulp-concat");
-var sass = require("gulp-sass");
+var scss = require("gulp-scss");
 var cleanCss = require("gulp-clean-css");
 var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
 var replace = require("gulp-replace");
+var templateCache = require("gulp-angular-templatecache");
 var buildConfig = require("./config/build.config.js");
 var path = require("path");
 var os = require("os");
 
-var paths = {
-    sass: ["./www/scss/*.scss"],
-    css: ["./www/css/*.css"],
-    scripts: [
-        "./www/js/*.js",
-        "./www/js/**/*.js"
-    ],
-    config: ["./config/build.config.js"]
-};
-var app_config_path = "./config/app.config.json";
+var app_config_path = "config/app.config.json";
 var bootstrap_data_path = "../../bootstrap/data.py";
 var version = get_ppkefu_version();
 var appConfig = load_app_config();
@@ -37,33 +29,47 @@ console.log("api key          \t", colorfulText(appConfig.api_key));
 console.log("gcm sender id    \t", colorfulText(appConfig.sender_id));
 console.log("------------- app config --------------");
 
-gulp.task("sass", generate_sass);
+gulp.task("scss", generate_scss);
 gulp.task("lib-css", generate_lib_css);
-gulp.task("scripts", generate_scripts);
-gulp.task("lib-scripts", generate_lib_scripts);
-gulp.task("refresh-config", refresh_config);
+gulp.task("js", generate_js);
+gulp.task("lib-js", generate_lib_js);
 gulp.task("copy-jcrop-gif", copy_jcrop_gif);
 gulp.task("copy-ionic-fonts", copy_ionic_fonts);
+gulp.task("template-cache", generate_template_cache);
 
 gulp.task("default", [
-    "sass",
+    "scss",
     "lib-css",
-    "lib-scripts",
+    "lib-js",
     "copy-jcrop-gif",
     "copy-ionic-fonts",
-    "scripts"
+    "js",
+    "template-cache"
 ]);
 
-gulp.task("watch", ["lib-css", "sass", "scripts"], function() {
-    gulp.watch(paths.sass, ["sass"]);
-    gulp.watch(paths.css, ["lib-css"]);
-    gulp.watch(paths.scripts, ["scripts"]);
-    gulp.watch(paths.config, ["refresh-config", "scripts"]);
+gulp.task("watch", ["default"], function() {
+    gulp.watch(buildConfig.scss, ["scss"]);
+    gulp.watch(buildConfig.css, ["lib-css"]);
+    gulp.watch(buildConfig.js, ["js"]);
+    gulp.watch(buildConfig.html, ["template-cache"]);
 });
 
-function generate_scripts (done) {
-    var src = buildConfig.ppmessageScripts;
-    var dest = buildConfig.buildScriptPath;
+function generate_template_cache (done) {
+    var src = buildConfig.html;
+    var dest =  buildConfig.buildJsPath;
+
+    gulp.src(src)
+        .pipe(templateCache("templates.js", {
+            root: "templates",
+            module: "ppmessage"
+        }))
+        .pipe(gulp.dest(dest))
+        .on("end", done);
+}
+
+function generate_js (done) {
+    var src = buildConfig.js;
+    var dest = buildConfig.buildJsPath;
 
     gulp.src(src)
         .pipe(replace('"{developer_mode}"', appConfig.developer_mode))
@@ -86,12 +92,12 @@ function generate_scripts (done) {
         .on("end", done);
 }
 
-function generate_sass (done) {
-    var src = "www/scss/ionic.ppmessage.scss";
+function generate_scss (done) {
+    var src = "app/scss/ionic.ppmessage.scss";
     var dest = buildConfig.buildCssPath;
 
     gulp.src(src)
-        .pipe(sass({errLogToConsole: true}))
+        .pipe(scss())
         .pipe(gulp.dest(dest))
         .pipe(cleanCss({ keepSpecialComments: 0 }))
         .pipe(rename({ extname: ".min.css" }))
@@ -99,9 +105,9 @@ function generate_sass (done) {
         .on("end", done);
 }
 
-function generate_lib_scripts (done) {
-    var src = buildConfig.libScripts;
-    var dest = buildConfig.buildScriptPath;
+function generate_lib_js (done) {
+    var src = buildConfig.libJs;
+    var dest = buildConfig.buildJsPath;
 
     gulp.src(src)
         .pipe(concat("lib.js"))
@@ -126,27 +132,26 @@ function generate_lib_css (done) {
         .on("end", done);
 }
 
-function refresh_config (done) {
-    var pwd = path.resolve() + "/config/build.config.js";
-    delete require.cache[pwd];
-    buildConfig = require("./config/build.config.js");
-    done();
-}
-
 function copy_ionic_fonts (done) {
-    gulp.src("bower_components/ionic/fonts/*")
-        .pipe(gulp.dest("www/build/fonts/"))
+    var src = "bower_components/ionic/fonts/*";
+    var dest = buildConfig.buildFontPath;
+
+    gulp.src(src)
+        .pipe(gulp.dest(dest))
         .on("end", done);
 }
 
 function copy_jcrop_gif (done) {
-    gulp.src("bower_components/Jcrop/css/Jcrop.gif")
-        .pipe(gulp.dest("www/build/css/"))
+    var src =  "bower_components/Jcrop/css/Jcrop.gif";
+    var dest =  buildConfig.buildCssPath;
+
+    gulp.src(src)
+        .pipe(gulp.dest(dest))
         .on("end", done);
 }
 
 function get_ppkefu_version () {
-    var data = fs.readFileSync("./package.json", "utf-8");
+    var data = fs.readFileSync("package.json", "utf-8");
     var package = JSON.parse(data);
     return package.version;
 }

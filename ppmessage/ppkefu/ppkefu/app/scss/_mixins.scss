@@ -70,7 +70,7 @@
 }
 
 @mixin background-icon($position, $size) {
-    background-image: url("../../img/all_icons.png");
+    background-image: url("../img/all_icons.png");
     background-position: 0 $position;
     width: $size;
     height: $size;

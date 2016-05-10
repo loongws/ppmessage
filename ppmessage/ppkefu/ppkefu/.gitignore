@@ -9,6 +9,10 @@ node_modules_osx/
 node_modules_linux/
 platforms/
 plugins/
-www/build
 *.log
 config/app.config.json
+.gulp-scss-cache
+.sass-cache
+www/js
+www/css
+www/fonts
