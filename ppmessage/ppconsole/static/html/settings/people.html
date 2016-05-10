@@ -1,18 +1,34 @@
 <div class="container" style="width:100%;margin-top:15px;">
   <div class="subnav org-toolbar">
+
     <div class="batch-middle right">
+      <!--
       <a href="javascript:void(0);" class="btn btn-primary" ng-click="show_batch_modal()">
         <i class="glyphicon glyphicon-plus"></i>
         {{ "application.people.CREATE_SERVICE_USER_TAG" | translate }}
       </a>
+      -->
+      <md-button class="md-raised" ng-click="show_batch_modal()"> {{ "application.people.CREATE_SERVICE_USER_TAG" | translate }} </md-button>
     </div>
+
     <div class="left non-admin-search">
+      
+      <md-input-container class="md-block md-icon-float">
+        <md-icon md-font-set="material-icons"> search </md-icon>
+        <label>{{ 'application.people.SEARCH_TAG' | translate }}...</label>
+        <input type="search" ng-model="search_value" ng-change="page_app_user(newPageNumber)" autocomplete="off">
+      </md-input-container>
+      <!-- 
       <div class="auto-search-group">
         <input class="subnav-search-input input-contrast auto-search-input" type="text" name="query" ng-model="search_value" ng-change="page_app_user(newPageNumber)" placeholder="{{ 'application.people.SEARCH_TAG' | translate }}..." autocomplete="off">
         <i class="glyphicon glyphicon-search"></i>
       </div>
+      -->
+      
     </div>
+
   </div>
+  
   <div class="table-list-header">
     <label class="table-list-header-select-all">
       <input type="checkbox" id="select-all-checkbox" ng-model="selectedAll" ng-click="checkAll()">
