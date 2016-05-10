@@ -26,6 +26,7 @@ from ppmessage.core.constant import PCSOCKET_SRV
 from ppmessage.core.constant import ONLINE_STATUS
 from ppmessage.core.constant import MESSAGE_SUBTYPE
 from ppmessage.core.constant import REDIS_PPKEFU_ONLINE_KEY
+from ppmessage.core.constant import REDIS_LOGOUT_NOTIFICATION_KEY
 
 from ppmessage.pcsocket.pcsocketapp import pcsocket_user_online
 from ppmessage.core.redis import redis_hash_to_dict
