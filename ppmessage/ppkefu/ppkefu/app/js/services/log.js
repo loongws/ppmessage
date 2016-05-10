@@ -9,7 +9,7 @@ function () {
         console.log.apply(console, args);              
     }
     
-    if (ppmessage.developerMode) {
+    if (ppmessage.developer_mode) {
         log = {
             log: function () {
                 var args = Array.prototype.slice.call(arguments);
