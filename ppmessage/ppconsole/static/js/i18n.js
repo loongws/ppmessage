@@ -342,7 +342,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     SERVICE_USER_TAG: "Service user",
                     CANCEL_TAG: "Cancel",
                     OK_TAG: "Ok",
-                    SERVICE_USER_NAME_TAG: "Username",
+                    SERVICE_USER_NAME_TAG: "Service user full name",
                     SERVICE_USER_EMAIL_TAG: "Email",
                     PASSWORD_TAG: "Password",
                     CONFIRM_PASSWORD_TAG: "Confirm password",
