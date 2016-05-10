@@ -11,10 +11,12 @@
     "url": "https://github.com/PPMESSAGE/ppmessage.git"
   },
   "build": {
+    "overwrite": true,
     "app-bundle-id": "com.ppmessage.ppkefu.mac",
     "helper-bundle-id": "com.ppmessage.ppkefu.mac.helper",
     "osx": {
       "title": "PPMessage",
+      "identity": "3rd Party Mac Developer Application: Beijing Yourui Technology Co., Ltd. (2WSQ489AT3)",
       "target": [
         "dmg",
         "mas"
@@ -35,7 +37,7 @@
       ]
     },
     "mas": {
-      "identity": "3rd Party Mac Developer Application: Beijing Yourui Technology Co., Ltd. (2WSQ489AT3)"
+      "identity": "3rd Party Mac Developer Installer: Beijing Yourui Technology Co., Ltd. (2WSQ489AT3)"
     },
     "win": {
       "iconUrl": "https://github.com/mirror-riddle/ppmessage/blob/master/ppmessage/ppkefu/ppkefu/build/icon.ico?raw=true"
@@ -47,7 +49,7 @@
   "scripts": {
     "gulp": "gulp",
     "start": "electron www/main.js",
-    "set-up-electron": "npm install electron-builder^3.17.1 electron-prebuilt^0.37.8",
+    "set-up-electron": "cnpm install electron-builder@3.17.1 electron-prebuilt@0.37.8",
     "pack": "build",
     "dist": "build --arch all"
   },

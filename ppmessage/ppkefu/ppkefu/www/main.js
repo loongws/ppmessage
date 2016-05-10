@@ -21,16 +21,16 @@ function handleSquirrelEvent() {
         return false;
     }
 
-    const ChildProcess = require('child_process');
-    const path = require('path');
+    var ChildProcess = require('child_process');
+    var path = require('path');
 
-    const appFolder = path.resolve(process.execPath, '..');
-    const rootAtomFolder = path.resolve(appFolder, '..');
-    const updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'));
-    const exeName = path.basename(process.execPath);
+    var appFolder = path.resolve(process.execPath, '..');
+    var rootAtomFolder = path.resolve(appFolder, '..');
+    var updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'));
+    var exeName = path.basename(process.execPath);
 
-    const spawn = function(command, args) {
-        let spawnedProcess, error;
+    var spawn = function(command, args) {
+        var spawnedProcess, error;
 
         try {
             spawnedProcess = ChildProcess.spawn(command, args, {detached: true});
@@ -39,11 +39,11 @@ function handleSquirrelEvent() {
         return spawnedProcess;
     };
 
-    const spawnUpdate = function(args) {
+    var spawnUpdate = function(args) {
         return spawn(updateDotExe, args);
     };
 
-    const squirrelEvent = process.argv[1];
+    var squirrelEvent = process.argv[1];
 
     switch (squirrelEvent) {
     case '--squirrel-install':
