@@ -1,29 +1,3 @@
-/*
- * window.ppmessage provides addtional below infos. Its value is processed by gulp.
- * View gulpfile.js and build.config.js for more details.
- *
- * api_key: Set ppekfu api_key.
- * server: Set the default server for mobile-ppkefu and electron-ppkefu, where we can't get server info from window.location.
- * version: Set browser-ppkefu version, same as mobile-ppkefu version.
- * developer_mode: Set developer_mode true/false. It influences log and UI.
- * disableOnbeforeunload: Set disableOnbeforeunload true/false, matters when user refresh web page.
- *
- */
-
-window.ppmessage = {
-    "api_key": "{api_key}",
-    "sender_id": "{sender_id}",
-    "server": {
-        "name": "{server_name}",
-        "protocol": "{server_protocol}",
-        "host": "{server_host}",
-        "port": "{server_port}"
-    },
-    "version": "{version}",
-    "developerMode": "{developer_mode}",
-    "disableOnbeforeunload": false
-};
-
 var ppmessageModule = angular.module("ppmessage", [
     "ionic",
     "base64",
@@ -70,7 +44,7 @@ function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvMenu, yvLocal, 
     yvLocal.localize();
     yvMenu.init();
     
-    if (ppmessage.developerMode) {
+    if (ppmessage.developer_mode) {
         ppmessage.monitor = yvMonitor;
     }
 
@@ -86,7 +60,7 @@ function ($state, $timeout, $rootScope, $ionicPlatform, yvSys, yvMenu, yvLocal, 
                 ppmessage.disableOnbeforeunload = false;
                 return;
             }
-            if (!ppmessage.developerMode && $state.includes("app.*")) {
+            if (!ppmessage.developer_mode && $state.includes("app.*")) {
                 event.returnValue = yvLocal.translate("app.GLOBAL.ON_BEFORE_UNLOAD_WARNING");
             }
         };

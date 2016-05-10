@@ -1,5 +1,7 @@
 module.exports = {
 
+    halfBuildPath: "app/build",
+
     buildCssPath: "www/css",
     buildJsPath: "www/js",
     buildFontPath: "www/fonts",
@@ -10,11 +12,11 @@ module.exports = {
     js: [
 
         // Module
+        "app/js/head.js",
         "app/js/module.js",
         "app/js/starter.js",
         "app/js/routers.js",
         "app/js/i18n.js",
-        "app/build/templates.js",
         "app/js/app.js",
 
         // Service

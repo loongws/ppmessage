@@ -153,7 +153,7 @@ function ($state, $timeout, $ionicLoading, yvSys, yvAPI, yvNav, yvLog, yvNoti, y
             var token = yvPush.get_token();
             session.device_token = token;
             if (yvSys.in_ios_app()) {
-                session.ios_app_development = !!ppmessage.developerMode;
+                session.ios_app_development = !!ppmessage.developer_mode;
             }
             if (yvSys.in_android_app() && yvUser.get("android_notification_type") === yvConstants.NOTIFICATION_TYPE.MQTT) {
                 session.device_token = null;

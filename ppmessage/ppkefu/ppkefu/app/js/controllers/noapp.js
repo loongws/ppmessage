@@ -4,7 +4,7 @@ ppmessageModule.controller("NoAppCtrl", [
     "yvConstants",
 function ($scope, yvSys, yvConstants) {
     $scope.showServerButton = function () {
-        return ppmessage.developerMode && yvSys.has_db();
+        return ppmessage.developer_mode && yvSys.has_db();
     };
 
 }]);

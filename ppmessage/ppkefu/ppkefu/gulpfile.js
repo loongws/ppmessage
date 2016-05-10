@@ -2,7 +2,7 @@ var fs = require("fs");
 var gulp = require("gulp");
 var gutil = require("gulp-util");
 var concat = require("gulp-concat");
-var scss = require("gulp-scss");
+var scss = require("gulp-sass");
 var cleanCss = require("gulp-clean-css");
 var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
@@ -63,6 +63,13 @@ function generate_template_cache (done) {
             root: "templates",
             module: "ppmessage"
         }))
+        .pipe(gulp.dest(buildConfig.halfBuildPath))
+        .pipe(uglify())
+        .on("error", function(e) {
+            console.log(e);
+            done();
+        })
+        .pipe(rename({"extname": ".min.js"}))
         .pipe(gulp.dest(dest))
         .on("end", done);
 }
@@ -71,25 +78,19 @@ function generate_js (done) {
     var src = buildConfig.js;
     var dest = buildConfig.buildJsPath;
 
-    gulp.src(src)
-        .pipe(replace('"{developer_mode}"', appConfig.developer_mode))
-        .pipe(replace("{server_name}", appConfig.server.name))
-        .pipe(replace("{server_protocol}", appConfig.server.protocol))
-        .pipe(replace("{server_host}", appConfig.server.host))
-        .pipe(replace("{server_port}", appConfig.server.port))
-        .pipe(replace("{api_key}", appConfig.api_key))
-        .pipe(replace("{sender_id}", appConfig.sender_id))
-        .pipe(replace("{version}", version))
-        .pipe(concat("ppmessage.js"))
-        .pipe(gulp.dest(dest))
-        .pipe(uglify())
-        .on("error", function(e) {
-            console.log(e);
-            done();
-        })
-        .pipe(rename({ extname: ".min.js" }))
-        .pipe(gulp.dest(dest))
-        .on("end", done);
+    generate_head_js(function() {
+        gulp.src(src)
+            .pipe(concat("ppmessage.js"))
+            .pipe(gulp.dest(buildConfig.halfBuildPath))
+            .pipe(uglify())
+            .on("error", function(e) {
+                console.log(e);
+                done();
+            })
+            .pipe(rename({"extname": ".min.js"}))
+            .pipe(gulp.dest(dest))
+            .on("end", done);
+    });
 }
 
 function generate_scss (done) {
@@ -98,7 +99,7 @@ function generate_scss (done) {
 
     gulp.src(src)
         .pipe(scss())
-        .pipe(gulp.dest(dest))
+        .pipe(gulp.dest(buildConfig.halfBuildPath))
         .pipe(cleanCss({ keepSpecialComments: 0 }))
         .pipe(rename({ extname: ".min.css" }))
         .pipe(gulp.dest(dest))
@@ -111,9 +112,12 @@ function generate_lib_js (done) {
 
     gulp.src(src)
         .pipe(concat("lib.js"))
-        .pipe(gulp.dest(dest))
+        .pipe(gulp.dest(buildConfig.halfBuildPath))
         .pipe(uglify())
-        .on("error", function(e) { console.log(e); })
+        .on("error", function(e) {
+            console.log(e);
+            done();
+        })
         .pipe(rename({ extname: ".min.js" }))
         .pipe(gulp.dest(dest))
         .on("end", done);
@@ -125,7 +129,7 @@ function generate_lib_css (done) {
 
     gulp.src(src)
         .pipe(concat("lib.css"))
-        .pipe(gulp.dest(dest))
+        .pipe(gulp.dest(buildConfig.halfBuildPath))
         .pipe(cleanCss({ keepSpecialComments: 0 }))
         .pipe(rename({ extname: ".min.css" }))
         .pipe(gulp.dest(dest))
@@ -222,4 +226,20 @@ function colorfulText(text) {
         return gutil.colors.red("Not specified, resolve this issue and run gulp again.");
     }
     return gutil.colors.green(text);
+}
+
+function generate_head_js (callback) {
+    var head_path = "app/js/head.js";
+    var config_string = JSON.stringify(appConfig);
+    var config = JSON.parse(config_string);
+
+    delete config.overwrite;
+    config.version = version;
+    config.disableOnbeforeunload = false;
+
+    var data = "window.ppmessage = " + JSON.stringify(config, null, 4) + "\n";
+    fs.writeFile(head_path, data, function (err) {
+        if (err) { throw err; }
+        callback && callback();
+    });
 }

@@ -16,3 +16,6 @@ config/app.config.json
 www/js
 www/css
 www/fonts
+www/build
+app/build
+app/js/head.js
