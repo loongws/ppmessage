@@ -18,6 +18,12 @@ LICENSE    README.md  dist.sh*   ppmessage/
 
 ```
 
+> 执行 download_geolite2.sh, 这个脚本能够下载geolite2的数据库，这个数据库维护了全球大部分IP地址和国家城市的地理位置映射。
+
+```bash
+ppmessage/scripts/download_geolite2.sh
+```
+
 
 > 执行 set-up-ppmesage-on-linux.sh 这个脚本能够帮助你在 Linux 上安装 PPMessage 所依赖的 Debian/Ubuntu 包和 Python 的开发包以及一些必须通过下载源码进行手动编译的过程。这个过程可能需要10分钟甚至更多时间，如果中间出现错误提示，可能意味着某个 PPMessage 所依赖的软件包没有正确安装。
 
