@@ -237,7 +237,7 @@ function generate_head_js (callback) {
     config.version = version;
     config.disableOnbeforeunload = false;
 
-    var data = "window.ppmessage = " + JSON.stringify(config, null, 4) + "\n";
+    var data = "window.ppmessage = " + JSON.stringify(config, null, 4) + ";\n";
     fs.writeFile(head_path, data, function (err) {
         if (err) { throw err; }
         callback && callback();
