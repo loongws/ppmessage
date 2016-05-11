@@ -49,7 +49,8 @@
   "scripts": {
     "gulp": "gulp",
     "start": "electron www/main.js",
-    "set-up-electron": "cnpm install electron-builder@3.17.1 electron-prebuilt@0.37.8",
+    "set-up-electron": "npm install electron-builder@3.17.1 electron-prebuilt@0.37.8",
+    "set-up-electron-cnpm": "cnpm install electron-builder@3.17.1 electron-prebuilt@0.37.8",
     "pack": "build",
     "dist": "build --arch all"
   },
