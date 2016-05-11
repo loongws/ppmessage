@@ -66,6 +66,8 @@ class HtmlLangHandler(BaseHandler):
 
 class StatisticsHandler(RequestHandler):
     def get(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
         _redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
         _key = "device_users.statistics.all"
         _all = _redis.get(_key)
