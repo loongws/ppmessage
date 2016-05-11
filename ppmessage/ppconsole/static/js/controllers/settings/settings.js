@@ -81,10 +81,6 @@ angular.module("this_app")
             $scope._update_string = "";
         };
 
-        $scope.create_team = function() {
-            $state.go("app.settings.createteam");
-        };
-
         $scope.refresh_settings_menu = function() {
             var _j = angular.element(".menu-item");
             for (var i = 0; i < _j.length; i++) {
