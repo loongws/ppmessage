@@ -6,7 +6,7 @@ angular.module("this_app")
     			$state.go("app.main");
     			return;
        		};
-       		$state.go("app.signin");
+       		$state.go("app.signup-md", {sign_what: "signin"});
     	}
 
     	var _init = function() {
@@ -15,8 +15,7 @@ angular.module("this_app")
                 var _t = "settings.confirmreset." + i;
                 _tag_list.push(_t);
             }
-            $scope.translate = function() {
-                
+            $scope.translate = function() {                
             };
             yvUtil.translate($scope, 'lang', _tag_list, $scope.translate);
         };
