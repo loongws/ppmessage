@@ -87,8 +87,8 @@ angular.module("this_app.constants", [])
 
         // according this to jump certain url
         USER_STATUS: {
-            OWNER_0: "app.createteam",
-            OWNER_1: "app.startteam",
+            OWNER_0: "app.main",
+            OWNER_1: "app.main",
             OWNER_2: "app.settings.overview",
             // OWNER_3: "",
             // SERVICE: "",

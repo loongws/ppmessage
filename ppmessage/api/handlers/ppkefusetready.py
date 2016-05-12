@@ -43,4 +43,5 @@ class PPKefuSetReady(BaseHandler):
 
     def _Task(self):
         super(PPKefuSetReady, self)._Task()
+        self._set()
         return

@@ -31,8 +31,10 @@ Ctrl.$sheetheader = (function() {
 
         // Cancel all sechedule tasks
         Service.$schedule.cancelAll();
-
         Service.$sheetHeader.close(false);
+
+        cancelAnyWaitingToCreateConversations();
+
     }
 
     function getHeaderTitle() {
@@ -44,7 +46,7 @@ Ctrl.$sheetheader = (function() {
     }
 
     function setHeaderTitle(title) {
-        title = title || this.getHeaderTitle();
+        title = title || getHeaderTitle();
         Service.$sheetHeader.setHeaderTitle(title);
         View.$sheetHeader.setTitle(title);
     }
@@ -68,6 +70,7 @@ Ctrl.$sheetheader = (function() {
             }
             
         } );
+        
     }
 
     function incrUnread() {
@@ -78,6 +81,22 @@ Ctrl.$sheetheader = (function() {
     function decrUnread( count ) {
         Service.$sheetHeader.decrUnreadCount ( count );
         View.$sheetHeader.setUnreadCount(Service.$sheetHeader.unreadCount());
+    }
+
+    function cancelAnyWaitingToCreateConversations() {
+        var $conversationAgency = Service.$conversationAgency,
+            inRequestingGroupConversation = $conversationAgency.isRequestingGroupConversation(),
+            DELAY_TIME = 300; // Waiting the css animation completed
+
+        Ctrl.$conversationPanel.stopPollingWaitingQueueLength();
+        $timeout( function() {
+            setHeaderTitle();
+            // resume to `MODE.LIST` mode if we are waiting group conversations
+            inRequestingGroupConversation && Ctrl.$conversationList.show();
+            // resume to `MODE.CONTENT` mode if we are waiting default conversations
+            !$conversationAgency.isDefaultConversationAvaliable() &&
+                Ctrl.$conversationPanel.mode( Ctrl.$conversationPanel.MODE.CONTENT );
+        }, DELAY_TIME );
     }
     
 })();

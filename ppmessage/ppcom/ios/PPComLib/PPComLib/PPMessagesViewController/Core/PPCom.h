@@ -10,6 +10,8 @@
 #import "PPComAPI.h"
 #import "PPJSQAvatarLoader.h"
 
+#import "PPWebSocketHandlerFactory.h"
+
 @class PPTxtLoader;
 @class PPUser;
 @class PPComUtils;
@@ -37,10 +39,7 @@ typedef NS_ENUM(NSInteger, InitializeState) {
 
 @protocol PPComMessageDelegate <NSObject>
 
-/**
- * OnNewMessageArrived Callback
- */
--(void)onNewMessageArrived:(PPMessage*)message;
+- (void)onWSMsgArrived:(id)obj msgType:(PPWebSocketMsgType)msgType;
 
 @end
 
@@ -48,7 +47,7 @@ typedef NS_ENUM(NSInteger, InitializeState) {
 @protocol PPComInitializeDelegate <NSObject>
 
 @required
-- (void)onInitSuccess:(PPUser*)user conversationId:(NSString *)conversationId;
+- (void)onInitSuccess:(PPUser*)user;
 
 @optional
 - (void)onGetUserInfo:(PPUser*)user;
@@ -64,7 +63,6 @@ typedef NS_ENUM(NSInteger, InitializeState) {
 @property (nonatomic, weak) id<PPComMessageDelegate> messageDelegate;
 
 @property PPUser *user;
-@property NSString *conversationId;
 
 @property (nonatomic) InitializeState initState;
 
@@ -73,6 +71,7 @@ typedef NS_ENUM(NSInteger, InitializeState) {
 @property (nonatomic) PPComUtils *utils;
 @property (nonatomic) PPDownloader *downloader;
 @property (nonatomic) PPMessageSender *messageSender;
+@property (nonatomic) PPMessageReceiver *messageReceiver;
 @property (nonatomic) PPUploader *uploader;
 @property (nonatomic) PPJSQAvatarLoader *jsqAvatarLoader;
 

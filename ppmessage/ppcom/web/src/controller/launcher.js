@@ -22,7 +22,7 @@ Ctrl.$launcher = (function() {
             if (!Ctrl.$hoverCard.get().interceptLauncherClickEvent()) {
                 var $hoverCardController = Ctrl.$hoverCard.get();
                 $hoverCardController.asyncPrepareHoverCardInfo( function( prepareSucc ) {
-                    prepareSucc && self.showMessageBox();
+                    self.showMessageBox();
                 } );
             }
         },

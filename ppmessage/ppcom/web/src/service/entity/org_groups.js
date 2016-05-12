@@ -15,6 +15,12 @@ Service.$orgGroups = (function() {
     ////// Implementation ////
 
     function asyncGetAppOrgGroupList (callback) {
+        
+        // Only show groups in `GROUP` policy
+        if ( Service.$app.policy() !== Service.$app.POLICY.GROUP ) {
+            $onResult( [], callback );
+            return;
+        }
 
         if (orgGroupList !== undefined) {
             $onResult( orgGroupList, callback );

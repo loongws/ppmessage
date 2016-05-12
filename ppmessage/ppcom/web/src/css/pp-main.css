@@ -476,6 +476,15 @@
     -webkit-animation:loading 1s linear 0s infinite both;
 }
 
+.pp-loading-text {
+    color: gray;
+    font-size: 14px !important;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    top: calc( 50% + 35px );
+}
+
 /* --LOADING--END- */
 
 @-webkit-keyframes loading { 100% {-webkit-transform: rotate(360deg); transform: rotate(360deg);} }

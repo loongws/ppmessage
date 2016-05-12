@@ -16,14 +16,18 @@
 
 #import "PPFastLog.h"
 #import "PPViewUtils.h"
+#import "PPLoadingView.h"
+#import "PPLayoutConstraintsUtils.h"
 
 #import "PPStoreManager.h"
 #import "PPConversationsStore.h"
 #import "PPMessagesStore.h"
 
 #import "PPMessagesViewController.h"
+#import "PPPolling.h"
 
 #import "PPCreateConversationHttpModel.h"
+#import "PPGetWaitingQueueLengthHttpModel.h"
 
 @interface PPConversationsViewController () <PPComInitializeDelegate, PPComMessageDelegate>
 
@@ -31,6 +35,7 @@
 @property (nonatomic) PPCom *client;
 
 @property (nonatomic) UIActivityIndicatorView *activityIndicator;
+@property (nonatomic) PPLoadingView *loadingView;
 
 @end
 
@@ -57,7 +62,12 @@
         [self releaseResources];
     }
     [super viewWillDisappear:animated];
-    
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.loadingView removeFromSuperview];
+    self.loadingView = nil;
 }
 
 - (void)setupTableView {
@@ -94,15 +104,39 @@
     
 }
 
-- (void)onInitSuccess:(PPUser*)user conversationId:(NSString *)conversationId {
-    
-    PPStoreManager *storeManager = [PPStoreManager instanceWithClient:self.client];
+- (void)onFailedGetDefaultConversation:(__weak PPConversationsViewController *)wself {
+    PPPolling *pollingConversation = [[PPPolling alloc] initWithClient:wself.client withTimeInterval:5];
+    [pollingConversation runWithExecutingCode:^{
+        PPGetWaitingQueueLengthHttpModel *getWaitingQueueLengthTask = [PPGetWaitingQueueLengthHttpModel modelWithClient:wself.client];
+        [getWaitingQueueLengthTask getWaitingQueueLengthWithCompletedBlock:^(NSNumber *waitingQueueLength, NSDictionary *response, NSError *error) {
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^ {
+                wself.loadingView.loadingText = [NSString stringWithFormat:@"当前等待人数:%@", waitingQueueLength];
+            }];
+        }];
+    }];
+}
+
+- (void)onGetDefaultConversation:(__weak PPConversationsViewController *)wself storeManager:(PPStoreManager *)storeManager {
     [storeManager.conversationStore sortedConversationsWithBlock:^(NSArray *conversations, NSError *error) {
         
-        [self.conversationItemDataSource updateAllItems:conversations];
-        [self.tableView reloadData];
-        [self stopAnimating];
+        [wself.conversationItemDataSource updateAllItems:conversations];
+        [wself.tableView reloadData];
+        [wself stopAnimating];
         
+    }];
+}
+
+- (void)onInitSuccess:(PPUser*)user {
+    
+    PPStoreManager *storeManager = [PPStoreManager instanceWithClient:self.client];
+    __weak PPConversationsViewController *wself = self;
+    [storeManager.conversationStore asyncGetDefaultConversationWithCompletedBlock:^(PPConversationItem *conversation) {
+        if (!conversation) {
+            [wself.view addSubview:wself.loadingView];
+            [self onFailedGetDefaultConversation:wself];
+        } else {
+            [self onGetDefaultConversation:wself storeManager:storeManager];
+        }
     }];
     
 }
@@ -113,12 +147,36 @@
 
 #pragma mark - Message Delegate
 
-- (void)onNewMessageArrived:(PPMessage *)message {
-    if (self.client && message) {
-        [[PPStoreManager instanceWithClient:self.client].messagesStore updateWithNewMessage:message];
-        NSArray *sortConversations = [[PPStoreManager instanceWithClient:self.client].conversationStore sortedConversations];
-        [self.conversationItemDataSource updateAllItems:sortConversations];
-        [self.tableView reloadData];
+- (void)onWSPPMessageObjArrived:(id)obj {
+    [[PPStoreManager instanceWithClient:self.client].messagesStore updateWithNewMessage:obj];
+    NSArray *sortConversations = [[PPStoreManager instanceWithClient:self.client].conversationStore sortedConversations];
+    [self.conversationItemDataSource updateAllItems:sortConversations];
+    [self.tableView reloadData];
+}
+
+- (void)onWSConversationObjArrived:(id)obj {
+    PPConversationsStore *conversationStore = [PPStoreManager instanceWithClient:self.client].conversationStore;
+    if (![conversationStore isDefaultConversationAvaliable]) {
+        [conversationStore addDefaultConversation:obj];
+        [self onGetDefaultConversation:self storeManager:[PPStoreManager instanceWithClient:self.client]];
+        [self.loadingView removeFromSuperview];
+    } else {
+        [conversationStore addConversation:obj];
+        [self gotoMessagesViewControllerWithConversation:obj];
+    }
+}
+
+- (void)onWSMsgArrived:(id)obj msgType:(PPWebSocketMsgType)msgType {
+    if (self.client) {
+        if (msgType == PPWebSocketMsgTypeMsg) {
+
+            [self onWSPPMessageObjArrived:obj];
+            
+        } else if (msgType == PPWebSocketMsgTypeConversation) {
+            
+            [self onWSConversationObjArrived:obj];
+            
+        }
     }
 }
 
@@ -189,5 +247,17 @@
         [self.activityIndicator stopAnimating];
     }
 }
+
+#pragma mark - getter setter
+
+- (PPLoadingView*)loadingView {
+    if (!_loadingView) {
+        _loadingView = [[PPLoadingView alloc] init];
+        _loadingView.center = CGPointMake([UIScreen mainScreen].bounds.size.width / 2, [UIScreen mainScreen].bounds.size.height / 2);
+    }
+    return _loadingView;
+}
+
+#pragma mark - helper
 
 @end

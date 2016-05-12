@@ -134,6 +134,10 @@ class DeviceUser(CommonMixin, BaseModel):
         if self.is_anonymous_user:
             _key = DeviceUser.__tablename__ + ".ppcom_trace_uuid." + self.ppcom_trace_uuid
             _redis.set(_key, self.uuid)
+
+        _key = self.__tablename__ + ".statistics.all"
+        _redis.incr(_key)
+        
         return
 
     def delete_redis_keys(self, _redis):
@@ -147,7 +151,10 @@ class DeviceUser(CommonMixin, BaseModel):
         if _obj["ppcom_trace_uuid"] != None:
             _key = self.__tablename__ + ".ppcom_trace_uuid." + _obj["ppcom_trace_uuid"]
             _redis.delete(_key)
-            
+
+        _key = self.__tablename__ + ".statistics.all"
+        _redis.decr(_key)
+        
         CommonMixin.delete_redis_keys(self, _redis)
         return    
 
@@ -565,7 +572,7 @@ class OrgGroup(CommonMixin, BaseModel):
         
         if _obj["is_distributor"] == True:
             _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
-                   ".is_distributor." + _obj["is_distributor"]
+                   ".is_distributor." + str(_obj["is_distributor"])
             _redis.set(_key, _obj["uuid"])
         return
     
@@ -578,7 +585,7 @@ class OrgGroup(CommonMixin, BaseModel):
 
         if _obj["is_distributor"] == True:
             _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
-                   ".is_distributor." + _obj["is_distributor"]
+                   ".is_distributor." + str(_obj["is_distributor"])
             _redis.delete(_key)
 
         CommonMixin.delete_redis_keys(self, _redis)

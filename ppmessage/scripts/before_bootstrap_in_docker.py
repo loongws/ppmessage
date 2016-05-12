@@ -1,4 +1,4 @@
-#!-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from ppmessage.bootstrap.config import BOOTSTRAP_CONFIG
 import subprocess

@@ -41,6 +41,7 @@ module.exports = {
         "../src/service/monitor.js",
         "../src/service/gb2312-utf8-convert.js",
         "../src/service/publishsubscribe.js",
+        "../src/service/polling.js",
         "../src/service/entity/app.js",
         "../src/service/entity/org_groups.js",
         "../src/service/entity/hovercard-welcome.js",
@@ -50,6 +51,7 @@ module.exports = {
         "../src/service/entity/conversation-manager.js",
         "../src/service/entity/sheetheader.js",
         "../src/service/entity/audiocontext.js",
+        "../src/service/entity/conversation-agency.js",
         "../src/service/message/api-message-adapter.js",
         "../src/service/message/api-message.js",
         "../src/service/message/message-sender.js",
@@ -76,6 +78,7 @@ module.exports = {
         "../src/service/websocket/sys.js",
         "../src/service/websocket/typing.js",
         "../src/service/websocket/unknown.js",
+        "../src/service/websocket/conversation.js",
 
         "../src/view/pp-view2.js",
         "../src/view/element.js",

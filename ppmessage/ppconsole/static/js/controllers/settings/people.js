@@ -104,7 +104,7 @@ angular.module("this_app")
         
         $scope.show_batch_modal = function() {
             jQuery("#batch_create_user").modal( { show:true } );
-            $scope.create_user_direct = {}; // clear any data stored before when show `create user modal`
+            $scope.create_user_direct = getInitialCreateUserModalData(); // clear any data stored before when show `create user modal`
         };
         
         $scope.set_invite_email_value = function(email) {
@@ -114,53 +114,18 @@ angular.module("this_app")
             $scope.send_invite_email = false;
             $scope.invite_member = create_app_user;
         };
-        
-        $scope.create_user_directly = function() {
 
-            // Check name is valid
-            var name_error = '';
-            if ( !$scope.create_user_direct.name ) {
-                name_error = "姓名不能为空";
-            } else if ( String($scope.create_user_direct.name).length > 20 ) {
-                name_error = "长度超过限制";
-            } else if ( !yvUtil.regexp_check($scope.create_user_direct.name) ) {
-                name_error = "包含非常规字符";
+        $scope.show_user_password = function(show) {
+            if (show) {
+                $scope.create_user_direct.user_password_is_visible = true;
+                $scope.create_user_direct.password_input_type = "text";
+            } else {
+                $scope.create_user_direct.user_password_is_visible = false;
+                $scope.create_user_direct.password_input_type = "password";
             }
-            $scope.create_user_direct.name_error = name_error;
-            if ( name_error.length > 0 ) return;
+        };
 
-            // Check email is valid
-            var email_error = '';
-            if (!$scope.create_user_direct.email){
-                email_error = "邮箱不能为空";
-            } else if (String($scope.create_user_direct.email).length > 32){
-                email_error = "长度超过限制";
-            } else if (!yvUtil.is_valid_email($scope.create_user_direct.email)){
-                email_error = "邮箱无效";
-            }
-            $scope.create_user_direct.email_error = email_error;
-            if ( email_error.length > 0 ) return;
-
-            // Check password valid
-            var password_error = '';
-            if (!$scope.create_user_direct.password){
-                password_error = "密码不能为空";
-            } else if (String($scope.create_user_direct.password).length > 16){
-                password_error = "长度超过限制";
-            } else if (!yvUtil.regexp_check($scope.create_user_direct.password)){
-                password_error = "包含非常规字符";
-            }
-            $scope.create_user_direct.password_error = password_error;
-            if ( password_error.length > 0 ) return;
-
-            // Check repeat password valid
-            var password_repeat_error = '';
-            if ($scope.create_user_direct.password != $scope.create_user_direct.password_repeat){
-                password_repeat_error = "密码不一致";
-            }
-            $scope.create_user_direct.password_repeat_error = password_repeat_error;
-            if ( password_repeat_error.length > 0 ) return;
-
+        $scope.create_service_user_form_submit = function() {
             var user_uuid = yvUser.get_uuid();
             var app_user_info = {
                 "user_status": "SERVICE",
@@ -437,10 +402,8 @@ angular.module("this_app")
 
         function getInitialCreateUserModalData() {
             return {
-                name_error: '',
-                email_error: '',
-                password_error: '',
-                password_repeat_error: ''
+                user_password_is_visible: false,
+                password_input_type: 'password',
             }
         }
 

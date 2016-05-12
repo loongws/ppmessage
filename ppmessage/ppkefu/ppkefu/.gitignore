@@ -1,13 +1,21 @@
 # Specifies intentionally untracked files to ignore when using Git
 # http://git-scm.com/docs/gitignore
 
+dist
 bower_components/
 node_modules/
 node_modules_win/
 node_modules_osx/
+node_modules_linux/
 platforms/
 plugins/
-electron/dist
-www/build
 *.log
-app.config.json
+config/app.config.json
+.gulp-scss-cache
+.sass-cache
+www/js
+www/css
+www/fonts
+www/build
+app/build
+app/js/head.js

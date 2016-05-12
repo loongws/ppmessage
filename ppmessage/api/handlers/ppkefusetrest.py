@@ -42,4 +42,5 @@ class PPKefuSetRest(BaseHandler):
 
     def _Task(self):
         super(PPKefuSetRest, self)._Task()
+        self._set()
         return

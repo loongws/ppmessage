@@ -13,6 +13,7 @@
     PublicAPI.prototype._clearData = function() {
         Service.$uploader.clear();
         Service.$notification.reset();
+        Ctrl.$conversationPanel.stopPollingWaitingQueueLength();
     };
 
     /**

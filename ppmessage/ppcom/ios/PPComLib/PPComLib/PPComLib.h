@@ -8,3 +8,5 @@
 
 #import <PPComLib/PPMessagesViewController.h>
 #import <PPComLib/PPConversationsViewController.h>
+
+FOUNDATION_EXPORT NSString *const PPComLibVersion;

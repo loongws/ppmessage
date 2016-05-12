@@ -70,7 +70,7 @@ angular.module("this_app")
                     _set_changepassword_string($scope.lang["changepassword.CHANGE_PASSWORD_SUCCESS_TAG"]);
 
                     $timeout(function() {
-                        $state.go("app.signin");
+                        $state.go("app.signup-md", {sign_what: "signin"});
                     },3000);
 
                 } else {

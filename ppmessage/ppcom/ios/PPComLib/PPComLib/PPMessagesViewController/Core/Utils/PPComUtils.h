@@ -104,4 +104,9 @@ NSString* PPFormatTimestampToHumanReadableStyle(double timestamp, BOOL withHHMMS
 UIImage* PPImageFromAssets(NSString* imagePathWithOutSuffix);
 UIImage* PPDefaultAvatarImage();
 
+/**
+ * We consider { error_code: 0, uri: '/xxx', error_string: 'xxx' } as empty response
+ */
+BOOL PPIsApiResponseEmpty(NSDictionary* apiResponse);
+
 @end

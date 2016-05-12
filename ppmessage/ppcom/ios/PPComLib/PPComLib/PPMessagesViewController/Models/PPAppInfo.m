@@ -8,6 +8,10 @@
 
 #import "PPAppInfo.h"
 
+NSString *const PPAppInfoGroupPolicyALL = @"ALL";
+NSString *const PPAppInfoGroupPolicySMART = @"SMART";
+NSString *const PPAppInfoGroupPolicyGROUP = @"GROUP";
+
 @interface PPAppInfo ()
 
 -(instancetype)init:(NSDictionary*)appInfo;
@@ -26,6 +30,8 @@
         _appId = appInfo[@"app_uuid"];
         if (!_appId) _appId = appInfo[@"uuid"];
         _appName = appInfo[@"app_name"];
+        _groupPolicy = appInfo[@"app_route_policy"];
+        if (!_groupPolicy) _groupPolicy = PPAppInfoGroupPolicyALL;
     }
     return self;
 }
