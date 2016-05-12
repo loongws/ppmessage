@@ -173,15 +173,16 @@ angular.module("this_app")
                 var _t = "application.grouping." + i;
                 _tag_list.push(_t);
             }
-            $scope.translate = function() {};
-            yvAppGroupingService.setUngroupedName();
+            $scope.translate = function() {
+                yvAppGroupingService.setUngroupedName();
+                _logined();
+            };
             yvUtil.translate($scope, 'lang', _tag_list, $scope.translate);
         };
 
         var _init = function() {
             $scope.refresh_settings_menu();
             _translate();
-            _logined();
         };
 
         ////////// Initialize ///////////
