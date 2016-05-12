@@ -84,9 +84,8 @@
         <h4 class="modal-title"><strong>{{ "application.people.REMOVE_SERVICE_USER_TAG" | translate }}</strong></h4>
       </div>
       <div class="modal-body" style="color: #D03F3F;">
-        <p>该操作会移除您选定的客服人员：</p>
+        <p>{{ "application.people.REMOVE_SERVICE_USER_PROMOTE_TAG" | translate }} </p>
         <p ng-repeat="user in to_be_removed_users" style="color: #000000;"> {{ user.user_fullname }} </p> 
-        <p>如有疑问请查看我们的文档或论坛信息.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">{{ "application.people.CANCEL_TAG" | translate }}</button>
@@ -128,27 +127,6 @@
             <md-icon md-font-set="material-icons" ng-if="create_user_direct.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
           </md-input-container>
         </div>
-
-        <!--
-        <span class="modal-body-email-h">{{ "application.people.SERVICE_USER_NAME_TAG" | translate }}:</span>
-        <input type="text" class="modal-body-email-b" ng-model="create_user_direct.name" tabindex="1" />
-        <span class="modal-body-email-bb">*</span>
-        <span class="modal-body-email-note" id="cud1" > {{ create_user_direct.name_error }} </span>
-        <span class="modal-body-email-h">{{ "application.people.SERVICE_USER_EMAIL_TAG" | translate }}:</span>
-        <input type="text" class="modal-body-email-b" placeholder="example@ppmessage.cn" ng-model="create_user_direct.email" tabindex="2" />
-        <span class="modal-body-email-bb">*</span>
-        <span class="modal-body-email-note" id="cud2"> {{ create_user_direct.email_error }} </span>
-        
-        <span class="modal-body-email-h">{{ "application.people.PASSWORD_TAG" | translate }}:</span>
-        <input type="password" class="modal-body-email-b" ng-model="create_user_direct.password" tabindex="3" />
-        <span class="modal-body-email-bb">*</span>
-        <span class="modal-body-email-note" id="cud3"> {{ create_user_direct.password_error }} </span>
-        ls
-        <span class="modal-body-email-h">{{ "application.people.CONFIRM_PASSWORD_TAG" | translate }}:</span>
-        <input type="password" class="modal-body-email-b" ng-model="create_user_direct.password_repeat" tabindex="4" />
-        <span class="modal-body-email-bb">*</span>
-        <span class="modal-body-email-note" id="cud4"> {{ create_user_direct.password_repeat_error }} </span>
-        -->
         
         <div class="modal-footer">
           <md-button type="submit" class="md-raised">{{ "application.people.CREATE_TAG" | translate }}</md-button>
