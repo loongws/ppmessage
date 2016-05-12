@@ -20,14 +20,15 @@ def _updateMessagePushTasksCharset(_engine):
 
 if __name__ == "__main__":
 
+    DB_HOST = BOOTSTRAP_CONFIG.get("mysql").get("db_host")
     DB_NAME = BOOTSTRAP_CONFIG.get("mysql").get("db_name")
     DB_PASS = BOOTSTRAP_CONFIG.get("mysql").get("db_pass")
     DB_USER = BOOTSTRAP_CONFIG.get("mysql").get("db_user")
-    
+
     print "Drop MDM DB now, please wait..."
     
-    _drop_cmd = "mysql -u%s -p%s mysql -e \"drop database if exists %s\"" % (DB_USER, DB_PASS, DB_NAME)
-    _create_cmd = "mysql -u%s -p%s mysql -e \"create database %s default charset utf8\"" % (DB_USER, DB_PASS, DB_NAME)
+    _drop_cmd = "mysql -h%s -u%s -p%s mysql -e \"drop database if exists %s\"" % (DB_HOST, DB_USER, DB_PASS, DB_NAME)
+    _create_cmd = "mysql -h%s -u%s -p%s mysql -e \"create database %s default charset utf8\"" % (DB_HOST, DB_USER, DB_PASS, DB_NAME)
 
     subprocess.check_output(_drop_cmd, shell=True)
     subprocess.check_output(_create_cmd, shell=True)
