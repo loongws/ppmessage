@@ -78,7 +78,7 @@ angular.module("this_app")
         };
 
         $scope.handle_group_name = function(group_name, len) {
-            if(group_name.length>len) {
+            if(group_name.length > len) {
                 return group_name.substring(0,len) + "...";
             };
             return group_name;
@@ -174,6 +174,7 @@ angular.module("this_app")
                 _tag_list.push(_t);
             }
             $scope.translate = function() {};
+            yvAppGroupingService.setUngroupedName();
             yvUtil.translate($scope, 'lang', _tag_list, $scope.translate);
         };
 
@@ -181,10 +182,6 @@ angular.module("this_app")
             $scope.refresh_settings_menu();
             _translate();
             _logined();
-
-            // bootstrap material
-            // $.material.init();
-            // $.material.checkbox();
         };
 
         ////////// Initialize ///////////
@@ -194,10 +191,8 @@ angular.module("this_app")
         ////////// Implementation ///////////
 
         function _get_init_info() {
-
             _get_group_list( _get_team_service_user_list );
             highlight();
-            
         }
 
         function _get_group_list( successCallback, errorCallback ) {

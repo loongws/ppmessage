@@ -39,6 +39,8 @@
             UNGROUPED_GROUP_INFO: UNGROUPED_GROUP_INFO,
             ERROR: ERROR,
 
+            setUngroupedName: setUngroupedName,
+            
             all: all,
 
             createGroup: createGroup,
@@ -426,6 +428,10 @@
 
             return errorCode;
             
+        }
+        
+        function setUngroupedName() {
+            UNGROUPED_GROUP_INFO.group_name = $filter("translate")("application.grouping.UNAMED_GROUP_NAME_TAG");
         }
         
     }
