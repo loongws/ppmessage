@@ -5,16 +5,16 @@
 }
 
 .yv-sidemenu-header {
-    
+
     >a.item, >a.activated {
         background-color: $sidemenu-content-bgcolor;
         border: none;
         padding-right: 72px;
-        
+
         >img {
             @include sized-icon(50px, 4px);
         }
-        
+
         >h2 {
             color: white;
             font-size: 18px;
@@ -32,11 +32,11 @@
             width: 15px;
             height: 15px;
             border-width: 1px;
-            border-radius: 50%;            
+            border-radius: 50%;
             border-style: solid;
             border-color: white;
         }
-        
+
         .button.log-out {
             color: white;
             position: absolute;
@@ -48,9 +48,9 @@
 
     .yv-searchbar {
         border-bottom-width: 0;
-        border: none;            
+        border: none;
         background-color: $sidemenu-content-bgcolor;
-        
+
         .yv-search-label {
             color: white;
             background-color: #26292e;
@@ -80,19 +80,19 @@
     .yv-search-result {
         z-index: 6;
         position: absolute;
-        top: 128px;
+        top: 138px;
         left: 15px;
-        width: calc(100% - 25px);
+        width: calc(100% - 30px);
 
         ion-scroll {
             background-color: #33363b;
             max-height: 420px;
-            
+
             .list {
                 width: 100%;
                 background-color: #33363b;
                 padding-top: 0px;
-                
+
                 .item-divider {
                     background-color: transparent;
                     border: transparent;
@@ -116,5 +116,5 @@
 
         }
     }
-    
+
 }
