@@ -242,7 +242,6 @@ def getWebServiceHandlers():
     handler_list.append((r"/PPKEFU_SET_REST", PPKefuSetRest))
     handler_list.append((r"/PPKEFU_SET_SERVICE_USER_STATUS", PPKefuSetServiceUserStatus))
     
-<<<<<<< HEAD
     handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT", PPGetAllPredefinedScript))
     handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT_GROUP", PPGetAllPredefinedScriptGroup))
     handler_list.append(("/PP_GET_PREDEFINED_SCRIPT_WITH_GROUP", PPGetPredefinedScriptWithGroup))
@@ -250,7 +249,7 @@ def getWebServiceHandlers():
     handler_list.append(("/PP_CANCEL_WAITING_CREATE_CONVERSATION", PPCancelWaitingCreateConversation))
     
     handler_list.append(("/PPCONSOLE_SEND_NEW_PASSWORD", PPConsoleSendNewPassword))
-=======
+
     handler_list.append((r"/PP_ADD_PREDEFINED_SCRIPT", PPAddPredefinedScript))
     handler_list.append((r"/PP_REMOVE_PREDEFINED_SCRIPT", PPRemovePredefinedScript))
     handler_list.append((r"/PP_ADD_PREDEFINED_SCRIPT_GROUP", PPAddPredefinedScriptGroup))
@@ -266,6 +265,5 @@ def getWebServiceHandlers():
     handler_list.append((r"/PPCOM_CREATE_CONVERSATION", PPComCreateConversationHandler))
     handler_list.append((r"/PP_GET_AMD_QUEUE_LENGTH", PPGetAmdQueueLength))
 
->>>>>>> CR434
     return handler_list
 
