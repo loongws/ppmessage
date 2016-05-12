@@ -121,15 +121,14 @@ NSString *const PPVersionString = @"0.0.2";
 
 -(void)sendMessage:(PPMessage *)message {
     [self.client.messageSender sendMessage:message complectionHandler:^(NSError *error, NSDictionary *response) {
+        if ( error != nil || // can not connect to server
+            ( response != nil && [response[@"error_code"] integerValue] != 0 ) || // `error_code` != 0
+            [self.senderId isEqual:unknownUserId]) { // `init` failed
             
-            if ( error != nil || // can not connect to server
-                 ( response != nil && [response[@"error_code"] integerValue] != 0 ) || // `error_code` != 0
-                 [self.senderId isEqual:unknownUserId]) { // `init` failed
-                
-                [self onSendMessageError:message withError:error];
-                
-            }
-        }];
+            [self onSendMessageError:message withError:error];
+            
+        }
+    }];
 }
 
 -(void)onSendMessageError:(PPMessage*)message withError:(NSError*)error {
@@ -181,7 +180,6 @@ NSString *const PPVersionString = @"0.0.2";
     
     self.senderId = self.client.user.uuid;
     self.senderDisplayName = self.client.user.fullName;
-    self.conversationId = self.client.conversationId;
 
     self.imageDownloadsInProgress = [NSMutableDictionary dictionary];
     
@@ -228,8 +226,8 @@ NSString *const PPVersionString = @"0.0.2";
     return self.jsqMessageArray[indexPath.item];
 }
 
-- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+// TEXT message bubble
+- (id<JSQMessageBubbleImageDataSource>)collectionView:(JSQMessagesCollectionView *)collectionView messageBubbleImageDataForItemAtIndexPath:(NSIndexPath *)indexPath {
     JSQMessage *message = self.jsqMessageArray[indexPath.item];
     
     if ([message.senderId isEqualToString:self.senderId]) {
@@ -247,8 +245,19 @@ NSString *const PPVersionString = @"0.0.2";
     
     PPMessage *ppMessage = self.ppMessageArray[indexPath.item];
     NSString *imageUrl = ppMessage.fromUser != nil ? ppMessage.fromUser.avatarUrl : nil;
+    NSString *userUuid = ppMessage.fromId;
     
-    return [self.client.jsqAvatarLoader getJSQAvatarImage:ppMessage.fromId withImageUrlString:imageUrl];
+    PPJSQAvatarLoader *jsqAvatarLoader = self.client.jsqAvatarLoader;
+    JSQMessagesAvatarImage *existAvatarImage = [jsqAvatarLoader getJSQAvatarImage:userUuid withImageUrlString:imageUrl];
+    if (!existAvatarImage) {
+        existAvatarImage = jsqAvatarLoader.defaultAvatarImage;
+        __weak PPMessagesViewController *wself = self;
+        [jsqAvatarLoader loadJSQAvatarImage:ppMessage.fromId withImageUrlString:imageUrl completed:^(JSQMessagesAvatarImage *jsqImage) {
+            [wself.collectionView reloadData];
+        }];
+    }
+    
+    return existAvatarImage;
 }
 
 #pragma mark - UICollectionView DataSource
@@ -338,33 +347,33 @@ NSString *const PPVersionString = @"0.0.2";
     CGFloat oldOffset = self.collectionView.contentSize.height - self.collectionView.contentOffset.y;
     
     [self loadHistory:[NSNumber numberWithInteger:self.nextPageOffset] withBlock:^(PPMessageList *response) {
-
-            // Duplicate Messages Bug
-            
-            // NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [response.jsqMessageArray count])];
-            // [self.jsqMessageArray insertObjects:response.jsqMessageArray atIndexes:indexes];
-            // [self.ppMessageArray insertObjects:response.ppMessageArray atIndexes:indexes];
-
-            if ( response != nil ) {
-
-                PPMessageList *list = response;
-                NSInteger pageOffset = self.nextPageOffset;
-                
-                //缓存数据
-                PPMessageList *cachedList = [self.messagesStore messagesInCovnersation:self.conversationId autoCreate:YES];
-                [cachedList addPPMessageListToHead:list];
-                cachedList.pageOffset = pageOffset;
-                [self.messagesStore setMessageList:cachedList forConversation:self.conversationId];
-            
-                //更新nextPageOffset
-                self.nextPageOffset = pageOffset + 1;
-                
-                [self.collectionView reloadData];
-                [self.collectionView layoutIfNeeded];
-                self.collectionView.contentOffset = CGPointMake(0.0, self.collectionView.contentSize.height - oldOffset);        
-            }
         
-        }];
+        // Duplicate Messages Bug
+        
+        // NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [response.jsqMessageArray count])];
+        // [self.jsqMessageArray insertObjects:response.jsqMessageArray atIndexes:indexes];
+        // [self.ppMessageArray insertObjects:response.ppMessageArray atIndexes:indexes];
+        
+        if ( response != nil ) {
+            
+            PPMessageList *list = response;
+            NSInteger pageOffset = self.nextPageOffset;
+            
+            //缓存数据
+            PPMessageList *cachedList = [self.messagesStore messagesInCovnersation:self.conversationId autoCreate:YES];
+            [cachedList addPPMessageListToHead:list];
+            cachedList.pageOffset = pageOffset;
+            [self.messagesStore setMessageList:cachedList forConversation:self.conversationId];
+            
+            //更新nextPageOffset
+            self.nextPageOffset = pageOffset + 1;
+            
+            [self.collectionView reloadData];
+            [self.collectionView layoutIfNeeded];
+            self.collectionView.contentOffset = CGPointMake(0.0, self.collectionView.contentSize.height - oldOffset);
+        }
+        
+    }];
 }
 
 - (void)collectionView:(JSQMessagesCollectionView *)collectionView didTapMessageBubbleAtIndexPath:(NSIndexPath *)indexPath
@@ -430,22 +439,20 @@ NSString *const PPVersionString = @"0.0.2";
 #pragma mark - Load Media Data
 
 - (void)appliesMediaViewMaskAsOutgoing:(JSQMediaItem*)jsqMediaItem message:(PPMessage*)message {
-    if (![message.fromId isEqual:self.client.user.uuid]) {
-        jsqMediaItem.appliesMediaViewMaskAsOutgoing = NO;
-    }
+    jsqMediaItem.appliesMediaViewMaskAsOutgoing = [message.fromId isEqual:self.client.user.uuid];
 }
 
 - (void)loadPhotoItemData:(JSQMessagesCollectionViewCell *)cell mediaData:(id)mediaData indexPath:(NSIndexPath *)indexPath
 {
     JSQPhotoMediaItem *mediaItem = (JSQPhotoMediaItem*)mediaData;
+    PPMessage *ppMessage = self.ppMessageArray[indexPath.item];
+    [self appliesMediaViewMaskAsOutgoing:mediaItem message:ppMessage];
     
     if (mediaItem.image) {
         return;
     }
     
-    PPMessage *ppMessage = self.ppMessageArray[indexPath.item];
     PPPhotoMediaItem *ppPhotoMediaItem = (PPPhotoMediaItem*)ppMessage.media;
-    [self appliesMediaViewMaskAsOutgoing:mediaItem message:ppMessage];
     
     ImageDownloader *downloader = self.imageDownloadsInProgress[indexPath];
     if (downloader == nil) {
@@ -454,9 +461,9 @@ NSString *const PPVersionString = @"0.0.2";
     }
     
     [downloader startDownload:ppPhotoMediaItem.furl completionHandler:^(UIImage *image) {
-            mediaItem.image = image;
-            [self.collectionView reloadData];
-        }];
+        mediaItem.image = image;
+        [self.collectionView reloadData];
+    }];
 }
 
 - (void)loadTxtMediaData:(id)mediaData cell:(JSQMessagesCollectionViewCell *)cell indexPath:(NSIndexPath*)indexPath
@@ -469,13 +476,13 @@ NSString *const PPVersionString = @"0.0.2";
         
         txtMediaData.state = PPTxtMediaItemLoadStateLoading;
         [self.client.txtLoader loadTxt:txtMediaData.txtUrl withBlock:^(NSError *error, NSString *content) {
-                //更新state
-                txtMediaData.state = PPTxtMediaItemLoadStateDone;
-                // 通知刷新
-                JSQMessage *jsqMessage = self.jsqMessageArray[indexPath.row];
-                jsqMessage.text = content;
-                [self.collectionView reloadData];
-            }];
+            //更新state
+            txtMediaData.state = PPTxtMediaItemLoadStateDone;
+            // 通知刷新
+            JSQMessage *jsqMessage = self.jsqMessageArray[indexPath.row];
+            jsqMessage.text = content;
+            [self.collectionView reloadData];
+        }];
     }
 }
 
@@ -583,10 +590,10 @@ NSString *const PPVersionString = @"0.0.2";
 
 #pragma mark - PP Message Arrived Delegate
 
--(void)onNewMessageArrived:(PPMessage *)message {
-    if (message != nil) {
+- (void)onWSMsgArrived:(id)obj msgType:(PPWebSocketMsgType)msgType {
+    if (msgType == PPWebSocketMsgTypeMsg) {
         //更新缓存
-        if ([self.messagesStore updateWithNewMessage:message]) {
+        if ([self.messagesStore updateWithNewMessage:obj]) {
             //更新本地数据
             PPMessageList *messageList = [self.messagesStore messagesInCovnersation:self.conversationId autoCreate:YES];
             self.jsqMessageArray = messageList.jsqMessageArray;

@@ -12,14 +12,16 @@
 #import "SRWebSocket.h"
 #import "PPAppInfo.h"
 
+#import "PPWebSocketHandlerFactory.h"
+
 @protocol PPMessageReceiverDelegate <NSObject>
 
 @required
 
 /**
- * Receive new message
+ * Receive obj
  */
--(void)didReceiveMessage:(PPMessage*)message;
+-(void)didReceiveObj:(id)obj objType:(PPWebSocketMsgType)objType;
 
 @optional
 

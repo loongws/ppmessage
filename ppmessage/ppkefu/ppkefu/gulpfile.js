@@ -1,16 +1,92 @@
+var os = require("os");
 var fs = require("fs");
+var path = require("path");
 var gulp = require("gulp");
-var gutil = require("gulp-util");
-var concat = require("gulp-concat");
 var scss = require("gulp-sass");
-var cleanCss = require("gulp-clean-css");
+var gutil = require("gulp-util");
+var xmlParser = require("xml2json");
 var rename = require("gulp-rename");
 var uglify = require("gulp-uglify");
+var concat = require("gulp-concat");
 var replace = require("gulp-replace");
+var cleanCss = require("gulp-clean-css");
 var templateCache = require("gulp-angular-templatecache");
 var buildConfig = require("./config/build.config.js");
-var path = require("path");
-var os = require("os");
+
+function get_ppkefu_version () {
+    var xml = fs.readFileSync("./config.xml", "utf-8");
+    var json = xmlParser.toJson(xml);
+    var object = JSON.parse(json);
+    return object.widget.version;
+}
+
+function get_bootstrap_data () {
+    var data = fs.readFileSync("../../bootstrap/data.py", "utf8");
+    data = data.slice(data.search("BOOTSTRAP_DATA"));
+    data = eval(data);
+    return data;
+}
+
+function create_app_config(target, bootstrap_data) {
+    var protocol = "http://";
+    if (bootstrap_data.nginx.ssl == "on") {
+        protocol = "https://";
+    }
+    var app_config = {
+        "developer_mode": true,
+        "api_key": bootstrap_data.PPKEFU.api_key,
+        "sender_id": bootstrap_data.gcm.sender_id,
+        "server": {
+            "port": bootstrap_data.nginx.listen,
+            "protocol": protocol,
+            "name": bootstrap_data.server.name,
+            "host": bootstrap_data.server.name
+        }
+    };
+    var json = JSON.stringify(app_config, null, 4);
+    fs.writeFile(target, json + "\n", function (err) {
+        if (err) console.error(err);
+    });
+    return app_config;
+}
+
+function load_app_config() {
+    var target = "./app.config.json";
+    var bootstrap_data = get_bootstrap_data();
+
+    try {
+        fs.accessSync(target, fs.F_OK);
+    } catch (err) {
+        if (err.code == "ENOENT") {
+            return create_app_config(target, bootstrap_data);
+        }
+        throw err;
+    }
+
+    var data = fs.readFileSync(target, "utf-8");
+    var app_config = JSON.parse(data);
+    if (bootstrap_data.PPKEFU.api_key !== app_config.api_key) {
+        console.log(gutil.colors.yellow("app_config.api_key is not equal to bootstrap_data.PPKEFU.api_key"));
+    }
+    return app_config;
+}
+
+function colorfulText(text) {
+    if (typeof text == "string" && text.length == 0) {
+        return gutil.colors.red("Not specified, resolve this issue and run gulp again.");
+    }
+    return gutil.colors.green(text);
+}
+
+var paths = {
+    sass: ["./www/scss/*.scss"],
+    css: ["./www/css/*.css"],
+    scripts: [
+        "./www/js/*.js",
+        "./www/js/**/*.js"
+    ],
+    config: ["./build.config.js"],
+};
 
 var app_config_path = "config/app.config.json";
 var bootstrap_data_path = "../../bootstrap/data.py";

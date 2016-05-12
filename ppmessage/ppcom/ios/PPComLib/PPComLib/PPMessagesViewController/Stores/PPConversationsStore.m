@@ -8,6 +8,7 @@
 
 #import "PPConversationsStore.h"
 
+#import "PPAppInfo.h"
 #import "PPMessage.h"
 #import "PPConversationItem.h"
 
@@ -17,6 +18,7 @@
 #import "PPGetConversationListHttpModel.h"
 #import "PPGetAppOrgGroupListHttpModel.h"
 #import "PPCreateConversationHttpModel.h"
+#import "PPGetDefaultConversationHttpModels.h"
 
 #define PP_ENABLE_LOG 1
 
@@ -25,6 +27,8 @@
 @property (nonatomic) NSMutableArray *conversationItems;
 @property (nonatomic) PPCom *client;
 @property (nonatomic) BOOL fetchedFromServer; // 是否从服务器下载过conversation_list
+
+@property (nonatomic) PPConversationItem *defaultConversation;
 
 @end
 
@@ -69,6 +73,11 @@
     }
 }
 
+- (void)addDefaultConversation:(PPConversationItem *)defaultConversation {
+    self.defaultConversation = defaultConversation;
+    [self addConversation:defaultConversation];
+}
+
 - (NSArray*)sortedConversations {
     return [self.conversationItems sortedArrayUsingComparator:^NSComparisonResult(PPConversationItem *obj1, PPConversationItem *obj2) {
         return [obj1 compare:obj2];
@@ -83,8 +92,7 @@
     }
     
     // 1. get app orggroup
-    PPGetAppOrgGroupListHttpModel *getAppOrgGroupsTask = [PPGetAppOrgGroupListHttpModel modelWithClient:self.client];
-    [getAppOrgGroupsTask getAppOrgGroupListWithBlock:^(id obj, NSDictionary *response, NSError *error) {
+    [self getAppOrgGroupsWithBlock:^(id obj, NSDictionary *response, NSError *error) {
         
         NSMutableArray *conversations = obj ? obj : self.conversationItems;
         
@@ -167,7 +175,40 @@
     
 }
 
+- (void)asyncGetDefaultConversationWithCompletedBlock:(void (^)(PPConversationItem *))completedBlock {
+    if ([self isDefaultConversationAvaliable]) {
+        if (completedBlock) completedBlock(self.defaultConversation);
+        return;
+    }
+    
+    PPGetDefaultConversationHttpModels *fetchDefaultConversation = [PPGetDefaultConversationHttpModels modelWithClient:self.client];
+    [fetchDefaultConversation requestWithBlock:^(PPConversationItem *conversation, NSDictionary *response, NSError *error) {
+        if (conversation) {
+            [self addConversation:conversation];
+            self.defaultConversation = conversation;
+        }
+        if (completedBlock) completedBlock(self.defaultConversation);
+    }];
+}
+
+- (BOOL)isDefaultConversationAvaliable {
+    return self.defaultConversation != nil;
+}
+
 #pragma mark - Helper
+
+- (void)getAppOrgGroupsWithBlock:(PPHttpModelCompletedBlock)completedBlock {
+    // Only show groups when `app_route_policy === GROUP`
+    if (![self.client.appInfo.groupPolicy isEqualToString:PPAppInfoGroupPolicyGROUP]) {
+        if (completedBlock) {
+            completedBlock([NSMutableArray array], nil, nil);
+        }
+        return;
+    }
+    
+    PPGetAppOrgGroupListHttpModel *getAppOrgGroupsTask = [PPGetAppOrgGroupListHttpModel modelWithClient:self.client];
+    [getAppOrgGroupsTask getAppOrgGroupListWithBlock:completedBlock];
+}
 
 - (NSInteger)indexForConversation:(NSString*)conversationUUID {
     __block NSInteger findIndex = NSNotFound;
