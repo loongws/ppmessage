@@ -24,12 +24,6 @@ from ppmessage.core.constant import CONVERSATION_TYPE
 from ppmessage.core.constant import CONVERSATION_STATUS
 from ppmessage.core.constant import REDIS_AMD_KEY
 
-from ppmessage.dispatcher.policy.policy import AbstractPolicy
-from ppmessage.dispatcher.policy.policy import BroadcastPolicy
-
-from ppmessage.core.utils.createicon import create_group_icon
-from ppmessage.core.utils.datetimestring import datetime_to_microsecond_timestamp
-
 import copy
 import uuid
 import json
@@ -209,6 +203,12 @@ class PPComCreateConversationHandler(BaseHandler):
             self.application.redis.rpush(_key, json.dumps(_value))
             return
 
-        logging.error("Error to create conversation for PPCom: %s, for no member or group provided." % str(_request))
+        if _group_uuid != None and _app_route_policy != APP_POLICY.GROUP:
+            logging.error("Error for create conversation for PPCom: %s." % str(_request))
+            self.setErrorCode(API_ERR.NO_PARA)
+            return
+
+        self.setErrorCode(API_ERR.NO_PARA)
+        logging.error("Error to create conversation for PPCom: %s." % str(_request))
         return
 

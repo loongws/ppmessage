@@ -65,6 +65,7 @@ class PPComGetDefaultConversationHandler(BaseHandler):
         _redis = self.application.redis
         _conversation = redis_hash_to_dict(_redis, ConversationInfo, _conversation_uuid)
         if _conversation == None:
+            logging.error("no such conversation info: %s" % _conversation_uuid)
             return None
         _key = ConversationUserData.__tablename__ + ".app_uuid." + _app_uuid + \
                ".user_uuid." + _user_uuid + ".conversation_uuid." + _conversation_uuid
@@ -72,8 +73,11 @@ class PPComGetDefaultConversationHandler(BaseHandler):
         if _data_uuid != None:
             _key = ConversationUserData.__tablename__ + ".uuid." + _data_uuid
             _data = _redis.hmget(_key, ["conversation_name", "conversation_icon"])
-	    _conversation["conversation_name"] = _data[0]
+            _conversation["conversation_name"] = _data[0]
             _conversation["conversation_icon"] = _data[1]
+        else:
+            logging.error("no conversation data for conversation_uuid: %s" % _conversation_uuid)
+
         return _conversation
 
     def _get_users(self, _users):
