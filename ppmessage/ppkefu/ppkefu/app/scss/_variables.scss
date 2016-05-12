@@ -2,8 +2,8 @@ $left-color: #fff;
 $right-color: #a7d94f;
 
 $sidemenu-bgcolor: #2e3238;
-$sidemenu-content-bgcolor: transparent; 
-$sidemenu-header-height: 132px;
+$sidemenu-content-bgcolor: transparent;
+$sidemenu-header-height: 142px;
 
 $chat-content-color: #eee;
 $bubble-padding: 10px;
@@ -41,7 +41,7 @@ $pc-chat-tool-footer-height: 40px;
       @content;
     }
   }
-  
+
   @else if $breakpoint == "small" {
     @media (min-width: 410px) {
       @content;

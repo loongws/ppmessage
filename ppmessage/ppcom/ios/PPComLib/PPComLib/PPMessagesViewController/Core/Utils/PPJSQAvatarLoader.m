@@ -13,7 +13,6 @@
 
 @property (nonatomic) NSMutableDictionary *imageDownloadDict;
 @property (nonatomic) NSMutableDictionary *avatarDict;
-@property (nonatomic) JSQMessagesAvatarImage *defaultAvatarImage;
 
 @end
 
@@ -44,19 +43,36 @@
 }
 
 -(JSQMessagesAvatarImage*)getJSQAvatarImage:(NSString*)userUuid withImageUrl:(NSURL*)url {
-    JSQMessagesAvatarImage *avatar = self.avatarDict[userUuid];
-    if (!avatar) {
-        if (url) {
-            [self startDownload:url.absoluteString completionHandler:^(UIImage *image) {
-                if (image != nil) {
-                    JSQMessagesAvatarImage *avatarImage = [JSQMessagesAvatarImageFactory avatarImageWithImage:image diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
-                    self.avatarDict[userUuid] = avatarImage;
-                }
-            }];
+    return self.avatarDict[userUuid];
+}
+
+- (void)loadJSQAvatarImage:(NSString *)userUuid
+        withImageUrlString:(NSString *)urlString
+                 completed:(void (^)(JSQMessagesAvatarImage *))completed {
+    JSQMessagesAvatarImage* avatarImage = [self getJSQAvatarImage:userUuid withImageUrlString:urlString];
+    if (avatarImage) {
+        if (completed) {
+            completed(avatarImage);
         }
-        return self.defaultAvatarImage;
+        return;
     }
-    return avatar;
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    if (url) {
+        [self startDownload:url.absoluteString completionHandler:^(UIImage *image) {
+            if (image != nil) {
+                JSQMessagesAvatarImage *avatarImage = [JSQMessagesAvatarImageFactory avatarImageWithImage:image diameter:kJSQMessagesCollectionViewAvatarSizeDefault];
+                self.avatarDict[userUuid] = avatarImage;
+            } else {
+                self.avatarDict[userUuid] = self.defaultAvatarImage;
+            }
+            if (completed) completed(self.avatarDict[userUuid]);
+        }];
+    } else {
+        self.avatarDict[userUuid] = self.defaultAvatarImage;
+        if (completed) completed(self.defaultAvatarImage);
+    }
+    
 }
 
 @end

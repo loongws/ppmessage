@@ -20,6 +20,8 @@ DIS_ERR = enum(
     "WRLEVEL",
     "CONVERSATION",
     "WAITING",
+    "CONVERSATION_NO_GROUP",
+    "CONVERSATION_NO_USER",
 )
 
 def get_error_string(_code):
@@ -36,6 +38,8 @@ def get_error_string(_code):
         DIS_ERR.WRLEVEL: "wrong api auth level.",
         DIS_ERR.CONVERSATION: "can not create conversation.",
         DIS_ERR.WAITING: "keep waiting to create conversation.",
+        DIS_ERR.CONVERSATION_NO_GROUP: "error to create conversation for no group",
+        DIS_ERR.CONVERSATION_NO_USER: "error to create conversation for no user",
     }
     _str = _err.get(_code)
     if _str == None:

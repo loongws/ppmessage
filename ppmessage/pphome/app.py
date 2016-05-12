@@ -17,7 +17,11 @@ from tornado.locale import get as get_locale
 
 import os
 import json
+import redis
 import logging
+
+from ppmessage.core.constant import REDIS_HOST
+from ppmessage.core.constant import REDIS_PORT
 
 def get_current_path(_dir_name):
     _static_path = os.path.abspath(__file__)
@@ -59,6 +63,19 @@ class HtmlLangHandler(BaseHandler):
     def get(self, lang, html):
         self.render_html(html, lang)
         return
+
+class StatisticsHandler(RequestHandler):
+    def get(self):
+        self.set_header("Access-Control-Allow-Origin", "*")
+        self.set_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+        _redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+        _key = "device_users.statistics.all"
+        _all = _redis.get(_key)
+        if _all != None:
+            self.write(_all)
+        else:
+            self.write("0")
+        return
     
 class App(Application):
     def __init__(self):
@@ -75,6 +92,7 @@ class App(Application):
         settings["cookie_secret"] = "24oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo="
         handlers = [
             (r"/", MainHandler),
+            (r"/statistics", StatisticsHandler),
             (r"/([\w]+\.html$)", HtmlHandler),
             (r"/([a-z]+_[A-Za-z]+)/([\w]+\.html$)", HtmlLangHandler)
         ]

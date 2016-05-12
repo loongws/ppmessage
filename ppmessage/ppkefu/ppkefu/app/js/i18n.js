@@ -518,6 +518,12 @@ ppmessageModule.config([
                 ADD_MEMBER: "Add Member",
                 ADD_BY_CONTACT: "Add by Contact",
                 ADD_BY_GROUP: "Add by Group",
+                
+                READY: "Ready",
+                BUSY: "Busy",
+                REST: "Rest",
+
+                USER_STATUS_AFTER_LOGIN: "User status after login",
             }
         }
     },
@@ -1024,6 +1030,12 @@ ppmessageModule.config([
                 ADD_MEMBER: "添加成员",
                 ADD_BY_CONTACT: "按联系人添加",
                 ADD_BY_GROUP: "按组添加",
+
+                READY: "空闲",
+                BUSY: "忙碌",
+                REST: "休息",
+
+                USER_STATUS_AFTER_LOGIN: "登录后用户状态",
             }
         }
     }

@@ -53,7 +53,8 @@ Service.$notification = (function() {
 
         // on webSocket close
         // An event listener to be called when the WebSocket connection's readyState changes to CLOSED.
-        onWebSocketClose = function() {
+        onWebSocketClose = function( event ) {
+            Service.$debug.d( '[WebSocket][Close]: ', event );
             if (wsSettings == null) return;            
             // reset status
             ws = null;
@@ -91,6 +92,7 @@ Service.$notification = (function() {
 
         // on webSocket error
         onWebSocketError = function(event) {
+            Service.$debug.error( '[WebSocket][Error]: ', event );
             ws = null;
         },
 

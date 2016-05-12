@@ -4,7 +4,7 @@ PPMESSAGE提供了丰富的SDK供开发者选择和使用，Web SDK主要针对P
 
 ## PPMESSAGE简介
 
-PPMESSAGE是一个即插即用的云客户服务系统。依托其在线云系统，为网站和移动应用提供统一的在线客服系统。PPMESSAGE提供户端嵌入代码、客服座席端应用以及PPMESSAGE平台服务接口。用户端嵌入代码支持 Web，Android，iOS，可以快速集成到网站和手机应用之中；平台服务接口是PPMESSAGE开放的服务的访问最底层协议，使用这些接口可以用来与PPMESSAGE进行深度集成，例如同步用户数据，创建和管理客服分组、获取历史消息等；客服座席端应用由PPMESSAGE单独提供，支持各种PC平台（Windows，Mac OS X，Linux），主流浏览器（IE、Safari、Chrome、Firefox），主流移动操作系统（Android、iOS、Windows Phone）；座席人员通过使用座席客户端进行在线服务。另外通过PPMESSAGE的后台服务管理配置可以管理服务团队的欢迎信息，离线信息，用户端界面风格，消息分流策略等。
+PPMESSAGE是一个即插即用的云客户服务系统。依托其在线云系统，为网站和移动应用提供统一的在线客服系统。PPMESSAGE提供用户端嵌入代码、客服座席端应用以及PPMESSAGE平台服务接口。用户端嵌入代码支持 Web，Android，iOS，可以快速集成到网站和手机应用之中；平台服务接口是PPMESSAGE开放的服务的访问最底层协议，使用这些接口可以用来与PPMESSAGE进行深度集成，例如同步用户数据，创建和管理客服分组、获取历史消息等；客服座席端应用由PPMESSAGE单独提供，支持各种PC平台（Windows，Mac OS X，Linux），主流浏览器（IE、Safari、Chrome、Firefox），主流移动操作系统（Android、iOS、Windows Phone）；座席人员通过使用座席客户端进行在线服务。另外通过PPMESSAGE的后台服务管理配置可以管理服务团队的欢迎信息，离线信息，用户端界面风格，消息分流策略等。
 
 ## 名词解释
 在PPMESSAGE系统及其文档描述中出现以下名词，其所指的含义，这些含义可能与常识不同。为了避免混淆，在这里进行列举并解释。

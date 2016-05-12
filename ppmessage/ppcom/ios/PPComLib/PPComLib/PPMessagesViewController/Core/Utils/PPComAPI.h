@@ -51,5 +51,9 @@ typedef void (^PPComAPICompletedResponse)(NSDictionary* response, NSError* error
 - (void) getDefaultConversation:(NSDictionary*)params completionHandler:(PPComAPICompletedResponse)handler;
 - (void) getAppOrgGroupList:(NSDictionary*)params completionHandler:(PPComAPICompletedResponse)handler;
 - (void) getConversationUserList:(NSDictionary*)params completionHandler:(PPComAPICompletedResponse)handler;
+- (void) createPPComConversation:(NSDictionary*)params completionHandler:(PPComAPICompletedResponse)handler;
+- (void) getPPComDefaultConversation:(NSDictionary*)params completionHandler:(PPComAPICompletedResponse)handler;
+- (void) getWaitingQueueLength:(NSDictionary*)params completionHandler:(PPComAPICompletedResponse)handler;
+- (void) getConversationInfo:(NSDictionary*)params completionHandler:(PPComAPICompletedResponse)handler;
 
 @end

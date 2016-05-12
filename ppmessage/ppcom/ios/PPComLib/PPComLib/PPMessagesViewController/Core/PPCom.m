@@ -34,7 +34,6 @@
 
 @interface PPCom () <PPMessageReceiverDelegate>
 
-@property PPMessageReceiver *messageReceiver;
 /** 用来获取`accessToken` **/
 @property (nonatomic) PPComToken *tokenStore;
 /** 用来存储第三方开发者提供的appUUID **/
@@ -64,7 +63,7 @@
 @interface PPCom (PPComInitialize)
 - (void) handleError:(NSError*)error with:(NSDictionary *)errorResponse;
 - (void) handleOnGetUserInfo:(PPUser*)user;
-- (void) handleSuccess:(PPUser*)user conversationId:(NSString *)conversationId;
+- (void) handleSuccess:(PPUser*)user;
 @end
 
 @implementation PPCom (PPComInitialize)
@@ -89,7 +88,7 @@
     }
 }
 
-- (void) handleSuccess:(PPUser*)user conversationId:(NSString *)conversationId {
+- (void) handleSuccess:(PPUser*)user {
     [self publishInitState:InitializeStateInited];
 
     // assign user to `PPCom` class
@@ -100,7 +99,7 @@
     
     //callback
     if (self.initDelegate != nil) {
-        [self.initDelegate onInitSuccess:user conversationId:conversationId];
+        [self.initDelegate onInitSuccess:user];
     }
 }
 @end
@@ -130,9 +129,6 @@
         // create a fake user
         self.user = [[PPUser alloc] initWithClient:self uuid:unknownUserId fullName:unknownUserName avatarId:nil];
         self.user.deviceUuid = unknownUserDeviceId;
-        
-        // create a fake conversation
-        self.conversationId = unknownConversationId;
 
         // create an empty appInfo
         self.appInfo = [PPAppInfo app:@{}];
@@ -161,8 +157,10 @@
     }
     
     if (self.initState == InitializeStateInited) {
-        PPFastLog(@"InitializeStateInited");
-        [self handleSuccess:self.user conversationId:self.conversationId];
+        PPFastLog(@"===InitializeStateInited===");
+        NSAssert(self.appInfo != nil, @"appInfo can not be nil");
+        NSAssert(self.appInfo.appId != nil, @"appInfo.appId can not be nil");
+        [self handleSuccess:self.user];
         return;
     }
     
@@ -292,10 +290,7 @@
 }
 
 - (void) initWebSocket:(PPUser*)user {
-    if (!_messageReceiver) {
-        _messageReceiver = [ [PPMessageReceiver alloc] init:self appInfo:self.appInfo ];
-    }
-    [_messageReceiver openWithDelegate:self];
+    [self.messageReceiver openWithDelegate:self];
 }
 
 - (NSString*) getAnonymousUserTrackId {
@@ -341,20 +336,7 @@
             
             [api updateDevice:params completionHandler:^(NSDictionary *response, NSError *error) {
                 if (!error) {
-                    
-                    // 获取默认`conversation`
-                    PPGetDefaultConversationHttpModels *fetchDefaultConversation = [PPGetDefaultConversationHttpModels modelWithClient:self];
-                    [fetchDefaultConversation requestWithBlock:^(PPConversationItem *conversation, NSDictionary *response, NSError *error) {
-                        if (conversation) {
-                            [[PPStoreManager instanceWithClient:self].conversationStore addConversation:conversation];
-                            self.conversationId = conversation.uuid;
-                            [self handleSuccess:user conversationId:self.conversationId];
-                        } else {
-                            [self handleError:error with:response];
-                        }
-                    }];
-                    
-                    
+                    [self handleSuccess:user];
                 } else {
                     [self handleError:error with:nil];
                 }
@@ -383,14 +365,12 @@
 
 #pragma mark - MessageReceiverDelegate Methods
 
-- (void)didReceiveMessage:(PPMessage *)message {
+-(void)didReceiveObj:(id)obj objType:(PPWebSocketMsgType)objType {
+    if (objType == PPWebSocketMsgTypeMsg) {
+        [self ackMessage:obj];
+    }
     if (self.messageDelegate) {
-        [self ackMessage:message];
-        if (message.illegal) {
-            [self.messageDelegate onNewMessageArrived:message];
-        } else {
-            PPFastLog(@"Illegal message %@.", message);
-        }
+        [self.messageDelegate onWSMsgArrived:obj msgType:objType];
     }
 }
 
@@ -423,7 +403,7 @@
 
                     // We consider unackedMessage as the new received message,
                     // so we let `MessageReceiver` to handle this ``new`` message
-                    [self didReceiveMessage:message];
+                    [self didReceiveObj:message objType:PPWebSocketMsgTypeMsg];
 
                     // Don't forget to ack this message
                     [self ackMessage:message];
@@ -523,6 +503,13 @@
         _tokenStore = [PPComToken tokenWithClient:self];
     }
     return _tokenStore;
+}
+
+- (PPMessageReceiver*)messageReceiver {
+    if (!_messageReceiver) {
+        _messageReceiver = [ [PPMessageReceiver alloc] init:self appInfo:self.appInfo ];
+    }
+    return _messageReceiver;
 }
 
 @end
