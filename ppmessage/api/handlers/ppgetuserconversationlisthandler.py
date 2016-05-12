@@ -67,13 +67,14 @@ class PPGetUserConversationListHandler(BaseHandler):
             _d_key = _redis.get(_d_key_pre + _conversation_uuid)
             _data = redis_hash_to_dict(self.application.redis, ConversationUserData, _d_key)
             _conversation["conversation_data"] = _data
-            if _data.get("conversation_name") != None:
+            if _data != None and _data.get("conversation_name") != None:
                 _conversation["conversation_name"] = _data.get("conversation_name")
-            if _data.get("conversation_icon") != None:
+            if _data != None and _data.get("conversation_icon") != None:
                 _conversation["conversation_icon"] = _data.get("conversation_icon")
             _conversation["from_user"] = self._get_from_user(_conversation)
             _conversation["latest_message"] = self._get_latest_message(_conversation)
             _conv_list.append(_conversation)
+        logging.info(_conv_list)
         return _conv_list
     
     def _get(self):
