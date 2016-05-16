@@ -1,6 +1,7 @@
+<div style="display: inline-block;">
 ![](ppmessage/doc/ppcom.gif)
 ![](ppmessage/doc/ppkefu.gif)
-
+</div>
 [In Chinese 中文版](ppmessage/doc/zh-cn/README.md)
 
 # PPMessage - Plug and Play Online Customer Service, iOS/Android In-App Messaging SDK, Intercom Alternative, Implemented with Python. 
