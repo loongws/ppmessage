@@ -1,4 +1,5 @@
-![PPMessage Logon](ppmessage/doc/PPMessage-Logo.png)
+![](ppmessage/doc/ppcom.gif)
+![](ppmessage/doc/ppkefu.gif)
 
 [In Chinese 中文版](ppmessage/doc/zh-cn/README.md)
 
