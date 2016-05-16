@@ -1,5 +1,8 @@
 ![](ppmessage/doc/ppcom.gif) ![](ppmessage/doc/ppkefu.gif)
 
+Solarized dark             |  Solarized Ocean
+:-------------------------:|:-------------------------:
+![](ppmessage/doc/ppcom.gif)  | ![](ppmessage/doc/ppkefu.gif)
 
 [In Chinese 中文版](ppmessage/doc/zh-cn/README.md)
 
