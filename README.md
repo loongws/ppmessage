@@ -1,6 +1,5 @@
-![](ppmessage/doc/ppcom.gif) ![](ppmessage/doc/ppkefu.gif)
 
-Solarized dark             |  Solarized Ocean
+Customer             |  Service
 :-------------------------:|:-------------------------:
 ![](ppmessage/doc/ppcom.gif)  | ![](ppmessage/doc/ppkefu.gif)
 
