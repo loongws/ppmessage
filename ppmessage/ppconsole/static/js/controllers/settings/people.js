@@ -6,86 +6,15 @@ angular.module("this_app")
         var app_uuid = null;
         var user_uuid = null;
 
-        $scope.create_user_direct = getInitialCreateUserModalData(); // Store the data that need to create user
-
+        $scope.selected_all = {seleted: false};
+        $scope.create_user_direct = getInitialCreateUserModalData(); 
+        $scope.edit_user_direct = getInitialCreateUserModalData();
+        
         var _note = function(index, tag) {
             $scope.set_flash_style(index);
             $scope.set_update_string($scope.lang[tag]);
         };
         
-        var search = function(emails){
-            var lastIndex = emails.length - 1;
-            var index = null;
-            var search_show = $(".modal-body");
-            $("#invite_email").keydown(function(event){
-                var key = event.keyCode;
-                if ($.trim($(this).val()).length == 0) {
-                    return;
-                };
-                if(key == 13){
-                    if(emails!==null && index!==null){
-                        $timeout(function(){
-                            $scope.set_invite_email_value(emails[index]);
-                        });
-                    }else{
-                        $timeout(function(){
-                            $scope.set_invite_email_value("");
-                            $scope.join_in_directly = true;
-                            $scope.send_invite_email = true;
-                        });
-                    };
-                    return;
-                }else if(key == 38){
-                    if(index === null){
-                        index = lastIndex;
-                    }else if(index == 0){
-                        index = lastIndex;
-                    }else{
-                        index--;    
-                    }
-                    search_show.find("li").eq(index).css("font-size", "20px").siblings().css("font-size", "14px");
-                }else if(key == 40){
-                    if(index == null){
-                        index = 0;
-                    }else if(index == lastIndex){
-                        index = 0;
-                    }else{
-                        index++;    
-                    }
-                    search_show.find("li").eq(index).css("font-size", "20px").siblings().css("font-size", "14px");
-                }else{
-                    search_show.find("li").css("font-size", "14px");
-                };
-            });
-        };
-
-        var send_invite_email = function(){
-            var is_email = yvUtil.is_valid_email($scope.invite_email);
-            if(!user_uuid || !app_uuid || !$scope.invite_email || !is_email){
-                return;
-            }
-            var _i = yvAjax.ajax_send_invite_email(user_uuid, app_uuid, $scope.invite_email);
-            _i.success(function(data) {
-                if(data.error_code == 0){
-                    jQuery("#invite_user").modal('hide');
-                    _note(0, "application.people.SEND_INVITATION_EMAIL_SUCCESSFULLY_TAG");
-                }else{
-                    jQuery("#invite_user").modal('hide');
-                    _note(1, "application.people.SEND_INVITATION_EMAIL_FAILED_TAG");
-                    console.error(data);
-                    return;
-                };
-                
-            });
-
-            _i.error(function(data) {
-                jQuery("#invite_user").modal('hide');
-                _note(2, "application.people.SEND_INVITATION_EMAIL_FAILED_TAG");
-                console.error(data);
-                return;
-            });
-        };
-
         $scope.email_handler = function(email) {
             if (email.length <= 22){
                 return email;
@@ -93,26 +22,24 @@ angular.module("this_app")
             return email.substring(0,18) + "..";
         }
         
-        $scope.show_invite_modal = function() {
-            $scope.join_in_directly = true;
-            $scope.send_invite_email = true;
-            $scope.invite_email = null;
-            $scope.emails = null;
-            jQuery("#invite_user").modal({show:true});
-            return;
+        $scope.show_edit_modal = function() {
+            jQuery("#batch_edit_user").modal( { show:true } );
+            $scope.edit_user_direct = getInitialEditUserModalData(); 
         };
         
-        $scope.show_batch_modal = function() {
+        $scope.show_create_modal = function() {
             jQuery("#batch_create_user").modal( { show:true } );
-            $scope.create_user_direct = getInitialCreateUserModalData(); // clear any data stored before when show `create user modal`
+            $scope.create_user_direct = getInitialCreateUserModalData(); 
         };
-        
-        $scope.set_invite_email_value = function(email) {
-            $scope.invite_email = email;
-            $scope.emails = null;
-            $scope.join_in_directly = true;
-            $scope.send_invite_email = false;
-            $scope.invite_member = create_app_user;
+
+        $scope.show_edit_user_password = function(show) {
+            if (show) {
+                $scope.edit_user_direct.user_password_is_visible = true;
+                $scope.edit_user_direct.password_input_type = "text";
+            } else {
+                $scope.edit_user_direct.user_password_is_visible = false;
+                $scope.edit_user_direct.password_input_type = "password";
+            }
         };
 
         $scope.show_user_password = function(show) {
@@ -124,7 +51,33 @@ angular.module("this_app")
                 $scope.create_user_direct.password_input_type = "password";
             }
         };
+        
+        $scope.edit_service_user_form_submit = function() {
+            var user_info = {
+                "app_uuid": yvUser.get_team().uuid,
+                "user_uuid": $scope.edit_user_direct.user_uuid,
+                "user_email": $scope.edit_user_direct.email,
+                "user_fullname": $scope.edit_user_direct.name
+            };
 
+            if ($scope.edit_user_direct.password && $scope.edit_user_direct.password.length > 0) {
+                user_info.user_password = sha1($scope.edit_user_direct.password);
+            }
+
+            yvAjax.update_user(user_info).success(function(data) {
+                if (data.error_code == 0) {
+                    _note(0, "application.people.EDIT_APP_USER_SUCCESS_TAG")
+                } else {
+                    _note(1, "application.people.EDIT_APP_USER_FAILED_TAG")
+                }
+            }).error(function(data) {
+                _note(1, "application.people.EDIT_APP_USER_FAILED_TAG")
+            });
+            
+            jQuery( "#batch_edit_user" ).modal( 'hide' );
+            $scope.page_app_user();
+        };
+        
         $scope.create_service_user_form_submit = function() {
             var user_uuid = yvUser.get_uuid();
             var app_user_info = {
@@ -160,7 +113,6 @@ angular.module("this_app")
                     note = "application.people.CREATE_APP_USER_FAILED_TAG";
                     noteIndex = 1;
                     break;
-                    
                 }
 
                 jQuery( "#batch_create_user" ).modal( 'hide' );
@@ -168,46 +120,24 @@ angular.module("this_app")
                 _note( noteIndex, note );
                 
             }, function( data ) {
-
                 jQuery("#batch_create_user").modal('hide');
-
                 $scope.page_app_user();
-
                 _note(2, "application.people.CREATE_APP_USER_FAILED_TAG");
-                console.error(data);
-                
             } );
 
-
         };
-        
-        $scope.get_invite_email_list = function(invite_email){
 
-            if(!invite_email){
-                $scope.emails = null;
-                return;
+        $scope.should_show_edit_button = function() {
+            var list = [];
+            angular.forEach($scope.group, function (member) {
+                if(member.selected) {
+                    this.push(member);
+                }
+            }, list);
+            if (list.length == 1) {
+                return true;
             }
-
-            var _i = yvAjax.ajax_invite_handler($.trim(invite_email));            
-            _i.success(function(data) {
-                $scope.emails = data.email_list;
-                search($scope.emails);
-                if (data.error_code == 0) {
-                    $scope.join_in_directly = true;
-                    $scope.send_invite_email = false;
-                    $scope.invite_member = create_app_user;
-                } else {
-                    $scope.join_in_directly = false;
-                    $scope.send_invite_email = true;
-                    $scope.invite_member = send_invite_email;
-                };
-            });
-
-            _i.error(function(data) {
-                console.error(data);
-                return;
-            });
-
+            return false;
         };
 
         $scope.should_show_remove_button = function() {
@@ -235,20 +165,14 @@ angular.module("this_app")
                 return;
             };
 
-            console.log("to_be_removed_users", $scope.to_be_removed_users);
             jQuery("#remove_user").modal({show:true});
             return;
         };
 
-        $scope.checkAll = function () {
-            if ($scope.selectedAll) {
-                $scope.selectedAll = true;
-            } else {
-                $scope.selectedAll = false;
-            }
+        $scope.check_all_changed = function (v) {
             angular.forEach($scope.group, function (member) {
-                if(!member.is_owner_user==1) {
-                    member.selected = $scope.selectedAll;
+                if(!member.is_owner_user == 1) {
+                    member.selected = v;
                 }
             });
         };
@@ -268,8 +192,10 @@ angular.module("this_app")
                     flag = false;
                 }
             });
-            if(flag)
-                scope.selectedAll = false;
+            
+            if(flag) {
+                scope.selected_all.selected = false;
+            }
         });
 
         $scope.remove_users = function(to_be_removed_users) {
@@ -283,15 +209,15 @@ angular.module("this_app")
 
             var _r = yvAjax.leave_app(_uuids, yvUser.get_team().uuid);
             _r.success(function(data) {
-                console.log(data);
+
                 if (data.error_code == 0) {
                     jQuery("#remove_user").modal('hide');
-                    $scope.selectedAll = false;
+                    $scope.selected_all.selected = false;
                     $scope.page_app_user();
                     _note(0, "application.people.REMOVE_APP_USER_SUCCESSFULLY_TAG");
                 } else {
                     jQuery("#remove_user").modal('hide');
-                    $scope.selectedAll = false;
+                    $scope.selected_all.selected = false;
                     $scope.page_app_user();
                     _note(1, "application.people.REMOVE_APP_USER_FAILED_TAG");
                     console.error(data);
@@ -300,7 +226,7 @@ angular.module("this_app")
             });
             _r.error(function(data) {
                 jQuery("#remove_user").modal('hide');
-                $scope.selectedAll = false;
+                $scope.selected_all.selected = false;
                 $scope.page_app_user();
                 _note(2, "application.people.REMOVE_APP_USER_FAILED_TAG");
                 console.error(data);
@@ -402,9 +328,27 @@ angular.module("this_app")
 
         function getInitialCreateUserModalData() {
             return {
+                password: null,
                 user_password_is_visible: false,
                 password_input_type: 'password',
             }
+        }
+
+        function getInitialEditUserModalData() {
+            var _return_member = null;
+            angular.forEach($scope.group, function(member) {
+                if(member.selected) {
+                    _return_member = member;
+                }
+            });
+
+            if (_return_member != null) {
+                _return_member.user_uuid = _return_member.uuid;
+                _return_member.email = _return_member.user_email;
+                _return_member.name = _return_member.user_fullname;
+                _return_member.password = "";                
+            }
+            return _return_member;
         }
 
         yvDebug.attach( 'yvAppPeopleController', { $scope: $scope } );
