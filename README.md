@@ -1,7 +1,9 @@
 
-Customer             |  Service
-:-------------------------:|:-------------------------:
-![](ppmessage/doc/ppcom.gif)  | ![](ppmessage/doc/ppkefu.gif)
+<!-- Customer             |  Service -->
+<!-- :-------------------------:|:-------------------------: -->
+<!-- ![](ppmessage/doc/ppcom.gif)  | ![](ppmessage/doc/ppkefu.gif) -->
+
+![](ppmessage/doc/ppkefu-ppcom.gif)
 
 [In Chinese 中文版](ppmessage/doc/zh-cn/README.md)
 

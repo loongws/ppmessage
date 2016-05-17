@@ -1,4 +1,4 @@
-![PPMessage Logo](/ppmessage/doc/PPMessage-Logo.png)
+![PPMessage Demo](/ppmessage/doc/ppkefu-ppcom.gif)
 
 [In English](/README.md)
 
