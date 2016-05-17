@@ -25,15 +25,6 @@ import json
 import logging
 
 class PPUpdateConversationMemberHandler(BaseHandler):
-    """
-    requst:
-    header
-    app_uuid, user_uuid
-    
-    response:
-    json with error_code
-
-    """
 
     def _add(self):
         _redis = self.application.redis        
@@ -89,11 +80,11 @@ class PPUpdateConversationMemberHandler(BaseHandler):
         super(PPUpdateConversationMemberHandler, self)._Task()
         _request = json.loads(self.request.body)
 
-        self._app_uuid = _request.get("app_uuid")
         self._action = _request.get("action")
+        self._app_uuid = _request.get("app_uuid")
+        self._group_uuid = _request.get("group_uuid")
         self._member_list = _request.get("member_list")
         self._conv_uuid = _request.get("conversation_uuid")
-        self._group_uuid = _request.get("group_uuid")
         
         if self._conv_uuid == None or \
            self._app_uuid == None or \
@@ -103,6 +94,10 @@ class PPUpdateConversationMemberHandler(BaseHandler):
             self.setErrorCode(API_ERR.NO_PARA)
             return
 
+        if not isinstance(self._member_list, list):
+            self.setErrorCode(API_ERR.NOT_LIST)
+            return
+        
         _redis = self.application.redis
         self._conv = redis_hash_to_dict(_redis, ConversationInfo, self._conv_uuid)
         if self._conv == None:

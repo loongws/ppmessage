@@ -7,10 +7,9 @@
 
 from .basehandler import BaseHandler
 
-from ppmessage.db.models import ConversationInfo
 from ppmessage.api.error import API_ERR
-
 from ppmessage.core.constant import API_LEVEL
+from ppmessage.db.models import ConversationInfo
 
 import uuid
 import json

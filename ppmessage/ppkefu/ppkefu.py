@@ -43,10 +43,8 @@ class PCApp(Application):
             (r"^/$", MainHandler),
             (r"^/cordova.js$", CordovaHandler),
             (r"/js/(.*)", StaticFileHandler, {"path": _root + "/js"}),
-            (r"/build/(.*)", StaticFileHandler, {"path": _root + "/build"}),
             (r"/css/(.*)", StaticFileHandler, {"path": _root + "/css"}),
-            (r"/templates/(.*)", StaticFileHandler, {"path": _root + "/templates"}),
-            (r"/lib/(.*)", StaticFileHandler, {"path": _root + "/lib"}),
+            (r"/fonts/(.*)", StaticFileHandler, {"path": _root + "/fonts"}),
             (r"/img/(.*)", StaticFileHandler, {"path": _root + "/img"}),
             
             (r"/download/(.*)", DownloadHandler, {"path": "/"}),

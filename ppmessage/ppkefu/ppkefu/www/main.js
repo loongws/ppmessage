@@ -10,6 +10,83 @@ var globalShortcut = electron.globalShortcut;
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow = null;
 
+// this should be placed at top of main.js to handle setup events quickly
+if (handleSquirrelEvent()) {
+    // squirrel event handled and app will exit in 1000ms, so don't do anything else
+    return;
+}
+
+function handleSquirrelEvent() {
+    if (process.platform !== "win32" || process.argv.length === 1) {
+        return false;
+    }
+
+    var ChildProcess = require('child_process');
+    var path = require('path');
+
+    var appFolder = path.resolve(process.execPath, '..');
+    var rootAtomFolder = path.resolve(appFolder, '..');
+    var updateDotExe = path.resolve(path.join(rootAtomFolder, 'Update.exe'));
+    var exeName = path.basename(process.execPath);
+
+    var spawn = function(command, args) {
+        var spawnedProcess, error;
+
+        try {
+            spawnedProcess = ChildProcess.spawn(command, args, {detached: true});
+        } catch (error) {}
+
+        return spawnedProcess;
+    };
+
+    var spawnUpdate = function(args) {
+        return spawn(updateDotExe, args);
+    };
+
+    var squirrelEvent = process.argv[1];
+
+    switch (squirrelEvent) {
+    case '--squirrel-install':
+        spawnUpdate(['--createShortcut', exeName]);
+        
+        setTimeout(app.quit, 1000);
+        return true;
+
+    case '--squirrel-updated':
+        // Optionally do things such as:
+        // - Add your .exe to the PATH
+        // - Write to the registry for things like file associations and
+        //   explorer context menus
+
+        // Install desktop and start menu shortcuts
+        spawnUpdate(['--createShortcut', exeName]);
+
+        setTimeout(app.quit, 1000);
+        return true;
+
+    case '--squirrel-uninstall':
+        // Undo anything you did in the --squirrel-install and
+        // --squirrel-updated handlers
+
+        // Remove desktop and start menu shortcuts
+        spawnUpdate(['--removeShortcut', exeName]);
+
+        setTimeout(app.quit, 1000);
+        return true;
+
+    case '--squirrel-obsolete':
+        // This is called on the outgoing version of your app before
+        // we update to the new version - it's the opposite of
+        // --squirrel-updated
+
+        app.quit();
+        return true;
+        
+    default:
+        return false;
+    }
+};
+
 function init() {
     // Create the browser window.
     mainWindow = new BrowserWindow({width: 1068, height: 1096, resizable: true, center: true, title: "PPMessage"});

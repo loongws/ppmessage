@@ -18,40 +18,16 @@ angular.module("this_app.route", ["ui.router", "this_app.constants"])
                 controller: "AppCtrl"
             })
 
-            .state("app.signin", {
-                url: "/signin/:return_state",
-                templateUrl: yvConstants.STATIC_PREFIX + "html/login.html",
-                controller: "LoginCtrl"
-            })
-
-            .state("app.signup", {
-                url: "/signup",
-                templateUrl: yvConstants.STATIC_PREFIX + "html/signup.html",
-                controller: "SignupCtrl"
-            })
-
-            .state("app.createteam", {
-                url: "/createteam",
-                templateUrl: yvConstants.STATIC_PREFIX + "html/createteam.html",
-                controller: "CreateTeamCtrl"
-            })
-
-            .state("app.startteam", {
-                url: "/startteam",
-                templateUrl: yvConstants.STATIC_PREFIX + "html/startteam.html",
-                controller: "StartTeamCtrl"
+            .state("app.signup-md", {
+                url: "/signup-md/:sign_what",
+                templateUrl: yvConstants.STATIC_PREFIX + "html/signup-md.html",
+                controller: "SignupMdCtrl"
             })
 
             .state("app.error", {
                 url: "/error",
                 templateUrl: yvConstants.STATIC_PREFIX + "html/404.html",
                 controller: "ErrorCtrl"
-            })
-
-            .state("app.checkinbox", {
-                url: "/checkinbox/:email",
-                templateUrl: yvConstants.STATIC_PREFIX + "html/checkinbox.html",
-                controller: "CheckInboxCtrl"
             })
 
             .state("app.createaccount", {
@@ -175,13 +151,8 @@ angular.module("this_app.route", ["ui.router", "this_app.constants"])
                 templateUrl: yvConstants.STATIC_PREFIX + "html/settings/account.html",
                 controller: "SettingsAccountCtrl"
             })
-
-            .state("app.settings.createteam", {
-                url: "/createteam",
-                templateUrl: yvConstants.STATIC_PREFIX + "html/settings/createapplication.html",
-                controller: "SettingsCreateAppCtrl"
-            });
-
-        $urlRouterProvider.otherwise("/app/signin/");
+        ;
+      
+        $urlRouterProvider.otherwise("/app/signup-md/signin");
 
     });

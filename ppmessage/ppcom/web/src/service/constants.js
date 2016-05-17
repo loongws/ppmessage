@@ -81,6 +81,8 @@
             DEFAULT_SERVE_NAME: '\u5ba2\u670d',
             UPLOADING_HINT: '\u6b63\u5728\u4e0a\u4f20',
             SEND: '\u53d1\u9001',
+            WAITING_AVALIABLE_CONVERSATION: '\u6b63\u5728\u7b49\u5f85\u5ba2\u670d...',
+            WAITING_LENGTH_HINT: '\u6b63\u5728\u6392\u961f\u4e2d\uff0c\u5f53\u524d\u5171\u6709%s\u4eba\u6b63\u5728\u7b49\u5f85',
 
             LOAD_HISTORY_HINT: '\u70b9\u51fb\u52a0\u8f7d\u5386\u53f2\u6d88\u606f',
             LOAD_HISTORY_MOBILE_HINT: '\u4e0b\u62c9\u52a0\u8f7d\u5386\u53f2\u6d88\u606f',
@@ -132,6 +134,8 @@
             DEFAULT_SERVE_NAME: 'Service',
             UPLOADING_HINT: 'Uploading',
             SEND: 'Send',
+            WAITING_AVALIABLE_CONVERSATION: 'Waiting service ...',
+            WAITING_LENGTH_HINT: 'There are total %s person in the queue',
 
             LOAD_HISTORY_HINT: 'Click to load history',
             LOAD_HISTORY_MOBILE_HINT: 'Pull to load history',

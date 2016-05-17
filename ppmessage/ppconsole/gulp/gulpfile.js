@@ -1,9 +1,9 @@
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var concat = require('gulp-concat');
-var minifyCss = require('gulp-minify-css');
+var cleanCss = require('gulp-clean-css');
 var rename = require('gulp-rename');
-var ngmin = require('gulp-ngmin');
+var ngAnnotate = require('gulp-ng-annotate');
 var uglify = require('gulp-uglify');
 var gulpif = require('gulp-if');
 var buildConfig = require("./build.config.js");
@@ -17,7 +17,7 @@ var watching_paths = {
     scripts: [
         '../static/js/*.js',
         '../static/js/**/*.js',
-	'../static/js/**/**/*.js',
+        '../static/js/**/**/*.js'
     ],
     css: [
         '../static/css/*.css'
@@ -49,7 +49,7 @@ gulp.task('user-css', function(done) {
     gulp.src(buildConfig.cssFiles.user)
         .pipe(concat('ppconsole-user.css'))
         .pipe(gulp.dest(buildConfig.buildPath))
-        .pipe(minifyCss())
+        .pipe(cleanCss())
         .on('error', function(e) {
             console.log(e);        
             done();
@@ -63,7 +63,7 @@ gulp.task('admin-css', function(done) {
     gulp.src(buildConfig.cssFiles.admin)
         .pipe(concat('ppconsole-admin.css'))
         .pipe(gulp.dest(buildConfig.buildPath))
-        .pipe(minifyCss())
+        .pipe(cleanCss())
         .on('error', function(e) {
             console.log(e);        
             done();
@@ -83,7 +83,7 @@ gulp.task('user-scripts', function(done) {
         .pipe(replace('{ppmessage_app_uuid}', bootstrap_data.team.app_uuid))
         .pipe(replace('{WEB_ROLE}', "user"))
         .pipe(gulp.dest(buildConfig.buildPath))
-        .pipe(gulpif(min_js, ngmin()))
+        .pipe(gulpif(min_js, ngAnnotate()))
         .pipe(gulpif(min_js, uglify()))
         .on('error', function(e) {
             console.log(e);
@@ -101,7 +101,7 @@ gulp.task('admin-scripts', function(done) {
         .pipe(replace('{ppconsole_api_key}', bootstrap_data.PPCONSOLE.api_key))
         .pipe(replace('{WEB_ROLE}', "admin"))
         .pipe(gulp.dest(buildConfig.buildPath))
-        .pipe(ngmin())
+        .pipe(ngAnnotate())
         .pipe(uglify())
         .on('error', function(e) {
             console.log(e);

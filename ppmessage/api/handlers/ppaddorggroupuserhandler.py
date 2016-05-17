@@ -84,8 +84,8 @@ class PPAddOrgGroupUserHandler(BaseHandler):
         super(PPAddOrgGroupUserHandler, self)._Task()
         _body = json.loads(self.request.body)
         _app_uuid = _body.get("app_uuid")
-        _group_uuid = _body.get("group_uuid")
         _user_list = _body.get("user_list")
+        _group_uuid = _body.get("group_uuid")
         if _app_uuid == None or _group_uuid == None or _user_list == None:
             self.setErrorCode(API_ERR.NO_PARA)
             return

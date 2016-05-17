@@ -71,9 +71,14 @@ angular.module("this_app")
         $scope.get_icon = function() {
             return $scope.icon_style;
         };
+
+        $scope.action_toast = function(scope, index, tag) {
+            $scope.set_flash_style(index);
+            $scope.set_update_string(scope.lang[tag]);
+        };
         
-        $scope.create_team = function() {
-            $state.go("app.settings.createteam");
+        var _init = function() {
+            $scope._update_string = "";
         };
 
         $scope.refresh_settings_menu = function() {
@@ -87,15 +92,6 @@ angular.module("this_app")
                 _j.className += " selected";
             }            
             return;
-        };
-
-        $scope.action_toast = function(scope, index, tag) {
-            $scope.set_flash_style(index);
-            $scope.set_update_string(scope.lang[tag]);
-        };
-        
-        var _init = function() {
-            $scope._update_string = "";
         };
 
         _init();

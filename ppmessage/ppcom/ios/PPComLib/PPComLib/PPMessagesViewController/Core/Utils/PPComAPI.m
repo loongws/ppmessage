@@ -23,6 +23,10 @@
 #define REQUEST_GET_DEFAULT_CONVERSATION @"/PP_GET_DEFAULT_CONVERSATION"
 #define REQUEST_GET_APP_ORG_GROUP_LIST @"/PP_GET_APP_ORG_GROUP_LIST"
 #define REQUEST_GET_CONVERSATION_USER_LIST @"/PP_GET_CONVERSATION_USER_LIST"
+#define REQUEST_CREATE_PPCOM_CONVERSATION @"/PPCOM_CREATE_CONVERSATION"
+#define REQUEST_GET_PPCOM_DEFAULT_CONVERSATION @"/PPCOM_GET_DEFAULT_CONVERSATION"
+#define REQUEST_GET_WAITING_QUEUE_LENGTH @"/PP_GET_AMD_QUEUE_LENGTH"
+#define REQUEST_GET_CONVERSATION_INFO @"/PP_GET_CONVERSATION_INFO"
 
 @interface PPComAPI ()
 @property PPCom *client;
@@ -177,6 +181,22 @@
 
 - (void) getConversationUserList:(NSDictionary *)params completionHandler:(PPComAPICompletedResponse)handler {
     return [self asyncPost:params urlSegment:REQUEST_GET_CONVERSATION_USER_LIST completionHandler:handler];
+}
+
+- (void) createPPComConversation:(NSDictionary *)params completionHandler:(PPComAPICompletedResponse)handler {
+    return [self asyncPost:params urlSegment:REQUEST_CREATE_PPCOM_CONVERSATION completionHandler:handler];
+}
+
+- (void) getPPComDefaultConversation:(NSDictionary *)params completionHandler:(PPComAPICompletedResponse)handler {
+    return [self asyncPost:params urlSegment:REQUEST_GET_PPCOM_DEFAULT_CONVERSATION completionHandler:handler];
+}
+
+- (void) getWaitingQueueLength:(NSDictionary *)params completionHandler:(PPComAPICompletedResponse)handler {
+    return [self asyncPost:params urlSegment:REQUEST_GET_WAITING_QUEUE_LENGTH completionHandler:handler];
+}
+
+- (void) getConversationInfo:(NSDictionary*)params completionHandler:(PPComAPICompletedResponse)handler {
+    return [self asyncPost:params urlSegment:REQUEST_GET_CONVERSATION_INFO completionHandler:handler];
 }
 
 @end

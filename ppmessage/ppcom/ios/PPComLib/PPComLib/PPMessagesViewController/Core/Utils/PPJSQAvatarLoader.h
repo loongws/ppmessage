@@ -11,7 +11,12 @@
 
 @interface PPJSQAvatarLoader : PPCachebleImageDownloader
 
+@property (nonatomic) JSQMessagesAvatarImage *defaultAvatarImage;
+
 -(JSQMessagesAvatarImage*)getJSQAvatarImage:(NSString*)userUuid withImageUrlString:(NSString*)urlString;
 -(JSQMessagesAvatarImage*)getJSQAvatarImage:(NSString*)userUuid withImageUrl:(NSURL*)url;
+- (void)loadJSQAvatarImage:(NSString*)userUuid
+        withImageUrlString:(NSString*)urlString
+                 completed:(void (^)(JSQMessagesAvatarImage* jsqImage))completed;
 
 @end

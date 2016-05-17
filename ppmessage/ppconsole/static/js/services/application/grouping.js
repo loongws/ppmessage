@@ -39,6 +39,8 @@
             UNGROUPED_GROUP_INFO: UNGROUPED_GROUP_INFO,
             ERROR: ERROR,
 
+            setUngroupedName: setUngroupedName,
+            
             all: all,
 
             createGroup: createGroup,
@@ -205,54 +207,33 @@
             // 1. get group list
             yvAjax.get_group_list( { app_uuid: yvUser.get_team().uuid } )
                 .success( function( data ) {
-
                     if ( noError( data ) ) {
                         onSuccessGetGroupList( data );
                     } else {
                         onErrorGetGroupList( data );
                     }
-
                 })
                 .error( onErrorGetGroupList );
 
             function onSuccessGetGroupList( data ) {
-                
                 var groupLists = data.list.sort( compare ) || [];
                 angular.forEach( groupLists, function( value, index ) {
-                    
-                    var workTimes = workTime( value );
-                    
-                    value.start_time = workTimes.start_time;
-                    value.end_time = workTimes.end_time;
-                    
                     // store group info to local
                     groups [ value.uuid ] = value;
-                    
                 } );
                 
                 // 2. get all users
                 getTeamServiceUserList( function( users ) {
                     successCallback && successCallback( groups );
-                    
                 }, function( error ) {
-
                     onErrorGetGroupList( error );
-                    
                 } );
-
             }
 
             function onErrorGetGroupList( data ) {
                 errorCallback && errorCallback( {} );
             }
 
-            function workTime( item ) {
-                var serviceTime = item.group_work_time_str;
-                return {
-                    start_time: serviceTime.split( '-' )[ 0 ].split( ':' )[0],
-                    end_time: serviceTime.split( '-' )[ 1 ].split( ':' )[0]
-                };
-            }
         }
 
         //// getTeamServiceUserList /////
@@ -447,6 +428,10 @@
 
             return errorCode;
             
+        }
+        
+        function setUngroupedName() {
+            UNGROUPED_GROUP_INFO.group_name = $filter("translate")("application.grouping.UNAMED_GROUP_NAME_TAG");
         }
         
     }

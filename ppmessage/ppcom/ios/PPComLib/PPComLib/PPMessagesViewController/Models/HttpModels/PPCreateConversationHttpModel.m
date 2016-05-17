@@ -64,12 +64,14 @@ static NSString *const kPPCreateConversationDefaultConversationType = @"P2S";
     NSString *userUUID = self.client.user.uuid;
     NSString *appUUID = self.client.appInfo.appId;
     NSString *conversationType = kPPCreateConversationDefaultConversationType;
+    NSString *deviceUUID = self.client.user.deviceUuid;
     NSDictionary *params = @{ @"user_uuid": userUUID,
                               @"app_uuid": appUUID,
+                              @"device_uuid": deviceUUID,
                               @"conversation_type": conversationType,
                               @"group_uuid": groupUUID };
     
-    [self.client.api createConversation:params completionHandler:^(NSDictionary *response, NSError *error) {
+    [self.client.api createPPComConversation:params completionHandler:^(NSDictionary *response, NSError *error) {
         
         PPConversationItem *conversationItem = nil;
         
@@ -93,15 +95,16 @@ static NSString *const kPPCreateConversationDefaultConversationType = @"P2S";
     NSString *selfUserUUID = self.client.user.uuid;
     NSString *appUUID = self.client.appInfo.appId;
     NSString *conversationType = kPPCreateConversationDefaultConversationType;
+    NSString *deviceUUID = self.client.user.deviceUuid;
     NSArray *memberList = @[ userUUID ];
+    
     NSDictionary *params = @{ @"user_uuid": selfUserUUID,
                               @"app_uuid": appUUID,
+                              @"device_uuid": deviceUUID,
                               @"conversation_type": conversationType,
                               @"member_list": memberList };
     
-    [self.client.api createConversation:params completionHandler:^(NSDictionary *response, NSError *error) {
-        
-        NSLog(@"response:%@, error:%@", response, error);
+    [self.client.api createPPComConversation:params completionHandler:^(NSDictionary *response, NSError *error) {
         
         PPConversationItem *conversationItem = nil;
         

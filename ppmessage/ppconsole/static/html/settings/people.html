@@ -1,18 +1,34 @@
 <div class="container" style="width:100%;margin-top:15px;">
   <div class="subnav org-toolbar">
+
     <div class="batch-middle right">
+      <!--
       <a href="javascript:void(0);" class="btn btn-primary" ng-click="show_batch_modal()">
         <i class="glyphicon glyphicon-plus"></i>
         {{ "application.people.CREATE_SERVICE_USER_TAG" | translate }}
       </a>
+      -->
+      <md-button class="md-raised" ng-click="show_batch_modal()"> {{ "application.people.CREATE_SERVICE_USER_TAG" | translate }} </md-button>
     </div>
+
     <div class="left non-admin-search">
+      
+      <md-input-container class="md-block md-icon-float">
+        <md-icon md-font-set="material-icons"> search </md-icon>
+        <label>{{ 'application.people.SEARCH_TAG' | translate }}...</label>
+        <input type="search" ng-model="search_value" ng-change="page_app_user(newPageNumber)" autocomplete="off">
+      </md-input-container>
+      <!-- 
       <div class="auto-search-group">
         <input class="subnav-search-input input-contrast auto-search-input" type="text" name="query" ng-model="search_value" ng-change="page_app_user(newPageNumber)" placeholder="{{ 'application.people.SEARCH_TAG' | translate }}..." autocomplete="off">
         <i class="glyphicon glyphicon-search"></i>
       </div>
+      -->
+      
     </div>
+
   </div>
+  
   <div class="table-list-header">
     <label class="table-list-header-select-all">
       <input type="checkbox" id="select-all-checkbox" ng-model="selectedAll" ng-click="checkAll()">
@@ -59,6 +75,7 @@
     </div>
   </div>
 </div>
+
 <div class="modal fade" id="remove_user">
   <div class="modal-dialog" style="margin-top: 300px;width: 600px;">
     <div class="modal-content">
@@ -67,9 +84,8 @@
         <h4 class="modal-title"><strong>{{ "application.people.REMOVE_SERVICE_USER_TAG" | translate }}</strong></h4>
       </div>
       <div class="modal-body" style="color: #D03F3F;">
-        <p>该操作会移除您选定的客服人员：</p>
+        <p>{{ "application.people.REMOVE_SERVICE_USER_PROMOTE_TAG" | translate }} </p>
         <p ng-repeat="user in to_be_removed_users" style="color: #000000;"> {{ user.user_fullname }} </p> 
-        <p>如有疑问请查看我们的文档或论坛信息.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">{{ "application.people.CANCEL_TAG" | translate }}</button>
@@ -79,42 +95,44 @@
     </div>
   </div>
 </div>
+
 <div class="modal fade" id="batch_create_user" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
   <div class="modal-dialog" role="document" style="top: 150px;" >
     <div class="modal-content" >
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">
-          <strong>{{ "application.people.CREATE_SERVICE_USER_TAG" | translate }}</strong>
-        </h4>
-      </div>
-      <div class="modal-body">
-        <span class="modal-body-email-h">{{ "application.people.SERVICE_USER_NAME_TAG" | translate }}:</span>
-        <input type="text" class="modal-body-email-b" ng-model="create_user_direct.name" tabindex="1" />
-        <span class="modal-body-email-bb">*</span>
-        <span class="modal-body-email-note" id="cud1" > {{ create_user_direct.name_error }} </span>
-      </div>
-      <div class="modal-body">
-        <span class="modal-body-email-h">{{ "application.people.SERVICE_USER_EMAIL_TAG" | translate }}:</span>
-        <input type="text" class="modal-body-email-b" placeholder="example@ppmessage.cn" ng-model="create_user_direct.email" tabindex="2" />
-        <span class="modal-body-email-bb">*</span>
-        <span class="modal-body-email-note" id="cud2"> {{ create_user_direct.email_error }} </span>
-      </div>
-      <div class="modal-body">
-        <span class="modal-body-email-h">{{ "application.people.PASSWORD_TAG" | translate }}:</span>
-        <input type="password" class="modal-body-email-b" ng-model="create_user_direct.password" tabindex="3" />
-        <span class="modal-body-email-bb">*</span>
-        <span class="modal-body-email-note" id="cud3"> {{ create_user_direct.password_error }} </span>
-      </div>
-      <div class="modal-body">
-        <span class="modal-body-email-h">{{ "application.people.CONFIRM_PASSWORD_TAG" | translate }}:</span>
-        <input type="password" class="modal-body-email-b" ng-model="create_user_direct.password_repeat" tabindex="4" />
-        <span class="modal-body-email-bb">*</span>
-        <span class="modal-body-email-note" id="cud4"> {{ create_user_direct.password_repeat_error }} </span>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" ng-click="create_user_directly()" tabindex="5">{{ "application.people.CREATE_TAG" | translate }}</button>
-      </div>
+      <form name="create-service-user-form" ng-submit="create_service_user_form_submit()">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">
+            <strong>{{ "application.people.CREATE_SERVICE_USER_TAG" | translate }}</strong>
+          </h4>
+        </div>
+        
+        <div class="modal-body">
+          <md-input-container class="md-block">
+            <label>{{ "application.people.SERVICE_USER_NAME_TAG" | translate }}</label>
+            <input ng-model="create_user_direct.name" md-maxlength="64" required>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>{{ "application.people.SERVICE_USER_EMAIL_TAG" | translate }}</label>
+            <input ng-model="create_user_direct.email" md-maxlength="128" required>
+          </md-input-container>
+
+          <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
+            <label>{{ "application.people.PASSWORD_TAG" | translate }}</label>
+            <input type="{{ create_user_direct.password_input_type }}" ng-model="create_user_direct.password" required>
+            <md-icon md-font-set="material-icons" ng-if="!create_user_direct.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
+            <md-icon md-font-set="material-icons" ng-if="create_user_direct.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
+          </md-input-container>
+        </div>
+        
+        <div class="modal-footer">
+          <md-button type="submit" class="md-raised">{{ "application.people.CREATE_TAG" | translate }}</md-button>
+        </div>
+        
+      </form>
     </div>
   </div>
 </div>

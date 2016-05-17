@@ -1,7 +1,26 @@
+/**
+
+## Inject `PPDebug` scripts to the third web site
+
+```javascript
+var head = document.getElementsByTagName('head')[0];
+var ppcom = document.createElement("script");
+ppcom.setAttribute('src', 'http://192.168.0.206:8001/assets/ppdebug.js');
+head.appendChild(ppcom);
+```
+
+## `API`
+
+- `PPDebug.show()`: show debug window in current page
+- `PPDebug.hide()`: hide debug window in current page
+
+*/
+
 ( function() {
 
     var $,
         Service,
+        Ctrl,
         Modal;
 
     ////////// PPDebug ////////////
@@ -21,6 +40,7 @@
             $ = PP.fn.$;
             Service = PP.fn.Service;
             Modal = PP.fn.Modal;
+            Ctrl = PP.fn.Controller;
             
             if ( $( debugContainerId ).is( ':visible') ) return;
 
@@ -54,6 +74,9 @@
             $elDebugContainer.append( _buildInputViewHtml( 'console-current-conversation-msgs', 'console打印当前会话所有消息' ) );
             $elDebugContainer.append( _buildInputViewHtml( 'simulate-and-show-group-members-with-diverse-state', '显示组下拉用户(假数据+状态随机)' ) );
             $elDebugContainer.append( _buildInputViewHtml( 'add-duplicate-ppcom-script', '在已有的情况下添加一个新的scripts' ) );
+            $elDebugContainer.append( _buildInputViewHtml( 'simulate-one-conversation-avaliable', '模拟一个Conversation Avaliable' ) );
+            $elDebugContainer.append( _buildInputViewHtml( 'check-current-messagepanel-mode', '查看当前MessagePanel所在的Mode' ) );
+            $elDebugContainer.append( _buildInputViewHtml( 'snapshot', '快照' ) );
             
             $elDebugContainer.append( '<br/><select class="drop-down"><option>None</option></select><br/>' );
             $elDebugContainer.append( _buildInputViewHtml( 'clear', '清空' ) );
@@ -80,6 +103,9 @@
             _bindViewClickEvent( 'console-current-conversation-msgs', test.consoleCurrentConversationMsgs );
             _bindViewClickEvent( 'simulate-and-show-group-members-with-diverse-state', test.simulateAndShowGroupMembersWithDiverseState );
             _bindViewClickEvent( 'add-duplicate-ppcom-script', test.addDuplicatePPComScripts );
+            _bindViewClickEvent( 'simulate-one-conversation-avaliable', test.simulateOneConversationAvaliable );
+            _bindViewClickEvent( 'check-current-messagepanel-mode', test.checkCurrentMessagePanelMode );
+            _bindViewClickEvent( 'snapshot', test.snapshot );
             
         }
 
@@ -142,6 +168,9 @@
 
             simulateAndShowGroupMembersWithDiverseState: simulateAndShowGroupMembersWithDiverseState,
             addDuplicatePPComScripts: addDuplicatePPComScripts,
+            simulateOneConversationAvaliable: simulateOneConversationAvaliable,
+            checkCurrentMessagePanelMode: checkCurrentMessagePanelMode,
+            snapshot: snapshot,
 
             clear: clear
         }
@@ -327,6 +356,30 @@
             debug( fakeUsers );
             
             View.$groupMembers._show( fakeUsers );
+        }
+
+        function simulateOneConversationAvaliable() {
+            Service.$notification.onWebSocketMessage( {
+                data: {
+                    type: 'ACK',
+                    device_uuid: Service.$tools.getUUID(),
+                    "what": 'CONVERSATION',
+                    "code": 0,
+                    "extra": { conversation_uuid : '1bf95561-0c1e-11e6-bc7a-acbc327f19e9' },
+                }
+            } );
+        }
+
+        function checkCurrentMessagePanelMode() {
+            append( 'Current MessagePanel Mode: ' + Ctrl.$conversationPanel.mode() + '\n' );
+        }
+
+        function snapshot() {
+            var info = '';
+            info += 'app route policy: ' + Service.$app.app().app_route_policy + '\n';
+            info += 'is webSocket OK: ' + Service.$notification.isWsOk() + '\n';
+            info += 'current mode: ' + Ctrl.$conversationPanel.mode() + '\n';
+            append( info );
         }
         
         function onChattingMessage() {

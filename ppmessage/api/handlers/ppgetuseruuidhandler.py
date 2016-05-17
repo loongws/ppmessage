@@ -35,7 +35,7 @@ class PPGetUserUUIDHandler(BaseHandler):
     response:
     user_uuid,
     """
-    def _create_third_party(self, _user_email, _user_fullname, _user_icon):
+    def _create_third_party(self, _app_uuid, _user_email, _user_fullname, _user_icon):
         _redis = self.application.redis
         _du_uuid = str(uuid.uuid1())
         _values = {
@@ -57,7 +57,7 @@ class PPGetUserUUIDHandler(BaseHandler):
         _values = {
             "uuid": _data_uuid,
             "user_uuid": _du_uuid,
-            "app_uuid": self.app_uuid,
+            "app_uuid": _app_uuid,
             "is_portal_user": True,
             "is_service_user": False,
             "is_owner_user": False,
@@ -71,15 +71,15 @@ class PPGetUserUUIDHandler(BaseHandler):
         _r["user_uuid"] = _du_uuid
         return
     
-    def _get(self, _user_email, _user_fullname, _user_icon):
+    def _get(self, _app_uuid, _user_email, _user_fullname, _user_icon):
         _redis = self.application.redis
         _key = DeviceUser.__tablename__ + ".user_email." + _user_email
         _uuid = _redis.get(_key)
         if _uuid == None:
-            self._create_third_party(_user_email, _user_fullname, _user_icon)
+            self._create_third_party(_app_uuid, _user_email, _user_fullname, _user_icon)
             return
-        _key = AppUserData.__tablename__ + ".app_uuid." +  self.app_uuid + ".user_uuid." + _uuid + ".is_service_user.True"
         
+        _key = AppUserData.__tablename__ + ".app_uuid." +  self.app_uuid + ".user_uuid." + _uuid + ".is_service_user.True"        
         if _redis.exists(_key):
             logging.error("user is service user who can not help himself ^_^.")
             self.setErrorCode(API_ERR.NOT_PORTAL)
@@ -111,6 +111,6 @@ class PPGetUserUUIDHandler(BaseHandler):
         if _user_fullname == None:
             _user_fullname = _user_email.split("@")[0]
 
-        self._get(_user_email, _user_fullname, _user_icon)
+        self._get(_app_uuid, _user_email, _user_fullname, _user_icon)
         return
 
