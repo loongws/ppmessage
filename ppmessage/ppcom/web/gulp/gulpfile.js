@@ -32,7 +32,7 @@ if (bootstrap_data.nginx.ssl == "on") {
 }
 
 if (bootstrap_data.js.min == "yes") {
-    mode = "script";
+    mode = "scripts";
 }
 
 var auth = http + host + "/ppauth";
