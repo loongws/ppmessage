@@ -2,42 +2,33 @@
   <div class="subnav org-toolbar">
 
     <div class="batch-middle right">
-      <!--
-      <a href="javascript:void(0);" class="btn btn-primary" ng-click="show_batch_modal()">
-        <i class="glyphicon glyphicon-plus"></i>
+      <md-button class="md-raised" ng-click="show_create_modal()">
         {{ "application.people.CREATE_SERVICE_USER_TAG" | translate }}
-      </a>
-      -->
-      <md-button class="md-raised" ng-click="show_batch_modal()"> {{ "application.people.CREATE_SERVICE_USER_TAG" | translate }} </md-button>
+      </md-button>
     </div>
 
     <div class="left non-admin-search">
-      
       <md-input-container class="md-block md-icon-float">
         <md-icon md-font-set="material-icons"> search </md-icon>
         <label>{{ 'application.people.SEARCH_TAG' | translate }}...</label>
         <input type="search" ng-model="search_value" ng-change="page_app_user(newPageNumber)" autocomplete="off">
       </md-input-container>
-      <!-- 
-      <div class="auto-search-group">
-        <input class="subnav-search-input input-contrast auto-search-input" type="text" name="query" ng-model="search_value" ng-change="page_app_user(newPageNumber)" placeholder="{{ 'application.people.SEARCH_TAG' | translate }}..." autocomplete="off">
-        <i class="glyphicon glyphicon-search"></i>
-      </div>
-      -->
-      
     </div>
 
   </div>
   
   <div class="table-list-header">
     <label class="table-list-header-select-all">
-      <input type="checkbox" id="select-all-checkbox" ng-model="selectedAll" ng-click="checkAll()">
+      <md-checkbox ng-change="check_all_changed(selected_all.selected)" ng-model="selected_all.selected" aria-label="Select All">
+      </md-checkbox>
     </label>
-    <label for="select-all-checkbox" class="table-list-header-meta member-list-select-all-label">
-      <span>{{ "application.people.SELECT_ALL_TAG" | translate }}</span>
-    </label>
-    <div class="member-toolbar-actions right" ng-show="should_show_remove_button()">
-      <a href="javascript:void(0);" class="btn btn-sm btn-danger" ng-click="show_remove_modal()">{{ "application.people.REMOVE_SERVICE_USER_TAG" | translate }}</a>
+    <div class="member-toolbar-actions right">
+      <md-button class="md-icon-button" aria-label="edit" ng-click="show_edit_modal()">
+        <md-icon md-font-set="material-icons" ng-show="should_show_edit_button()"> edit </md-icon>
+      </md-button>
+      <md-button class="md-icon-button" aria-label="delete" ng-click="show_remove_modal()">
+        <md-icon md-font-set="material-icons" ng-show="should_show_remove_button()"> delete </md-icon>
+      </md-button>
     </div>
   </div>
 
@@ -46,7 +37,7 @@
       <li class="table-list-item member-list-item" dir-paginate="member in group | itemsPerPage: items_per_page" current-page="page_number" total-items="total_items">
         <!--      <li class="table-list-item member-list-item" ng-repeat="member in group"> -->
         <div class="table-list-cell table-list-cell-checkbox">
-          <input type="checkbox" class="js-check-all-item js-org-person-toggle" ng-model="member.selected" ng-disabled="member.is_owner_user==1">
+          <md-checkbox ng-model="member.selected" ng-disabled="member.is_owner_user==1" aria-label="check"> </md-checkbox>
         </div>
 
         <div class="table-list-cell member-info">
@@ -136,4 +127,46 @@
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="batch_edit_user" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document" style="top: 150px;" >
+    <div class="modal-content" >
+      <form name="edit-service-user-form" ng-submit="edit_service_user_form_submit()">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">
+            <strong>{{ "application.people.EDIT_SERVICE_USER_TAG" | translate }}</strong>
+          </h4>
+        </div>
+        
+        <div class="modal-body">
+          <md-input-container class="md-block">
+            <label>{{ "application.people.SERVICE_USER_NAME_TAG" | translate }}</label>
+            <input ng-model="edit_user_direct.name" md-maxlength="64" required>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>{{ "application.people.SERVICE_USER_EMAIL_TAG" | translate }}</label>
+            <input ng-model="edit_user_direct.email" md-maxlength="128" required>
+          </md-input-container>
+
+          <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
+            <label>{{ "application.people.PASSWORD_TAG" | translate }}</label>
+            <input type="{{ edit_user_direct.password_input_type }}" ng-model="edit_user_direct.password">
+            <md-icon md-font-set="material-icons" ng-if="!edit_user_direct.user_password_is_visible" ng-click="show_edit_user_password(true)"> visibility </md-icon>
+            <md-icon md-font-set="material-icons" ng-if="edit_user_direct.user_password_is_visible" ng-click="show_edit_user_password(false)"> visibility_off </md-icon>
+          </md-input-container>
+        </div>
+        
+        <div class="modal-footer">
+          <md-button type="submit" class="md-raised">{{ "application.people.SAVE_TAG" | translate }}</md-button>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</div>
+
 

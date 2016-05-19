@@ -337,6 +337,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     CREATE_SERVICE_USER_TAG: "Create service user",
                     SEARCH_TAG: "Search",
                     SELECT_ALL_TAG: "Select all",
+                    EDIT_SERVICE_USER_TAG: "Edit",
                     REMOVE_SERVICE_USER_TAG: "Remove",
                     REMOVE_SERVICE_USER_PROMOTE_TAG: "Are you sure to remove the service user: ",
                     OWNER_TAG: "Owner",
@@ -347,8 +348,11 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     SERVICE_USER_EMAIL_TAG: "Email",
                     PASSWORD_TAG: "Password",
                     CONFIRM_PASSWORD_TAG: "Confirm password",
-                    CREATE_TAG: "Create"
-                    
+                    CREATE_TAG: "Create",
+                    SAVE_TAG: "Save",
+
+                    EDIT_APP_USER_SUCCESSFULLAY_TAG: "Edit user successfully.",
+                    EDIT_APP_USER_FAILED_TAG: "Edit user failed.",
                 },
 
                 manualinstall: {
@@ -755,6 +759,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                    CREATE_SERVICE_USER_TAG: "创建客服人员",
                    SEARCH_TAG: "搜索",
                    SELECT_ALL_TAG: "选择全部",
+                   REMOVE_SERVICE_USER_TAG: "编辑客服",
                    REMOVE_SERVICE_USER_TAG: "移除客服",
                    REMOVE_SERVICE_USER_PROMOTE_TAG: "该操作会移除您选定的客服人员：",
                    OWNER_TAG: "创建者",
@@ -765,8 +770,12 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                    SERVICE_USER_EMAIL_TAG: "客服邮箱",
                    PASSWORD_TAG: "设置密码",
                    CONFIRM_PASSWORD_TAG: "确认密码",
-                   CREATE_TAG: "创建"
-                   
+                   CREATE_TAG: "创建",
+                   SAVE_TAG: "保存",
+
+                   EDIT_APP_USER_SUCCESSFULLAY_TAG: "更新用户信息成功",
+                   EDIT_APP_USER_FAILED_TAG: "更新用户信息失败",
+
                },
 
                 manualinstall: {
