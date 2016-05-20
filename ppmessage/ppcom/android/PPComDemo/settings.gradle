@@ -1,1 +1,1 @@
-include ':app', ':ppcomlib', ':sdk'
+include ':app', ':ppcomsdk', ':sdk'

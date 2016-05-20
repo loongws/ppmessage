@@ -3,19 +3,29 @@ PPMessage Android Library
 
 This library included `API`, `Notification`, `UI` and some other useful tools for the basic usage of [PPMessage](https://ppmessage.com)
 
-Before
+[![Jcenter Status](https://api.bintray.com/packages/ppmessage/maven/ppmessagesdk/images/download.svg)](https://bintray.com/ppmessage/maven/ppmessagesdk)
+
+Download
 ======
 
+You can download through `Maven` or `Gradle`.
+
+## Maven
+
+```xml
+<dependency>
+  <groupId>com.ppmessage</groupId>
+  <artifactId>sdk</artifactId>
+  <version>0.0.1</version>
+  <type>pom</type>
+</dependency>
 ```
-compile 'com.koushikdutta.async:androidasync:2.+'
-compile 'com.squareup.picasso:picasso:2.5.2'
+
+## Gradle
+
+```groovy
+compile 'com.ppmessage:sdk:0.0.1'
 ```
-
-[AndroidAsync](https://github.com/koush/AndroidAsync) for WebSocket implementation
-
-[Picasso](https://github.com/square/picasso) for ImageLoader implementation
-
-The minimum sdk version is `15`, and current library version is `0.0.1`.
 
 Usage
 ======

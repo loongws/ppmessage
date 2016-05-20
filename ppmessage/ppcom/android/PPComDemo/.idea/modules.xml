@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PPComDemo.iml" filepath="$PROJECT_DIR$/PPComDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ppcomlib/ppcomlib.iml" filepath="$PROJECT_DIR$/ppcomlib/ppcomlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ppcomsdk/ppcomsdk.iml" filepath="$PROJECT_DIR$/ppcomsdk/ppcomsdk.iml" />
       <module fileurl="file://$PROJECT_DIR$/sdk/sdk.iml" filepath="$PROJECT_DIR$/sdk/sdk.iml" />
     </modules>
   </component>

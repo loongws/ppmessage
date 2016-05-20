@@ -25,8 +25,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.koushikdutta.async:androidasync:2.+'
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.ppmessage:sdk:0.0.1'
     androidTestCompile 'com.android.support.test:runner:0.4'
     androidTestCompile 'org.hamcrest:hamcrest-library:1.3'
 }
@@ -44,7 +43,7 @@ install {
         pom {
             project {
                 packaging 'aar'
-                name 'ppmessagesdk'
+                name 'ppcomsdk'
                 url siteUrl
                 licenses {
                     license {
@@ -97,7 +96,7 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = "ppmessagesdk"                                                 // #CONFIG# project name in jcenter
+        name = "ppcomsdk"                                                 // #CONFIG# project name in jcenter
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["MIT"]
