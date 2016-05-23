@@ -95,7 +95,9 @@ typedef NS_ENUM(NSInteger, AutoReconnectState) {
 -(void)close {
     if (_srWebSocket) {
         _socketClose = YES;
-        [_srWebSocket close];
+        if (_srWebSocket.readyState == SR_OPEN) {
+            [_srWebSocket close];
+        }
     }
     [self stopAutoReconnect];
 }
