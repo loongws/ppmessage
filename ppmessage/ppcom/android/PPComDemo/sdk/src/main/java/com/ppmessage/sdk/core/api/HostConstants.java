@@ -7,7 +7,7 @@ public final class HostConstants {
 
     private HostConstants() {}
 
-    private static final boolean LOCAL_DEBUG = true;
+    private static final boolean LOCAL_DEBUG = false;
 
     public static final String HOST;
     public static final String HTTP_HOST;

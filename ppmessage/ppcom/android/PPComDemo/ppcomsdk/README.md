@@ -5,7 +5,7 @@ Android SDK for PPCom
 
 For more information please see [the website](https://ppmessage.com)
 
-[![Jcenter Status](https://api.bintray.com/packages/ppmessage/maven/ppcomsdk/images/download.svg)](https://bintray.com/ppmessage/maven/ppcomsdk)
+[ ![Download](https://api.bintray.com/packages/ppmessage/maven/ppcomsdk/images/download.svg) ](https://bintray.com/ppmessage/maven/ppcomsdk/_latestVersion)
 
 Download
 ======
@@ -18,7 +18,7 @@ You can download through `Maven` or `Gradle`.
 <dependency>
   <groupId>com.ppmessage</groupId>
   <artifactId>ppcomsdk</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -26,7 +26,7 @@ You can download through `Maven` or `Gradle`.
 ## Gradle
 
 ```groovy
-compile 'com.ppmessage:ppcomsdk:0.0.1'
+compile 'com.ppmessage:ppcomsdk:0.0.2'
 ```
 	
 Usage

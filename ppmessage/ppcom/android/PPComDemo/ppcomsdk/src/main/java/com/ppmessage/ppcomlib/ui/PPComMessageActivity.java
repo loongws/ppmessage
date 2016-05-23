@@ -72,7 +72,7 @@ public class PPComMessageActivity extends MessageActivity {
         setConversation(findConversation(conversationUUID));
 
         List<PPMessage> messageList = messagesModel.getMessageList(conversationUUID);
-        MessageAdapter messageAdapter = new MessageAdapter(messageSDK, this, messageList);
+        MessageAdapter messageAdapter = new MessageAdapter(messageSDK, this, messageList, false);
         setAdapter(messageAdapter);
 
         messageListView.scrollToBottom();

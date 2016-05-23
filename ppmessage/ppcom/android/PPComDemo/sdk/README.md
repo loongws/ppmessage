@@ -3,7 +3,7 @@ PPMessage Android Library
 
 This library included `API`, `Notification`, `UI` and some other useful tools for the basic usage of [PPMessage](https://ppmessage.com)
 
-[![Jcenter Status](https://api.bintray.com/packages/ppmessage/maven/ppmessagesdk/images/download.svg)](https://bintray.com/ppmessage/maven/ppmessagesdk)
+[ ![Download](https://api.bintray.com/packages/ppmessage/maven/ppmessagesdk/images/download.svg) ](https://bintray.com/ppmessage/maven/ppmessagesdk/_latestVersion)
 
 Download
 ======
@@ -16,7 +16,7 @@ You can download through `Maven` or `Gradle`.
 <dependency>
   <groupId>com.ppmessage</groupId>
   <artifactId>sdk</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -24,7 +24,7 @@ You can download through `Maven` or `Gradle`.
 ## Gradle
 
 ```groovy
-compile 'com.ppmessage:sdk:0.0.1'
+compile 'com.ppmessage:sdk:0.0.2'
 ```
 
 Usage

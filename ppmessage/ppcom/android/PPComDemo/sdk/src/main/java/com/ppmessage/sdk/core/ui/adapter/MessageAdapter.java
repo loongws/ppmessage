@@ -52,16 +52,22 @@ public class MessageAdapter extends BaseAdapter {
 
     private List<PPMessage> mChatMessages;
     private LayoutInflater mInflater;
+    private boolean showOutgoingUserAvatar;
 
     private final int SCREEN_WIDTH;
     private final int SCREEN_HEIGHT;
 
     public MessageAdapter(PPMessageSDK sdk, Activity activity, List<PPMessage> messages) {
+        this(sdk, activity, messages, true);
+    }
+
+    public MessageAdapter(PPMessageSDK sdk, Activity activity, List<PPMessage> messages, boolean showOutgoingUserAvatar) {
         this.sdk = sdk;
         this.activity = activity;
         this.context = sdk.getContext();
         this.imageLoader = sdk.getImageLoader();
         this.mChatMessages = messages;
+        this.showOutgoingUserAvatar = showOutgoingUserAvatar;
 
         SCREEN_WIDTH = Utils.getDisplayPoint(this.context).x;
         SCREEN_HEIGHT = Utils.getDisplayPoint(this.context).y;
@@ -163,6 +169,7 @@ public class MessageAdapter extends BaseAdapter {
             v = mInflater.inflate(R.layout.pp_chat_item_file_by_user,
                     parent, false);
             holder = new ViewHolderRightFileMessage();
+            holder.avatar = (ImageView) v.findViewById(R.id.pp_chat_item_user_avatar);
             holder.fileNameTv = (TextView) v.findViewById(R.id.pp_chat_item_file_by_user_file_name);
             holder.timestampTv = (TextView) v.findViewById(R.id.pp_chat_item_file_by_user_message_extra);
             holder.container = (ViewGroup) v.findViewById(R.id.pp_chat_item_file_by_user_container);
@@ -172,7 +179,7 @@ public class MessageAdapter extends BaseAdapter {
         }
 
         PPMessageFileMediaItem fileMediaItem = (PPMessageFileMediaItem) message.getMediaItem();
-
+        showOutgoingUserAvatar(holder.avatar, message.getFromUser());
         holder.fileNameTv.setText(fileMediaItem.getName());
         setMessageItemExtraInfo(holder.timestampTv, message);
         holder.fileNameTv.setMaxWidth(getMaxFileBubbleWidth());
@@ -218,6 +225,7 @@ public class MessageAdapter extends BaseAdapter {
             v = mInflater.inflate(
                     R.layout.pp_chat_item_image_by_user, parent, false);
             holder = new ViewHolderRightImageMessage();
+            holder.avatar = (ImageView) v.findViewById(R.id.pp_chat_item_user_avatar);
             holder.timestampTv = (TextView) v.findViewById(R.id.pp_chat_item_image_by_user_message_extra);
             holder.imgBody = (ImageView) v.findViewById(R.id.pp_chat_item_image_by_user_message_body);
             v.setTag(holder);
@@ -229,6 +237,7 @@ public class MessageAdapter extends BaseAdapter {
 
         PPMessageImageMediaItem imageMediaItem = (PPMessageImageMediaItem) message.getMediaItem();
         calcAndSetImageViewFinalTargetSize(holder.imgBody, imageMediaItem.getOrigWidth(), imageMediaItem.getOrigHeight());
+        showOutgoingUserAvatar(holder.avatar, message.getFromUser());
 
         sdk.getImageLoader().loadImage(imageMediaItem.getOrigUrl(),
                 imageMediaItem.getOrigWidth(),
@@ -278,6 +287,7 @@ public class MessageAdapter extends BaseAdapter {
             v = mInflater.inflate(R.layout.pp_chat_item_text_by_user,
                     parent, false);
             holder = new ViewHolderRightTextMessage();
+            holder.avatar = (ImageView) v.findViewById(R.id.pp_chat_item_user_avatar);
             holder.bodyTv = (TextView) v.findViewById(R.id.pp_chat_item_text_by_user_message_body);
             holder.timestampTv = (TextView) v.findViewById(R.id.pp_chat_item_text_by_user_message_extra);
             v.setTag(holder);
@@ -286,6 +296,7 @@ public class MessageAdapter extends BaseAdapter {
         }
 
         setMessageItemExtraInfo(holder.timestampTv, message);
+        showOutgoingUserAvatar(holder.avatar, message.getFromUser());
         bindTextViewLongClickListener(holder.bodyTv);
         holder.bodyTv.setMaxWidth(getMaxTextBubbleWidth());
         loadText(message, holder.bodyTv);
@@ -355,6 +366,19 @@ public class MessageAdapter extends BaseAdapter {
         } else {
             extraTv.setText(Utils.formatTimestamp(message.getTimestamp()));
             extraTv.setTextColor(context.getResources().getColor(R.color.pp_chat_item_extra));
+        }
+    }
+
+    private void showOutgoingUserAvatar(ImageView userAvatar, User fromUser) {
+        userAvatar.setVisibility(showOutgoingUserAvatar ? View.VISIBLE : View.GONE);
+        if (showOutgoingUserAvatar) {
+            if (fromUser != null && fromUser.getIcon() != null) {
+                imageLoader.loadImage(fromUser.getIcon(),
+                        DEFAULT_AVATAR_WIDTH,
+                        DEFAULT_AVATAR_HEIGHT,
+                        R.drawable.pp_icon_avatar,
+                        userAvatar);
+            }
         }
     }
 
@@ -464,6 +488,7 @@ public class MessageAdapter extends BaseAdapter {
      * Right Text Message ViewHolder
      */
     class ViewHolderRightTextMessage {
+        ImageView avatar;
         TextView bodyTv;
         TextView timestampTv;
     }
@@ -481,6 +506,7 @@ public class MessageAdapter extends BaseAdapter {
      * Right Image Message ViewHolder
      */
     class ViewHolderRightImageMessage {
+        ImageView avatar;
         ImageView imgBody;
         TextView timestampTv;
     }
@@ -499,6 +525,7 @@ public class MessageAdapter extends BaseAdapter {
      * Right File Message ViewHolder
      */
     class ViewHolderRightFileMessage {
+        ImageView avatar;
         TextView fileNameTv;
         TextView timestampTv;
         ViewGroup container;
