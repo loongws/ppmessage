@@ -154,7 +154,7 @@ class PPComCreateConversationHandler(BaseHandler):
 
             _pi = _redis.pipeline()
             for _conversation_uuid in _conversations:
-                _key = ConversationInfo.__tablename__ + ".uuid." + _conversation
+                _key = ConversationInfo.__tablename__ + ".uuid." + _conversation_uuid
                 _pi.hget(_key, "updatetime")
             _updatetime = _pi.execute()
             
