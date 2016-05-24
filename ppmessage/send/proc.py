@@ -226,7 +226,7 @@ class Proc():
         _thum_height = _image_height
         
         if _image.format == "GIF":
-            return {"thum":_fid, "orig":_fid, "mime":"image/gif", "orig_width": _image_width, "orig_height": _image_height, "thum_width": _thum_width, "_thum_height": _thum_height}
+            return {"thum":_fid, "orig":_fid, "mime":"image/gif", "orig_width": _image_width, "orig_height": _image_height, "thum_width": _thum_width, "thum_height": _thum_height}
         
         _thum_format = "JPEG"
         if _image.format == "PNG":

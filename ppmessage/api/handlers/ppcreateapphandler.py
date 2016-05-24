@@ -122,6 +122,7 @@ class PPCreateAppHandler(BaseHandler):
 
     def initialize(self):
         self.addPermission(api_level=API_LEVEL.PPCONSOLE)
+        self.addPermission(api_level=API_LEVEL.THIRD_PARTY_CONSOLE)
         return
 
     def _Task(self):

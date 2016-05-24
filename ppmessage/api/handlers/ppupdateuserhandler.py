@@ -20,17 +20,6 @@ import hashlib
 import logging
 
 class PPUpdateUserHandler(BaseHandler):
-    """
-    requst:
-    header
-    user_uuid
-    user_xxx would be update
-    user_xxx field must be same with db field of DeviceUser
-    
-    response:
-    error_code
-
-    """
     def _update(self):
         _redis = self.application.redis
         _request = json.loads(self.request.body)

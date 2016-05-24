@@ -31,15 +31,6 @@ class PPMessageHandler(tornado.web.RequestHandler):
         with open(page) as f:
             self.write(f.read())
 
-class IntercomHandler(tornado.web.RequestHandler):
-    
-    def post(self):
-        page = 'test-intercom.html'
-        with open(page) as f:
-            self.write(f.read())
-
-    def get(self):
-        self.post()
 
 class PPDebugTestHandler(tornado.web.RequestHandler):
     
@@ -58,7 +49,6 @@ if __name__ == "__main__":
         handlers = [
             (r"/", TestHandler),
             (r"/debug", PPDebugTestHandler),
-            (r"/intercom", IntercomHandler),
             (r"/ppmessage", PPMessageHandler),
             (r"/libs/(.*)", StaticFileHandler, {
                 "path": os.path.join(os.path.dirname(__file__), "../assets"),

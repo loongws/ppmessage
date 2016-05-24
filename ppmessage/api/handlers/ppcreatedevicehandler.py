@@ -107,8 +107,6 @@ class PPCreateDeviceHandler(BaseHandler):
     def initialize(self):
         self.addPermission(app_uuid=True)
         self.addPermission(api_level=API_LEVEL.PPCOM)
-        self.addPermission(api_level=API_LEVEL.PPKEFU)
-        self.addPermission(api_level=API_LEVEL.THIRD_PARTY_KEFU)
         return
         
     def _Task(self):

@@ -32,8 +32,8 @@
         TEXT_MAX_LEN: 128
     };
 
-    PPConstants.MAX_UPLOAD_SIZE = 41943040; //40MB
-    PPConstants.MAX_UPLOAD_SIZE_STR = "40MB";
+    PPConstants.MAX_UPLOAD_SIZE = 4194304; //4MB
+    PPConstants.MAX_UPLOAD_SIZE_STR = "4MB";
 
     PPConstants.MESSAGE_TYPE = {
         NOTI: "NOTI",

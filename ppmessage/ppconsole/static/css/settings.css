@@ -48,6 +48,10 @@
     color: #767676;
 }
 
+.settings {
+    padding-bottom: 115px;
+}
+
 .settings .container {
     width: 911px;
     margin-right: auto;

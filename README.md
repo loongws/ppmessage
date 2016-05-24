@@ -1,4 +1,9 @@
-![PPMessage Logon](ppmessage/doc/PPMessage-Logo.png)
+
+<!-- Customer             |  Service -->
+<!-- :-------------------------:|:-------------------------: -->
+<!-- ![](ppmessage/doc/ppcom.gif)  | ![](ppmessage/doc/ppkefu.gif) -->
+
+![](ppmessage/doc/ppkefu-ppcom.gif)
 
 [In Chinese 中文版](ppmessage/doc/zh-cn/README.md)
 
