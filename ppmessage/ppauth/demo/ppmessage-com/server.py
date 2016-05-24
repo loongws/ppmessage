@@ -6,7 +6,7 @@ import tornado.options
 import tornado.httpserver
 import tornado.httpclient
 
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
+from data import BOOTSTRAP_DATA
 
 import os
 import json
@@ -36,19 +36,15 @@ class AuthCallbackHandler(tornado.web.RequestHandler):
     def get(self):
         code = self.get_query_argument("code")
         state = self.get_query_argument("state")
-        global KEFU_API_UUID, KEFU_API_KEY, KEFU_API_SECRET
 
         if state == "kefu":
             api_uuid = KEFU_API_UUID
-            client_id = KEFU_API_KEY
-            client_secret = KEFU_API_SECRET
-            logging.info(api_uuid)
-            logging.info(client_id)
-            logging.info(client_secret)
+            client_id = KEFU_CLIENT_ID
+            client_secret = KEFU_CLIENT_SECRET
         elif state == "console":
             api_uuid = CONSOLE_API_UUID
-            client_id = CONSOLE_API_KEY
-            client_secret = CONSOLE_API_SECRET
+            client_id = CONSOLE_CLIENT_ID
+            client_secret = CONSOLE_CLIENT_SECRET
         else:
             self.send_error(400)
             return
@@ -61,7 +57,6 @@ class AuthCallbackHandler(tornado.web.RequestHandler):
             "grant_type": "authorization_code"
         })
 
-        logging.info(" ------- 111 %s" % body)
         request = tornado.httpclient.HTTPRequest(TOKEN_URI, method="POST", body=body)
         client = tornado.httpclient.HTTPClient()
         response = client.fetch(request)
@@ -88,15 +83,9 @@ class MainHandler(tornado.web.RequestHandler):
     
 class RequestKefuAuthHandler(tornado.web.RequestHandler):
     def get(self):
-        logging.info(" ------- %s" % self.request)
-        global KEFU_API_UUID, KEFU_API_KEY, KEFU_API_SECRET
-        KEFU_API_UUID = self.get_query_argument("kefu_api_uuid")
-        KEFU_API_KEY = self.get_query_argument("kefu_api_key")
-        KEFU_API_SECRET = self.get_query_argument("kefu_api_secret")
-        logging.info(" ---------- 000 %s" % KEFU_API_SECRET) 
         params = {
             "state": "kefu",
-            "client_id": KEFU_API_KEY,
+            "client_id": KEFU_CLIENT_ID,
             "redirect_uri": REDIRECT_URI,
             "response_type": "code"
         }
@@ -110,11 +99,10 @@ class RequestConsoleAuthHandler(tornado.web.RequestHandler):
         logging.info(" ------- %s" % self.request)
         params = {
             "state": "console",
-            "client_id": CONSOLE_API_KEY,
+            "client_id": CONSOLE_CLIENT_ID,
             "redirect_uri": REDIRECT_URI,
             "response_type": "code"
         }
-        return
         logging.info("request console auth params: %s" %params)
         target_url = AUTH_URI + "?" + createBodyString(params)
         self.redirect(target_url)
@@ -141,15 +129,17 @@ if __name__ == "__main__":
     AUTH_URI = server + "/ppauth/auth"
     TOKEN_URI = server + "/ppauth/token"
     REDIRECT_URI = "http://localhost:8090/auth_callback"
-    
-    KEFU_API_UUID = ""
-    KEFU_API_KEY = ""
-    KEFU_API_SECRET = ""
 
-    CONSOLE_API_UUID = ""
-    CONSOLE_API_KEY = ""
-    CONSOLE_API_SECRET = ""
-        
+    kefu = BOOTSTRAP_DATA.get("THIRD_PARTY_KEFU")
+    KEFU_API_UUID = kefu.get("api_uuid")
+    KEFU_CLIENT_ID = kefu.get("api_key")
+    KEFU_CLIENT_SECRET = kefu.get("api_secret")
+
+    console = BOOTSTRAP_DATA.get("THIRD_PARTY_CONSOLE")    
+    CONSOLE_API_UUID = console.get("api_uuid")
+    CONSOLE_CLIENT_ID = console.get("api_key")
+    CONSOLE_CLIENT_SECRET = console.get("api_secret")
+    
     tornado.options.define("port", default=8090, help="", type=int)
     tornado.options.parse_command_line()
     app = App()
