@@ -60,7 +60,7 @@
                 
                 // Welcome msg
                 if (inMobile) {
-                    return getMobileWelcomeMsg();
+                    // return getMobileWelcomeMsg();
                 } else {
                     // if welcomeInfo fetched from server is presented
                     if (welcomeInfo) {
