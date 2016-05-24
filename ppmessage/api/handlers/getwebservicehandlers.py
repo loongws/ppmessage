@@ -242,11 +242,11 @@ def getWebServiceHandlers():
     handler_list.append((r"/PPKEFU_SET_REST", PPKefuSetRest))
     handler_list.append((r"/PPKEFU_SET_SERVICE_USER_STATUS", PPKefuSetServiceUserStatus))
     
-    handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT", PPGetAllPredefinedScript))
-    handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT_GROUP", PPGetAllPredefinedScriptGroup))
-    handler_list.append(("/PP_GET_PREDEFINED_SCRIPT_WITH_GROUP", PPGetPredefinedScriptWithGroup))
+    # handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT", PPGetAllPredefinedScript))
+    # handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT_GROUP", PPGetAllPredefinedScriptGroup))
+    # handler_list.append(("/PP_GET_PREDEFINED_SCRIPT_WITH_GROUP", PPGetPredefinedScriptWithGroup))
 
-    handler_list.append(("/PP_CANCEL_WAITING_CREATE_CONVERSATION", PPCancelWaitingCreateConversation))
+    # handler_list.append(("/PP_CANCEL_WAITING_CREATE_CONVERSATION", PPCancelWaitingCreateConversation))
     
     handler_list.append(("/PPCONSOLE_SEND_NEW_PASSWORD", PPConsoleSendNewPassword))
 
