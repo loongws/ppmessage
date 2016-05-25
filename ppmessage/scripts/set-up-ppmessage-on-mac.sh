@@ -96,4 +96,4 @@ tar -xzvf mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz
 cd mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION
 sudo python setup.py install
 
-echo "Finish deployment successfully, have fun with PPMessage"
+echo "Finish install the PPMessage requirements successfully, have fun with PPMessage"
