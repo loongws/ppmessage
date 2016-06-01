@@ -19,9 +19,9 @@ def createBodyString(params):
         body += "&" + param + "=" + str(params[param])
     return body.lstrip("&")
 
-def getAppServiceUserList(api_uuid, token):
+def getAppServiceUserList(token):
     api_uri = API_URI + "/PP_GET_APP_SERVICE_USER_LIST"
-    body = json.dumps({ "app_uuid": api_uuid })
+    body = json.dumps({ "app_uuid": APP_UUID })
     headers = {
         "Content-Type": "application/json",
         "Authorization": "OAuth " + token
@@ -38,11 +38,9 @@ class AuthCallbackHandler(tornado.web.RequestHandler):
         state = self.get_query_argument("state")
 
         if state == "kefu":
-            api_uuid = KEFU_API_UUID
             client_id = KEFU_CLIENT_ID
             client_secret = KEFU_CLIENT_SECRET
         elif state == "console":
-            api_uuid = CONSOLE_API_UUID
             client_id = CONSOLE_CLIENT_ID
             client_secret = CONSOLE_CLIENT_SECRET
         else:
@@ -68,7 +66,7 @@ class AuthCallbackHandler(tornado.web.RequestHandler):
             self.write(item + ": " + str(res_body[item]) + "<hr>")
 
         # a test
-        user_list = getAppServiceUserList(api_uuid, res_body["access_token"])
+        user_list = getAppServiceUserList(res_body["access_token"])
         self.write("<h1>test getappserviceuserlist using access_token</h1>");
         for item in user_list:
             self.write(item + ": " + str(user_list[item]) + "<hr>")
@@ -130,13 +128,14 @@ if __name__ == "__main__":
     TOKEN_URI = server + "/ppauth/token"
     REDIRECT_URI = "http://localhost:8090/auth_callback"
 
+    team = BOOTSTRAP_DATA.get("team")
+    APP_UUID = team.get("app_uuid")
+
     kefu = BOOTSTRAP_DATA.get("THIRD_PARTY_KEFU")
-    KEFU_API_UUID = kefu.get("api_uuid")
     KEFU_CLIENT_ID = kefu.get("api_key")
     KEFU_CLIENT_SECRET = kefu.get("api_secret")
 
     console = BOOTSTRAP_DATA.get("THIRD_PARTY_CONSOLE")    
-    CONSOLE_API_UUID = console.get("api_uuid")
     CONSOLE_CLIENT_ID = console.get("api_key")
     CONSOLE_CLIENT_SECRET = console.get("api_secret")
     
