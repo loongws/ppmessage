@@ -23,7 +23,7 @@ PPConsole is Web user interface of PPMessage and open sourced as well. After PPM
 
 > In the following, list some document to use and develope PPMessage. More on [PPMessage Site](https://ppmessage.com).
 
-<!-- * [Using online PPMessage](/ppmessage/doc/en-us/using-online-ppmessage.md) -->
+* [Install PPMessage on Debian Linux](/ppmessage/doc/en-us/install-ppmessage-on-debian.md)
 
 * [Install PPMessage on Mac OS X](/ppmessage/doc/en-us/install-ppmessage-on-mac-os-x.md)
 
