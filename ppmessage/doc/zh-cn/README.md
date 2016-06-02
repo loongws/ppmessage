@@ -25,7 +25,7 @@ PPMessage 同时提供了一个 Web 管理界面，称之为 PPConsole，当然�
 
 > 完全参考手册，请关注 PPMessage 在 GitBook 上的持续更新
 
-* [PPMessage Book](https://ppmessage.gitbooks.io/ppbook/content/)
+* [中文手册](https://ppmessage.gitbooks.io/ppbook/content/)
 
 
 <!--
