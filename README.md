@@ -34,3 +34,6 @@ PPConsole is Web user interface of PPMessage and open sourced as well. After PPM
 -->
 
 
+## LICENSE 
+
+[MIT](LICENSE.md)
