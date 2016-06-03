@@ -5,8 +5,6 @@
 # All rights reserved
 #
 
-from .deviceuserloginhandler import DeviceUserLoginHandler
-from .deviceuserlogouthandler import DeviceUserLogoutHandler
 from .getyvobjectdetailhandler import GetYVObjectDetailHandler
 
 from .ackmessagehandler import AckMessageHandler
@@ -125,12 +123,6 @@ from .ppgetamdqueuelength import PPGetAmdQueueLength
 
 def getWebServiceHandlers():
     handler_list = []
-
-    # device user login
-    handler_list.append((r"/DEVICE_USER_LOGIN", DeviceUserLoginHandler))
-
-    # device user logout
-    handler_list.append((r"/DEVICE_USER_LOGOUT", DeviceUserLogoutHandler))
 
     # get yvobject detail yvobject is the caller and callee
     handler_list.append((r"/GET_YVOBJECT_DETAIL", GetYVObjectDetailHandler))
