@@ -18,6 +18,16 @@ PPMessage includes a backend system which exposes OAuth and Web service APIs, a 
 PPConsole is Web user interface of PPMessage and open sourced as well. After PPMessage backend running, PPConsole provided a Web interface to help the service team leader to setup the PPMessage system. 
 
 
+## SUBPROJECTS
+
+* [PPCom iOS SDK](https://github.com/PPMESSAGE/ppcom-ios-sdk)
+
+* [PPCom Android SDK](https://github.com/PPMESSAGE/ppcom-android-sdk)
+
+
+
+## DOCOMENTS
+
 > In the following, list some document to use and develope PPMessage. More on [PPMessage Site](https://ppmessage.com).
 
 * [Install PPMessage on Debian Linux](/ppmessage/doc/en-us/install-ppmessage-on-debian.md)
