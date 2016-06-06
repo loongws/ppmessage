@@ -1,3 +1,0 @@
-## `PPComDemo.xcodeproj` 编译不过去，报`@interface not visible`错误
-
-执行`open PPComDemo.xcodeproj`来打开`PPComDemo project`, 如果是第一次在某个目录下打开这个`project`，那么需要手动将`xcode`左上角的`scheme`( 按钮 Stop the running scheme or application 右边的那个长条，鼠标悬浮上去显示 Set the active scheme )选择为`Framework`，然后执行以下`Command + B (Build)`命令，即需要重新`Build`以下这个`Framework`。然后再切换回`PPComDemo` scheme, 再次执行`Command + B`就可以编译过去了~
