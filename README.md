@@ -13,9 +13,9 @@ With PPMessage, you can chat with visitor or customer via Web or mobile App as o
 
 PPMessage targets to run on Linux, Mac OS X operation system. And PPMessage includes a clearly API system which could be integrated with any open source Content Management System like Wordpress, Drupal and any commercial system even a e-commerce system.
 
-PPMessage includes a series of frontend SDK named PPCom which run on your visitor or customer side, and a series of frontend App named PPKefu which run on your service team side.
+PPMessage includes a series of frontend SDK named **PPCom** which run on your visitor or customer side, and a series of frontend App named **PPKefu** which run on your service team side.
 
-PPConsole is Web admin interface of PPMessage and open sourced as well. After PPMessage backend running, PPConsole provided a Web interface to manager the PPMessage system. 
+**PPConsole** is Web admin interface of PPMessage and open sourced as well. After PPMessage backend running, PPConsole provided a Web interface to manager the PPMessage system. 
 
 
 ## SUBPROJECTS
