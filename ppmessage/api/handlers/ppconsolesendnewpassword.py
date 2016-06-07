@@ -27,7 +27,7 @@ class PPConsoleSendNewPassword(BaseHandler):
         _row.async_update()
         _subject = "[PPMessage]: renew password"
         _text = "Dear %s,\n  Your password has been reset to %s\n Yours Sincerely,\n PPMessage\n" % (_user_fullname, _new_password)
-        _html = "<html><body>Dear %s, <br><br> <p>Your password has been changed to <strong>%s</strong>.</p> <p>Yours Sincerely,</p> <p>PPMessage</p></body></html>" % (_user_fullname, _new_password)
+        _html = "<html><body>Dear %s, <br><br> <p> <strong>%s</strong> is your new password. Login <a href='https://ppmessage.com/user/#/app/signup-md/signin'> PPMessage </a> with your new password. </p> <br><br> <p>Yours Sincerely,</p> <p>PPMessage</p></body></html>" % (_user_fullname, _new_password)
         _key = REDIS_EMAIL_KEY
         _request = {
             "to": [_user_email],
