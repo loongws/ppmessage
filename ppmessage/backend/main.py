@@ -15,6 +15,7 @@ from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.main import get_total_handlers
 
 from ppmessage.file.uploadapplication import UploadWebService
+from ppmessage.file.downloadapplication import DownloadWebService
 
 import os
 import redis
