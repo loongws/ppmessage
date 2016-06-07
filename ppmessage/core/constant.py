@@ -31,6 +31,13 @@ class Enum(set):
 Animals = Enum(["DOG", "CAT", "HORSE"])
 # Animals.DOG == "DOG"
 
+PP_WEB_SERVICE = Enum([
+    "META",
+    "ABSTRACT",
+    "UPLOAD",
+    "DOWNLOAD"
+])
+
 API_LEVEL = Enum([
     "PPCOM",
     "PPKEFU",
@@ -381,6 +388,9 @@ PPHOME_PORT = 8941
 
 PPAUTH_PORT = 8943
 PPCONSOLE_PORT = 8944
+
+# all in one backend service port
+MAIN_PORT = 8945
 
 IOS_FAKE_TOKEN = "YOU-GOT-A-FAKE-IOS-TOKEN-IN-EMULATOR"
 INVALID_IOS_TOKEN = "INVALID_IOS_TOKEN"

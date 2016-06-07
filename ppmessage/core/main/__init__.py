@@ -4,5 +4,8 @@
 # Guijin Ding, dingguijin@gmail.com.
 # All rights reserved.
 #
-# core/srv/__init__.py
+# core/main/__init__.py
 #
+
+from ppwebservice import AbstractWebService
+from ppwebservice import get_total_handlers
