@@ -12,6 +12,7 @@ from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import PP_WEB_SERVICE
 
 from ppmessage.core.main import AbstractWebService
+
 from ppmessage.core.downloadhandler import DownloadHandler
 from ppmessage.core.identiconhandler import IdenticonHandler
 

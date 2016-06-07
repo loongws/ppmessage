@@ -35,7 +35,8 @@ PP_WEB_SERVICE = Enum([
     "META",
     "ABSTRACT",
     "UPLOAD",
-    "DOWNLOAD"
+    "DOWNLOAD",
+    "API",
 ])
 
 API_LEVEL = Enum([

@@ -8,6 +8,9 @@
 from ppmessage.core.singleton import singleton
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
+from ppmessage.core.constant import PP_WEB_SERVICE
+
+from ppmessage.core.main import AbstractWebService
 
 from handlers.getwebservicehandlers import getWebServiceHandlers
 
@@ -15,13 +18,23 @@ import os
 import redis
 from tornado.web import Application
 
+
+class ApiWebService(AbstractWebService):
+
+    @classmethod
+    def name(cls):
+        return PP_WEB_SERVICE.API
+
+    @classmethod
+    def get_handlers(cls):
+        return getWebServiceHandlers()
+
 @singleton
-class APIApp(Application):
+class ApiApp(Application):
     
     def __init__(self):
         settings = {}
         settings["debug"] = True
-        handlers = getWebServiceHandlers()
         self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
-        Application.__init__(self, handlers, **settings)
+        Application.__init__(self, ApiWebService.get_handlers(), **settings)
         
