@@ -10,32 +10,31 @@
 from ppmessage.api.error import API_ERR
 from ppmessage.api.error import getErrorDesc
 
+from ppmessage.core.singleton import singleton
 from ppmessage.core.utils.datetimeencoder import DateTimeEncoder
-from ppmessage.api.getbackendqueue import getBackendQueue
 
-from ppmessage.db.models import ApiTokenData
 from ppmessage.db.models import AppInfo
-
-from tornado.web import RequestHandler
-from tornado.web import asynchronous
-from tornado.ioloop import IOLoop
+from ppmessage.db.models import ApiTokenData
 
 import json
 import hashlib
 import logging
 import datetime
 
+from Queue import Queue
 
-"""
+from tornado.ioloop import IOLoop
+from tornado.web import asynchronous
+from tornado.web import RequestHandler
 
-method could be GET/POST/PUT/DELETE
 
-The derived class need implement the
-_Task
-_After
-_Before
-to be overwritten
-"""
+@singleton
+class BackendQueue(Queue):
+    pass
+
+def getBackendQueue():
+    return BackendQueue()
+
 
 class BaseHandler(RequestHandler):
 

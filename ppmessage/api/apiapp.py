@@ -1,20 +1,19 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
-# All rights reserved
+# Guijin Ding, dingguijin@gmail.com.
+# All rights reserved.
 #
 
 from ppmessage.core.singleton import singleton
-from handlers.getwebservicehandlers import getWebServiceHandlers
-
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 
-from tornado.web import Application
+from handlers.getwebservicehandlers import getWebServiceHandlers
 
-import redis
 import os
+import redis
+from tornado.web import Application
 
 @singleton
 class APIApp(Application):
