@@ -109,12 +109,6 @@ angular.module("this_app.route", ["ui.router", "this_app.constants"])
                 controller: "ApplicationMessageRouteCtrl"
             })
 
-            .state("app.settings.teamstatistics", {
-                url: "/teamstatistics",
-                templateUrl: yvConstants.STATIC_PREFIX + "html/settings/statistics.html",
-                controller: "ApplicationStatisticsCtrl"
-            })
-
             .state("app.settings.overview", {
                 url: "/overview",
                 templateUrl: yvConstants.STATIC_PREFIX + "html/settings/overview.html",
