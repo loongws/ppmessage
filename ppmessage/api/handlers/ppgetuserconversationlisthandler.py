@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
-#
+# Guijin Ding, dingguijin@gmail.com.
+# All rights are reserved.
 #
 
 from .basehandler import BaseHandler
@@ -17,7 +17,6 @@ from ppmessage.api.error import API_ERR
 from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import CONVERSATION_TYPE
 from ppmessage.core.constant import CONVERSATION_STATUS
-
 
 import json
 import time
@@ -74,7 +73,7 @@ class PPGetUserConversationListHandler(BaseHandler):
             _conversation["from_user"] = self._get_from_user(_conversation)
             _conversation["latest_message"] = self._get_latest_message(_conversation)
             _conv_list.append(_conversation)
-        logging.info(_conv_list)
+
         return _conv_list
     
     def _get(self):
@@ -84,6 +83,7 @@ class PPGetUserConversationListHandler(BaseHandler):
                ".user_uuid." + self._user_uuid
         _conversations = _redis.smembers(_key)
 
+        logging.info(_conversations)
         _pi = _redis.pipeline()
         for _conversation_uuid in _conversations:
             _key = ConversationUserData.__tablename__ + \
@@ -108,6 +108,7 @@ class PPGetUserConversationListHandler(BaseHandler):
 
         _r = self.getReturnData()
         _r["list"] = self._get_conversation_list(_l)
+        logging.info(_r)
         return None
     
     def initialize(self):
