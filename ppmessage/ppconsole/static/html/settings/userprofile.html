@@ -5,21 +5,21 @@
     <form accept-charset="UTF-8" class="columns" ng-submit="submit(user)">
 
       <div class="column two-thirds">
-        <dl class="form">
-          <dt><label for="user_profile_firstname">{{ "statistics.userprofile.EMAIL_TAG" | translate }}</label></dt>
-          <dd>
-            <span id="user_email" style="background:transparent; width:30px; height:20px; display:block;" > {{ user.email }}</span>
-          </dd>
-        </dl>
+
+        <md-input-container class="md-block">
+          <label>{{ "statistics.userprofile.EMAIL_TAG" | translate }}</label>
+          <span id="user_email" style="background:transparent; width:30px; height:20px; display:block;" > {{ user.email }}</span>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>{{ "statistics.userprofile.USER_NAME_TAG" | translate }}</label>
+          <input ng-model="user.fullname" required="required" />
+        </md-input-container>
         
-        <dl class="form">
-          <dt><label for="user_profile_lastname">{{ "statistics.userprofile.USER_NAME_TAG" | translate }}</label></dt>
-          <dd>
-            <input id="user_fullname" style="background:transparent;border:1" size="30" type="text" tabindex="1" ng-model="user.fullname" required="required" />
-          </dd>
-      
-        </dl>
-        <p><button type="submit" class="btn btn-primary" tabindex="2" >{{ "statistics.userprofile.SAVE_TAG" | translate }}</button></p>
+        <md-button type="submit" class="md-raised" tabindex="2" >
+          {{ "statistics.userprofile.SAVE_TAG" | translate }}
+        </md-button>
+        
       </div>
     </form>
   </div>
