@@ -39,7 +39,8 @@ PP_WEB_SERVICE = Enum([
     "PCSOCKET",
     "PPCOM",
     "PPKEFU",
-    "PPCONSOLE"
+    "PPCONSOLE",
+    "PPAUTH"
 ])
 
 API_LEVEL = Enum([

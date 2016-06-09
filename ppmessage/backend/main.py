@@ -16,6 +16,7 @@ from ppmessage.core.main import get_total_handlers
 
 from ppmessage.api.apiapp import ApiWebService
 from ppmessage.backend.ppcomapp import PPComWebService
+from ppmessage.backend.ppauthapp import PPAuthWebService
 from ppmessage.backend.ppconsoleapp import PPConsoleWebService
 from ppmessage.pcsocket.pcsocketapp import PCSocketWebService
 from ppmessage.file.uploadapplication import UploadWebService

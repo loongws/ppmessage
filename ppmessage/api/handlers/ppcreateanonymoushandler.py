@@ -96,7 +96,7 @@ class PPCreateAnonymousHandler(BaseHandler):
             _language = "zh-TW"
             _string = USER_NAME["tw"]
 
-        _ip = self.request.headers["X-Real-Ip"]
+        _ip = self.request.headers.get("X-Real-Ip") or self.request.headers.get("remote_ip")
 
         if _ip == None or _ip == "127.0.0.1" or _ip == "localhost" or "192.168." in _ip:
             return _string.get("local") + "." + _string.get("user")
