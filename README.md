@@ -38,7 +38,7 @@ PPMessage includes a series of frontend SDK named **PPCom** which run on your vi
 
 ## LICENSE 
 
-[MIT](LICENSE.md)
+[Apache License](LICENSE.md)
 
-Do whatever you want to do.
+Any change or use must include the license file.
 
