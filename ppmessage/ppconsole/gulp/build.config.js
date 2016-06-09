@@ -57,14 +57,7 @@ module.exports = {
             "../static/js/controllers/about.js",
             "../static/js/controllers/appuser.js",
 
-            "../static/js/controllers/basicInformation.js",
-            "../static/js/controllers/modifyBasicInformation.js",
-            "../static/js/controllers/modifyPassword.js",
-            "../static/js/controllers/appInformation.js",
-            "../static/js/controllers/addApp.js",
-            "../static/js/controllers/invitation.js",
             "../static/js/controllers/404.js",
-            "../static/js/controllers/jobs.js",
 
             "../static/js/directives/focusme.js",
             "../static/js/directives/uniform.js",
