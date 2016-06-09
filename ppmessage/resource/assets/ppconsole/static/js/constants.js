@@ -13,9 +13,9 @@ angular.module("this_app.constants", [])
         },
 
         COOKIE_KEY: {
-            LOGINED_USER_UUID: 'cookie_ppconsole_{WEB_ROLE}_logined_user_uuid',
-            ACTIVE_USER_UUID: 'cookie_ppconsole_{WEB_ROLE}_user_uuid',
-            ACCESS_TOKEN: 'cookie_ppconsole_{WEB_ROLE}_access_token',
+            LOGINED_USER_UUID: 'cookie_ppconsole_user_logined_user_uuid',
+            ACTIVE_USER_UUID: 'cookie_ppconsole_user_user_uuid',
+            ACCESS_TOKEN: 'cookie_ppconsole_user_access_token',
         },
 
         BROADCAST_EVENT_KEY: {
@@ -25,8 +25,8 @@ angular.module("this_app.constants", [])
 
         MAX_TEXT_LEN: 128,
 
-        STATIC_PREFIX: "/{WEB_ROLE}/static/",
-        DEFAULT_USER_ICON: "/{WEB_ROLE}/static/img/default-user.png",
+        STATIC_PREFIX: "/ppconsole/static/",
+        DEFAULT_USER_ICON: "/ppconsole/static/img/default-user.png",
 
         MESSAGE_TYPE: {
             NOTI: "NOTI",

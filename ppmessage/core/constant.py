@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
-# All rights reserved
+# Guijin Ding, dingguijin@gmail.com.
+# All rights are reserved.
 #
 # core/constant.py
-#
 #
 
 DEV_MODE = True
@@ -37,6 +36,10 @@ PP_WEB_SERVICE = Enum([
     "UPLOAD",
     "DOWNLOAD",
     "API",
+    "PCSOCKET",
+    "PPCOM",
+    "PPKEFU",
+    "PPCONSOLE"
 ])
 
 API_LEVEL = Enum([

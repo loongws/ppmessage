@@ -80,7 +80,7 @@ angular.module("this_app")
                     if (data.error_code == 0) {
                         yvLogin.updateActiveUserCookieKey( data.user_uuid );
                         yvLogin.updateLoginedUserCookieKey( data.user_uuid, data.access_token );
-                        yvAjax.get_{WEB_ROLE}_detail_with_password(data.user_uuid)
+                        yvAjax.get_user_detail_with_password(data.user_uuid)
                             .success(function(data) {
                                 yvDebug.d('get_user_detail', data);
                                 if (data.error_code != 0) {

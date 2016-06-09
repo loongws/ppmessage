@@ -15,6 +15,9 @@ from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.main import get_total_handlers
 
 from ppmessage.api.apiapp import ApiWebService
+from ppmessage.backend.ppcomapp import PPComWebService
+from ppmessage.backend.ppconsoleapp import PPConsoleWebService
+from ppmessage.pcsocket.pcsocketapp import PCSocketWebService
 from ppmessage.file.uploadapplication import UploadWebService
 from ppmessage.file.downloadapplication import DownloadWebService
 
@@ -33,16 +36,19 @@ class MainApplication(tornado.web.Application):
     def __init__(self):
         settings = {}
         settings["debug"] = True
-        
+        settings["cookie_secret"] = "24oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo="
+        settings["template_path"]= os.path.join(os.path.dirname(__file__), "../resource/template")
+
         total_handlers = get_total_handlers()
 
         handlers = []
         for i in total_handlers:
-            handlers.append(("/" + i["name"].lower() + i["handler"][0], i["handler"][1]))
-
+            handler = ("/" + i["name"].lower() + i["handler"][0], i["handler"][1])
+            if len(i["handler"]) == 3:
+                handler = ("/" + i["name"].lower() + i["handler"][0], i["handler"][1], i["handler"][2])
+            handlers.append(handler)
         logging.info(handlers)
-        tornado.web.Application.__init__(self, handlers, **settings)
-        
+        tornado.web.Application.__init__(self, handlers, **settings)        
         return                
 
 def _main():

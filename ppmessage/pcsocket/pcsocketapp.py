@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
-# All rights reserved
+# Guijin Ding, dingguijin@gmail.com.
+# All rights are reserved.
 #
 
 from .wshandler import WSHandler
@@ -25,9 +25,12 @@ from ppmessage.core.constant import REDIS_LOGOUT_NOTIFICATION_KEY
 from ppmessage.core.constant import REDIS_PPCOM_ONLINE_KEY
 
 from ppmessage.core.constant import DIS_WHAT
+from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.constant import DATETIME_FORMAT
 
 from ppmessage.core.constant import TIMEOUT_WEBSOCKET_OFFLINE
+
+from ppmessage.core.main import AbstractWebService
 
 from ppmessage.core.utils.getipaddress import getIPAddress
 from ppmessage.core.utils.datetimestring import now_to_string
@@ -65,11 +68,15 @@ def pcsocket_user_online(_redis, _user_uuid, _body):
         _key = REDIS_ONLINE_NOTIFICATION_KEY + ".host." + _listener["host"] + ".port." + _listener["port"]
         _redis.rpush(_key, json.dumps(_body))
     return
-    
-class MainHandler(RequestHandler):
-    def get(self):
-        self.write("PCSOCKET WORKED.")
-        return
+
+class PCSocketWebService(AbstractWebService):
+    @classmethod
+    def name(cls):
+        return PP_WEB_SERVICE.PCSOCKET
+
+    @classmethod
+    def get_handlers(cls):
+        return [("/"+PCSOCKET_SRV.WS, WSHandler)]
 
 class PCSocketApp(Application):
     
@@ -79,10 +86,7 @@ class PCSocketApp(Application):
         
         settings = {}
         settings["debug"] = True
-        handlers = []
-        handlers.append(("/", MainHandler))
-        handlers.append(("/"+PCSOCKET_SRV.WS, WSHandler))
-        Application.__init__(self, handlers, **settings)
+        Application.__init__(self, PCSocketWebService.get_handlers(), **settings)
         return
 
     def _remove_device_data_by_pattern(self, _pattern):

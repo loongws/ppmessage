@@ -6,8 +6,8 @@
   "description": "",
   "main": "",
   "moduleType": [],
-  "license": "MIT",
-  "homepage": "",
+  "license": "Apache-2.0",
+  "homepage": "https://ppmessage.com",
   "private": true,
   "ignore": [
     "**/.*",

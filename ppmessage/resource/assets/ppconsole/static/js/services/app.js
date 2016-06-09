@@ -87,7 +87,7 @@
                 
             } else {
                 
-                yvAjax.get_{WEB_ROLE}_detail_with_password( app.user_uuid )
+                yvAjax.get_user_detail_with_password( app.user_uuid )
                     .success( function( response ) {
                         if ( response.error_code === 0 ) {
 

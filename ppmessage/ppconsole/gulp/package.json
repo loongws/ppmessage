@@ -1,7 +1,8 @@
 {
-  "name": "portal",
+  "name": "ppconsole",
   "version": "1.0.0",
-  "description": "The portal of ppmessage",
+  "license": "Apache-2.0",
+  "description": "ppconsole of ppmessage",
   "dependencies": {
     "get-gulp-args": "*",
     "gulp": "^3.5.6",

@@ -209,7 +209,7 @@
             }
 
             _user_uuid = _user_uuid.replace(/\"/g, "");
-            var _loggedin = yvAjax.get_{WEB_ROLE}_detail_with_password(_user_uuid);
+            var _loggedin = yvAjax.get_user_detail_with_password(_user_uuid);
 
             var _error = function() {
                 $timeout(function() {

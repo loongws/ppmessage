@@ -14,7 +14,7 @@ var args = require('get-gulp-args')();
 var os = require('os');
 
 var _get_bootstrap_data = function() {
-    var data = fs.readFileSync("../../../bootstrap/data.py", "utf8");
+    var data = fs.readFileSync("../../bootstrap/data.py", "utf8");
     data = data.slice(data.search("BOOTSTRAP_DATA"));
     data = eval(data);
     return data;
@@ -64,7 +64,8 @@ gulp.task('css', function(done) {
 });
 
 gulp.task('merge', ['css'], function(done) {
-    var css = fs.readFileSync("../assets/pp-lib.min.css", "utf8");
+    var min_path = buildConfig.distPath + "/pp-lib.min.css";
+    var css = fs.readFileSync(min_path, "utf8");
     gulp.src("../src/view/pp-view-element-css.js")
         .pipe(replace('{css}', css))
         .pipe(rename({ extname: '.replaced.js' }))

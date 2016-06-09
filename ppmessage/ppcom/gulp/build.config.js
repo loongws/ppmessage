@@ -1,6 +1,6 @@
 
 module.exports = {
-    distPath: "../assets",
+    distPath: "../../resource/assets/ppcom/assets",
     scriptFiles: [
         "../src/main/begin.js",
 
@@ -155,7 +155,7 @@ module.exports = {
 
         // MODULE JQuery
         "../src/main/jquery/jquery-module-begin.js",
-        "../assets/lib/bower_components/jquery/dist/jquery.js",
+        "../../resource/assets/ppcom/assets/bower_components/jquery/dist/jquery.js",
         "../src/main/jquery/jquery-module-end.js",
 
         // RUN
