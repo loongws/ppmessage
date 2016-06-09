@@ -5,9 +5,6 @@ angular.module("this_app")
             ppcom_launcher_color: '#54c6d6',
             ppcom_launcher_color_changed: false,
         };
-
-        $scope.enableAutoReply = enableAutoReply; // whether or not enable auto reply auto reply offline msg
-        $scope.onAutoReplyInputChanged = onAutoReplyInputChanged;
         
         var _ajax_update_team_info = function(update, cb) {
             yvAjax.update_app_info(update)
@@ -51,9 +48,6 @@ angular.module("this_app")
                     ppcom_powered_by_visible: _own_team.ppcom_powered_by_visible,
                 };
                 _begin_watch();
-
-                enableAutoReply( autoReply() );
-                
             });
         };
         
@@ -71,43 +65,8 @@ angular.module("this_app")
         var _init_flag = function() {
             $scope.current_bubble.ppcom_launcher_color_changed = false;
         };
-
-        var _change_app_route_policy = function(name) {
-            var update = {
-                "app_uuid": yvUser.get_team().uuid,
-                "app_route_policy": name
-            };
-            _ajax_update_team_info(update);
-        };
-
-        var _change_ppcom_launcher_style = function(style) {
-            var update = {
-                "app_uuid": yvUser.get_team().uuid,
-                "ppcom_launcher_style": style,
-            };
-            _ajax_update_team_info(update);
-        };
         
         var _begin_watch = function() {
-            
-            $scope.$watch('current_bubble.show_ppcom_hover', function(newValue, oldValue) {
-                //check if first load
-                if(oldValue !== newValue) {
-                    var update = {
-                        "app_uuid": yvUser.get_team().uuid,
-                        "show_ppcom_hover": newValue,
-                    };
-                    _ajax_update_team_info(update);
-                };
-            });
-
-            $scope.$watch('current_bubble.app_route_policy', function(newValue, oldValue) {
-                //check if first load
-                if(oldValue !== newValue) {
-                    console.log("update app route policy from: %s to: %s", oldValue, newValue);
-                    _change_app_route_policy(newValue);
-                };
-            });
             
             $scope.$watch('current_bubble.ppcom_launcher_color', function(newValue, oldValue) {
                 if(oldValue !== newValue) {
@@ -116,14 +75,7 @@ angular.module("this_app")
                 };
             });
 
-            $scope.$watch('current_bubble.ppcom_launcher_style', function(newValue, oldValue) {
-                if(oldValue !== newValue) {
-                    _change_ppcom_launcher_style(newValue);
-                };
-            });
-
         };
-
         
         $scope.change_ppcom_color = function() {
             if($scope.current_bubble.ppcom_launcher_color_changed) {
@@ -199,27 +151,6 @@ angular.module("this_app")
         _init();
 
         /////////// Implementation /////////////
-
-        function onAutoReplyInputChanged () {
-            
-            if ( !yvUtil.isNull( yvUser.get_team() ) ) {
-                
-                _ajax_update_team_info( {
-                    "app_uuid": yvUser.get_team().uuid,
-                    "return_offline_message": $scope.enableAutoReply
-                } );
-                
-            }
-            
-        }
-
-        function enableAutoReply ( reply ) {
-            $scope.enableAutoReply = reply;
-        }
-
-        function autoReply() {
-            return yvUser.get_team().return_offline_message ? true : false;
-        }
 
         yvDebug.attach( 'yvAppWelcomeController', { $scope: $scope, yvUser: yvUser } );
     });

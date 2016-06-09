@@ -1916,7 +1916,7 @@ img.yv-chat-icon {
 }
 /* =============custom radio=================== */
 
-.boxed-group-inner .config_basic tr td .default_bubble_color {
+.boxed-group-inner .default_bubble_color {
     height: 48px;
     width: 48px;
     border-radius: 50%;

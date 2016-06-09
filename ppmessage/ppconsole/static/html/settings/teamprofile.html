@@ -1,52 +1,48 @@
 <div class="boxed-group">
   <h3>{{ "application.teamprofile.TEAM_INFO" | translate }}</h3>
   <div class="boxed-group-inner clearfix">
-    <form accept-charset="UTF-8" class="columns" ng-submit="modify()">
+    <md-content layout-padding>
+      <form accept-charset="UTF-8" submit="modify()">
 
-      <div class="column">
-          <dl class="form">
-            <dt><label>Team UUID (app_uuid)</label></dt>
-            <dd><input class="input-noborder" size="30" type="text" readonly="readonly" ng-model="team_info.app_uuid"></dd>
-          </dl>
+        <md-input-container class="md-block">
+          <label>Team UUID (app_uuid)</label>
+          <input ng-model="team_info.app_uuid" disabled />
+        </md-input-container>
 
-          <dl class="form">
-            <dt><label>PPKefu API Key (PPKefu api_key)</label></dt>
-            <dd>
-              <input class="input-noborder" size="30" type="text" readonly="readonly" ng-model="team_info.ppkefu_thirdparty.api_key">
-            </dd>
-          </dl>
+        <md-input-container class="md-block">
+          <label>PPKefu API Key (PPKefu api_key)</label>
+          <input ng-model="team_info.ppkefu_thirdparty.api_key" disabled />
+        </md-input-container>
 
-          
-          <dl class="form">
-            <dt><label>PPKefu API Secret (PPKefu api_secret)</label></dt>
-            <dd><input class="input-noborder" size="30" type="text" readonly="readonly" ng-model="team_info.ppkefu_thirdparty.api_secret"></dd>
-          </dl>
+        <md-input-container class="md-block">
+          <label>PPKefu API Secret (PPKefu api_secret)</label>
+          <input ng-model="team_info.ppkefu_thirdparty.api_secret" disabled />
+        </md-input-container>
 
-          <dl class="form">
-            <dt><label>PPConsole API Key (PPConsole api_key)</label></dt>
-            <dd>
-              <input class="input-noborder" size="30" type="text" readonly="readonly" ng-model="team_info.ppconsole_thirdparty.api_key">
-            </dd>
-          </dl>
+        <md-input-container class="md-block">
+          <label>PPConsole API Key (PPConsole api_key)</label>
+          <input ng-model="team_info.ppconsole_thirdparty.api_key" disabled />
+        </md-input-container>
 
-          
-          <dl class="form">
-            <dt><label>PPConsole API Secret (PPConsole api_secret)</label></dt>
-            <dd>
-              <input class="input-noborder" size="30" type="text" readonly="readonly" ng-model="team_info.ppconsole_thirdparty.api_secret">
-            </dd>
-          </dl>
+        <md-input-container class="md-block">
+          <label>PPConsole API Key (PPConsole api_secret)</label>
+          <input ng-model="team_info.ppconsole_thirdparty.api_secret" disabled />
+        </md-input-container>
 
-          
-          <dl class="form">
-            <dt><label for="app_name">{{ "application.teamprofile.TEAM_NAME" | translate }}</label></dt>
-            <dd><input id="app_name" size="30" type="text" ng-model="team_info.app_name" tabindex="2"></dd>
-          </dl>
-          <p><button type="submit" class="btn btn-primary" tabindex="3" >{{ "application.teamprofile.SAVE" | translate }}</button></p>
-        </div>
+        <md-input-container class="md-block">
+          <label>{{ "application.teamprofile.TEAM_NAME" | translate }}</label>
+          <input ng-model="team_info.app_name" />
+        </md-input-container>
+
+        <md-button type="submit" class="md-raised">
+          {{ "application.teamprofile.SAVE" | translate }}
+        </md-button>
+        
       </form>
-    </div>
+    </md-content>
+    
   </div>
+</div>
 </div>
 
 <div class="boxed-group dangerzone" ng-if="can_delete">

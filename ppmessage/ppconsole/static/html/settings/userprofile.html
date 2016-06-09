@@ -2,10 +2,8 @@
 <div class="boxed-group">
   <h3>{{ "settings.menu.BASIC_CONFIG_TAG" | translate }}</h3>
   <div class="boxed-group-inner clearfix">
-    <form accept-charset="UTF-8" class="columns" ng-submit="submit(user)">
-
-      <div class="column two-thirds">
-
+    <md-content layout-padding>
+      <form accept-charset="UTF-8" ng-submit="submit(user)">
         <md-input-container class="md-block">
           <label>{{ "statistics.userprofile.EMAIL_TAG" | translate }}</label>
           <input ng-model="user.email" disabled />
@@ -19,8 +17,7 @@
         <md-button type="submit" class="md-raised" tabindex="2" >
           {{ "statistics.userprofile.SAVE_TAG" | translate }}
         </md-button>
-        
-      </div>
-    </form>
+      </form>
+    </md-content>
   </div>
 </div>
