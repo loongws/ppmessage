@@ -5,25 +5,41 @@ angular.module("this_app")
             $scope.set_flash_style(index);
             $scope.set_update_string($scope.lang[tag]);
         };
-        
-        $scope.resetpassword = function() {            
-            $state.go("app.resetpassword", {email: yvUtil.base64_encode(yvUser.get_email())});
+
+        var _reset_scope_user = function() {
+            $scope.user = {
+                user_password_is_visible: false,
+                password_input_type: "password",
+            };
         };
 
-        $scope.user = {};
+        $scope.user = {
+            user_password_is_visible: false,
+            password_input_type: "password",
+        };
+        
+        $scope.show_user_password = function(show) {
+            if (show) {
+                $scope.user.user_password_is_visible = true;
+                $scope.user.password_input_type = "text";
+            } else {
+                $scope.user.user_password_is_visible = false;
+                $scope.user.password_input_type = "password";
+            }
+        };
 
         $scope.changepassword = function(user) {
             
-            if (!user.oldpassword || !user.newpassword || !user.confirmnewpassword || !yvUser.get_uuid()) {
+            if (!user.user_new_password || !yvUser.get_uuid()) {
                 return;
             }
 
             var errorTag;
-            var _pass_hash = sha1(user.oldpassword);
+            var _pass_hash = sha1(user.user_old_password);
             if (_pass_hash !== yvUser.get_password()) {
                 errorTag = "settings.account.OLDPASSWORD_MISMATCH_TAG";
             } else {
-                var error_code = yvUtil.validator.validateRepeatPassword( user.newpassword, user.confirmnewpassword );
+                var error_code = yvUtil.validator.validateRepeatPassword( user.user_new_password, user.user_new_password );
                 switch( error_code ) {
                 case yvUtil.validator.ERR_CODE.MIN_LENGTH_LIMIT:
                     errorTag = 'signup.NO_PASSWORD_TAG';
@@ -51,7 +67,7 @@ angular.module("this_app")
             var _d = {
                 "app_uuid": yvUser.get_team().uuid,
                 "user_uuid": yvUser.get_uuid(),
-                "user_password": sha1( user.newpassword ),
+                "user_password": sha1( user.user_new_password ),
                 "old_password": _pass_hash,
             };
             
@@ -59,87 +75,22 @@ angular.module("this_app")
             _update.success(function(data) {
                 
                 if (data.error_code == 0) {
-
-                    yvUser.set_password( sha1( user.newpassword ) );
+                    yvUser.set_password( sha1( user.user_new_password ) );
                     _note(0, "settings.profile.UPDATE_SUCCESSFULLY_TAG");
-                    $scope.user = {};                    
+                    _reset_scope_user();
                     
                 } else {
-                    
                     _note(1, "settings.profile.UPDATE_FAILED_TAG");
-                    $scope.user = {};
-                    
+                    _reset_scope_user();
                 }
             });
             _update.error(function() {
-                
                 _note(2, "settings.profile.UPDATE_FAILED_TAG");
-                $scope.user = {};
-                
+                _reset_scope_user();
             });
         };
         
-        $scope.disabled = true;
-        $scope.change = function(user) {
-            if (user.email === yvUser.get_email() && user.password && user.password.length) {
-                $timeout(function() {
-                    $scope.disabled = false;
-                });
-            } else {
-                $timeout(function() {
-                    $scope.disabled = true;
-                });
-            }
-        }
-
-        $scope.delete_portal_user = function(user) {
-            if (!user.password || !user.email || !yvUser.get_uuid()) {
-                $timeout(function() {
-                    $scope.promote_string = $scope.lang["settings.account.NO_EMAIL_OR_PASSWORD_TAG"]
-                });
-                console.error("no password/email provided");
-                return;
-            }
-
-            var _pass_hash = sha1(user.password);
-            if (_pass_hash !== yvUser.get_password()) {
-                _note(1, "settings.profile.UPDATE_FAILED_TAG");
-                return;
-            }
-            
-            var _delete = yvAjax.remove_user({
-                "user_email": user.email,
-                "user_password": _pass_hash,
-                "user_uuid": yvUser.get_uuid()
-            });
-            
-            _delete.success(function(data) {
-                console.log(data);
-                if (data.error_code == 0) {
-                    jQuery("#delete-account-modal").modal('hide');
-                    $timeout(function() {
-                        $state.go("app.main");
-                    }, 1000);
-                } else {
-                    $timeout(function() {
-                        $scope.promote_string = $scope.lang["settings.account.REMOVE_USER_FAILED_TAG"]
-                    });
-                }
-            });
-            _delete.error(function() {
-                $timeout(function() {
-                    $scope.promote_string = $scope.lang["settings.account.REMOVE_USER_FAILED_TAG"]
-                });
-                return;
-            });
-        };
         
-        $scope.show_delete_modal = function() {
-            jQuery("#delete-account-modal").modal({show:true});
-            $scope.promote_string = $scope.lang["settings.account.REMOVE_USER_PROMOTE_TAG"];
-            return;
-        };
-
         var _logined = function() {
             yvLogin.prepare( function( errorCode ) {
                 switch( errorCode ) {
