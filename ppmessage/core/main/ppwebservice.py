@@ -25,13 +25,16 @@ class Meta(type):
     def get_handlers(cls):
         return []
 
+    @classmethod
+    def get_delegate(cls):
+        return None
+    
 MetaWebService = Meta("MetaWebService", (object,), {})
 
 class AbstractWebService(MetaWebService):
     @classmethod
     def name(cls):
         return PP_WEB_SERVICE.ABASTRACT
-
 
 def get_total_handlers():
     handlers = []
@@ -40,4 +43,11 @@ def get_total_handlers():
         for k in j:
             handlers.append({"name":_registry[i].name(), "handler":k})
     return handlers
+
+def get_total_delegates(app):
+    delegates = {}
+    for i in _registry:
+        delegates[_registry[i].name()] = _registry[i].get_delegate(app)
+    return delegates
+    
 

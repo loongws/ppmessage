@@ -13,10 +13,18 @@ from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.main import AbstractWebService
+from ppmessage.core.singleton import singleton
 
 import os
 import redis
 import tornado.web
+
+@singleton
+class PPAuthDelegate():
+    def __init__(self, app):
+        return
+    def run_periodic(self):
+        return
 
 class PPAuthWebService(AbstractWebService):
 
@@ -38,6 +46,10 @@ class PPAuthWebService(AbstractWebService):
 
         return handlers
 
+    @classmethod
+    def get_delegate(cls, app):
+        return PPAuthDelegate(app)
+    
 class PPAuthApp(tornado.web.Application):
     
     def __init__(self):
@@ -49,4 +61,6 @@ class PPAuthApp(tornado.web.Application):
         
         tornado.web.Application.__init__(self, PPAuthWebService.get_handlers(), **settings)
     
-
+    def get_delegate(self, name):
+        return PPAuthDelegate(self)
+    

@@ -9,6 +9,7 @@
 
 from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.main import AbstractWebService
+from ppmessage.core.singleton import singleton
 
 import os
 import logging
@@ -26,6 +27,13 @@ class PPConsoleHandler(tornado.web.RequestHandler):
         self.write(_html)
         self.finish()
 
+@singleton
+class PPConsoleDelegate():
+    def __init__(self, app):
+        return
+    def run_periodic(self):
+        return
+        
 class PPConsoleWebService(AbstractWebService):
 
     @classmethod
@@ -45,6 +53,10 @@ class PPConsoleWebService(AbstractWebService):
 
         return handlers
 
+    @classmethod
+    def get_delegate(cls, app):
+        return PPConsoleDelegate(app)
+
 class PPConsoleApp(tornado.web.Application):
     
     def __init__(self):
@@ -53,3 +65,7 @@ class PPConsoleApp(tornado.web.Application):
         settings["cookie_secret"] = "24oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo="
         tornado.web.Application.__init__(self, PPConsoleWebService.get_handlers(), **settings)
 
+    def get_delegate(self, name):
+        return PPConsoleDelegate(self)
+
+    

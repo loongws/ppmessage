@@ -31,6 +31,7 @@ from ppmessage.core.constant import DATETIME_FORMAT
 from ppmessage.core.constant import TIMEOUT_WEBSOCKET_OFFLINE
 
 from ppmessage.core.main import AbstractWebService
+from ppmessage.core.singleton import singleton
 
 from ppmessage.core.utils.getipaddress import getIPAddress
 from ppmessage.core.utils.datetimestring import now_to_string
@@ -46,9 +47,8 @@ from ppmessage.dispatcher.policy.policy import AbstractPolicy
 
 from .error import DIS_ERR
 
-from tornado.ioloop import IOLoop
 from tornado.web import Application
-from tornado.web import RequestHandler
+from tornado.ioloop import PeriodicCallback
 
 import datetime
 import logging
@@ -69,26 +69,14 @@ def pcsocket_user_online(_redis, _user_uuid, _body):
         _redis.rpush(_key, json.dumps(_body))
     return
 
-class PCSocketWebService(AbstractWebService):
-    @classmethod
-    def name(cls):
-        return PP_WEB_SERVICE.PCSOCKET
-
-    @classmethod
-    def get_handlers(cls):
-        return [("/"+PCSOCKET_SRV.WS, WSHandler)]
-
-class PCSocketApp(Application):
-    
-    def __init__(self):
-        self.ws_hash = {}
-        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
-        
-        settings = {}
-        settings["debug"] = True
-        Application.__init__(self, PCSocketWebService.get_handlers(), **settings)
+@singleton
+class PCSocketDelegate(app):
+    def __init__(self, app):
+        self.app = app
+        self.redis = app.redis
+        self.sockets = {}
         return
-
+    
     def _remove_device_data_by_pattern(self, _pattern):
         _keys = self.redis.keys(_pattern)
         for _i in _keys:
@@ -346,7 +334,7 @@ class PCSocketApp(Application):
                 # no message
                 return
             body = json.loads(noti)
-            ws = self.ws_hash.get(body.get("devcie_uuid"))
+            ws = self.sockets.get(body.get("devcie_uuid"))
             if ws == None:
                 logging.error("No WS to handle online body: %s" % body) 
                 continue
@@ -364,7 +352,7 @@ class PCSocketApp(Application):
                 # no message
                 return
             body = json.loads(noti)
-            ws = self.ws_hash.get(body.get("listen_device"))
+            ws = self.sockets.get(body.get("listen_device"))
             if ws == None:
                 logging.error("No WS to handle typing body: %s" % body) 
                 continue
@@ -386,7 +374,7 @@ class PCSocketApp(Application):
                 # no message
                 return
             body = json.loads(noti)
-            ws = self.ws_hash.get(body.get("device_uuid"))
+            ws = self.sockets.get(body.get("device_uuid"))
             if ws == None:
                 logging.error("No WS to handle logout body: %s" % body) 
                 continue
@@ -404,7 +392,7 @@ class PCSocketApp(Application):
                 # no message
                 return
             body = json.loads(noti)
-            ws = self.ws_hash.get(body.get("device_uuid"))
+            ws = self.sockets.get(body.get("device_uuid"))
             if ws == None:
                 logging.error("No WS to handle ack body: %s" % body) 
                 continue
@@ -428,11 +416,54 @@ class PCSocketApp(Application):
                 logging.error("no pcsocket in push: %s" % (body))
                 continue
             device_uuid = pcsocket.get("device_uuid")
-            ws = self.ws_hash.get(device_uuid)
+            ws = self.sockets.get(device_uuid)
             if ws == None:
                 logging.error("No WS handle push: %s" % body)
                 continue
             ws.send_msg(body["body"])
 
         return
+
+    def run_periodic(self):
+        # set the periodic check online every 1000 ms
+        PeriodicCallback(self.online_loop, 1000).start()
+
+        # set the periodic check typing every 1000 ms
+        PeriodicCallback(self.typing_loop, 1000).start()
+
+        # set the periodic check logout every 1000 ms
+        PeriodicCallback(self.logout_loop, 1000).start()
+
+        # set the periodic check ack every 100 ms
+        PeriodicCallback(self.ack_loop, 100).start()
+
+        # set the periodic check push every 50 ms
+        PeriodicCallback(self.push_loop, 50).start()
+        return
+
+class PCSocketWebService(AbstractWebService):
+    @classmethod
+    def name(cls):
+        return PP_WEB_SERVICE.PCSOCKET
+
+    @classmethod
+    def get_handlers(cls):
+        return [("/"+PCSOCKET_SRV.WS, WSHandler)]
+
+    @classmethod
+    def get_delegate(cls, app):
+        return PCSocketDelegate(app)
+
+class PCSocketApp(Application):
+    
+    def __init__(self):
+        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+        settings = {}
+        settings["debug"] = True
+        Application.__init__(self, PCSocketWebService.get_handlers(), **settings)
+        return
+
+    def get_delegate(self, name):
+        return PCSocketDelegate(self)
+    
 

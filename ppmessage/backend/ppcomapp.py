@@ -10,6 +10,7 @@
 from ppmessage.core.constant import PP_WEB_SERVICE
 
 from ppmessage.core.main import AbstractWebService
+from ppmessage.core.singleton import singleton
 
 import os
 import json
@@ -28,6 +29,13 @@ class EnterpriseHandler(tornado.web.RequestHandler):
         self.render("enterprise.html", **_enterprise)
         return
 
+@singleton
+class PPComDelegate():
+    def __init__(self, app):
+        return
+    def run_periodic(self):
+        return
+    
 class PPComWebService(AbstractWebService):
 
     @classmethod
@@ -47,6 +55,10 @@ class PPComWebService(AbstractWebService):
         
         return handlers
 
+    @classmethod
+    def get_delegate(cls, app):
+        return PPComDelegate(app)
+    
 class PPComApp(tornado.web.Application):
     
     def __init__(self):
@@ -56,3 +68,6 @@ class PPComApp(tornado.web.Application):
         settings["template_path"]= os.path.join(os.path.dirname(__file__), "../resource/template")
         tornado.web.Application.__init__(self, PPComWebService.get_handlers(), **settings)
 
+    def get_delegate(self, name):
+        return PPComDelegate(self)
+    
