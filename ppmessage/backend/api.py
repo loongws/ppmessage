@@ -31,7 +31,7 @@ def _main():
     _mmdb = _api_path + os.path.sep + "geolite2" + os.path.sep + _mmdb
     
     if not os.path.exists(_mmdb):
-        logging.error("no geolite2 mmdb, run scripts/download_geolite2.sh to download.")
+        logging.error("no geolite2 mmdb, run scripts/download_geolite2.sh to download and restart api.")
         sys.exit()
         
     tornado.options.parse_command_line()

@@ -52,7 +52,6 @@ class MainApplication(tornado.web.Application):
             if len(i["handler"]) == 3:
                 handler = ("/" + i["name"].lower() + i["handler"][0], i["handler"][1], i["handler"][2])
             handlers.append(handler)
-        logging.info(handlers)
         
         tornado.web.Application.__init__(self, handlers, **settings)        
         return
