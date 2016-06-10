@@ -4,7 +4,7 @@
 <!-- ![](ppmessage/doc/ppcom.gif)  | ![](ppmessage/doc/ppkefu.gif) -->
 
 ![](ppmessage/doc/ppkefu-ppcom.gif)
-<img src="ppmessage/doc/ppkefu-ppcom.gif" style="width:auto; height:200px;"></img>
+<img src="ppmessage/doc/ppkefu-ppcom.gif" height=200px></img>
 
 [In Chinese 中文版](ppmessage/doc/zh-cn/README.md)
 
