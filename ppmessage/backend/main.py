@@ -15,7 +15,9 @@ from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.main import get_total_handlers
 from ppmessage.core.main import get_total_delegates
 
+from ppmessage.api.apiapp import load_ip2geo
 from ppmessage.api.apiapp import ApiWebService
+
 from ppmessage.backend.ppcomapp import PPComWebService
 from ppmessage.backend.ppauthapp import PPAuthWebService
 from ppmessage.backend.ppconsoleapp import PPConsoleWebService
@@ -24,6 +26,7 @@ from ppmessage.file.uploadapplication import UploadWebService
 from ppmessage.file.downloadapplication import DownloadWebService
 
 import os
+import sys
 import redis
 import logging
 import tornado.web
@@ -42,7 +45,11 @@ class MainApplication(tornado.web.Application):
         settings["template_path"]= os.path.join(os.path.dirname(__file__), "../resource/template")
 
         self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
-    
+
+        self.geoip_reader = load_ip2geo()
+        if self.geoip_reader == None:
+            sys.exit()
+            
         self.total_handlers = get_total_handlers()
         self.total_delegates = get_total_delegates(self)
         
