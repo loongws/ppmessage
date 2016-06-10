@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Yuan Wanshang, wanshang.yuan@yvertical.com
-# Guijin Ding, dingguijin@gmail.com
+# Yuan Wanshang, wanshang.yuan@yvertical.com.
+# Guijin Ding, dingguijin@gmail.com.
 #
-# All rights reserved
+# All rights are reserved.
 #
 
 from ppmessage.core.constant import REDIS_HOST
@@ -12,12 +12,20 @@ from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import PP_WEB_SERVICE
 
 from ppmessage.core.main import AbstractWebService
+from ppmessage.core.singleton import singleton
 
 from ppmessage.core.downloadhandler import DownloadHandler
 from ppmessage.core.identiconhandler import IdenticonHandler
 
 import redis
 from tornado.web import Application
+
+@singleton
+class DownloadDelegate():
+    def __init__(self, app):
+        return
+    def run_periodic(self):
+        return
 
 class DownloadWebService(AbstractWebService):
 
@@ -30,6 +38,10 @@ class DownloadWebService(AbstractWebService):
         return [("/download/([^\/]+)?$", DownloadHandler, {"path": "/"}),
                 ("/identicon/([^\/]+)?$", IdenticonHandler, {"path": "/"})]
 
+    @classmethod
+    def get_delegate(cls, app):
+        return DownloadDelegate(app)
+    
 class DownloadApplication(Application):
     
     def __init__(self):
@@ -43,4 +55,7 @@ class DownloadApplication(Application):
         Application.__init__(self, DownloadWebService.get_handlers(), **settings)
 
         return
+
+    def get_delegate(self, name):
+        return DownloadDelegate(self)
     

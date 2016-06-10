@@ -17,6 +17,13 @@ import os
 import redis
 from tornado.web import Application
 
+@singleton
+class UploadDelegate():
+    def __init__(self, app):
+        return
+    def run_periodic(self):
+        return
+
 class UploadWebService(AbstractWebService):
 
     @classmethod
@@ -27,6 +34,10 @@ class UploadWebService(AbstractWebService):
     def get_handlers(cls):
         return [(r"/upload", UploadFileHandler)]
 
+    @classmethod
+    def get_delegate(cls, app):
+        return UploadDelegate(app)
+    
 @singleton
 class UploadApplication(Application):
     
@@ -37,4 +48,7 @@ class UploadApplication(Application):
         handlers.extend(UploadWebService.get_handlers())
         self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
         Application.__init__(self, handlers, **settings)
+    
+    def get_delegate(self, name):
+        return UploadDelegate(self)
     

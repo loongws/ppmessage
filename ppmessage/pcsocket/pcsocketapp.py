@@ -70,11 +70,12 @@ def pcsocket_user_online(_redis, _user_uuid, _body):
     return
 
 @singleton
-class PCSocketDelegate(app):
+class PCSocketDelegate():
     def __init__(self, app):
         self.app = app
         self.redis = app.redis
         self.sockets = {}
+        self.register = {"uuid": None, "host": None, "port": None}
         return
     
     def _remove_device_data_by_pattern(self, _pattern):
@@ -95,7 +96,7 @@ class PCSocketDelegate(app):
 
     def register_service(self, _port):
         _ip = getIPAddress()
-        self.register = {"host": _ip, "port": _port}
+        self.register.update({"host": _ip, "port": _port})
         
         _key = PCSocketInfo.__tablename__ + \
                ".host." + _ip + \
@@ -327,7 +328,10 @@ class PCSocketDelegate(app):
         """
         every 1000ms check online notification
         """
-        key = REDIS_ONLINE_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+        _host = str(self.register.get("host"))
+        _port = str(self.register.get("port"))
+
+        key = REDIS_ONLINE_NOTIFICATION_KEY + ".host." + _host + ".port." + _port
         while True:
             noti = self.redis.lpop(key)
             if noti == None:
@@ -345,7 +349,11 @@ class PCSocketDelegate(app):
         """
         every 1000ms check typing notification
         """
-        key = REDIS_TYPING_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+
+        _host = str(self.register.get("host"))
+        _port = str(self.register.get("port"))
+
+        key = REDIS_TYPING_NOTIFICATION_KEY + ".host." + _host + ".port." + _port
         while True:
             noti = self.redis.lpop(key)
             if noti == None:
@@ -367,7 +375,11 @@ class PCSocketDelegate(app):
         """
         every 1000ms check logout notification
         """
-        key = REDIS_LOGOUT_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+        
+        _host = str(self.register.get("host"))
+        _port = str(self.register.get("port"))
+
+        key = REDIS_LOGOUT_NOTIFICATION_KEY + ".host." + _host + ".port." + _port
         while True:
             noti = self.redis.lpop(key)
             if noti == None:
@@ -385,7 +397,10 @@ class PCSocketDelegate(app):
         """
         every 100ms check ack notification
         """
-        key = REDIS_ACK_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+        _host = str(self.register.get("host"))
+        _port = str(self.register.get("port"))
+        
+        key = REDIS_ACK_NOTIFICATION_KEY + ".host." + _host + ".port." + _port
         while True:
             noti = self.redis.lpop(key)
             if noti == None:
@@ -403,7 +418,11 @@ class PCSocketDelegate(app):
         """
         every 50ms check push notification
         """
-        key = REDIS_PUSH_NOTIFICATION_KEY + ".host." + self.register["host"] + ".port." + self.register["port"]
+        _host = str(self.register.get("host"))
+        _port = str(self.register.get("port"))
+        
+        key = REDIS_PUSH_NOTIFICATION_KEY + ".host." + _host + ".port." + _port
+        
         while True:
             noti = self.redis.lpop(key)
             if noti == None:

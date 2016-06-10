@@ -13,6 +13,7 @@ from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 
 from ppmessage.core.main import get_total_handlers
+from ppmessage.core.main import get_total_delegates
 
 from ppmessage.api.apiapp import ApiWebService
 from ppmessage.backend.ppcomapp import PPComWebService
