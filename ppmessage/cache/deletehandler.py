@@ -30,7 +30,7 @@ class DeleteHandler():
         self.app = _app
     
     def task(self, _data):
-        if "table" not in _data or\
+        if "table" not in _data or \
            "values" not in _data:
             logging.error("Error add request %s.", str(_data))
             return

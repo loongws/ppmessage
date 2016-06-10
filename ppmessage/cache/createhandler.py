@@ -9,14 +9,14 @@ from ppmessage.db.dbinstance import getDBSessionClass
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.sqlmysql import BaseModel
 
-from sqlalchemy import Boolean
 from sqlalchemy import String
+from sqlalchemy import Boolean
 from sqlalchemy import DateTime
 
 from time import strptime
 
-import datetime
 import logging
+import datetime
 import traceback
 
 def _class(tablename):

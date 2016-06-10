@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
-# All rights reserved
+# Guijin Ding, dingguijin@gmail.com.
+# All rights reserved.
 #
 # backend/amd.py 
 # The entry for amd (automatic message distribution)
@@ -45,9 +45,10 @@ import tornado.options
 import uuid
 import json
 import redis
+import random
 import logging
 import datetime
-import random
+
 
 class AmdApp(tornado.web.Application):
     def __init__(self):
