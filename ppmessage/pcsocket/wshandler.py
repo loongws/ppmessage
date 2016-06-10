@@ -12,6 +12,7 @@ from ppmessage.core.constant import ONLINE_STATUS
 from ppmessage.core.constant import MESSAGE_TYPE
 from ppmessage.core.constant import MESSAGE_SUBTYPE
 from ppmessage.core.constant import WEBSOCKET_STATUS
+from ppmessage.core.constant import PP_WEB_SERVICE
 
 from ppmessage.db.models import DeviceInfo
 from ppmessage.db.models import ApiTokenData

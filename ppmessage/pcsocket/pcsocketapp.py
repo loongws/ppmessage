@@ -47,6 +47,8 @@ from ppmessage.dispatcher.policy.policy import AbstractPolicy
 
 from .error import DIS_ERR
 
+import tornado.options
+from tornado.options import options
 from tornado.web import Application
 from tornado.ioloop import PeriodicCallback
 
@@ -444,6 +446,9 @@ class PCSocketDelegate():
         return
 
     def run_periodic(self):
+        tornado.options.parse_command_line()
+        self.register_service(str(options.port))
+
         # set the periodic check online every 1000 ms
         PeriodicCallback(self.online_loop, 1000).start()
 
