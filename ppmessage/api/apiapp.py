@@ -9,8 +9,6 @@ from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import PP_WEB_SERVICE
 
-from geoip2 import database
-
 from ppmessage.core.singleton import singleton
 from ppmessage.core.main import AbstractWebService
 
@@ -19,15 +17,14 @@ from handlers.getwebservicehandlers import getWebServiceHandlers
 import os
 import sys
 import redis
+
+from geoip2 import database
 from tornado.web import Application
 
 @singleton
 class ApiDelegate():
 
     def __init__(self, app):
-        return
-
-    def get_delegate(self):
         return
 
     def run_periodic(self):
@@ -71,4 +68,8 @@ class ApiApp(Application):
             sys.exit()
             
         Application.__init__(self, ApiWebService.get_handlers(), **settings)
+        return
         
+    def get_delegate(self, name):
+        return ApiDelegate(self)
+    

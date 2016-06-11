@@ -32,7 +32,7 @@ class AckMessageHandler(BaseHandler):
         if not _redis.exists(_key):
             return
         _row = MessagePush(uuid=_uuid, status=MESSAGE_STATUS.ACKED)
-        _row.async_update()
+        _row.async_update(_redis)
         _row.delete_redis_keys(_redis)
         return
 

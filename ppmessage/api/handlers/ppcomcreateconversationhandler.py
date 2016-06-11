@@ -86,7 +86,7 @@ class PPComCreateConversationHandler(BaseHandler):
         }
         # create it
         _row = ConversationInfo(**_values)
-        _row.async_add()
+        _row.async_add(_redis)
         _row.create_redis_keys(_redis)
 
         _row = ConversationUserData(uuid=str(uuid.uuid1()),
@@ -97,7 +97,7 @@ class PPComCreateConversationHandler(BaseHandler):
                                     conversation_name=_member_user_name,
                                     conversation_icon=_member_user_icon,
                                     conversation_status=CONVERSATION_STATUS.NEW)
-        _row.async_add()
+        _row.async_add(_redis)
         _row.create_redis_keys(_redis)
 
         _row = ConversationUserData(uuid=str(uuid.uuid1()),
@@ -108,7 +108,7 @@ class PPComCreateConversationHandler(BaseHandler):
                                     conversation_name=_portal_user_name,
                                     conversation_icon=_portal_user_icon,
                                     conversation_status=CONVERSATION_STATUS.NEW)
-        _row.async_add()
+        _row.async_add(_redis)
         _row.create_redis_keys(_redis)
 
         self._return(_conversation_uuid, _request)

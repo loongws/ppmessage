@@ -85,7 +85,7 @@ class PCSocketDelegate():
         for _i in _keys:
             _row = PCSocketDeviceData(uuid=self.redis.get(_i))
             _row.delete_redis_keys(self.redis)
-            _row.async_delete()
+            _row.async_delete(self.redis)
         return
 
     def _remove_device_data_by_uuid(self, _uuid):
@@ -93,7 +93,7 @@ class PCSocketDelegate():
             return
         _row = PCSocketDeviceData(uuid=_uuid)
         _row.delete_redis_keys(self.redis)
-        _row.async_delete()
+        _row.async_delete(self.redis)
         return
 
     def register_service(self, _port):
@@ -108,7 +108,7 @@ class PCSocketDelegate():
             _row = PCSocketInfo(uuid=self.redis.get(_key),
                                 latest_register_time=datetime.datetime.now())
             _row.update_redis_keys(self.redis)
-            _row.async_update()
+            _row.async_update(self.redis)
             _key = PCSocketDeviceData.__tablename__ + \
                ".pc_socket_uuid." + _row.uuid + \
                ".device_uuid.*"
@@ -121,7 +121,7 @@ class PCSocketDelegate():
                             host=_ip,
                             port=_port,
                             latest_register_time=datetime.datetime.now())
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
         self.register["uuid"] = _row.uuid
         return
@@ -158,7 +158,7 @@ class PCSocketDelegate():
                                   pc_socket_uuid=self.register["uuid"],
                                   device_uuid=_device_uuid)
         _row.create_redis_keys(self.redis)
-        _row.async_add()
+        _row.async_add(self.redis)
         return
 
     def unmap_device(self, _device_uuid):
@@ -192,7 +192,7 @@ class PCSocketDelegate():
 
     def device_online(self, _device_uuid, _is_online=True):
         _row = DeviceInfo(uuid=_device_uuid, device_is_online=_is_online)
-        _row.async_update()
+        _row.async_update(self.redis)
         _row.update_redis_keys(self.redis)
         return
 
@@ -322,7 +322,7 @@ class PCSocketDelegate():
             
         _row = DeviceNavigationData(uuid=str(uuid.uuid1()), app_uuid=_app_uuid,
                                     device_uuid=_device_uuid, navigation_data=_extra_data)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
         return
 

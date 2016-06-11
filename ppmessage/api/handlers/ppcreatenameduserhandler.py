@@ -45,7 +45,7 @@ class PPGetUserUUIDHandler(BaseHandler):
             _values["user_icon"] = _user_icon
 
         _row = DeviceUser(**_values)
-        _row.async_add()
+        _row.async_add(_redis)
         _row.create_redis_keys(_redis)
         
         _data_uuid = str(uuid.uuid1())
@@ -59,7 +59,7 @@ class PPGetUserUUIDHandler(BaseHandler):
             "is_distributor_user": False,
         }
         _row = AppUserData(**_values)
-        _row.async_add()
+        _row.async_add(_redis)
         _row.create_redis_keys(_redis)
 
         _r = self.getReturnData()

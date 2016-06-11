@@ -30,7 +30,7 @@ class PPKefuSetRest(BaseHandler):
             return
 
         _user = DeviceUser(uuid=_user_uuid, service_user_status=SERVICE_USER_STATUS.REST)
-        _user.async_update()
+        _user.async_update(self.application.redis)
         _user.update_redis_keys(self.application.redis)
         return
 

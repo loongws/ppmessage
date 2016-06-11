@@ -26,7 +26,7 @@ class PPRemovePredefinedScriptGroup(BaseHandler):
             return
 
         _group = PredefinedScriptGroup(uuid=_group_uuid)
-        _group.async_delete()
+        _group.async_delete(self.application.redis)
         _group.delete_redis_keys(self.application.redis)
 
         _key = PredefinedScript.__tablename__ + ".group_uuid." + _group_uuid

@@ -49,11 +49,11 @@ class PPRemoveAppHandler(BaseHandler):
         
         for _i in _data_uuid_list:
             _row = AppUserData(uuid=_i)
-            _row.async_delete()
+            _row.async_delete(_redis)
             _row.delete_redis_keys(_redis)
 
         _row = AppInfo(uuid=_app_uuid)
-        _row.async_delete()
+        _row.async_delete(_redis)
         _row.delete_redis_keys(_redis)
         return
         

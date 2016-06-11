@@ -28,7 +28,7 @@ def generic_update(_redis, _cls, _uuid, _data):
         return False
     
     _row = _cls(**_values)
-    _row.async_update()
+    _row.async_update(_redis)
     _row.update_redis_keys(_redis)
     return True
 

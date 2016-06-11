@@ -40,7 +40,15 @@ PP_WEB_SERVICE = Enum([
     "PPCOM",
     "PPKEFU",
     "PPCONSOLE",
-    "PPAUTH"
+    "PPAUTH",
+    "AMD",
+    "CACHE"
+])
+
+CACHE_TYPE = Enum([
+    "CREATE",
+    "UPDATE",
+    "DELETE"
 ])
 
 API_LEVEL = Enum([
@@ -497,6 +505,8 @@ REDIS_AMD_KEY = "redis_amd_key"
 
 REDIS_PPKEFU_ONLINE_KEY = "redis_ppkefu_online_key"
 REDIS_PPCOM_ONLINE_KEY = "redis_ppcom_online_key"
+
+REDIS_CACHE_KEY = "redis_cache_key"
 
 DATETIME_FORMAT = {
     "extra": '%Y-%m-%d %H:%M:%S %f',

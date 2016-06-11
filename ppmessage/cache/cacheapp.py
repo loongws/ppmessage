@@ -36,6 +36,17 @@ class CacheDelegate():
         self.redis = app.redis
         return
 
+    def _handler(self, _type, _data):
+        _handlers = {
+            CACHE_TYPE.CREATE: CreateHandler(),
+            CACHE_TYPE.UPDATE: UpdateHandler(),
+            CACHE_TYPE.DELETE: DeleteHandler()
+        }
+        if _type not in _handlers:
+            return
+        _handlers[_type].task(_data)
+        return
+
     def run_periodic(self):
         tornado.ioloop.PeriodicCallback(self.task_loop, 1000).start()
         return
@@ -51,18 +62,7 @@ class CacheDelegate():
             _data = _request.get("data")
             self._handler(_type, _data)
         return
-    
-    def _handler(self, _type, _data):
-        _handlers = {
-            CACHE_TYPE.CREATE: CreateHandler(),
-            CACHE_TYPE.UPDATE: UpdateHandler(),
-            CACHE_TYPE.DELETE: DeleteHandler()
-        }
-        if _type not in _handler:
-            return
-        _handler[_type].task(_data)
-        return
-        
+            
 class CacheWebService(AbstractWebService):
 
     @classmethod

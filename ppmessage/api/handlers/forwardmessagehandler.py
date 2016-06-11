@@ -95,11 +95,11 @@ class ForwardMessageHandler(BaseHandler):
         }
 
         _row = MessagePushTask(**_task)
-        _row.async_add()
+        _row.async_add(self.application.redis)
         _row.create_redis_keys(self.application.redis)
 
         _row = ConversationInfo(uuid=_conversation_uuid, lastest_task=_uuid)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         _row.update_redis_keys(self.application.redis)
         
         _m = {"task_uuid": _uuid}

@@ -64,7 +64,7 @@ def create_user(_redis, _request):
         "is_anonymous_user": False,
     }
     _row = DeviceUser(**_values)
-    _row.async_add()
+    _row.async_add(_redis)
     _row.create_redis_keys(_redis)
     _user_values = _values
     
@@ -79,7 +79,7 @@ def create_user(_redis, _request):
         "is_owner_user": False,
     }
     _row = AppUserData(**_values)
-    _row.async_add()
+    _row.async_add(_redis)
     _row.create_redis_keys(_redis)
     
     return _user_values

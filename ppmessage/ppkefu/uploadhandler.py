@@ -90,7 +90,7 @@ class UploadHandler(RequestHandler):
         
         _row = FileInfo(**_values)
         _row.create_redis_keys(self.application.redis)
-        _row.async_add()
+        _row.async_add(self.application.redis)
                 
         _r = {}
         _r["fid"] = _new_name

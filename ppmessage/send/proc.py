@@ -159,11 +159,11 @@ class Proc():
             "task_status": TASK_STATUS.PENDING,
         }
         _row = MessagePushTask(**_task)
-        _row.async_add()
+        _row.async_add(self._redis)
         _row.create_redis_keys(self._redis)
 
         _row = ConversationInfo(uuid=self._conversation_uuid, status=CONVERSATION_STATUS.OPEN, latest_task=self._uuid)
-        _row.async_update()
+        _row.async_update(self._redis)
         _row.update_redis_keys(self._redis)
 
         _m = {"task_uuid": self._uuid}
@@ -173,7 +173,7 @@ class Proc():
         _datas = self._redis.smembers(_key)
         for _data_uuid in _datas:
             _row = ConversationUserData(uuid=_data_uuid, conversation_status=CONVERSATION_STATUS.OPEN)
-            _row.async_update()
+            _row.async_update(self._redis)
             _row.update_redis_keys(self._redis)
         
         # for message routing algorithm
@@ -183,7 +183,7 @@ class Proc():
     def _user_latest_send_message_time(self):
         _now = datetime.datetime.now()
         _row = DeviceUser(uuid=self._from_uuid, latest_send_message_time=_now)
-        _row.async_update()
+        _row.async_update(self._redis)
         return
 
     def _parseTxt(self, _body):

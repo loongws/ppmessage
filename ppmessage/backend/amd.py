@@ -16,12 +16,17 @@ from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 
+from ppmessage.core.constant import PP_WEB_SERVICE
+
 from ppmessage.core.constant import REDIS_AMD_KEY
 from ppmessage.core.constant import REDIS_ACK_NOTIFICATION_KEY
 
 from ppmessage.core.constant import CONVERSATION_TYPE
 from ppmessage.core.constant import CONVERSATION_STATUS
 from ppmessage.core.constant import SERVICE_USER_STATUS
+
+from ppmessage.core.singleton import singleton
+from ppmessage.core.main import AbstractWebService
 
 from ppmessage.db.models import AppInfo
 from ppmessage.db.models import OrgGroup
@@ -49,10 +54,15 @@ import random
 import logging
 import datetime
 
+@singleton
+class AmdDelegate():
+    def __init__(self, app):
+        self.redis = app.redis
+        return
 
-class AmdApp(tornado.web.Application):
-    def __init__(self):
-        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+    def run_periodic(self):
+        # every 2000ms check dispatcher task
+        tornado.ioloop.PeriodicCallback(self.task_loop, 2000).start()
         return
 
     def _apps(self):
@@ -178,7 +188,7 @@ class AmdApp(tornado.web.Application):
                                 status=CONVERSATION_STATUS.NEW,
                                 conversation_type=CONVERSATION_TYPE.P2S)
 
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
         
         _row = ConversationUserData(uuid=str(uuid.uuid1()),
@@ -188,7 +198,7 @@ class AmdApp(tornado.web.Application):
                                     conversation_name=_allocated_user_dict["user_fullname"],
                                     conversation_icon=_allocated_user_dict["user_icon"],
                                     conversation_status=CONVERSATION_STATUS.NEW)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
 
         _row = ConversationUserData(uuid=str(uuid.uuid1()),
@@ -198,7 +208,7 @@ class AmdApp(tornado.web.Application):
                                     conversation_name=_portal_user_dict["user_fullname"],
                                     conversation_icon=_portal_user_dict["user_icon"],
                                     conversation_status=CONVERSATION_STATUS.NEW)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
         
         self._ack_success(_device_uuid, _conversation_uuid)
@@ -224,7 +234,7 @@ class AmdApp(tornado.web.Application):
                                user_uuid=_user_uuid,
                                status=CONVERSATION_STATUS.NEW,
                                conversation_type=CONVERSATION_TYPE.P2S)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
 
         _conversation_name = []
@@ -240,7 +250,7 @@ class AmdApp(tornado.web.Application):
                                     conversation_name=_conversation_name,
                                     conversation_icon=_group_icon,
                                     conversation_status=CONVERSATION_STATUS.NEW)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
 
         for _user in _allocated_users:
@@ -251,7 +261,7 @@ class AmdApp(tornado.web.Application):
                                         conversation_name=_portal_user_name,
                                         conversation_icon=_portal_user_icon,
                                         conversation_status=CONVERSATION_STATUS.NEW)
-            _row.async_add()
+            _row.async_add(self.redis)
             _row.create_redis_keys(self.redis)
         
         self._ack_success(_device_uuid, _conversation_uuid)
@@ -306,7 +316,7 @@ class AmdApp(tornado.web.Application):
                                user_uuid=_user_uuid,
                                status=CONVERSATION_STATUS.NEW,
                                conversation_type=CONVERSATION_TYPE.P2S)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
         
         _row = ConversationUserData(uuid=str(uuid.uuid1()),
@@ -316,7 +326,7 @@ class AmdApp(tornado.web.Application):
                                     conversation_name=_allocated_user_name,
                                     conversation_icon=_allocated_user_icon,
                                     conversation_status=CONVERSATION_STATUS.NEW)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
 
         _row = ConversationUserData(uuid=str(uuid.uuid1()),
@@ -326,7 +336,7 @@ class AmdApp(tornado.web.Application):
                                     conversation_name=_portal_user_name,
                                     conversation_icon=_portal_user_icon,
                                     conversation_status=CONVERSATION_STATUS.NEW)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
         
         self._ack_success(_device_uuid, _conversation_uuid)
@@ -375,14 +385,38 @@ class AmdApp(tornado.web.Application):
                     break
         return
 
-if __name__ == "__main__":
+class AmdWebService(AbstractWebService):
+
+    @classmethod
+    def name(cls):
+        return PP_WEB_SERVICE.AMD
+
+    @classmethod
+    def get_handlers(cls):
+        return []
+
+    @classmethod
+    def get_delegate(cls, app):
+        return AmdDelegate(app)
+
+class AmdApp(tornado.web.Application):
+    def __init__(self):
+        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+        return
+
+    def get_delegate(self, name):
+        return AmdDelegate(self)
+    
+def _main():
     import sys
     reload(sys)
     sys.setdefaultencoding('utf8')
     tornado.options.parse_command_line()
     _app = AmdApp()
-    # every 2000ms check dispatcher task
-    tornado.ioloop.PeriodicCallback(_app.task_loop, 2000).start()
+    _delegate = _app.get_delegate("").run_periodic()
+    
     logging.info("Starting amd service......")
     tornado.ioloop.IOLoop.instance().start()
-    
+
+if __name__ == "__main__":
+    _main()

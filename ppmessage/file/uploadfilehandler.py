@@ -93,7 +93,7 @@ class UploadFileHandler(RequestHandler):
         }
         _row = FileInfo(**_add)
         _row.create_redis_keys(_redis)
-        _row.async_add()
+        _row.async_add(_redis)
 
         _r = {}
         _r["fuuid"] = _fuuid

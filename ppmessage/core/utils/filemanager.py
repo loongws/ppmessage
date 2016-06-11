@@ -59,7 +59,7 @@ def create_file_with_data(_redis, _data, _mime, _user_uuid, _file_name=None, _ma
         "file_mime": _mime,
         "material_type": _material_type,
     })
-    _row.async_add()
+    _row.async_add(_redis)
     _row.create_redis_keys(_redis)
     return _name
 

@@ -211,7 +211,7 @@ class AbstractPolicy(Policy):
             "message_body": _message_body,
         }
         _row = MessagePushTask(**_values)
-        _row.async_update()
+        _row.async_update(self._redis)
         _row.update_redis_keys(self._redis)
         return
 
@@ -284,7 +284,7 @@ class AbstractPolicy(Policy):
         }
                     
         _row = MessagePush(**_values)
-        _row.async_add()
+        _row.async_add(self._redis)
         _row.create_redis_keys(self._redis)
         return _row.uuid
 
@@ -553,7 +553,7 @@ class AbstractPolicy(Policy):
             "task_status": TASK_STATUS.PENDING,
         }
         _row = MessagePushTask(**_task)
-        _row.async_add()
+        _row.async_add(self._redis)
         _row.create_redis_keys(self._redis)
         _m = {"task_uuid": _row.uuid}
         self._redis.rpush(REDIS_DISPATCHER_NOTIFICATION_KEY, json.dumps(_m))

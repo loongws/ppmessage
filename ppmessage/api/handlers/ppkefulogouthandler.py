@@ -56,7 +56,7 @@ class PPKefuLogoutHandler(BaseHandler):
         }        
         _row = DeviceInfo(**_values)
         _row.update_redis_keys(self.application.redis)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         return
 
     def _update_user_status(self):        
@@ -65,7 +65,7 @@ class PPKefuLogoutHandler(BaseHandler):
             "service_user_status": SERVICE_USER_STATUS.NULL
         }        
         _row = DeviceUser(**_values)
-        _row.async_update()        
+        _row.async_update(self.application.redis)        
         _row.update_redis_keys(self.application.redis)
         return
 

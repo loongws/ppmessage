@@ -57,7 +57,7 @@ class PPCreateAnonymousHandler(BaseHandler):
         }
         
         _row = DeviceUser(**_values)
-        _row.async_add()
+        _row.async_add(self.application.redis)
         _row.create_redis_keys(self.application.redis)
 
         _data_uuid = str(uuid.uuid1())
@@ -71,7 +71,7 @@ class PPCreateAnonymousHandler(BaseHandler):
             "is_distributor_user": False,
         }
         _row = AppUserData(**_values)
-        _row.async_add()
+        _row.async_add(self.application.redis)
         _row.create_redis_keys(self.application.redis)
         
         _rdata = self.getReturnData()
