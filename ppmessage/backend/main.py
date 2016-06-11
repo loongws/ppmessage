@@ -20,6 +20,7 @@ from ppmessage.api.apiapp import load_ip2geo
 
 from ppmessage.api.apiapp import ApiWebService
 from ppmessage.backend.amd import AmdWebService
+from ppmessage.backend.send import SendWebService
 from ppmessage.cache.cacheapp import CacheWebService
 from ppmessage.backend.ppcomapp import PPComWebService
 from ppmessage.backend.ppemail import PPEmailWebService

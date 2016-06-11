@@ -48,6 +48,7 @@ PP_WEB_SERVICE = Enum([
     "IOSPUSH",
     "MQTTPUSH",
     "PPEMAIL",
+    "SEND",
 ])
 
 CACHE_TYPE = Enum([
