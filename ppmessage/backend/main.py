@@ -30,6 +30,8 @@ from ppmessage.pcsocket.pcsocketapp import PCSocketWebService
 from ppmessage.file.uploadapplication import UploadWebService
 from ppmessage.file.downloadapplication import DownloadWebService
 
+from ppmessage.backend.message import mqtt_message_main
+
 import os
 import sys
 import redis
@@ -84,6 +86,7 @@ def _main():
     tornado.httpserver.HTTPServer(_app).listen(tornado.options.options.port)
     _app.run_periodic()
 
+    mqtt_message_main()
     logging.info("Starting PPMessage backend servcie on %d." % tornado.options.options.port)
     
     tornado.ioloop.IOLoop.instance().start()

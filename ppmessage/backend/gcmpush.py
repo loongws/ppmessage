@@ -11,8 +11,8 @@
 from ppmessage.iospush.pushtitle import push_title
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
-from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.constant import REDIS_GCMPUSH_KEY
+from ppmessage.core.constant import PP_WEB_SERVICE
 
 from ppmessage.core.singleton import singleton
 from ppmessage.core.main import AbstractWebService
