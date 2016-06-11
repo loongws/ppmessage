@@ -43,6 +43,7 @@ class CacheDelegate():
             CACHE_TYPE.DELETE: DeleteHandler()
         }
         if _type not in _handlers:
+            logging.error("not support type: %s with data: %s" % (_type, _data))
             return
         _handlers[_type].task(_data)
         return
