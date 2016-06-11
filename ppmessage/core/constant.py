@@ -46,6 +46,7 @@ PP_WEB_SERVICE = Enum([
     "DISPATCHER",
     "GCMPUSH",
     "IOSPUSH",
+    "MQTTPUSH",
 ])
 
 CACHE_TYPE = Enum([
