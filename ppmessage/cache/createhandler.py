@@ -38,7 +38,9 @@ class CreateHandler():
         if _cls == None:
             logging.error("Error for not db class for %s.", _data["table"])
             return
-            
+
+        logging.info("create with %s." % str(_data))
+        
         _rowdata = _data["values"]
 
         if "createtime" in _rowdata:

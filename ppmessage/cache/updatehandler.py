@@ -40,7 +40,7 @@ class UpdateHandler():
             logging.error("update not enough parameters: %s" % str(_data))
             return
 
-        #logging.info("update with %s" % str(_data))
+        logging.info("update with %s" % str(_data))
 
         _cls = _get_class_by_tablename(_data["table"])
         if _cls == None:
@@ -86,7 +86,7 @@ class UpdateHandler():
         try:
             _i = _session.query(_cls).filter_by(**_kd).scalar()
             if not _i:
-                logging.error("update %s to:%s with:%s" % (_data["table"], str(_rowdata), str(_kd)))
+                logging.error("error to update %s to:%s with:%s" % (_data["table"], str(_rowdata), str(_kd)))
                 return
             
             for _k in _rowdata:

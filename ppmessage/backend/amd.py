@@ -371,6 +371,8 @@ class AmdDelegate():
         _app_uuids = self._apps()
         for _app_uuid in _app_uuids:
             _key = REDIS_AMD_KEY + ".app_uuid." + _app_uuid
+            if self.redis.llen(_key) == 0:
+                continue
             logging.info("amd queue size: %d, app_uuid:%s." % (self.redis.llen(_key), _app_uuid))
             while True:
                 _request = self.redis.lpop(_key)

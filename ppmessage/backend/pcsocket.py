@@ -9,8 +9,8 @@
 #
 #
 
-from ppmessage.pcsocket.pcsocketapp import PCSocketApp
 from ppmessage.core.constant import PCSOCKET_PORT
+from ppmessage.pcsocket.pcsocketapp import PCSocketApp
 
 import logging
 import tornado.ioloop
@@ -19,8 +19,7 @@ import tornado.httpserver
 
 tornado.options.define("port", default=PCSOCKET_PORT, help="", type=int)  
 
-if __name__ == "__main__":
-
+def _main():
     tornado.options.parse_command_line()
     _app = PCSocketApp()
 
@@ -31,5 +30,8 @@ if __name__ == "__main__":
 
     logging.info("Starting pcsocket service......")
     tornado.ioloop.IOLoop.instance().start()
+
+if __name__ == "__main__":
+    _main()
     
 
