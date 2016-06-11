@@ -21,6 +21,7 @@ from ppmessage.api.apiapp import ApiWebService
 from ppmessage.backend.amd import AmdWebService
 from ppmessage.cache.cacheapp import CacheWebService
 from ppmessage.backend.ppcomapp import PPComWebService
+from ppmessage.backend.ppemail import PPEmailWebService
 from ppmessage.backend.gcmpush import GcmPushWebService
 from ppmessage.backend.ppauthapp import PPAuthWebService
 from ppmessage.backend.mqttpush import MqttPushWebService
