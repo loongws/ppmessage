@@ -14,6 +14,7 @@ from ppmessage.core.constant import REDIS_PORT
 
 from ppmessage.core.main import get_total_handlers
 from ppmessage.core.main import get_total_delegates
+from ppmessage.core.downloadhandler import DownloadHandler
 
 from ppmessage.api.apiapp import load_ip2geo
 
@@ -55,6 +56,8 @@ class MainApplication(tornado.web.Application):
 
         self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
 
+        DownloadHandler.set_cls_redis(self.redis)
+        
         self.geoip_reader = load_ip2geo()
         if self.geoip_reader == None:
             sys.exit()
