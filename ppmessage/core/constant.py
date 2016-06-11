@@ -43,7 +43,8 @@ PP_WEB_SERVICE = Enum([
     "PPAUTH",
     "AMD",
     "CACHE",
-    "DISPATCHER"
+    "DISPATCHER",
+    "GCMPUSH",
 ])
 
 CACHE_TYPE = Enum([

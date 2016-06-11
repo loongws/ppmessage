@@ -402,6 +402,7 @@ class AmdWebService(AbstractWebService):
 class AmdApp(tornado.web.Application):
     def __init__(self):
         self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+        tornado.web.Application.__init__(self, [], **{"debug":True})
         return
 
     def get_delegate(self, name):
