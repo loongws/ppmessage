@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2010-2016 .
-# Guijin Ding, dingguijin@gmail.com
+# Copyright (C) 2010-2016 PPMessage.
+# Guijin Ding, dingguijin@gmail.com.
+# All rights are reserved.
 #
+# cache/updatehandler.py
 #
 
 from ppmessage.db.dbinstance import getDBSessionClass
@@ -31,9 +33,6 @@ def _get_class_by_tablename(tablename):
 
 class UpdateHandler():
   
-    def __init__(self, _app):
-        self.app = _app
-
     def task(self, _data):
         if "table" not in _data or \
            "values" not in _data or \
