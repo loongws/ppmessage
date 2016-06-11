@@ -9,38 +9,31 @@
 
 from ppmessage.iospush.iospushapp import IOSPushApp
 from ppmessage.bootstrap.data import BOOTSTRAP_DATA
-from ppmessage.core.constant import IOSPUSH_PORT
 
 import tornado.ioloop
 import tornado.options
 import tornado.httpserver
 
-import logging
 import sys
+import logging
 
-tornado.options.define("port", default=IOSPUSH_PORT, help="", type=int)  
-
-if __name__ == "__main__":
-
+def _main():    
     tornado.options.parse_command_line()
 
     # FIXME: support more apns certifcate
     _apns = BOOTSTRAP_DATA.get("apns")
 
-    if len(_apns) == 0:
+    if _apns == None or len(_apns) == 0:
         logging.info("apns not config, iospush can not start")
         sys.exit()
     
     _app = IOSPushApp()
-    _http_server = tornado.httpserver.HTTPServer(_app)
-    _http_server.listen(tornado.options.options.port)
-
-    # set the periodic check outdated connection
-    tornado.ioloop.PeriodicCallback(_app.outdate, 1000*60*5).start()
-    
-    # set the periodic check push request every 200 ms
-    tornado.ioloop.PeriodicCallback(_app.push, 200).start()
+    _app.get_delegate("").run_periodic()
     
     logging.info("IOSPush service starting...")
     tornado.ioloop.IOLoop.instance().start()
+    return
 
+if __name__ == "__main__":
+    _main()
+    

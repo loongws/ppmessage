@@ -75,7 +75,7 @@ class GcmPushDelegate():
         _api_key = _config.get("api_key")
         self.gcm = GCM(_api_key)
         self.redis = app.redis
-        self.push_handler = PushHandler(self)
+        self.push_handler = GcmPushHandler(self)
         return
         
     def outdate(self):

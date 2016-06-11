@@ -23,6 +23,7 @@ from ppmessage.cache.cacheapp import CacheWebService
 from ppmessage.backend.ppcomapp import PPComWebService
 from ppmessage.backend.gcmpush import GcmPushWebService
 from ppmessage.backend.ppauthapp import PPAuthWebService
+from ppmessage.iospush.iospushapp import IOSPushWebService
 from ppmessage.backend.dispatcher import DispatcherWebService
 from ppmessage.backend.ppconsoleapp import PPConsoleWebService
 from ppmessage.pcsocket.pcsocketapp import PCSocketWebService
