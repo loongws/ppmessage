@@ -1,12 +1,13 @@
 #!/bin/bash
 
-# version: 0.2
+# version: 0.3
 # maintainer: Jin He <jin.he@ppmessage.com>
 # description: a shell script to deploy PPMessage on Debian and Ubuntu
+#
+# version: 0.3
+# remove ffmpeg/nginx/mysql/scikit
+#
 
-NGINX_VERSION="1.8.0"
-FFMPEG_VERSION="3.0.2"
-MYSQL_CONNECTOR_PYTHON_VERSION="2.1.3"
 
 function ppmessage_err()
 {
@@ -69,7 +70,6 @@ apt-get install -y \
     libssl-dev \
     libtool \
     mercurial \
-    mysql-server \
     openssl \
     pkg-config \
     python \
@@ -94,39 +94,6 @@ cd libmaxminddb
 ./bootstrap
 ./configure
 make && make install
-cd -
-
-cd /tmp
-wget -c http://cdn.mysql.com//Downloads/Connector-Python/mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz
-tar -xzvf mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz
-cd mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION
-python setup.py install
-cd -
-
-cd /tmp
-wget -c http://nginx.org/download/nginx-$NGINX_VERSION.tar.gz
-git clone https://github.com/vkholodkov/nginx-upload-module.git
-cd nginx-upload-module && git checkout 2.2 && cd ../
-tar -xzvf nginx-$NGINX_VERSION.tar.gz
-cd nginx-$NGINX_VERSION
-./configure --with-http_ssl_module --add-module=../nginx-upload-module 
-make && make install 
-ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
-cd -
-
-cd /tmp 
-wget -c http://ffmpeg.org/releases/ffmpeg-$FFMPEG_VERSION.tar.bz2 
-tar -xjvf ffmpeg-$FFMPEG_VERSION.tar.bz2 
-cd ffmpeg-$FFMPEG_VERSION 
-./configure --enable-libopencore-amrnb \
-            --enable-libopencore-amrwb \
-            --enable-version3 \
-            --enable-nonfree \
-            --disable-yasm \
-            --enable-libmp3lame \
-            --enable-libopus \
-            --enable-libfdk-aac
-make && make install 
 cd -
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
@@ -158,18 +125,12 @@ pip install \
     qrcode \
     readline \
     redis \
-    rq \
     supervisor \
     sqlalchemy \
     tornado \
-    xlrd \
-    numpy \
-    matplotlib \
-    scipy \
-    scikit-learn
+    xlrd
 
-pip install git+https://github.com/senko/python-video-converter.git \
-    hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
+pip install hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
 
 
 echo "Finish install the requirements of PPMessage, next to run dist.sh with different arguments to start PPMessage."
