@@ -169,9 +169,14 @@ class PPComGetDefaultConversationHandler(BaseHandler):
         # no conversation then queue to AMD create
         # client check uuid field to check
         if _conversations == None or len(_conversations) == 0:
+            _value = {"app_uuid": _app_uuid, "user_uuid":_user_uuid, "device_uuid":_device_uuid}
+            _value = json.dumps(_value)
+            _hash = hashlib.sha1(_value).hexdigest()
+            _key = REDIS_AMD_KEY + ".amd_hash." + _hash
+            self.application.redis.set(_key, _value)
+            self.application.redis.rpush(REDIS_AMD_KEY, _hash)
             _key = REDIS_AMD_KEY + ".app_uuid." + _app_uuid
-            _value = {"user_uuid":_user_uuid, "device_uuid":_device_uuid}
-            self.application.redis.rpush(_key, json.dumps(_value))
+            self.application.redis.sadd(_key, _hash)
             logging.info("waiting for AMD to allocate service user to create conversation")
             return
 

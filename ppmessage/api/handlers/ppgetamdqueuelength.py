@@ -25,7 +25,7 @@ class PPGetAmdQueueLength(BaseHandler):
             return
 
         _key = REDIS_AMD_KEY + ".app_uuid." + _app_uuid
-        _len = self.application.redis.llen(_key)
+        _len = self.application.redis.scard(_key)
         _r = self.getReturnData()
         _r["length"] = _len
         return

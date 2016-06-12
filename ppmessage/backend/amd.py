@@ -77,12 +77,6 @@ class AmdDelegate():
             return None
         _pcsocket_dict = redis_hash_to_dict(self.redis, PCSocketInfo, _pcsocket_uuid)
         return _pcsocket_dict
-
-    def _back_to_queue(self, _app_uuid, _user_uuid, _device_uuid, _group_uuid):
-        _key = REDIS_AMD_KEY + ".app_uuid." + _app_uuid
-        _value = {"user_uuid":_user_uuid, "device_uuid":_device_uuid, "group_uuid":_group_uuid} 
-        self.redis.lpush(_key, json.dumps(_value))
-        return
     
     def _ack_error(self, _device_uuid, _code=DIS_ERR.CONVERSATION):
         _body = {
@@ -170,7 +164,6 @@ class AmdDelegate():
         if len(_ready_users) == 0:
             logging.info("waiting group user ready: %s" % _group_uuid)
             self._ack_waiting(_device_uuid)
-            self._back_to_queue(_app_uuid, _user_uuid, _device_uuid, _group_uuid)
             return False
 
         _allocated_user = random.randint(0, len(_ready_users)-1)
@@ -368,23 +361,45 @@ class AmdDelegate():
         """
         every 2000ms check all app queue
         """
-        _app_uuids = self._apps()
-        for _app_uuid in _app_uuids:
-            _key = REDIS_AMD_KEY + ".app_uuid." + _app_uuid
-            if self.redis.llen(_key) == 0:
+        #_app_uuids = self._apps()
+        _key = REDIS_AMD_KEY
+        _hashs = []
+
+        if self.redis.llen(_key) == 0:
+            return
+
+        logging.info("amd queue size: %d" % (self.redis.llen(_key)))
+        
+        while True:
+            _hash = self.redis.lpop(_key)
+            if _hash == None or len(_hash) == 0:
+                break
+            _hashs.append(_hash)
+            
+        for _hash in _hashs:
+            _key = REDIS_AMD_KEY + ".amd_hash." + _hash
+            _value = self.redis.get(_key)
+
+            if _value == None or len(_value) == 0:
                 continue
-            logging.info("amd queue size: %d, app_uuid:%s." % (self.redis.llen(_key), _app_uuid))
-            while True:
-                _request = self.redis.lpop(_key)
-                if _request == None:
-                    break
-                _request = json.loads(_request)
-                _user_uuid = _request.get("user_uuid")
-                _device_uuid = _request.get("device_uuid")
-                _group_uuid = _request.get("group_uuid")
-                _continue = self._task(_app_uuid, _user_uuid, _device_uuid, _group_uuid)
-                if not _continue:
-                    break
+            
+            _request = json.loads(_value)
+            _app_uuid = _request.get("app_uuid")
+            _user_uuid = _request.get("user_uuid")
+            _device_uuid = _request.get("device_uuid")
+            _group_uuid = _request.get("group_uuid")
+            _continue = self._task(_app_uuid, _user_uuid, _device_uuid, _group_uuid)
+            # _continue True means got allocated or meets error
+            # _continue False means need continue waiting
+            
+            if not _continue:
+                self.redis.rpush(REDIS_AMD_KEY, _hash)
+            else:
+                _key = REDIS_AMD_KEY+".app_uuid."+_app_uuid
+                if self.redis.exists(_key):
+                    self.redis.srem(_key, _hash)
+                self.redis.delete(_key)
+                
         return
 
 class AmdWebService(AbstractWebService):
@@ -420,6 +435,7 @@ def _main():
     
     logging.info("Starting amd service......")
     tornado.ioloop.IOLoop.instance().start()
-
+    return
+    
 if __name__ == "__main__":
     _main()

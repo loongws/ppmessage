@@ -28,6 +28,7 @@ import copy
 import uuid
 import json
 import time
+import hashlib
 import logging
 import datetime
 
@@ -198,9 +199,18 @@ class PPComCreateConversationHandler(BaseHandler):
                 self.setErrorCode(API_ERR.NO_PARA)
                 return
 
+            _value = {"app_uuid": _app_uuid, "user_uuid": _user_uuid, "device_uuid":_device_uuid, "group_uuid":_group_uuid}
+            _value = json.dumps(_value)
+            _hash = hashlib.sha1(_value)
+            
+            _key = REDIS_AMD_KEY + ".amd_hash." + _hash
+            self.application.redis.set(_key, _value)
+
+            _key = REDIS_AMD_KEY
+            self.application.redis.rpush(_key, _hash)
+
             _key = REDIS_AMD_KEY + ".app_uuid." + _app_uuid
-            _value = {"user_uuid": _user_uuid, "device_uuid":_device_uuid, "group_uuid":_group_uuid}
-            self.application.redis.rpush(_key, json.dumps(_value))
+            self.application.redis.sadd(_key, _hash)
             return
 
         if _group_uuid != None and _app_route_policy != APP_POLICY.GROUP:

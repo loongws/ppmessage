@@ -14,6 +14,7 @@ from ppmessage.core.constant import REDIS_AMD_KEY
 from ppmessage.core.constant import SERVICE_USER_STATUS
 
 import json
+import hashlib
 import logging
 
 class PPCancelWaitingCreateConversation(BaseHandler):
@@ -29,17 +30,19 @@ class PPCancelWaitingCreateConversation(BaseHandler):
             self.setErrorCode(API_ERR.NO_PARA)
             return
 
-        _value = {"user_uuid": _user_uuid, "device_uuid": _device_uuid, "group_uuid": str(_group_uuid)}
+        _value = {"app_uuid": _app_uuid, "user_uuid": _user_uuid, "device_uuid": _device_uuid}
+        if _group_uuid != None:
+            _value = {"app_uuid": _app_uuid, "user_uuid": _user_uuid, "device_uuid": _device_uuid, "group_uuid": _group_uuid}
+            
         _value = json.dumps(_value)
+        _hash = hashlib.sha1(_value).hexdigest()
+
+        _key = REDIS_AMD_KEY + ".amd_hash." + _hash
+        self.application.redis.delete(_key)
 
         _key = REDIS_AMD_KEY + ".app_uuid." + _app_uuid
-        _values = self.application.redis.lrange(_key, 0, -1)
-
-        self.application.redis.delete(_key)
+        self.application.redis.srem(_hash)
         
-        for _i in range(len(_values)):
-            if _values[_i] != _value:
-                self.application.redis.rpush(_key, _values[_i])
         return
         
     def initialize(self):
