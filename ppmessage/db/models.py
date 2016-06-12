@@ -1027,7 +1027,7 @@ class APNSSetting(CommonMixin, BaseModel):
         if _obj == None:
             return
         _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"]
-        _redis.remove(_key)
+        _redis.delete(_key)
 
         CommonMixin.delete_redis_keys(self, _redis)
         return
@@ -1778,11 +1778,11 @@ class ApiInfo(CommonMixin, BaseModel):
         if _obj == None:
             return
         _key = self.__tablename__ + ".api_key." + _obj["api_key"]
-        _redis.remove(_key)
+        _redis.delete(_key)
 
         _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
                ".user_uuid." + _obj["user_uuid"] + ".api_level." + _obj["api_level"]
-        _redis.remove(_key)
+        _redis.delete(_key)
         
         CommonMixin.delete_redis_keys(self, _redis)
         return
@@ -1807,6 +1807,10 @@ class ApiTokenData(CommonMixin, BaseModel):
     def create_redis_keys(self, _redis, *args, **kwargs):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
 
+        _key = self.__tablename__ + ".app_uuid." + self.app_uuid + \
+               ".api_token." + self.api_token
+        _redis.set(_key, self.uuid)
+        
         _key = self.__tablename__ + ".api_token." + self.api_token
         _v = json.dumps([self.api_uuid, self.api_level])
         _redis.set(_key, _v)
@@ -1827,9 +1831,13 @@ class ApiTokenData(CommonMixin, BaseModel):
         if _obj == None:
             return
         _key = self.__tablename__ + ".api_token." + _obj["api_token"]
-        _redis.remove(_key)
+        _redis.delete(_key)
         _key = self.__tablename__ + ".api_code." + _obj["api_code"]
-        _redis.remove(_key)
+        _redis.delete(_key)
+        _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
+               ".api_token." + _obj["api_token"]
+        _redis.delete(_key)
+        
         CommonMixin.delete_redis_keys(self, _redis)
         return
 

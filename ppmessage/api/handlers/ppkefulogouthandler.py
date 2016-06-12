@@ -93,6 +93,17 @@ class PPKefuLogoutHandler(BaseHandler):
         pcsocket_user_online(self.application.redis, self.user_uuid, _body)
         return
 
+    def _delete_auth_token(self):
+        _key = ApiTokenData.__tablename__ + ".app_uuid." + self.app_uuid + \
+               ".api_token." + self.api_token
+        _uuid = self.application.redis.get(_key)
+        if _uuid == None or len(_uuid) == 0:
+            return
+        _row = ApiTokenData(uuid=_uuid)
+        _row.delete_redis_keys(self.application.redis)
+        _row.async_delete(self.application.redis)
+        return
+    
     def _Task(self):    
         super(PPKefuLogoutHandler, self)._Task()
         _input = json.loads(self.request.body)
@@ -114,4 +125,5 @@ class PPKefuLogoutHandler(BaseHandler):
         self._update_user_status()
         self._user_online_status()
         self._send_online()
+        self._delete_auth_token()
         return

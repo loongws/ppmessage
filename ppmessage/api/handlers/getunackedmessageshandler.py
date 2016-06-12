@@ -16,10 +16,10 @@ from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import MESSAGE_STATUS
 from ppmessage.core.redis import redis_hash_to_dict
 
-import traceback
-import logging
 import json
 import copy
+import logging
+import traceback
 
 class GetUnackedMessagesHandler(BaseHandler):
     """
