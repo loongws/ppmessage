@@ -361,20 +361,19 @@ class AmdDelegate():
         """
         every 2000ms check all app queue
         """
-        #_app_uuids = self._apps()
-        _key = REDIS_AMD_KEY
-        _hashs = []
+        _hashs = set()
 
-        if self.redis.llen(_key) == 0:
+        _len = self.redis.llen(REDIS_AMD_KEY) 
+        if _len == 0:
             return
 
-        logging.info("amd queue size: %d" % (self.redis.llen(_key)))
+        logging.info("amd queue size: %d" % _len)
         
         while True:
-            _hash = self.redis.lpop(_key)
+            _hash = self.redis.lpop(REDIS_AMD_KEY)
             if _hash == None or len(_hash) == 0:
                 break
-            _hashs.append(_hash)
+            _hashs.add(_hash)
             
         for _hash in _hashs:
             _key = REDIS_AMD_KEY + ".amd_hash." + _hash
