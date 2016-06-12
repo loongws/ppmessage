@@ -41,7 +41,7 @@ class PPCancelWaitingCreateConversation(BaseHandler):
         self.application.redis.delete(_key)
 
         _key = REDIS_AMD_KEY + ".app_uuid." + _app_uuid
-        self.application.redis.srem(_hash)
+        self.application.redis.srem(_key, _hash)
         
         return
         
