@@ -17,7 +17,7 @@ from ppmessage.core.redis import row_to_redis_hash
 from ppmessage.core.redis import redis_hash_to_dict
 from ppmessage.core.imageconverter import ImageConverter
 
-from .sqlmysql import BaseModel
+from .dbinstance import BaseModel
 from .commonmixin import CommonMixin
 from .dbinstance import getDBSessionClass
 

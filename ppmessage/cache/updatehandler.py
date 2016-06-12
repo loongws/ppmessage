@@ -8,7 +8,7 @@
 #
 
 from ppmessage.db.dbinstance import getDBSessionClass
-from ppmessage.db.sqlmysql import BaseModel
+from ppmessage.db.dbinstance import BaseModel
 from ppmessage.db.models import DeviceUser
 
 from sqlalchemy import String

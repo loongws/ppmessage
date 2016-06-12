@@ -8,8 +8,8 @@
 #
 
 from ppmessage.db.dbinstance import getDBSessionClass
+from ppmessage.db.dbinstance import BaseModel
 from ppmessage.db.models import DeviceUser
-from ppmessage.db.sqlmysql import BaseModel
 
 from sqlalchemy import String
 from sqlalchemy import Boolean

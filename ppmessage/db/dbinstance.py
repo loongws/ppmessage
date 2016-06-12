@@ -7,19 +7,26 @@
 # db/dbinstance.py
 #
 
-from .sqlmysql import SQLMysql
+#from .sqlsqlite import SqlInstance
+#from .sqlsqlite import BaseModel
+
+#from .sqlpsql import SqlInstance
+#from .sqlpsql import BaseModel
+
+from .sqlmysql import SqlInstance
+from .sqlmysql import BaseModel
 
 def getDBSessionClass():
-    db = SQLMysql()
+    db = SqlInstance()
     db.createEngine()
     return db.getSessionClass()
 
 def getDatabaseInstance():
-    db = SQLMysql()
+    db = SqlInstance()
     db.createEngine()
     return db
 
 def getDatabaseEngine():
-    db = SQLMysql()
+    db = SqlInstance()
     db.createEngine()
     return db.dbengine
