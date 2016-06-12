@@ -28,6 +28,9 @@ PPMessage 同时提供了一个 Web 管理界面，称之为 PPConsole，当然�
 * [中文手册](https://ppmessage.gitbooks.io/ppbook/content/)
 
 
+> 应网友之强烈要求，要有个 QQ 群 348015072
+![](/ppmessage/doc/img/348015072.png)
+
 <!--
 
 * [在线使用PPMessage](/ppmessage/doc/zh-cn/online-ppmessage-guide.md) 
