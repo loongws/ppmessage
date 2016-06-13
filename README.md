@@ -27,24 +27,33 @@ PPMessage includes a series of frontend SDK named **PPCom** which run on your vi
 
 ## EASY START
 
-> Clone the code
+> Clone 
 
 `
 git clone https://github.com/PPMESSAGE/ppmessage.git
 `
 
-> Install requirements if you are under Debian/Ubuntu
+> Requirements under Debian/Ubuntu
 
 
 `
 bash ppmessage/scripts/set-up-ppmessage-on-linux.sh
 `
 
-> Install requirements if you are under macOS
+> Requirements under macOS
 
 
 `
 bash ppmessage/scripts/set-up-ppmessage-on-mac.sh
+`
+
+> Build 
+
+`
+bash dist.sh bootstrap
+bash dist.sh npm
+bash dist.sh bower
+bash dist.sh gulp
 `
 
 > Run
@@ -53,8 +62,11 @@ bash ppmessage/scripts/set-up-ppmessage-on-mac.sh
 python ppmessage/backend/main.py
 `
 
-> Open your brower to access `http://127.0.0.1:8945`
+> Access
 
+`
+Open your brower to access `http://127.0.0.1:8945`
+`
 
 
 ## DOCOMENTS
