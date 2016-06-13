@@ -61,10 +61,6 @@ http {
         server 127.0.0.1:20600;
     }
 
-    upstream pphome_backends {
-       server 127.0.0.1:20800;
-    }
-
     upstream ppauth_backends {
        server 127.0.0.1:20900;
     }
@@ -93,14 +89,14 @@ http {
         proxy_set_header Request-Uri $request_uri;
 
         location / {
-            rewrite ^/$ /home permanent;
-        }
-
-        location /home/ {
-            proxy_pass http://pphome_backends/;
+            rewrite ^/$ /ppconsole permanent;
         }
 
         location /user/ {
+            proxy_pass http://ppconsole_backends/;
+        }
+
+        location /ppconsole/ {
             proxy_pass http://ppconsole_backends/;
         }
 
