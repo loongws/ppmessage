@@ -48,6 +48,11 @@ import tornado.httpserver
 
 tornado.options.define("port", default=MAIN_PORT, help="", type=int)  
 
+class EntryHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.redirect("/ppconsole/")
+        return
+
 class MainApplication(tornado.web.Application):
     
     def __init__(self):
@@ -67,13 +72,13 @@ class MainApplication(tornado.web.Application):
         self.total_handlers = get_total_handlers()
         self.total_delegates = get_total_delegates(self)
         
-        handlers = []
+        handlers = [(r"/", EntryHandler)]
         for i in self.total_handlers:
             handler = ("/" + i["name"].lower() + i["handler"][0], i["handler"][1])
             if len(i["handler"]) == 3:
                 handler = ("/" + i["name"].lower() + i["handler"][0], i["handler"][1], i["handler"][2])
             handlers.append(handler)
-        
+
         tornado.web.Application.__init__(self, handlers, **settings)        
         return
 
@@ -93,9 +98,9 @@ def _main():
     tornado.httpserver.HTTPServer(_app).listen(tornado.options.options.port)
     _app.run_periodic()
 
-    mqtt_message_main()
-    logging.info("Starting PPMessage backend servcie on %d." % tornado.options.options.port)
-    
+    #mqtt_message_main()
+    logging.info("PPMessage backend servcie started.")
+    logging.info("Access http://127.0.0.1:%d/ to use PPMessage." % tornado.options.options.port)
     tornado.ioloop.IOLoop.instance().start()
     return
 
