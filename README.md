@@ -27,10 +27,11 @@ PPMessage includes a series of frontend SDK named **PPCom** which run on your vi
 
 ## EASY START
 
-> Clone <small>and change directory into ppmessage project</small>
+> Clone and change directory into ppmessage project
 
 ```bash
 git clone https://github.com/PPMESSAGE/ppmessage.git
+cd ppmessage
 ```
 
 > Requirements under Debian/Ubuntu
