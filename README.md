@@ -66,7 +66,7 @@ python ppmessage/backend/main.py
 > Access
 
 `
-Open your brower to access `http://127.0.0.1:8945`
+Open your browser to access `http://127.0.0.1:8945`
 `
 
 
