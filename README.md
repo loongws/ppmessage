@@ -25,13 +25,41 @@ PPMessage includes a series of frontend SDK named **PPCom** which run on your vi
 * [PPCom Android SDK](https://github.com/PPMESSAGE/ppcom-android-sdk)
 
 
+## EASY START
+
+> Clone the code
+
+`
+git clone https://github.com/PPMESSAGE/ppmessage.git
+`
+
+> Install requirements if you are under Debian/Ubuntu
+
+
+`
+bash ppmessage/scripts/set-up-ppmessage-on-linux.sh
+`
+
+> Install requirements if you are under macOS
+
+
+`
+bash ppmessage/scripts/set-up-ppmessage-on-mac.sh
+`
+
+> Run
+
+`
+python ppmessage/backend/main.py
+`
+
+> Open your brower to access `http://127.0.0.1:8945`
+
+
+
 ## DOCOMENTS
 
 > In the following, list some document to use and develope PPMessage. More on [PPMessage Site](https://ppmessage.com).
-
-* [Install PPMessage on Debian Linux](/ppmessage/doc/en-us/install-ppmessage-on-debian.md)
-
-* [Install PPMessage on Mac OS X](/ppmessage/doc/en-us/install-ppmessage-on-mac-os-x.md)
 
 * [Complete english manual](https://ppmessage.gitbooks.io/ppbook-en/content/)
 
