@@ -107,7 +107,6 @@ pip install \
     evernote \
     filemagic \
     geoip2 \
-    green \
     identicon \
     ipython \
     jieba \

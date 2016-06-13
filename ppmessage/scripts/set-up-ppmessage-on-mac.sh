@@ -58,7 +58,6 @@ sudo pip install \
      evernote \
      filemagic \
      geoip2 \
-     green \
      hg+https://dingguijin@bitbucket.org/dingguijin/apns-client \
      identicon \
      ipython \
