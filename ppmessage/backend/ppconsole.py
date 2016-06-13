@@ -31,8 +31,7 @@ def _main():
     logging.info("Starting ppconsole of user... with port: %d" % tornado.options.options.port)
 
     http_server.listen(tornado.options.options.port)
-    loop = tornado.ioloop.IOLoop.instance()
-    loop.start()
+    tornado.ioloop.IOLoop.instance().start()
     return
 
 if __name__ == "__main__":
