@@ -70,7 +70,6 @@ class PPKefuWebService(AbstractWebService):
 class PPKefuApp(Application):
     
     def __init__(self):
-       
         settings = {}
         settings["debug"] = True
         settings["cookie_secret"] = "PzEMu2OLSsKGTH2cnyizyK+ydP38CkX3rhbmGPqrfBs="

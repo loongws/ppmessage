@@ -18,10 +18,15 @@ import logging
 
 tornado.options.define("port", default=PPKEFU_PORT, help="", type=int)
 
-if __name__ == "__main__":
+def _main():
     tornado.options.parse_command_line()
-    http_server = tornado.httpserver.HTTPServer(PPKefuApp(), max_body_size=1024*1024*1024)
+    http_server = tornado.httpserver.HTTPServer(PPKefuApp(), max_body_size=64*1024*1024)
     http_server.listen(tornado.options.options.port)
 
     logging.info("Starting PPKEFU...")
     tornado.ioloop.IOLoop.instance().start()
+    return
+
+if __name__ == "__main__":
+    _main()
+    
