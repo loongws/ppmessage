@@ -98,7 +98,11 @@ function generate_scss (done) {
     var dest = buildConfig.buildCssPath;
 
     gulp.src(src)
-        .pipe(scss())
+        .pipe(scss({
+            includePaths: [
+                "../../resource/share/bower_components/ionic/scss"
+            ]}
+        ))
         .pipe(gulp.dest(buildConfig.halfBuildPath))
         .pipe(cleanCss({ keepSpecialComments: 0 }))
         .pipe(rename({ extname: ".min.css" }))
