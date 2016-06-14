@@ -71,7 +71,7 @@ Open your browser to access http://127.0.0.1:8945
 ```
 
 
-## DOCOMENTS
+## DOCUMENTS
 
 > In the following, list some document to use and develope PPMessage. More on [PPMessage Site](https://ppmessage.com).
 
