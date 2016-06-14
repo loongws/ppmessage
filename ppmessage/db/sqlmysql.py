@@ -19,7 +19,7 @@ from sqlalchemy import create_engine
 
 from ppmessage.core.constant import SQL
 from ppmessage.core.singleton import singleton
-from ppmessage.bootstrap.config import BOOTSTRAP_CONFIG
+from ppmessage.bootstrap import PPMESSAGE_CONFIG
 
 import traceback
 
@@ -45,10 +45,10 @@ class SqlInstance(SqlNone):
     
     def __init__(self):
 
-        DB_NAME = BOOTSTRAP_CONFIG.get("mysql").get("db_name")
-        DB_PASS = BOOTSTRAP_CONFIG.get("mysql").get("db_pass")
-        DB_USER = BOOTSTRAP_CONFIG.get("mysql").get("db_user")
-        DB_HOST = BOOTSTRAP_CONFIG.get("mysql").get("db_host")
+        DB_NAME = BOOTSTRAP_CONFIG.get("db").get("mysql").get("db_name")
+        DB_PASS = PPMESSAGE_CONFIG.get("db").get("mysql").get("db_pass")
+        DB_USER = PPMESSAGE_CONFIG.get("db").get("mysql").get("db_user")
+        DB_HOST = PPMESSAGE_CONFIG.get("db").get("mysql").get("db_host")
 
         self.dbhost = DB_HOST
         self.dbname = DB_NAME

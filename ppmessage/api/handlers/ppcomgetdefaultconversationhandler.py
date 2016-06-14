@@ -26,7 +26,7 @@ from ppmessage.core.constant import DATETIME_FORMAT
 from ppmessage.core.constant import CONVERSATION_TYPE
 from ppmessage.core.constant import REDIS_AMD_KEY
 
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
+from ppmessage.core.utils.config import get_config_language
 
 from ppmessage.core.utils.datetimeencoder import DateTimeEncoder
 from ppmessage.api.handlers.ppgetorggroupuserlisthandler import single_user
@@ -110,7 +110,7 @@ class PPComGetDefaultConversationHandler(BaseHandler):
         return _return
     
     def _get_app_welcome(self, _r):
-        _language = BOOTSTRAP_DATA.get("user_language")
+        _language = get_config_language()
         if _language == None:
             _language = "zh_cn"
             

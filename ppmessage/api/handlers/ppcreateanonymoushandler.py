@@ -15,8 +15,8 @@ from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import USER_NAME
 from ppmessage.core.constant import USER_STATUS
 
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 from ppmessage.core.redis import redis_hash_to_dict
+from ppmessage.core.utils.config import get_config_language
 from ppmessage.core.utils.createicon import create_user_icon
 
 import json
@@ -85,14 +85,19 @@ class PPCreateAnonymousHandler(BaseHandler):
         """
         Get user nickName
         """
-
+        _config_language = get_config_language().lower()
+        if _config_language == None:
+            logging.error("no lanuage config.")
+            return None
+        
         _language = "en"
         _string = USER_NAME["en"]
-        if BOOTSTRAP_DATA.get("user_language") == "zh_cn":
+
+        if _config_language == "zh_cn":
             _language = "zh-CN"
             _string = USER_NAME["cn"]
 
-        if BOOTSTRAP_DATA.get("user_language") == "zh_tw":
+        if _config_language == "zh_tw":
             _language = "zh-TW"
             _string = USER_NAME["tw"]
 

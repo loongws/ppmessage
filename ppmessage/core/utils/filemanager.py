@@ -5,9 +5,10 @@
 #
 #
 
+from .config import get_config_server_generic_store
+
 from ppmessage.db.models import FileInfo
 from ppmessage.core.redis import redis_hash_to_dict
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 
 import os
 import uuid
@@ -31,6 +32,11 @@ def read_file(_redis, _uuid):
     return _r
 
 def create_file_with_data(_redis, _data, _mime, _user_uuid, _file_name=None, _material_type=None):
+    _store_dir = get_config_server_generic_store()
+    if _store_dir == None:
+        logging.error("no generic_store configed")
+        return None
+    
     if _data == None or len(_data) == 0:
         return None
     
@@ -44,7 +50,6 @@ def create_file_with_data(_redis, _data, _mime, _user_uuid, _file_name=None, _ma
     if _file_name == None:
         _file_name = _name
 
-    _store_dir = BOOTSTRAP_DATA.get("server").get("generic_store")
     _path = _store_dir + os.path.sep + _name
     _f = open(_path, "wb")
     _f.write(_data)
