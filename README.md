@@ -3,9 +3,8 @@
 <!-- :-------------------------:|:-------------------------: -->
 <!-- ![](ppmessage/doc/ppcom.gif)  | ![](ppmessage/doc/ppkefu.gif) -->
 
-<img src="ppmessage/doc/ppkefu-ppcom.gif" height=200px></img>
+<img src="ppmessage/doc/ppkefu-ppcom.gif" height=400px></img>
 
-[In Chinese 中文版](ppmessage/doc/zh-cn/README.md)
 
 # PPMessage
 
@@ -60,7 +59,7 @@ bash dist.sh gulp
 > Run
 
 ```bash
-python ppmessage/backend/main.py
+python ppmessage.py
 ```
 
 > Access
@@ -71,7 +70,7 @@ Open your browser to access http://127.0.0.1:8945
 ```
 
 
-## DOCOMENTS
+## DOCUMENTS
 
 > In the following, list some document to use and develope PPMessage. More on [PPMessage Site](https://ppmessage.com).
 
@@ -96,3 +95,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+
+## OTHER LANGUAGES
+
+[In Chinese 中文版](ppmessage/doc/zh-cn/README.md)
