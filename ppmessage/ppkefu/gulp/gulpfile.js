@@ -94,7 +94,7 @@ function generate_js (done) {
 }
 
 function generate_scss (done) {
-    var src = "../app/scss/ionic.ppmessage.scss";
+    var src = "../src/scss/ionic.ppmessage.scss";
     var dest = buildConfig.buildCssPath;
 
     gulp.src(src)
@@ -229,7 +229,7 @@ function colorfulText(text) {
 }
 
 function generate_head_js (callback) {
-    var head_path = "../app/js/head.js";
+    var head_path = "../src/js/head.js";
     var config_string = JSON.stringify(appConfig);
     var config = JSON.parse(config_string);
 

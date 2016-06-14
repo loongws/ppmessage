@@ -1,25 +1,57 @@
-module.exports = {
+build_config = {
 
-    halfBuildPath: "../src/build",
-
-    buildCssPath: "../../resource/assets/ppkefu/assets/css",
-    buildJsPath: "../../resource/assets/ppkefu/assets/js",
-    buildFontPath: "../../resource/assets/ppkefu/assets/fonts",
+    "buildHtmlFile": "../../resource/html/ppkefu-index.html",
+    "buildHtmlTemplateFile": "../../resource/html/ppkefu-index.html.template",
     
-    html: ["../src/html/**/*.html"],
-    css: ["../src/css/*.css"],
-    scss: ["../src/scss/*.scss"],
-    js: [
+    "buildHeadFile": "../src/js/head.js",
+    
+    "buildCssPath": "../../resource/assets/ppkefu/assets/css",
+    "buildJsPath": "../../resource/assets/ppkefu/assets/js",
+    "buildFontPath": "../../resource/assets/ppkefu/assets/fonts",
+    
+    "htmlPath": "../src/html",
+    "scssPath": "../src/scss",
+    
+    "scss": [
+        "../src/scss/ionic.ppmessage.scss",
+        "../src/scss/_variables.scss",
+        "../src/scss/_action_sheet.scss",
+        "../src/scss/_add_member_modal.scss",
+        "../src/scss/_addpage.scss",
+        "../src/scss/_animate.scss",
+        "../src/scss/_base.scss",
+        "../src/scss/_bigmic.scss",
+        "../src/scss/_change_avatar.scss",
+        "../src/scss/_change_signature.scss",
+        "../src/scss/_chat.scss",
+        "../src/scss/_chattool.scss",
+        "../src/scss/_chattool_new.scss",
+        "../src/scss/_contact_item.scss",
+        "../src/scss/_contact_list.scss",
+        "../src/scss/_content.scss",
+        "../src/scss/_conversation_item.scss",
+        "../src/scss/_conversation_list.scss",
+        "../src/scss/_conversation_member.scss",
+        "../src/scss/_image_modal.scss",
+        "../src/scss/_mixins.scss",
+        "../src/scss/_popover.scss",
+        "../src/scss/_profile.scss",
+        "../src/scss/_search_modal.scss",
+        "../src/scss/_setting_list.scss",
+        "../src/scss/_sidemenu.scss",
+        "../src/scss/_sidemenu_header.scss",
+        "../src/scss/_text_modal.scss",
+        "../src/scss/_userdetail.scss"
+    ],
 
-        // Module
+    "js": [
+        
         "../src/js/head.js",
         "../src/js/module.js",
-        "../src/js/starter.js",
         "../src/js/routers.js",
         "../src/js/i18n.js",
         "../src/js/app.js",
 
-        // Service
         "../src/js/services/constants.js",
         "../src/js/services/util.js",
         "../src/js/services/log.js",
@@ -34,7 +66,6 @@ module.exports = {
         "../src/js/services/user.js",
         "../src/js/services/send.js",
         "../src/js/services/message.js",
-        "../src/js/services/peer.js",
         "../src/js/services/sys.js",
         "../src/js/services/mime.js",
         "../src/js/services/uploader.js",
@@ -55,7 +86,6 @@ module.exports = {
         "../src/js/services/monitor.js",
         "../src/js/services/menu.js",
 
-        // DIRECTIVE: CHAT-MESSAGE
         "../src/js/directives/message.js",
         "../src/js/directives/text-message.js",
         "../src/js/directives/txt-message.js",
@@ -65,35 +95,28 @@ module.exports = {
         "../src/js/directives/double-click.js",
         "../src/js/directives/click.js",
 
-        // DIRECTIVE: CHAT-TOOL OLD STYLE
         "../src/js/directives/chat-tool.js",
         "../src/js/directives/adding-button.js",
         "../src/js/directives/big-mic-button.js",
         "../src/js/directives/recording-status.js",
         "../src/js/directives/dynamic-height.js",
 
-        // DIRECTIVE: CHAT-TOOL NEW STYLE-->
         "../src/js/directives/new-chat-tool.js",
 
-        // DIRECTIVE: HIDE-TABS
         "../src/js/directives/hide-tabs.js",
 
-        // DIRECTIVE: IMAGE-CROP
         "../src/js/directives/crop-image.js",
         "../src/js/directives/change-avatar.js",
 
-        // DIRECTIVE: MODAL
         "../src/js/directives/image-modal.js",
         "../src/js/directives/text-modal.js",
         "../src/js/directives/file-chooser-modal.js",
         "../src/js/directives/search-modal.js",
         "../src/js/directives/conversation-member.js",
         "../src/js/directives/add-member-modal.js",
-        // "../src/js/directives/select-group-user-modal.js",
         "../src/js/directives/add-member-by-contact.js",
         "../src/js/directives/add-member-by-group.js",
 
-        // DIRECTIVE: POPOVER
         "../src/js/directives/sidemenu-header.js",
         "../src/js/directives/conversation.js",
         "../src/js/directives/contact.js",
@@ -102,10 +125,8 @@ module.exports = {
         "../src/js/directives/contextmenu-in-list.js",
 
 
-        // DIRECTIVE: USERINFOSETTINGS
         "../src/js/directives/user-info-modal.js",
 
-        // CONTROLLER: NOAPP
         "../src/js/controllers/noapp.js",
         "../src/js/controllers/main-with-logo.js",
         "../src/js/controllers/auto-login.js",
@@ -115,19 +136,15 @@ module.exports = {
         "../src/js/controllers/add-server.js",
         "../src/js/controllers/switch-server.js",
 
-        // CONTROLLER: APP
         "../src/js/controllers/app.js",
 
-        // CONTROLLER: APP.CONVERSATIONS
         "../src/js/controllers/conversation-list.js",
         "../src/js/controllers/conversation.js",
         "../src/js/controllers/message.js",
 
-        // CONTROLLER: APP.CONTACTS
         "../src/js/controllers/contact-list.js",
         "../src/js/controllers/contact.js",
 
-        // CONTROLLER: APP.SETTINGS
         "../src/js/controllers/setting-list.js",
         "../src/js/controllers/switch-language.js",
         "../src/js/controllers/switch-app.js",
@@ -139,7 +156,7 @@ module.exports = {
         "../src/js/controllers/push-notification.js",
     ],
 
-    libJs: [
+    "libJs": [
         "../src/lib/jscd.js",
         "../src/lib/sha1.js",
         "../src/lib/sha1file.js",
@@ -147,21 +164,20 @@ module.exports = {
         "../src/lib/base64binary.js",
         "../src/lib/moment-with-zh-cn-locale.js",
 
-        // "../../resource/share/bower_components/base64/base64.js",
-
-        "../../resource/share/bower_components/Jcrop/js/jquery.min.js",
+        "../../resource/share/bower_components/jquery/dist/jquery.js",
         "../../resource/share/bower_components/Jcrop/js/Jcrop.js",
 
         "../../resource/share/bower_components/ionic/js/ionic.bundle.js",
         "../../resource/share/bower_components/angular-cookies/angular-cookies.js",
         "../../resource/share/bower_components/angular-translate/angular-translate.js",
         "../../resource/share/bower_components/angular-block-ui/dist/angular-block-ui.js",
-        "../../resource/share/bower_components/angular-file-upload/angular-file-upload.js",
+        "../../resource/share/bower_components/angular-file-upload/dist/angular-file-upload.js",
         "../../resource/share/bower_components/angular-base64/angular-base64.js"
     ],
 
-    libCss: [
-        "../src/css/*.css",
+    "libCss": [
+        "../src/css/hide-tabs.css",
+        "../src/css/user-info-settings.css",
         "../../resource/share/bower_components/Jcrop/css/Jcrop.css",
         "../../resource/share/bower_components/angular-block-ui/dist/angular-block-ui.css"
     ]

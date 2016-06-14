@@ -20,7 +20,7 @@
 $ionicons-font-path: "../fonts" !default;
 
 // Include all of Ionic
-@import "../../bower/bower_components/ionic/scss/ionic";
+@import "ionic";
 
 // ppmessage scss begin
 @import "mixins";
