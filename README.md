@@ -60,7 +60,7 @@ bash dist.sh gulp
 > Run
 
 ```bash
-python ppmessage/backend/main.py
+python ppmessage.py
 ```
 
 > Access
