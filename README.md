@@ -5,7 +5,6 @@
 
 <img src="ppmessage/doc/ppkefu-ppcom.gif" height=200px></img>
 
-[In Chinese 中文版](ppmessage/doc/zh-cn/README.md)
 
 # PPMessage
 
@@ -96,3 +95,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+
+[In Chinese 中文版](ppmessage/doc/zh-cn/README.md)
