@@ -16,9 +16,9 @@ import hashlib
 def _cur_dir():
     return os.path.dirname(__file__)
 
-def _replace_api_key(_api_uuid, _api_key, _api_secret, _app_uuid):
-    TEMPLATE_MIN_JS = "../../resource/assets/ppconsole/assets/dist/ppconsole-template.min.js"
-    MIN_JS = "../../resource/assets/ppconsole/assets/dist/ppconsole.min.js"
+def _replace(_api_uuid, _api_key, _api_secret, _app_uuid):
+    TEMPLATE_MIN_JS = "../../resource/assets/ppconsole/static/dist/ppconsole-template.min.js"
+    MIN_JS = "../../resource/assets/ppconsole/static/dist/ppconsole.min.js"
     
     _js_path = os.path.join(_cur_dir(), TEMPLATE_MIN_JS)
     _js_n_path = os.path.join(_cur_dir(), MIN_JS)
@@ -39,22 +39,8 @@ def _replace_api_key(_api_uuid, _api_key, _api_secret, _app_uuid):
 
     return
 
-def _replace_html_file(_js_name):
-    HTML_TEMPLATE_PATH = "../../resource/html/ppkefu-index.html.template"
-    HTML_PATH = "../../resource/html/ppkefu-index.html"
-    _template_path = os.path.join(_cur_dir(), HTML_TEMPLATE_PATH)
-    _html_path = os.path.join(_cur_dir(), HTML_PATH)
-    
-    with open(_template_pat) as _t:
-        _t_str = _t.read(_template_path, "r")
-        _n_str = _t_str.replace("{{ppkefu.min.js}}", _js_name)
-        with opne(_html_path, "w") as _html:
-            _html.write(_n_str)
-
-    return
-
-def config(_key):
-    _replace_api_key(_key)
+def config(_api_uuid, _api_key, _api_secret, _app_uuid):
+    _replace(_api_uuid, _api_key, _api_secret, _app_uuid)
     return
 
 if __name__ == "__main__":
