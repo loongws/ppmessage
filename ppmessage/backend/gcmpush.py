@@ -17,8 +17,6 @@ from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.singleton import singleton
 from ppmessage.core.main import AbstractWebService
 
-from ppmessage.bootstrap.config import BOOTSTRAP_CONFIG
-
 from gcm import GCM
 
 import tornado.ioloop
@@ -71,7 +69,10 @@ class GcmPushHandler():
 @singleton
 class GcmPushDelegate():
     def __init__(self, app):
-        _config = BOOTSTRAP_CONFIG.get("gcm")
+        _config = {
+            "api_key": "AIzaSyArXf60KTz2KwROtzAlQDJozAskFAdvzBE",
+            "sender_id": "878558045932"
+        }
         _api_key = _config.get("api_key")
         self.gcm = GCM(_api_key)
         self.redis = app.redis
