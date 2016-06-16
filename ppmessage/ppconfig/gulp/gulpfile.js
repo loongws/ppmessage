@@ -1,16 +1,17 @@
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var concat = require('gulp-concat');
-var cleanCss = require('gulp-clean-css');
-var rename = require('gulp-rename');
-var ngAnnotate = require('gulp-ng-annotate');
-var uglify = require('gulp-uglify');
-var gulpif = require('gulp-if');
-var path = require('path');
-var args = require("get-gulp-args")();
-var replace = require('gulp-replace');
 var os = require("os");
 var fs = require("fs");
+var path = require('path');
+var gulp = require('gulp');
+var gulpif = require('gulp-if');
+var gutil = require('gulp-util');
+var concat = require('gulp-concat');
+var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
+var args = require("get-gulp-args")();
+var replace = require('gulp-replace');
+var cleanCss = require('gulp-clean-css');
+var ngAnnotate = require('gulp-ng-annotate');
+var cache = require("gulp-angular-templatecache");
 
 var min_js = true;
 
@@ -31,7 +32,7 @@ var watching_paths = {
     config: ['./build.config.js']
 };
 
-gulp.task('default', ['css', 'css-lib', 'js', 'js-lib', 'font']);
+gulp.task('default', ['css', 'css-lib', 'js', 'js-lib', 'font', 'cache']);
 
 gulp.task('css', function(done) {
     gulp.src(buildConfig.cssFiles)
@@ -87,6 +88,23 @@ gulp.task('js-lib', function(done) {
 
 gulp.task('font', function(done) {
     gulp.src(buildConfig.fontFiles)
+        .pipe(gulp.dest(buildConfig.buildPath))
+        .on("end", done);
+});
+
+gulp.task("cache", function(done) {
+    gulp.src(buildConfig.html)
+        .pipe(cache("templates.js", {
+            root: "templates",
+            module: "ppconsole"
+        }))
+        .pipe(gulp.dest(buildConfig.buildPath))
+        .pipe(uglify())
+        .on("error", function(e) {
+            console.log(e);
+            done();
+        })
+        .pipe(rename({"extname": ".min.js"}))
         .pipe(gulp.dest(buildConfig.buildPath))
         .on("end", done);
 });

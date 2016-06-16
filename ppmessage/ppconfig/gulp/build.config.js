@@ -1,5 +1,7 @@
 module.exports = {
 
+    html: ["../src/html/**/*.html"],
+    
     buildPath: "../../resource/assets/ppconfig/static/dist/",
 
     scriptFiles: [
