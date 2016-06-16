@@ -25,6 +25,7 @@ angular.module("this_app.constants", [])
 
         MAX_TEXT_LEN: 128,
 
+        TEMPLATE_PREFIX: "templates/",
         STATIC_PREFIX: "/ppconsole/static/",
         DEFAULT_USER_ICON: "/ppconsole/static/img/default-user.png",
 

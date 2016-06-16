@@ -1,4 +1,5 @@
 module.exports = {
+    html: ["../src/html/**/*.html"],
 
     buildPath: "../../resource/assets/ppconsole/static/dist/",
 
