@@ -64,7 +64,7 @@ gulp.task('css-lib', function(done) {
 
 gulp.task('js', function(done) {
     gulp.src(buildConfig.scriptFiles)
-        .pipe(concat('ppconfig-template.js'))
+        .pipe(concat('ppconfig.js'))
         .pipe(gulp.dest(buildConfig.buildPath))
         .pipe(gulpif(min_js, ngAnnotate()))
         .pipe(gulpif(min_js, uglify()))
