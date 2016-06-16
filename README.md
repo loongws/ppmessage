@@ -50,7 +50,7 @@ bash ppmessage/scripts/set-up-ppmessage-on-mac.sh
 > Run
 
 ```bash
-python ppmessage.py
+./ppmessage.py
 ```
 
 > Access
@@ -62,6 +62,7 @@ Open your browser to access http://127.0.0.1:8945
 
 ```
 
+> Not working, what? Please fire an issue on Github, thanks. Enjoy!
 
 ## DOCUMENTS
 
