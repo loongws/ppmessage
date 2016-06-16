@@ -12,14 +12,9 @@ angular.module("this_app")
 
         var isLogin = yvLogin.isLogined();
 
-        $scope.isAdminUser = false; // is `ppconsole admin` user
-        $scope.apps = []; // apps
-        $scope.selectApp = selectApp; // Event: `selectApp`
-        $scope.appStyle = appStyle; // css style
         $scope.menuStyle = {
-            'margin-top': $scope.isAdminUser ? '12px' : '24px'
+            'margin-top': '24px'
         }; // menu style
-        $scope.selectedApp = { app_name: '' };
 
         var _getPreferredLanguage = function() {
             var _p = $translate.use();
@@ -40,8 +35,6 @@ angular.module("this_app")
             }
             return _l;
         };
-
-        
         
         $scope.toggle_mobile_menu = function($event) {
             if ($(".mobile-menu").hasClass("active")) {
@@ -172,58 +165,10 @@ angular.module("this_app")
         var _init = function() {
             // Event: login successful
             $rootScope.$on( yvConstants.BROADCAST_EVENT_KEY.LOGIN_FINISHED , function( event, args ) {
-
                 isLogin = true;
-                $scope.isAdminUser = args.isAdmin;
-                if ( $scope.isAdminUser === true ) {                    
-                    $scope.menuStyle[ 'margin-top' ] = '12px';
-                    refreshApps();
-                }
             } );            
         };
 
         _init();
-
-        // ===========
-        function refreshApps() {
-            fetchApps( function( apps ) {
-                setupAppsDropDownButton( apps );
-            } );            
-        }
-        
-        function fetchApps( callback ) {
-            yvAppService.getApps( callback );
-        }
-        
-        function setupAppsDropDownButton( apps ) {
-            $scope.apps = apps;
-            angular.forEach( apps, function( app, index ) {
-                if ( app.is_selected ) {
-                    $scope.selectedApp = app;                    
-                }
-            } );
-        }
-
-        function selectApp( app ) {
-            yvAppService.selectApp( app, function() {
-
-                refreshApps();
-                $scope.$broadcast( yvConstants.BROADCAST_EVENT_KEY.REFRESH_PAGE );
-                
-            }, function( error ) {
-                
-                yvDebug.d( 'select app error', error );
-                
-            } );
-        }
-
-        function appStyle( app ) {
-            if ( app.is_selected ) {
-                return {
-                    'background-color': 'red'
-                };
-            }
-            return { };
-        }
 
     }); // end app ctrl

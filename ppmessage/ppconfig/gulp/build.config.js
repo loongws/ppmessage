@@ -12,26 +12,11 @@ module.exports = {
         "../src/js/i18n.js",
         "../src/js/route.js",
 
-        "../src/js/services/rest.js",
         "../src/js/services/ajax.js",
-        "../src/js/services/user.js",
-        "../src/js/services/mime.js",
-        "../src/js/services/util.js",
-        "../src/js/services/doc.js",
-        "../src/js/services/type.js",
-        "../src/js/services/log.js",
-        "../src/js/services/debug.js",
-        "../src/js/services/login.js",
-        "../src/js/services/app.js",
-
+        
         "../src/js/controllers/signupmd.js",
         "../src/js/controllers/app.js",
         
-        "../src/js/directives/focusme.js",
-        "../src/js/directives/uniform.js",
-        "../src/js/directives/slimscroll.js",
-        "../src/js/directives/href.js",
-
         "../src/js/bootstrap.js"
     ],
 
@@ -58,11 +43,6 @@ module.exports = {
     ],
     
     cssFiles: [
-        "../src/css/header.css",
-        "../src/css/main.css",
-        "../src/css/login.css",
-        "../src/css/settings.css",
-        "../src/css/404.css",
     ],
 
     cssLibFiles: [

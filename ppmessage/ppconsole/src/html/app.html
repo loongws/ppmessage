@@ -17,20 +17,6 @@
       
       <div class="menu" ng-style="menuStyle" >
 
-        <span class="dropdown" ng-show="isAdminUser && is_logined()" >
-          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownApps" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            {{ selectedApp.app_name }}
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu app-menu" aria-labelledby="dropdownApps">
-            <li ng-repeat="app in apps">
-              <a ng-click="selectApp(app)" ng-style="appStyle(app)">
-                {{ app.app_name }}
-              </a>
-            </li>
-          </ul>
-        </span>
-
         <span class="register-item" ng-show="!is_logined()">
           <a ui-sref="app.signup-md({sign_what: 'signup'})">{{ "global.SIGNUP_TAG" | translate }}</a>
           <a ui-sref="app.signup-md({sign_what: 'signin'})">{{ "global.SIGNIN_TAG" | translate }}</a>
