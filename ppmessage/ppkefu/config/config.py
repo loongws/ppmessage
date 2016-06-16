@@ -18,7 +18,7 @@ def _cur_dir():
 
 def _replace_api_key(_api_key):
     JS_BUILD_PATH = "../../resource/assets/ppkefu/assets/js"
-    PPKEFU_TEMPLATE_MIN_JS = "ppkefu.template.min.js"
+    PPKEFU_TEMPLATE_MIN_JS = "ppkefu-template.min.js"
     
     _ppkefu_js_dir = os.path.join(_cur_dir(), JS_BUILD_PATH)
     _ppkefu_js_path = os.path.join(_ppkefu_js_dir, PPKEFU_TEMPLATE_MIN_JS)
