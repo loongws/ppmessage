@@ -7,8 +7,6 @@
 # ppkefu/min/config.py
 #
 
-from buildconfig import build_config
-
 import os
 import json
 import scss
@@ -59,8 +57,6 @@ def config(_key):
 
 if __name__ == "__main__":
     import sys
-    import uuid
-
     reload(sys)
     sys.setdefaultencoding('utf-8')
     _key = "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA=="

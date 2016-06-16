@@ -4,5 +4,5 @@
 # Guijin Ding, dingguijin@gmail.com.
 # All rights are reserved.
 #
-# ppkefu/min/__init__.py
+# ppkefu/config/__init__.py
 #
