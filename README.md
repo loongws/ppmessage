@@ -55,7 +55,6 @@ bash ppmessage/scripts/set-up-ppmessage-on-mac.sh
 
 > Access
 
-> First PPMessage will navigate you to config itself, enjoy.
 
 ```bash
 Open your browser to access http://127.0.0.1:8945
