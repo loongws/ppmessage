@@ -36,7 +36,7 @@ gulp.task('default', ['css', 'css-lib', 'js', 'js-lib', 'font', 'cache']);
 
 gulp.task('css', function(done) {
     gulp.src(buildConfig.cssFiles)
-        .pipe(concat('ppconsole.css'))
+        .pipe(concat('ppconfig.css'))
         .pipe(gulp.dest(buildConfig.buildPath))
         .pipe(cleanCss())
         .on('error', function(e) {
@@ -64,7 +64,7 @@ gulp.task('css-lib', function(done) {
 
 gulp.task('js', function(done) {
     gulp.src(buildConfig.scriptFiles)
-        .pipe(concat('ppconsole-template.js'))
+        .pipe(concat('ppconfig-template.js'))
         .pipe(gulp.dest(buildConfig.buildPath))
         .pipe(gulpif(min_js, ngAnnotate()))
         .pipe(gulpif(min_js, uglify()))
@@ -96,7 +96,7 @@ gulp.task("cache", function(done) {
     gulp.src(buildConfig.html)
         .pipe(cache("templates.js", {
             root: "templates",
-            module: "ppconsole"
+            module: "ppconfig"
         }))
         .pipe(gulp.dest(buildConfig.buildPath))
         .pipe(uglify())

@@ -1,5 +1,5 @@
 {
-  "name": "ppconsole",
+  "name": "ppconfig",
   "version": "1.0.0",
   "license": "Apache-2.0",
   "description": "ppconsole of ppmessage",
@@ -12,7 +12,8 @@
     "gulp-ng-annotate": "^2.0.0",
     "gulp-rename": "^1.2.0",
     "gulp-replace": "~0.5.4",
-    "gulp-uglify": "^1.4.2"
+    "gulp-uglify": "^1.4.2",
+    "gulp-angular-templatecache": "^1.8.0"
   },
   "devDependencies": {
     "gulp-util": "^2.2.14"
