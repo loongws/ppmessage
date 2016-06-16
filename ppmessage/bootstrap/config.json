@@ -1,0 +1,1 @@
+{"configed": false, "language": "zh_cn", "server": {"ssl": "on", "port": 443, "name": "ppmessage.com", "identicon_store": "/usr/local/opt/ppmessage/identicon","generic_store": "/usr/local/opt/ppmessage/generic"}}

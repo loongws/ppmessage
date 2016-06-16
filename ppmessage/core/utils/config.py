@@ -9,6 +9,7 @@
 
 """
 {
+"configed": false,
 "language": "zh_cn",
 "server": {
 "ssl": "on",
@@ -36,6 +37,11 @@ def _get_config():
     _r = _f.read()
     _f.close()
     if _r == None or len(_r) == 0:
+        logging.error("PPMessage system not configed")
+        return None
+    
+    _config = json.loads(_r)
+    if _config.get("configed") == None or _config.get("configed") == False:
         logging.error("PPMessage system not configed")
         return None
     
