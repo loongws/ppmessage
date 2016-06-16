@@ -9,7 +9,10 @@
 
 from .sqlnone import SqlNone
 
-from sqlalchemy.ext.declarative import declarative_base
+from ppmessage.core.constant import SQL
+from ppmessage.core.singleton import singleton
+from ppmessage.core.utils.config import get_config_sqlite
+
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.pool import Pool
@@ -20,18 +23,13 @@ from sqlalchemy import create_engine
 
 from sqlite3 import dbapi2 as sqlite
 
-from ppmessage.core.constant import SQL
-from ppmessage.core.singleton import singleton
-from ppmessage.bootstrap.config import BOOTSTRAP_CONFIG
-
+import logging
 import traceback
-
-BaseModel = declarative_base()
 
 class SqlInstance(SqlNone):
 
     def __init__(self):
-        _sqlite = BOOTSTRAP_CONFIG.get("sqlite")
+        _sqlite = get_config_sqlite()
         _dbpath = None
         if _sqlite != None:
             _dbpath = _sqlite.get("db_path")

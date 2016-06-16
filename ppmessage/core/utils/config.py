@@ -18,6 +18,12 @@
 "identicon_store": "/usr/local/opt/ppmessage/identicon",
 "generic_store": "/usr/local/opt/ppmessage/generic"
 },
+"db": {
+"type": "sqlite",
+"mysql":{},
+"sqlite": {},
+"psql": {},
+}
 }
 """
 
@@ -83,3 +89,34 @@ def get_config_server_generic_store():
         return None
     return _config.get("server").get("generic_store")
 
+def get_config_db():
+    _config = _get_config()
+    if _config == None:
+        return None
+    try:
+        return _config.get("db")
+    except:
+        return None
+    return None
+
+def get_config_db_psql():
+    _config = _get_config()
+    if _config == None:
+        return None
+    try:
+        return _config.get("db").get("psql")
+    except:
+        return None
+    return None
+
+def get_config_db_mysql():
+    _config = _get_config()
+    if _config == None:
+        return None
+    try:
+        return _config.get("db").get("mysql")
+    except:
+        return None
+    return None
+
+    

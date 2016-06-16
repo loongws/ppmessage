@@ -7,26 +7,51 @@
 # db/dbinstance.py
 #
 
-#from .sqlsqlite import SqlInstance
-#from .sqlsqlite import BaseModel
+from ppmessage.core.utils.config import get_config_db
 
-#from .sqlpsql import SqlInstance
-#from .sqlpsql import BaseModel
+from sqlalchemy.ext.declarative import declarative_base
 
-from .sqlmysql import SqlInstance
-from .sqlmysql import BaseModel
+import logging
+
+BaseModel = declarative_base()
+
+def _get_instance():
+    _config = get_config_db()
+    if _config == None:
+        logging.error("db not configed")
+        return None
+    if _config.get("type").upper() == "SQLITE":
+        from .sqlsqlite import SqlInstance
+    elif _config.get("type").upper() == "PSQL":
+        from .sqlpsql import SqlInstance
+    elif _config.get("type").upper() == "MYSQL":
+        from .sqlmysql import SqlInstance
+    else:
+        logging.error("db type not supported: %s" % _config.get("type"))
+        return None
+    
+    return SqlInstance()
 
 def getDBSessionClass():
-    db = SqlInstance()
+    db = _get_instance()
+    if db == None:
+        return None
+    
     db.createEngine()
     return db.getSessionClass()
 
 def getDatabaseInstance():
-    db = SqlInstance()
+    db = _get_instance()
+    if db == None:
+        return None
+    
     db.createEngine()
     return db
 
 def getDatabaseEngine():
-    db = SqlInstance()
+    db = _get_instance()
+    if db == None:
+        return None
+    
     db.createEngine()
     return db.dbengine

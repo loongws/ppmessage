@@ -105,8 +105,12 @@ def _main():
     _app.run_periodic()
 
     #mqtt_message_main()
-    logging.info("PPMessage backend servcie started.")
-    logging.info("Access http://127.0.0.1:%d/ to use PPMessage." % tornado.options.options.port)
+
+    _str = "Access http://127.0.0.1:%d/ to %s PPMessage."
+    if _get_config() == None:
+        logging.info(_str % (tornado.options.options.port, "config"))
+    else:
+        logging.info(_str % (tornado.options.options.port, "use"))
     tornado.ioloop.IOLoop.instance().start()
     return
 

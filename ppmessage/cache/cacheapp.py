@@ -15,8 +15,9 @@ from ppmessage.core.constant import CACHE_TYPE
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import PP_WEB_SERVICE
-
 from ppmessage.core.constant import REDIS_CACHE_KEY
+
+from ppmessage.core.utils.config import get_config_db
 
 from ppmessage.core.singleton import singleton
 from ppmessage.core.main import AbstractWebService
@@ -49,6 +50,10 @@ class CacheDelegate():
         return
 
     def run_periodic(self):
+        if get_config_db() == None:
+            logging.error("Cache not run for PPMessage not configed.")
+            return
+        
         tornado.ioloop.PeriodicCallback(self.task_loop, 1000).start()
         return
 
