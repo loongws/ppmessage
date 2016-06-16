@@ -7,10 +7,4 @@
 # __init__.py
 #
 
-def get_bootstrap_data():
-    try:
-        from .data import BOOTSTRAP_DATA as bootstrap_data
-    except:
-        return None
-    return bootstrap_data
-
+from .config import PPMESSAGE_CONFIG

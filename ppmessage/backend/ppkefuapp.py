@@ -17,8 +17,9 @@ from ppmessage.core.main import AbstractWebService
 from ppmessage.core.downloadhandler import DownloadHandler
 from ppmessage.core.materialfilehandler import MaterialFileHandler
 
+from ppmessage.core.utils.config import get_config_server_generic_store
+
 from ppmessage.db.models import FileInfo
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 
 import os
 import stat
@@ -86,8 +87,7 @@ class UploadHandler(tornado.web.RequestHandler):
         _file_sha1 = hashlib.sha1(_file_body).hexdigest()
         _new_name = str(uuid.uuid1())
 
-        _generic_store = BOOTSTRAP_DATA.get("server")
-        _generic_store = _generic_store.get("generic_store")
+        _generic_store = get_config_server_generic_store()
         
         _new_path = _generic_store + os.path.sep + _new_name
         with open(_new_path, "wb") as _new_file:
@@ -135,8 +135,10 @@ class PPKefuWebService(AbstractWebService):
     def get_handlers(cls):
 
         _root = os.path.join(os.path.dirname(__file__), "../resource/assets/ppkefu/assets")
-        _generic_store = BOOTSTRAP_DATA.get("server")
-        _generic_store = _generic_store.get("generic_store")
+        _generic_store = get_config_server_generic_store()
+        if _generic_store == None:
+            logging.error("PPKefu not run for PPMessage not configed")
+            return []
         
         handlers = [
             (r"/", MainHandler),

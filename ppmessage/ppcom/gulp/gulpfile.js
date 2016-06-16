@@ -6,43 +6,14 @@ var rename = require('gulp-rename');
 var ngAnnotate = require('gulp-ng-annotate');
 var uglify = require('gulp-uglify');
 var replace = require('gulp-replace');
-var del = require('del');
-var buildConfig = require("./build.config.js");
-var path = require('path');
 var fs = require('fs');
-var args = require('get-gulp-args')();
 var os = require('os');
+var del = require('del');
+var path = require('path');
+var args = require('get-gulp-args')();
+var buildConfig = require("./build.config.js");
 
-var _get_bootstrap_data = function() {
-    var data = fs.readFileSync("../../bootstrap/data.py", "utf8");
-    data = data.slice(data.search("BOOTSTRAP_DATA"));
-    data = eval(data);
-    return data;
-};
-
-var bootstrap_data = _get_bootstrap_data();
-var ws = "ws://";
-var http = "http://";
-var host = bootstrap_data.server.name + ":" + bootstrap_data.nginx.listen;
-var mode = "dev";
-if (bootstrap_data.nginx.ssl == "on") {
-    http = "https://";
-    ws = "wss://";
-    host = bootstrap_data.server.name + ":" + bootstrap_data.nginx.ssl_listen;
-}
-
-if (bootstrap_data.js.min == "yes") {
-    mode = "scripts";
-}
-
-var auth = http + host + "/ppauth";
-var api = http + host + "/api";
-var portal = http + host;
-var ppcom_assets_path = http + host + "/ppcom/assets/";
-var web_socket_url = ws + host + "/pcsocket/WS";
-var file_upload_url = http + host + "/upload";
-var file_upload_txt_url = http + host + "/upload_txt";
-var file_download_url= http + host + "/download/";
+var mode = "scripts";
 
 var watchingPaths = {
     scripts: ['../src/**/*.js'],
@@ -75,18 +46,7 @@ gulp.task('merge', ['css'], function(done) {
 
 gulp.task('dev', ['merge'], function(done) {
     gulp.src(buildConfig.scriptFiles)
-        .pipe(concat('pp-library.js'))
-        .pipe(replace('{auth}', auth))
-        .pipe(replace('{api}', api))
-        .pipe(replace('{portal}', portal))
-        .pipe(replace('{web_socket_url}', web_socket_url))
-        .pipe(replace('{file_upload_url}', file_upload_url))
-        .pipe(replace('{file_download_url}', file_download_url))
-        .pipe(replace('{file_upload_txt_url}', file_upload_txt_url))
-        .pipe(replace('{ppcom_assets_path}', ppcom_assets_path))
-        .pipe(replace('{ppcom_api_key}', bootstrap_data.PPCOM.api_key))
-        .pipe(replace('{ppcom_api_secret}', bootstrap_data.PPCOM.api_secret))
-        .pipe(gulp.dest(buildConfig.distPath))
+        .pipe(concat('pp-library-template.js'))
         .pipe(rename({ extname: '.min.js' }))
         .pipe(gulp.dest(buildConfig.distPath))
         .on('end', done);
@@ -94,17 +54,7 @@ gulp.task('dev', ['merge'], function(done) {
 
 gulp.task('scripts', ['merge'], function(done) {
     gulp.src(buildConfig.scriptFiles)
-        .pipe(concat('pp-library.js'))
-        .pipe(replace('{auth}', auth))
-        .pipe(replace('{api}', api))
-        .pipe(replace('{portal}', portal))
-        .pipe(replace('{web_socket_url}', web_socket_url))
-        .pipe(replace('{file_upload_url}', file_upload_url))
-        .pipe(replace('{file_download_url}', file_download_url))
-        .pipe(replace('{file_upload_txt_url}', file_upload_txt_url))
-        .pipe(replace('{ppcom_assets_path}', ppcom_assets_path))
-        .pipe(replace('{ppcom_api_key}', bootstrap_data.PPCOM.api_key))
-        .pipe(replace('{ppcom_api_secret}', bootstrap_data.PPCOM.api_secret))
+        .pipe(concat('pp-library-template.js'))
         .pipe(gulp.dest(buildConfig.distPath))
         .pipe(ngAnnotate())
         .pipe(uglify())
@@ -121,7 +71,7 @@ gulp.task('scripts', ['merge'], function(done) {
 gulp.task('clean:src', [ mode ], function(done) {
     try {
         return del([
-            buildConfig.distPath + '/pp-library.js',
+            buildConfig.distPath + '/pp-library-template.js',
             buildConfig.distPath + '/pp-lib.css',
             buildConfig.distPath + '/pp-lib.min.css'
         ], {

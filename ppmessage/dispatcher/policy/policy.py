@@ -8,7 +8,7 @@
 
 from .algorithm import AbstractAlgorithm
 
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
+#from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 
 from ppmessage.core.constant import IOS_FAKE_TOKEN
 from ppmessage.core.constant import CONVERSATION_TYPE
@@ -291,16 +291,17 @@ class AbstractPolicy(Policy):
     def _push_to_ios(self, _user_uuid, _device_uuid):
         logging.info("push ios %s:%s" % (_user_uuid, _device_uuid))
 
-        _apns_config = BOOTSTRAP_DATA.get("apns")
-        _apns_name = _apns_config.get("name")
-        _apns_dev = _apns_config.get("dev")
-        _apns_pro = _apns_config.get("pro")
+        # FIXME: route to apns name
+        # _apns_config = BOOTSTRAP_DATA.get("apns")
+        # _apns_name = _apns_config.get("name")
+        # _apns_dev = _apns_config.get("dev")
+        # _apns_pro = _apns_config.get("pro")
 
-        if _apns_name == None or len(_apns_name) == 0 or \
-           _apns_dev == None or len(_apns_dev) == 0 or \
-           _apns_pro == None or len(_apns_pro) == 0:
-            logging.info("iospush not start for no apns config")
-            return
+        # if _apns_name == None or len(_apns_name) == 0 or \
+        #    _apns_dev == None or len(_apns_dev) == 0 or \
+        #    _apns_pro == None or len(_apns_pro) == 0:
+        #     logging.info("iospush not start for no apns config")
+        #     return
 
         _app_uuid = self._task["app_uuid"]
         _user = self._users_hash.get(_user_uuid)

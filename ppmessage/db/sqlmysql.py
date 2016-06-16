@@ -7,8 +7,10 @@
 #
 
 from .sqlnone import SqlNone
+from ppmessage.core.constant import SQL
+from ppmessage.core.singleton import singleton
+from ppmessage.core.utils.config import get_config_db_mysql
 
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.pool import Pool
@@ -17,13 +19,8 @@ from sqlalchemy import exc
 from sqlalchemy import event
 from sqlalchemy import create_engine
 
-from ppmessage.core.constant import SQL
-from ppmessage.core.singleton import singleton
-from ppmessage.bootstrap.config import BOOTSTRAP_CONFIG
-
+import logging
 import traceback
-
-BaseModel = declarative_base()
 
 @event.listens_for(Pool, "checkout")
 def ping_connection(dbapi_connection, connection_record, connection_proxy):
@@ -45,10 +42,15 @@ class SqlInstance(SqlNone):
     
     def __init__(self):
 
-        DB_NAME = BOOTSTRAP_CONFIG.get("mysql").get("db_name")
-        DB_PASS = BOOTSTRAP_CONFIG.get("mysql").get("db_pass")
-        DB_USER = BOOTSTRAP_CONFIG.get("mysql").get("db_user")
-        DB_HOST = BOOTSTRAP_CONFIG.get("mysql").get("db_host")
+        _config = get_config_db_mysql()
+        if _config == None:
+            logging.error("MySQL is not configed.")
+            return
+        
+        DB_NAME = _config.get("db_name")
+        DB_PASS = _config.get("db_pass")
+        DB_USER = _config.get("db_user")
+        DB_HOST = _config.get("db_host")
 
         self.dbhost = DB_HOST
         self.dbname = DB_NAME
@@ -61,7 +63,12 @@ class SqlInstance(SqlNone):
     def name(self):
         return SQL.MYSQL
     
-    def createEngine(self):                
+    def createEngine(self):
+        _config = get_config_db_mysql()
+        if _config == None:
+            logging.error("MySQL is not configed.")
+            return None
+
         db_string = "mysql+mysqlconnector://%s:%s@%s/%s?charset=utf8" % (self.dbuser, 
                                                      self.dbpassword,
                                                      self.dbhost,

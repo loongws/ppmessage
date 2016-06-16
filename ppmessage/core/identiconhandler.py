@@ -6,7 +6,7 @@
 # All rights reserved
 #
 
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
+from ppmessage.core.utils.config import get_config_server_identicon_store
 
 from tornado.web import StaticFileHandler
 from tornado.web import HTTPError
@@ -31,8 +31,10 @@ class IdenticonHandler(StaticFileHandler):
             
     @classmethod
     def get_absolute_path(cls, root, path):
-        _identicon_store = BOOTSTRAP_DATA.get("server")
-        _identicon_store = _identicon_store.get("identicon_store")
+        _identicon_store = get_config_server_identicon_store()
+        if _identicon_store == None:
+            logging.error("Identicon store not configed")
+            return path
         _p = _identicon_store + os.path.sep + path
         return _p
 

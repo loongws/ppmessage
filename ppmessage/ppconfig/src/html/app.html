@@ -1,0 +1,23 @@
+<!-- Header BEGIN -->
+<div class="header">
+  <div class="nav">
+	<div class="nav_main">
+	  <div class="logo" ng-click="ppmessage()">
+	  </div>
+	</div>
+  </div>
+</div>
+<!-- Header END -->
+<div class="fix-header-padding"></div>
+
+<ui-view>
+</ui-view>
+
+<div class="footer-section navbar-fixed-bottom">
+  <div class="copyright">
+    <p ng-if="!is_lang_english()"><a style="cursor:pointer; color: white; font-weight: bold;" ng-click="switch_to_english()"> Switch to English </a></p>
+    <p ng-if="is_lang_english()"><a style="cursor:pointer; color: white; font-weight: bold;" ng-click="switch_to_chinese()">转换到中文</a></p>
+    <p>Proudly use <a href="https://ppmessage.com">PPMessage</a></p>
+  </div>
+</div>
+

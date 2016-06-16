@@ -16,8 +16,6 @@ from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.main import AbstractWebService
 from ppmessage.core.singleton import singleton
 
-from ppmessage.bootstrap.config import BOOTSTRAP_CONFIG
-
 import tornado.ioloop
 import tornado.options
 
@@ -26,6 +24,14 @@ import logging
 import redis
 import json
 import sys
+
+global_email_config = {
+    "service_type": "mailgun",
+    "domain_name": "mg.ppmessage.com",
+    "from_email": "service@ppmessage.com",
+    "from_name": "PPMessage Service",
+    "private_api_key": "key-7d5cf0ffe7c013db67b3f4af98108f3d",
+}
 
 class MailGunWorker():
     def __init__(self):
@@ -74,7 +80,7 @@ class EmailWorker():
         return
 
     def work(self, email_request):
-        _email = BOOTSTRAP_CONFIG.get("email")
+        _email = global_email_config
         _type = _email.get("service_type")
         _worker_class = self.service_mapping.get(_type)
         if _worker_class == None:

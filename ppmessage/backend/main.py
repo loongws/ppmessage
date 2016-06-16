@@ -15,6 +15,8 @@ from ppmessage.core.constant import REDIS_PORT
 
 from ppmessage.core.main import get_total_handlers
 from ppmessage.core.main import get_total_delegates
+from ppmessage.core.utils.config import _get_config
+
 from ppmessage.core.downloadhandler import DownloadHandler
 
 from ppmessage.api.apiapp import load_ip2geo
@@ -51,7 +53,10 @@ tornado.options.define("port", default=MAIN_PORT, help="", type=int)
 
 class EntryHandler(tornado.web.RequestHandler):
     def get(self):
-        self.redirect("/ppconsole/")
+        if _get_config() == None:
+            self.redirect("/ppconfig/")
+        else:
+            self.redirect("/ppconsole/")
         return
 
 class MainApplication(tornado.web.Application):
@@ -100,11 +105,14 @@ def _main():
     _app.run_periodic()
 
     #mqtt_message_main()
-    logging.info("PPMessage backend servcie started.")
-    logging.info("Access http://127.0.0.1:%d/ to use PPMessage." % tornado.options.options.port)
+
+    _str = "Access http://127.0.0.1:%d/ to %s PPMessage."
+    if _get_config() == None:
+        logging.info(_str % (tornado.options.options.port, "config"))
+    else:
+        logging.info(_str % (tornado.options.options.port, "use"))
     tornado.ioloop.IOLoop.instance().start()
     return
 
 if __name__ == "__main__":
     _main()
-

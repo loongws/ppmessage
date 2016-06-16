@@ -19,11 +19,11 @@
   "dependencies": {
     "angular-utils-pagination": "~0.10.0",
     "bootstrap": "~3.3.6",
-    "angular": "~1.5.0",
-    "angular-cookies": "~1.5.0",
+    "angular": "~1.5.6",
+    "angular-cookies": "~1.5.6",
     "angular-file-upload": "^2.2.0",
     "angular-block-ui": "^0.2.2",
-    "angular-translate": "^2.9.2",
+    "angular-translate": "^2.11.0",
     "angular-ui-router": "^0.2.18",
     "js-sha1": "^0.3.0",
     "moment": "^2.11.2",
@@ -43,7 +43,7 @@
     "angular-toastr": "^1.7.0"
   },
   "resolutions": {
-    "angular": "1.5.5",
+    "angular": "1.5.6",
     "jquery": ">=1.10"
   }
 }
