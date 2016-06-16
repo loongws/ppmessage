@@ -1,2 +1,12 @@
-*.js
-*.css
+MaterialIcons-Regular.eot
+MaterialIcons-Regular.ijmap
+MaterialIcons-Regular.svg
+MaterialIcons-Regular.ttf
+MaterialIcons-Regular.woff
+MaterialIcons-Regular.woff2
+codepoints
+lib.css
+lib.js
+ppconsole.css
+ppconsole.js
+ppconsole.min.js
