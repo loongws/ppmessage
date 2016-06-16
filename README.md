@@ -47,15 +47,6 @@ bash ppmessage/scripts/set-up-ppmessage-on-linux.sh
 bash ppmessage/scripts/set-up-ppmessage-on-mac.sh
 ```
 
-> Build 
-
-```bash
-bash dist.sh bootstrap
-bash dist.sh npm
-bash dist.sh bower
-bash dist.sh gulp
-```
-
 > Run
 
 ```bash
@@ -63,6 +54,8 @@ python ppmessage.py
 ```
 
 > Access
+
+> First PPMessage will navigate you to config itself, enjoy.
 
 ```bash
 Open your browser to access http://127.0.0.1:8945
