@@ -28,8 +28,6 @@ import datetime
 
 from .pushthreadhandler import PushThreadHandler
 
-
-
 @singleton
 class IOSPushDelegate():
     def __init__(self, app):

@@ -69,10 +69,12 @@ class GcmPushHandler():
 @singleton
 class GcmPushDelegate():
     def __init__(self, app):
-        _config = {
-            "api_key": "AIzaSyArXf60KTz2KwROtzAlQDJozAskFAdvzBE",
-            "sender_id": "878558045932"
-        }
+        _config = get_config_gcm()
+        if _config == None:
+            logging.error("GCM is not configed.")
+            self.gcm = None
+            return
+        
         _api_key = _config.get("api_key")
         self.gcm = GCM(_api_key)
         self.redis = app.redis
@@ -97,6 +99,8 @@ class GcmPushDelegate():
         return
 
     def run_periodic(self):
+        if self.gcm == None:
+            return
         tornado.ioloop.PeriodicCallback(self.outdate, 1000*30).start()
         tornado.ioloop.PeriodicCallback(self.push, 1000).start()
         return

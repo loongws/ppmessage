@@ -58,7 +58,6 @@ class PushThreadHandler():
         _data = json.loads(_data)
         _config = _data.get("config")
         _body = _data.get("body")
-        #_app_uuid = _data.get("app_uuid")
         
         # FIXME: so far not support for every team has APN cert
         if _get_config() == None:
