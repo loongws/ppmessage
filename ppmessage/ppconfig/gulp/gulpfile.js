@@ -32,7 +32,7 @@ var watching_paths = {
     config: ['./build.config.js']
 };
 
-gulp.task('default', ['css', 'css-lib', 'js', 'js-lib', 'font', 'cache']);
+gulp.task('default', ['css', 'css-lib', 'js', 'js-lib', 'font', 'cache', 'icon']);
 
 gulp.task('css', function(done) {
     gulp.src(buildConfig.cssFiles)
@@ -92,11 +92,15 @@ gulp.task('font', function(done) {
         .on("end", done);
 });
 
+gulp.task('icon', function(done) {
+    gulp.src(buildConfig.icon).pipe(gulp.dest(buildConfig.iconPath)).on("end", done);
+});
+
 gulp.task("cache", function(done) {
     gulp.src(buildConfig.html)
         .pipe(cache("templates.js", {
             root: "templates",
-            module: "ppconfig"
+            module: "this_app"
         }))
         .pipe(gulp.dest(buildConfig.buildPath))
         .pipe(uglify())

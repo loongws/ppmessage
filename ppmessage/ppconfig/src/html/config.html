@@ -1,99 +1,61 @@
-<div style="position:relative;" layout="column">
-  
-  <div layout="row" layout-align="center" style="padding-bottom:120px;">
-    <md-content class="md-padding" flex-xs flex-sm flex-gt-sm="55" flex-gt-lg="33" layout="column">
-      <md-content class="md-padding">
-        <h2>{{ "global.USER_ACCOUNT_TAG" | translate }}</h2>
-      </md-content>
+<md-content>
+  <div layout="column" flex="noshrink" layout-align="center center">
 
-      <md-tabs md-dynamic-height md-border-bottom md-center-tabs md-selected="ui.selected_index" class="md-padding" style="border: 1px solid #e1e1e1;">
+      <md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar">
+        <div class="md-toolbar-tools docs-toolbar-tools" tabIndex="-1">
+          <div layout="row" flex class="fill-height">
+            <h2 class="md-toolbar-item md-breadcrumb md-headline">
+              <span>
+                <span>Config PPMessage</span>
+              </span>
+            </h2>
+            <span flex></span> <!-- use up the empty space -->        
+          </div>
+        </div>
+      </md-toolbar>
 
-        <md-tab label="{{ 'global.SIGNUP_TAG' | translate }}">
-          <md-content class="md-padding">
-            <form name="sign_up_form" ng-submit="sign_up_form_submit()">
+      <div class="md-padding" layout="column" style="width:100%;" ng-cloak>
+        <br/>
+        <md-content class="md-no-momentum config-buttons">
 
-              
-              <md-input-container class="md-block">
-                <label>Team name</label>
-                <input ng-model="user.app_name" required>
-              </md-input-container>
+          <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+            <md-button class="md-raised" ng-disabled="should_disable_initialize_database()" ng-click="initialize_database()">
+              Initialize Database
+            </md-button>
+            <span flex></span>
+            <div class="label">{{ get_database_status() }}</div>
+          </section>
 
-              <md-input-container class="md-block">
-                <label>Full name</label>
-                <input ng-model="user.user_fullname" required>
-              </md-input-container>
+          <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+            <md-button class="md-raised" ng-disabled="should_disable_create_first()" ng-click="create_first()">
+              Create First User And Team
+            </md-button>
+            <span flex></span>
+            <div class="label">{{ get_first_status() }}</div>
+          </section>
 
-              <md-input-container class="md-block">
-                <label>Email</label>
-                <input ng-model="user.user_email" type="email" required>
-              </md-input-container>
+          <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+            <md-button class="md-raised" ng-disabled="should_disable_config_apns()" ng-click="config_apns()">
+              Config iOS Push
+            </md-button>
+            <span flex></span>
+            <div class="label">{{ get_apns_status() }}</div>
+          </section>
 
-              <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
-                <label>Password</label>
-                <input type="{{ user.password_input_type }}" ng-model="user.user_password" required>
-                <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
-                <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
-              </md-input-container>
+          <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+            <md-button class="md-raised" ng-disabled="should_disable_config_android_push()" ng-click="config_android_push()">
+              Config Android Push
+            </md-button>
+            <span flex></span>
+            <div class="label">{{ get_android_push_status() }}</div>
+          </section>
 
-              <md-input-container class="md-block">
-                <label>Language</label>
-                <md-select ng-model="user.user_language">
-                  <md-option value="English">
-                    English
-                  </md-option>
-                  <md-option value="Chinese">
-                    Chinese
-                  </md-option>
-                </md-select>
-              </md-input-container>
-              
-              <md-button class="md-raised" type="submit">{{ 'global.SIGNUP_TAG' | translate }}</md-button>
-              
-            </form>
-          </md-content>  
-        </md-tab>
-        
-        <md-tab label="{{ 'global.SIGNIN_TAG' | translate }}">
-          <md-content class="md-padding">
-            <form name="sign_in_form" ng-submit="sign_in_form_submit()">
-
-              <md-input-container class="md-block">
-                <label>Email</label>
-                <input ng-model="user.user_email" type="email" required>
-              </md-input-container>
-
-              <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
-                <label>Password</label>
-                <input type="{{ user.password_input_type }}" ng-model="user.user_password" required>
-                <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
-                <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
-              </md-input-container>
-              
-              <md-button class="md-raised" type="submit">{{ 'global.SIGNIN_TAG' | translate }}</md-button>
-              
-            </form>
-          </md-content>  
-
-        </md-tab>
-        
-        <md-tab label="{{ 'global.RESET_PASSWORD_TAG' | translate }}">
-          <md-content class="md-padding">
-            <form name="reset_password_form" ng-submit="reset_password_form_submit()">
-              
-              <md-input-container class="md-block">
-                <label>Email</label>
-                <input ng-model="user.user_email" type="email" required>
-              </md-input-container>
-
-              <md-button class="md-raised" type="submit">{{ 'global.SEND_NEW_PASSWORD_TAG' | translate }}</md-button>              
-            </form>
-          </md-content>  
-
-        </md-tab>
-
-      </md-tabs>
-    </md-content>
+        </md-content>
+      </div>
+      
   </div>
-</div>
 
+
+
+</md-content>
 

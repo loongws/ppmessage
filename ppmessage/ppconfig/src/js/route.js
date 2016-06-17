@@ -8,13 +8,13 @@ angular.module("this_app.route", ["ui.router", "this_app.constants"])
             .state("app", {
                 abstract: true,
                 url: "/app",
-                templateUrl: yvConstants.TEMPLATE_PREFIX + "app.html",
+                templateUrl: "templates/app.html",
                 controller: "AppCtrl"
             })
 
             .state("app.config", {
                 url: "/config",
-                templateUrl: yvConstants.TEMPLATE_PREFIX + "config.html",
+                templateUrl: "templates/config.html",
                 controller: "ConfigCtrl"
             })
 

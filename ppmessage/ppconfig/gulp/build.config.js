@@ -1,7 +1,8 @@
 module.exports = {
 
-    html: ["../src/html/**/*.html"],
-    
+    html: ["../src/html/**/*.html", "../src/html/*.html"],
+    icon: ['../../resource/share/bower_components/material-design-icons/*/svg/production/*.svg'],
+    iconPath: "../../resource/assets/ppconfig/static/img/icon/",    
     buildPath: "../../resource/assets/ppconfig/static/dist/",
 
     scriptFiles: [
@@ -13,10 +14,10 @@ module.exports = {
         "../src/js/route.js",
 
         "../src/js/services/ajax.js",
-        
-        "../src/js/controllers/signupmd.js",
+
         "../src/js/controllers/app.js",
-        
+        "../src/js/controllers/config.js",
+                
         "../src/js/bootstrap.js"
     ],
 
@@ -43,6 +44,8 @@ module.exports = {
     ],
     
     cssFiles: [
+        "../src/css/head.css",
+        "../src/css/config.css",
     ],
 
     cssLibFiles: [

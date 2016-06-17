@@ -32,6 +32,7 @@ from ppmessage.backend.ppkefuapp import PPKefuWebService
 from ppmessage.backend.ppauthapp import PPAuthWebService
 from ppmessage.backend.mqttpush import MqttPushWebService
 from ppmessage.iospush.iospushapp import IOSPushWebService
+from ppmessage.backend.ppconfigapp import PPConfigWebService
 from ppmessage.backend.dispatcher import DispatcherWebService
 from ppmessage.backend.ppconsoleapp import PPConsoleWebService
 from ppmessage.pcsocket.pcsocketapp import PCSocketWebService

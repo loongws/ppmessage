@@ -1,6 +1,7 @@
 angular.module("this_app")
-    .controller("AppCtrl", function($window, $scope, $rootScope, $location, $state, $translate, $timeout, $cookies, $filter, toastr, yvAjax, yvUser, yvUtil, yvDebug, yvLogin, yvAppService, yvConstants, yvLoginedUser, yvTransTags) {
+    .controller("AppCtrl", function($window, $scope, $rootScope, $location, $state, $translate, $timeout, $cookies, $filter, toastr, yvAjax) {
 
+        $scope.thisYear = (new Date()).getUTCFullYear();
         $scope._languages = [
             {
                 lang: "zh-CN",
@@ -9,7 +10,6 @@ angular.module("this_app")
                 lang: "en",
             },
         ];
-
 
         var _getPreferredLanguage = function() {
             var _p = $translate.use();
@@ -23,11 +23,7 @@ angular.module("this_app")
         };
         
         var _getLanguage = function() {
-            var _l = yvUser.get_language();
-            if (_l == null) {
-                _l = _getPreferredLanguage();
-                yvUser.set_language(_l);
-            }
+            _l = _getPreferredLanguage();
             return _l;
         };
         
@@ -36,21 +32,16 @@ angular.module("this_app")
         };
 
         $scope.switch_to_english = function () {
-            yvUser.set_language("en");
             $translate.use("en");
         };
 
         $scope.switch_to_chinese = function () {
-            yvUser.set_language("zh-CN");
             $translate.use("zh-CN");
         };
 
         $scope.is_lang_english = function() {
-            var _l = yvUser.get_language();
-            if (_l == null) {
-                return true;
-            }
-            if (_l == "en") {
+            var _p = $translate.use();
+            if (_p == "en") {
                 return true;
             }
             return false;
@@ -58,7 +49,6 @@ angular.module("this_app")
         
         $scope.toast_error_string = function(str) {
             var _local_str = $filter("translate")("global." + str);
-            console.log(_local_str);
             $timeout( function() {
                 toastr.error(_local_str);
             });
@@ -66,7 +56,6 @@ angular.module("this_app")
 
         $scope.toast_success_string = function(str) {
             var _local_str = $filter("translate")("global." + str);
-            console.log(_local_str);
             $timeout( function() {
                 toastr.success(_local_str);
             });

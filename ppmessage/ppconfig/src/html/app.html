@@ -1,5 +1,5 @@
 <!-- Header BEGIN -->
-<div class="header">
+<div class="header" layout="row">
   <div class="nav">
 	<div class="nav_main">
 	  <div class="logo" ng-click="ppmessage()">
@@ -10,14 +10,17 @@
 <!-- Header END -->
 <div class="fix-header-padding"></div>
 
-<ui-view>
-</ui-view>
 
-<div class="footer-section navbar-fixed-bottom">
-  <div class="copyright">
+<md-content md-scroll-y layout="column" flex>
+  <ui-view layout-padding flex="noshrink"></ui-view>
+
+  <div layout="row" flex="noshrink" layout-align="center center">
     <p ng-if="!is_lang_english()"><a style="cursor:pointer; color: white; font-weight: bold;" ng-click="switch_to_english()"> Switch to English </a></p>
     <p ng-if="is_lang_english()"><a style="cursor:pointer; color: white; font-weight: bold;" ng-click="switch_to_chinese()">转换到中文</a></p>
-    <p>Proudly use <a href="https://ppmessage.com">PPMessage</a></p>
+    <div id="license-footer" flex>
+      Proudly use <a href="https://ppmessage.com">PPMessage</a> &copy;2010&#8211;{{thisYear}}.
+      Code licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0"  target="_blank" class="md-default-theme md-accent">Apache License Version 2.0</a>.
+    </div>
   </div>
-</div>
+</md-content>
 
