@@ -1,6 +1,16 @@
 angular.module("this_app")
     .controller("ConfigCtrl", function($scope, $state, $stateParams, $timeout, $translate, yvAjax) {
 
+        var CONFIG_STATUS = {
+            NONE: 0,
+            DATABASE: 1,
+            FIRST: 2,
+            IOS: 3,
+            ANDROID: 4
+        };
+
+        var _config_status = CONFIG_STATUS.NONE;
+        
         $scope.user = {
             user_status: "OWNER_2",
             is_service_user: false,
@@ -47,35 +57,59 @@ angular.module("this_app")
         };
 
         $scope.get_database_status = function() {
-            return "N/A";
+            if (_config_status == CONFIG_STATUS.NONE) {
+                return "N/A";
+            }
+            return "OK";
         };
 
         $scope.get_first_status = function() {
+            if (_config_status >= CONFIG_STATUS.FIRSTUSER) {
+                return "OK";
+            }
             return "N/A";
         };
 
         $scope.get_apns_status = function() {
+            if (_config_status >= CONFIG_STATUS.IOS) {
+                return "OK";
+            }
             return "N/A";
         };
 
         $scope.get_android_push_status = function() {
+            if (_config_status == CONFIG_STATUS.ANDROID) {
+                return "OK";
+            }
             return "N/A";
         };
 
         $scope.should_disable_initialize_database = function() {
-            return false;
+            if (_config_status == CONFIG_STATUS.NONE) {
+                return false;
+            }
+            return true;
         };
         
         $scope.should_disable_create_first = function() {
-            return false;
+            if (_config_status == CONFIG_STATUS.DATABASE) {
+                return false;
+            }
+            return true;
         };
         
         $scope.should_disable_config_apns = function() {
-            return false;
+            if (_config_status == CONFIG_STATUS.FIRSTUSER) {
+                return false;
+            }
+            return true;
         };
         
         $scope.should_disable_config_android_push = function() {
-            return false;
+            if (_config_status == CONFIG_STATUS.IOS) {
+                return false;
+            }
+            return true;
         };
         
         
