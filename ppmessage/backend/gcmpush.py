@@ -16,6 +16,7 @@ from ppmessage.core.constant import PP_WEB_SERVICE
 
 from ppmessage.core.singleton import singleton
 from ppmessage.core.main import AbstractWebService
+from ppmessage.core.utils.config import get_config_gcm
 
 from gcm import GCM
 

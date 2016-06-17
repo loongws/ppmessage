@@ -119,4 +119,14 @@ def get_config_db_mysql():
         return None
     return None
 
+def get_config_gcm():
+    _config = _get_config()
+    if _config == None:
+        return None
+    try:
+        return _config.get("gcm")
+    except:
+        return None
+    return None
+
     
