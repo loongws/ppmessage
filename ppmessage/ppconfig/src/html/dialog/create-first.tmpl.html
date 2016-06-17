@@ -1,0 +1,69 @@
+<md-dialog aria-label="Create First User"  ng-cloak>
+  <form ng-submit="confirm()">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Create First User</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="static/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>Create First User</h2>
+
+        <p style="padding-bottom: 20px;">
+          Here will create service team and first user of the team, and the user is the leader of the team.
+        </p>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Language</label>
+          <md-select ng-model="user.user_language">
+            <md-option ng-repeat="language in user.languages" value="{{language}}">
+              {{language}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Team Name</label>
+          <input ng-model="user.team_name" required md-no-asterisk>
+        </md-input-container>
+        
+        <md-input-container class="md-block">
+          <label>User Full Name</label>
+          <input ng-model="user.user_fullname" required md-no-asterisk>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>User Email</label>
+          <input ng-model="user.user_email" type="email" required md-no-asterisk>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>User Password</label>
+          <input ng-model="user.user_password" required md-no-asterisk>
+        </md-input-container>
+
+        <p></p>
+      </div>
+    </md-dialog-content>
+    
+    <md-dialog-actions layout="row">
+      <span flex></span>
+
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+      
+      <md-button type="submit">
+        Confirm
+      </md-button>
+      
+    </md-dialog-actions>
+    
+  </form>
+</md-dialog>

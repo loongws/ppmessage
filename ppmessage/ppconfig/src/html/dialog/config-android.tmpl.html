@@ -1,0 +1,69 @@
+<md-dialog aria-label="Config Android Device Push"  ng-cloak>
+  <form ng-submit="confirm()">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Config Android Device Push</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="static/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>Config Android Device Push</h2>
+
+        <p style="padding-bottom: 20px;">
+          For Android device, since Google GCM is not always work in China, so that you may choose an alternative way to push message to Android device. MQTT push is embedded in PPMessage so that it does not need any parameter.
+        </p>
+
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Android Push Type</label>
+          <md-select ng-model="android.type">
+            <md-option ng-repeat="push_type in android.types" value="{{push_type}}">
+              {{push_type}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+
+        <div ng-if="should_show('GCM')" style="padding-top:20px;">
+          <md-input-container class="md-block">
+            <label>GCM API Key</label>
+            <input ng-model="android.gcm.api_key" required>
+          </md-input-container>
+        </div>
+
+        <div ng-if="should_show('JPUSH')" style="padding-top:20px;">
+          <md-input-container class="md-block">
+            <label>JPUSH Master Secert</label>
+            <input ng-model="android.jpush.master_secret" required>
+          </md-input-container>
+        </div>
+        
+        <p></p>
+      </div>
+    </md-dialog-content>
+    
+    <md-dialog-actions layout="row">
+      
+      <md-button ng-click="pass()">
+        No Android Push, Please Pass
+      </md-button>
+
+      <span flex></span>
+
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+
+      
+      <md-button type="submit">
+        Confirm
+      </md-button>
+      
+    </md-dialog-actions>
+    
+  </form>
+</md-dialog>

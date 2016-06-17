@@ -1,0 +1,40 @@
+<md-dialog aria-label="Restart PPMessage with Configuration "  ng-cloak>
+  <form ng-submit="confirm()">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Restart PPMessage With Configuration</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="static/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>Restart PPMessage With Configuration</h2>
+
+        <p style="padding-bottom: 20px;">
+          Now you have configed PPMessage completely. You need restart PPMessage, PPMessage automatically run with the configed data. For security reason, you can not restart PPMessage here. Everything is here just tell you restart PPMessage.
+        </p>
+        
+        <p></p>
+      </div>
+    </md-dialog-content>
+    
+    <md-dialog-actions layout="row">
+      <span flex></span>
+
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+      
+      <md-button type="submit">
+        Confirm
+      </md-button>
+      
+    </md-dialog-actions>
+    
+  </form>
+</md-dialog>

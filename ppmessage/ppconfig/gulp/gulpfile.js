@@ -32,7 +32,7 @@ var watching_paths = {
     config: ['./build.config.js']
 };
 
-gulp.task('default', ['css', 'css-lib', 'js', 'js-lib', 'font', 'cache', 'icon']);
+gulp.task('default', ['css', 'css-lib', 'js', 'js-lib', 'font', 'cache']);
 
 gulp.task('css', function(done) {
     gulp.src(buildConfig.cssFiles)

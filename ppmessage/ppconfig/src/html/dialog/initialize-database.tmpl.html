@@ -1,5 +1,5 @@
 <md-dialog aria-label="Initialize Database"  ng-cloak>
-  <form ng-submit="initialize()">
+  <form ng-submit="confirm()">
 
     <md-toolbar>
       <div class="md-toolbar-tools">
@@ -22,23 +22,88 @@
         <md-input-container class="md-block" flex-gt-sm>
           <label>Database Type</label>
           <md-select ng-model="database.type">
-            <md-option ng-repeat="db_type in database_types" value="{{db_type}}">
+            <md-option ng-repeat="db_type in database.types" value="{{db_type}}">
               {{db_type}}
             </md-option>
           </md-select>
         </md-input-container>
 
+        <div ng-if="should_show_sqlite()" style="padding-top:20px;">
+          <md-input-container class="md-block">
+            <label>Database File Path</label>
+            <input ng-model="database.sqlite.db_file_path" required>
+          </md-input-container>
+        </div>
         
-            
+        <div ng-if="should_show_mysql()" style="padding-top:20px;">
+          <md-input-container class="md-block">
+            <label>Database Name</label>
+            <input ng-model="database.mysql.db_name" required>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Database Host</label>
+            <input ng-model="database.mysql.db_host" required>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Database Port</label>
+            <input ng-model="database.mysql.db_port" required>
+          </md-input-container>
+          
+          <md-input-container class="md-block">
+            <label>Database User</label>
+            <input ng-model="database.mysql.db_user" required>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Database User Password</label>
+            <input ng-model="database.mysql.db_password">
+          </md-input-container>
+        </div>
+
+        <div ng-if="should_show_pgsql()" style="padding-top:20px;">
+          <md-input-container class="md-block">
+            <label>Database Name</label>
+            <input ng-model="database.pgsql.db_name" required>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Database Host</label>
+            <input ng-model="database.pgsql.db_host" required>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Database Port</label>
+            <input ng-model="database.pgsql.db_port" required>
+          </md-input-container>
+          
+          <md-input-container class="md-block">
+            <label>Database User</label>
+            <input ng-model="database.pgsql.db_user" required>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Database User Password</label>
+            <input ng-model="database.pgsql.db_password">
+          </md-input-container>          
+        </div>
+        
         <p></p>
       </div>
     </md-dialog-content>
     
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button type="submit">
-        Initialize
+
+      <md-button ng-click="cancel()">
+        Cancel
       </md-button>
+      
+      <md-button type="submit">
+        Confirm
+      </md-button>
+      
     </md-dialog-actions>
     
   </form>

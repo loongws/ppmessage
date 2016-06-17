@@ -1,61 +1,70 @@
 <md-content>
   <div layout="column" flex="noshrink" layout-align="center center">
 
-      <md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar">
-        <div class="md-toolbar-tools docs-toolbar-tools" tabIndex="-1">
-          <div layout="row" flex class="fill-height">
-            <h2 class="md-toolbar-item md-breadcrumb md-headline">
-              <span>
-                <span>Config PPMessage</span>
-              </span>
-            </h2>
-            <span flex></span> <!-- use up the empty space -->        
-          </div>
+    <md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar">
+      <div class="md-toolbar-tools docs-toolbar-tools" tabIndex="-1">
+        <div layout="row" flex class="fill-height">
+          <h2 class="md-toolbar-item md-breadcrumb md-headline">
+            <span>
+              <span>Config PPMessage</span>
+            </span>
+          </h2>
+          <span flex></span> <!-- use up the empty space -->        
         </div>
-      </md-toolbar>
-
-      <div class="md-padding" layout="column" style="width:100%;" ng-cloak>
-        <br/>
-        <md-content class="md-no-momentum config-buttons">
-
-          <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-            <md-button class="md-raised" ng-disabled="should_disable_initialize_database()" ng-click="initialize_database(event)">
-              Initialize Database
-            </md-button>
-            <span flex></span>
-            <div class="label">{{ get_database_status() }}</div>
-          </section>
-
-          <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-            <md-button class="md-raised" ng-disabled="should_disable_create_first()" ng-click="create_first(event)">
-              Create First User And Team
-            </md-button>
-            <span flex></span>
-            <div class="label">{{ get_first_status() }}</div>
-          </section>
-
-          <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-            <md-button class="md-raised" ng-disabled="should_disable_config_apns()" ng-click="config_ios(event)">
-              Config iOS Push
-            </md-button>
-            <span flex></span>
-            <div class="label">{{ get_apns_status() }}</div>
-          </section>
-
-          <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-            <md-button class="md-raised" ng-disabled="should_disable_config_android_push()" ng-click="config_android(event)">
-              Config Android Push
-            </md-button>
-            <span flex></span>
-            <div class="label">{{ get_android_push_status() }}</div>
-          </section>
-
-        </md-content>
       </div>
-      
+    </md-toolbar>
+
+    <div style="width:100%;">
+      <md-card class="md-whiteframe-z2" flex="66">
+
+        <div class="md-padding" layout="column" style="width:100%;" ng-cloak>
+
+          <md-content class="md-no-momentum config-buttons">
+
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+              <md-button class="md-raised" ng-disabled="should_disable_initialize_database()" ng-click="initialize_database(event)">
+                Initialize Database
+              </md-button>
+              <span flex></span>
+              <div class="label" style="padding-left: 15px;">{{ get_database_status() }}</div>
+            </section>
+
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+              <md-button class="md-raised" ng-disabled="should_disable_create_first()" ng-click="create_first(event)">
+                Create First User And Team
+              </md-button>
+              <span flex></span>
+              <div class="label" style="padding-left: 15px;">{{ get_first_status() }}</div>
+            </section>
+
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+              <md-button class="md-raised" ng-disabled="should_disable_config_apns()" ng-click="config_ios(event)">
+                Config iOS Push
+              </md-button>
+              <span flex></span>
+              <div class="label" style="padding-left: 15px;">{{ get_apns_status() }}</div>
+            </section>
+
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+              <md-button class="md-raised" ng-disabled="should_disable_config_android_push()" ng-click="config_android(event)">
+                Config Android Push
+              </md-button>
+              <span flex></span>
+              <div class="label" style="padding-left: 15px;">{{ get_android_push_status() }}</div>
+            </section>
+
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+              <md-button class="md-raised" ng-disabled="should_disable_restart()" ng-click="restart_ppmessage(event)">
+                Restart PPMessage with configed data
+              </md-button>
+            </section>
+
+          </md-content>
+        </div>
+      </md-card>
+
+    </div>
   </div>
-
-
-
+  
 </md-content>
 
