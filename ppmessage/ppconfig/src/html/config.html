@@ -19,7 +19,7 @@
         <md-content class="md-no-momentum config-buttons">
 
           <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-            <md-button class="md-raised" ng-disabled="should_disable_initialize_database()" ng-click="initialize_database()">
+            <md-button class="md-raised" ng-disabled="should_disable_initialize_database()" ng-click="initialize_database(event)">
               Initialize Database
             </md-button>
             <span flex></span>
@@ -27,7 +27,7 @@
           </section>
 
           <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-            <md-button class="md-raised" ng-disabled="should_disable_create_first()" ng-click="create_first()">
+            <md-button class="md-raised" ng-disabled="should_disable_create_first()" ng-click="create_first(event)">
               Create First User And Team
             </md-button>
             <span flex></span>
@@ -35,7 +35,7 @@
           </section>
 
           <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-            <md-button class="md-raised" ng-disabled="should_disable_config_apns()" ng-click="config_apns()">
+            <md-button class="md-raised" ng-disabled="should_disable_config_apns()" ng-click="config_ios(event)">
               Config iOS Push
             </md-button>
             <span flex></span>
@@ -43,7 +43,7 @@
           </section>
 
           <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-            <md-button class="md-raised" ng-disabled="should_disable_config_android_push()" ng-click="config_android_push()">
+            <md-button class="md-raised" ng-disabled="should_disable_config_android_push()" ng-click="config_android(event)">
               Config Android Push
             </md-button>
             <span flex></span>

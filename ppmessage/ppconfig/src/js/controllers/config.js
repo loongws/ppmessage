@@ -1,5 +1,5 @@
 angular.module("this_app")
-    .controller("ConfigCtrl", function($scope, $state, $stateParams, $timeout, $translate, yvAjax) {
+    .controller("ConfigCtrl", function($scope, $state, $stateParams, $timeout, $translate, $mdDialog, yvAjax) {
 
         var CONFIG_STATUS = {
             NONE: 0,
@@ -110,6 +110,30 @@ angular.module("this_app")
                 return false;
             }
             return true;
+        };
+
+        $scope.initialize_database = function(ev) {
+            $mdDialog.show({
+                controller: InitializeDatabaseController,
+                templateUrl: 'templates/dialog/initialize-database.tmpl.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose:true
+            }).then(function(answer) {
+                $scope.status = 'You said the information was "' + answer + '".';
+            }, function() {
+                $scope.status = 'You cancelled the dialog.';
+            });
+            
+        };
+                
+        $scope.create_first = function() {
+        };
+
+        $scope.config_ios = function() {
+        };
+
+        $scope.config_android = function() {
         };
         
         

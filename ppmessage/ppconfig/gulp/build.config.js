@@ -14,10 +14,10 @@ module.exports = {
         "../src/js/route.js",
 
         "../src/js/services/ajax.js",
-
         "../src/js/controllers/app.js",
+        "../src/js/controllers/database.js",        
         "../src/js/controllers/config.js",
-                
+        
         "../src/js/bootstrap.js"
     ],
 
