@@ -10,6 +10,7 @@
 from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.main import AbstractWebService
 from ppmessage.core.singleton import singleton
+from ppmessage.core.utils.config import _get_config
 
 import os
 import logging
@@ -17,7 +18,6 @@ import logging
 import tornado.web
 
 class PPConfigHandler(tornado.web.RequestHandler):
-    # ppcom library load from where
     def get(self, id=None):
         _dir = os.path.dirname(os.path.abspath(__file__))
         _html_path = _dir + "/../resource/html/ppconfig-index.html" 
@@ -26,6 +26,41 @@ class PPConfigHandler(tornado.web.RequestHandler):
         _html_file.close()
         self.write(_html)
         self.finish()
+
+class ConfigStatusHandler(tornado.web.RequestHandler):
+    def post(self, id=None):
+        _status = {"status": "NONE"}
+        if _get_config() == None:
+            pass  
+        elif _get_config().get("db") and _get_config().get("team") and _get_config().get("apns") and _get_config.get("gcm"):
+            _status["status"] = "ANDROID"
+        elif _get_config().get("db") and _get_config().get("team") and _get_config().get("apns"):
+            _status["status"] = "IOS"
+        elif _get_config().get("db") and _get_config().get("team"):
+            _status["status"] = "FIRST"
+        elif _get_config().get("db"):
+            _status["status"] = "DATABASE"
+        else:
+            _status["status"] = "NONE"
+        self.set_header("Content-Type", "application/json")
+        self.write(json.dumps(_status))
+        return
+
+class DatabaseHandler(tornado.web.RequestHandler):
+    def post(self, id=None):
+        return
+
+class FirstHandler(tornado.web.RequestHandler):
+    def post(self, id=None):
+        return
+
+class IOSHandler(tornado.web.RequestHandler):
+    def post(self, id=None):
+        return
+
+class GCMHandler(tornado.web.RequestHandler):
+    def post(self, id=None):
+        return
 
 @singleton
 class PPConfigDelegate():
@@ -48,6 +83,11 @@ class PPConfigWebService(AbstractWebService):
         
         handlers=[
             (r"/", PPConfigHandler),
+            (r"/status", ConfigStatusHandler),
+            (r"/database", DatabaseHandler),
+            (r"/first", FirstHandler),
+            (r"/ios", IOSHandler),
+            (r"/android", AndroidHandler),
             (r"/static/(.*)", tornado.web.StaticFileHandler, _a_settings),
         ]
 
