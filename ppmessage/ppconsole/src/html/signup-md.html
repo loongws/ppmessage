@@ -8,51 +8,6 @@
 
       <md-tabs md-dynamic-height md-border-bottom md-center-tabs md-selected="ui.selected_index" class="md-padding" style="border: 1px solid #e1e1e1;">
 
-        <md-tab label="{{ 'global.SIGNUP_TAG' | translate }}">
-          <md-content class="md-padding">
-            <form name="sign_up_form" ng-submit="sign_up_form_submit()">
-
-              
-              <md-input-container class="md-block">
-                <label>Team name</label>
-                <input ng-model="user.app_name" required>
-              </md-input-container>
-
-              <md-input-container class="md-block">
-                <label>Full name</label>
-                <input ng-model="user.user_fullname" required>
-              </md-input-container>
-
-              <md-input-container class="md-block">
-                <label>Email</label>
-                <input ng-model="user.user_email" type="email" required>
-              </md-input-container>
-
-              <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
-                <label>Password</label>
-                <input type="{{ user.password_input_type }}" ng-model="user.user_password" required>
-                <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
-                <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
-              </md-input-container>
-
-              <md-input-container class="md-block">
-                <label>Language</label>
-                <md-select ng-model="user.user_language">
-                  <md-option value="English">
-                    English
-                  </md-option>
-                  <md-option value="Chinese">
-                    Chinese
-                  </md-option>
-                </md-select>
-              </md-input-container>
-              
-              <md-button class="md-raised" type="submit">{{ 'global.SIGNUP_TAG' | translate }}</md-button>
-              
-            </form>
-          </md-content>  
-        </md-tab>
-        
         <md-tab label="{{ 'global.SIGNIN_TAG' | translate }}">
           <md-content class="md-padding">
             <form name="sign_in_form" ng-submit="sign_in_form_submit()">
@@ -73,7 +28,6 @@
               
             </form>
           </md-content>  
-
         </md-tab>
         
         <md-tab label="{{ 'global.RESET_PASSWORD_TAG' | translate }}">
@@ -88,7 +42,6 @@
               <md-button class="md-raised" type="submit">{{ 'global.SEND_NEW_PASSWORD_TAG' | translate }}</md-button>              
             </form>
           </md-content>  
-
         </md-tab>
 
       </md-tabs>
