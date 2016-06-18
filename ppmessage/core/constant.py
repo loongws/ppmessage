@@ -33,7 +33,7 @@ Animals = Enum(["DOG", "CAT", "HORSE"])
 SQL = Enum([
     "NONE",
     "MYSQL",
-    "PSQL",
+    "PGSQL",
     "SQLITE",
 ])
 

@@ -7,10 +7,13 @@
 # backend/ppconfigapp.py
 #
 
+from ppmessage.core.constant import SQL
 from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.main import AbstractWebService
 from ppmessage.core.singleton import singleton
 from ppmessage.core.utils.config import _get_config
+
+from ppmessage.db.create import create_sqlite_tables
 
 import os
 import logging
@@ -47,8 +50,61 @@ class ConfigStatusHandler(tornado.web.RequestHandler):
         return
 
 class DatabaseHandler(tornado.web.RequestHandler):
-    def post(self, id=None):
-        logging.info("databasehandler")
+    def _return(self, _code):
+        if _code >= 0:
+            self.write({"error_code": _code})
+            self.flush()
+        else:
+            self.send_error(520-_code)
+        return
+
+    def _sqlite(self):
+        _db_file_path = _request.get("db_file_path")
+        if _db_file_path == None or len(_db_file_path) == 0:
+            logging.error("db_file_path is required for sqlite")
+            return self._return(-1)
+        try:
+            open(_db_file_path, "w").close()
+        except:
+            logging.error("sqlite db_file_path can not create")
+            return self._return(-1)
+        
+        _config = {
+            "type": "sqlite",
+            "sqlite": {
+                "db_file_path": _db_file_path
+            }
+        }
+
+        if create_database_tables(_config):
+            self._dump_db_config(_config)
+            return self._return(0)
+        return self._return(-1)
+    
+    def post(self, id=None):        
+        _request = json.loads(self.request.body)
+        _type = _request.get("type")
+
+        _config = _get_config()
+        if _config != None:
+            logging.error("config already existed.")
+            self.write(json.dumps(_return_error))
+            return
+        
+        if _type == None or len(_type) == 0:
+            logging.error("type is required.")
+            self.write(json.dumps(_return_error))
+            return
+
+        _type = _type.upper()
+        if _type == SQL.SQLITE:
+            return self._sqlite(_request)
+        if _type == SQL.MYSQL:
+            return self._mysql(_request)
+        if _type == SQL.PGSQL:
+            return self._pgsql(_request)
+
+        self._return(-1)
         return
 
 class FirstHandler(tornado.web.RequestHandler):

@@ -32,8 +32,10 @@ import json
 import logging
 import hashlib
 
+_CONFIG_PATH = os.path.join(os.path.dirname(__file__), "../../bootstrap/config.json")
+
 def _get_config():
-    _config_file = os.path.join(os.path.dirname(__file__), "../../bootstrap/config.json")
+    _config_file = _CONFIG_PATH
 
     if not os.path.exists(_config_file):
         logging.error("PPMesage system not configed")
@@ -52,6 +54,13 @@ def _get_config():
         return None
     
     return json.loads(_r)
+
+def _dump_config(_config):
+    _config_file = _CONFIG_PATH
+    _f = open(_config_file, "w")
+    _r = _f.write(json.dumps(_config))
+    _f.close()
+    return
 
 def get_config_language():
     _config = _get_config()

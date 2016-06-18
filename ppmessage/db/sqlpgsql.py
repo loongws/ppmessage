@@ -10,14 +10,10 @@
 from .sqlnone import SqlNone
 from ppmessage.core.constant import SQL
 from ppmessage.core.singleton import singleton
-from ppmessage.core.utils.config import get_config_db_psql
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
-from sqlalchemy.pool import Pool
 
-from sqlalchemy import exc
-from sqlalchemy import event
 from sqlalchemy import create_engine
 
 import logging
@@ -25,17 +21,19 @@ import traceback
 
 class SqlInstance(SqlNone):
 
-    def __init__(self):
+    def __init__(self, _db_config):
 
-        _psql = get_config_db_psql()
-        if _psql == None:
-            logging.error("PSQL not configed.")
+        self.pgsql_config = None
+        _pgsql = _db_config.get(SQL.PGSQL.lower())
+        if _pgsql == None:
+            logging.error("PGSQL not configed.")
             reutrn
-            
-        DB_NAME = _psql.get("db_name")
-        DB_PASS = _psql.get("db_pass")
-        DB_USER = _psql.get("db_user")
-        DB_HOST = _psql.get("db_host")
+        self.pgsql_config = _pgsql
+        
+        DB_NAME = _pgsql.get("db_name")
+        DB_PASS = _pgsql.get("db_pass")
+        DB_USER = _pgsql.get("db_user")
+        DB_HOST = _pgsql.get("db_host")
 
         self.dbhost = DB_HOST
         self.dbname = DB_NAME
@@ -46,14 +44,14 @@ class SqlInstance(SqlNone):
         return
 
     def name(self):
-        return SQL.PSQL
+        return SQL.PGSQL
         
     def createEngine(self):
-        _psql = get_config_db_psql()
-        if _psql == None:
-            logging.error("PSQL not configed.")
-            reutrn None
 
+        if self.pgsql_config == None:
+            logging.error("can not create engine for not configed.")
+            return None
+        
         db_string = "postgresql+psycopg2://%s:%s@%s/%s" % (self.dbuser, 
                                                            self.dbpassword,
                                                            self.dbhost,
