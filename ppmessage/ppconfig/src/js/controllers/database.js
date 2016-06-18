@@ -62,8 +62,13 @@ function InitializeDatabaseController($scope, $mdDialog) {
     };
 
     $scope.confirm = function() {
+        yvAjax.database().success(function(){
+            console.log("database create successfully");
+            $mdDialog.hide("success");
+        }).error(function(){
+            console.log("database create failed");
+        });
         console.log("confirm to initialize database");
-        $mdDialog.hide("success");
     };
     
 }

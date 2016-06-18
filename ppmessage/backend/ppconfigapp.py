@@ -28,7 +28,7 @@ class PPConfigHandler(tornado.web.RequestHandler):
         self.finish()
 
 class ConfigStatusHandler(tornado.web.RequestHandler):
-    def get(self, id=None):
+    def post(self, id=None):
         _status = {"status": "NONE"}
         if _get_config() == None:
             pass  
@@ -48,18 +48,22 @@ class ConfigStatusHandler(tornado.web.RequestHandler):
 
 class DatabaseHandler(tornado.web.RequestHandler):
     def post(self, id=None):
+        logging.info("databasehandler")
         return
 
 class FirstHandler(tornado.web.RequestHandler):
     def post(self, id=None):
+        logging.info("firsthandler")
         return
 
 class IOSHandler(tornado.web.RequestHandler):
     def post(self, id=None):
+        logging.info("ioshandler")
         return
 
-class GCMHandler(tornado.web.RequestHandler):
+class AndroidHandler(tornado.web.RequestHandler):
     def post(self, id=None):
+        logging.info("Androidhandler")
         return
 
 @singleton

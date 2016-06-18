@@ -11,7 +11,7 @@ var args = require("get-gulp-args")();
 var replace = require('gulp-replace');
 var cleanCss = require('gulp-clean-css');
 var ngAnnotate = require('gulp-ng-annotate');
-var cache = require("gulp-angular-templatecache");
+var ngCache = require("gulp-angular-templatecache");
 
 var min_js = true;
 
@@ -32,7 +32,7 @@ var watching_paths = {
     config: ['./build.config.js']
 };
 
-gulp.task('default', ['css', 'css-lib', 'js', 'js-lib', 'font', 'cache']);
+gulp.task('default', ['css', 'css-lib', 'js', 'js-lib', 'font', 'ngcache']);
 
 gulp.task('css', function(done) {
     gulp.src(buildConfig.cssFiles)
@@ -96,9 +96,9 @@ gulp.task('icon', function(done) {
     gulp.src(buildConfig.icon).pipe(gulp.dest(buildConfig.iconPath)).on("end", done);
 });
 
-gulp.task("cache", function(done) {
+gulp.task("ngcache", function(done) {
     gulp.src(buildConfig.html)
-        .pipe(cache("templates.js", {
+        .pipe(ngCache("templates.js", {
             root: "templates",
             module: "this_app"
         }))
