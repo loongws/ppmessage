@@ -15,6 +15,7 @@ from ppmessage.core.constant import PP_WEB_SERVICE
 
 from ppmessage.core.main import AbstractWebService
 from ppmessage.core.singleton import singleton
+from ppmessage.core.utils.config import get_config_email
 
 import tornado.ioloop
 import tornado.options
@@ -80,7 +81,9 @@ class EmailWorker():
         return
 
     def work(self, email_request):
-        _email = global_email_config
+        _email = get_config_email()
+        if _email == None:
+            _email = global_email_config
         _type = _email.get("service_type")
         _worker_class = self.service_mapping.get(_type)
         if _worker_class == None:

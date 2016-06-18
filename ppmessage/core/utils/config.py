@@ -129,4 +129,13 @@ def get_config_gcm():
         return None
     return None
 
-    
+def get_config_email():
+    _config = _get_config()
+    if _config == None:
+        return None
+    try:
+        return _config.get("email")
+    except:
+        return None
+    return None
+
