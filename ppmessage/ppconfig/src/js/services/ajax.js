@@ -4,7 +4,7 @@ function $yvAjaxService($state, $timeout, $http, $cookies, yvConstants) {
     var _api_post = function(_url, _data) {
         _data = _data || {};
         
-        _url = '/ppconfig/' + _url;
+        _url = '/ppconfig' + _url;
         return $http({
             method: 'POST',
             cache: false,

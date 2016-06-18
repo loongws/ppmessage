@@ -1,4 +1,4 @@
-function InitializeDatabaseController($scope, $mdDialog) {
+function InitializeDatabaseController($scope, $mdDialog, yvAjax) {
 
     var DATABASE_TYPE = {
         SQLITE: "SQLITE",
@@ -68,12 +68,11 @@ function InitializeDatabaseController($scope, $mdDialog) {
         }).error(function(){
             console.log("database create failed");
         });
-        console.log("confirm to initialize database");
     };
     
 }
 
-function CreateFirstController($scope, $mdDialog) {
+function CreateFirstController($scope, $mdDialog, yvAjax) {
     var LANGUAGE = {
         CHINESE: "CHINESE",
         ENGLISH: "ENGLISH"
@@ -101,12 +100,17 @@ function CreateFirstController($scope, $mdDialog) {
     };
 
     $scope.confirm = function() {
-        $mdDialog.hide("success");
+        yvAjax.first().success(function(){
+            console.log("first user successfully");
+            $mdDialog.hide("success");
+        }).error(function(){
+            console.log("first user create failed");
+        });
     };
     
 }
 
-function ConfigIOSController($scope, $mdDialog) {
+function ConfigIOSController($scope, $mdDialog, yvAjax) {
 
     $scope.ios = {
         dev_cert_file_path: null,
@@ -132,11 +136,16 @@ function ConfigIOSController($scope, $mdDialog) {
     };
 
     $scope.pass = function() {
-        $mdDialog.hide("success");
+        yvAjax.ios().success(function(){
+            console.log("ios successfully");
+            $mdDialog.hide("success");
+        }).error(function(){
+            console.log("ios failed");
+        });
     };
 }
 
-function ConfigAndroidController($scope, $mdDialog) {
+function ConfigAndroidController($scope, $mdDialog, yvAjax) {
 
     var PUSH_TYPE = {
         MQTT: "MQTT",
@@ -170,7 +179,12 @@ function ConfigAndroidController($scope, $mdDialog) {
     };
 
     $scope.confirm = function() {
-        $mdDialog.hide("success");
+        yvAjax.android().success(function(){
+            console.log("android successfully");
+            $mdDialog.hide("success");
+        }).error(function(){
+            console.log("android failed");
+        });
     };
 
     $scope.pass = function() {
@@ -183,7 +197,6 @@ function ConfigAndroidController($scope, $mdDialog) {
         }
         return false;
     };
-
 }
 
 function RestartController($scope, $mdDialog) {
