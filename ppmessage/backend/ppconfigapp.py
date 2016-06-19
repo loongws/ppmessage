@@ -28,7 +28,7 @@ class PPConfigHandler(tornado.web.RequestHandler):
         _html = _html_file.read()
         _html_file.close()
         self.write(_html)
-        self.finish()
+        self.flush()
 
 class ConfigStatusHandler(tornado.web.RequestHandler):
     def post(self, id=None):
@@ -45,8 +45,8 @@ class ConfigStatusHandler(tornado.web.RequestHandler):
             _status["status"] = "DATABASE"
         else:
             _status["status"] = "NONE"
-        self.set_header("Content-Type", "application/json")
-        self.write(json.dumps(_status))
+        self.write(_status)
+        self.flush()
         return
 
 class DatabaseHandler(tornado.web.RequestHandler):
@@ -70,16 +70,75 @@ class DatabaseHandler(tornado.web.RequestHandler):
             return self._return(-1)
         
         _config = {
-            "type": "sqlite",
+            "type": SQL.SQLITE.lower(),
             "sqlite": {
                 "db_file_path": _db_file_path
             }
         }
 
-        if create_database_tables(_config):
+        if create_database_tables(_config.get(SQL.SQLITE.lower())):
             self._dump_db_config(_config)
             return self._return(0)
         return self._return(-1)
+
+    def _mysql(self):
+        _db_name = _request.get("db_name")
+        _db_host = _request.get("db_host")
+        _db_port = _request.get("db_port")
+        _db_user = _request.get("db_user")
+        _db_pass = _request.get("db_pass")
+
+        if _db_name == None or _db_host == None or _db_port == None\
+           or _db_user == None or _db_pass == None:
+            logging.error("mysql required db paramters not provided.")
+            self._return(-1)
+
+        _config = {
+            "type": SQL.MYSQL.lower(),
+            "mysql": {
+                "db_name": _db_name,
+                "db_host": _db_host,
+                "db_port": _db_port,
+                "db_user": _db_user,
+                "db_pass": _db_pass
+            }
+        }
+        if create_mysql_db(_config.get(SQL.MYSQL.lower())):
+            if create_mysql_tables(_config.get(SQL.MYSQL.lower())):
+                self._dump_db_config(_config)
+                return self._return(0)
+        
+        return self.return(-1)
+
+    def _pgsql(self):
+        
+        _db_name = _request.get("db_name")
+        _db_host = _request.get("db_host")
+        _db_port = _request.get("db_port")
+        _db_user = _request.get("db_user")
+        _db_pass = _request.get("db_pass")
+
+        if _db_name == None or _db_host == None or _db_port == None\
+           or _db_user == None or _db_pass == None:
+            logging.error("mysql required db paramters not provided.")
+            self._return(-1)
+
+        _config = {
+            "type": SQL.PGSQL.lower(),
+            "mysql": {
+                "db_name": _db_name,
+                "db_host": _db_host,
+                "db_port": _db_port,
+                "db_user": _db_user,
+                "db_pass": _db_pass
+            }
+        }
+        if create_mysql_db(_config.get(SQL.PGSQL.lower())):
+            if create_mysql_tables(_config.get(SQL.PGSQL.lower())):
+                self._dump_db_config(_config)
+                return self._return(0)
+        
+        return self.return(-1)
     
     def post(self, id=None):        
         _request = json.loads(self.request.body)

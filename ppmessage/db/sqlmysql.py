@@ -41,23 +41,12 @@ def ping_connection(dbapi_connection, connection_record, connection_proxy):
 class SqlInstance(SqlNone):
     
     def __init__(self, _db_config):
-
-        self.mysql_config = _db_config.get(SQL.MYSQL.lower())
-        
-        if self.mysql_config == None:
-            logging.error("MySQL is not configed.")
-            return
-        
-        DB_NAME = self.mysql_config.get("db_name")
-        DB_PASS = self.mysql_config.get("db_pass")
-        DB_USER = self.mysql_config.get("db_user")
-        DB_HOST = self.mysql_config.get("db_host")
-
-        self.dbhost = DB_HOST
-        self.dbname = DB_NAME
-        self.dbuser = DB_USER
-        self.dbpassword = DB_PASS
-
+        self.mysql_config = _db_config
+        self.db_name = self.mysql_config.get("db_name")
+        self.db_pass = self.mysql_config.get("db_pass")
+        self.db_user = self.mysql_config.get("db_user")
+        self.db_host = self.mysql_config.get("db_host")
+        self.db_port = self.mysql_config.get("db_port")
         super(SqlInstance, self).__init__()
         return
 
@@ -65,16 +54,12 @@ class SqlInstance(SqlNone):
         return SQL.MYSQL
     
     def createEngine(self):
-        
-        if self.mysql_config == None:
-            logging.error("MySQL is not configed.")
-            return None
-
-        db_string = "mysql+mysqlconnector://%s:%s@%s/%s?charset=utf8" % \
-                    (self.dbuser, 
-                     self.dbpassword,
-                     self.dbhost,
-                     self.dbname)
+        db_string = "mysql+mysqlconnector://%s:%s@%s:%s/%s?charset=utf8" % \
+                    (self.db_user, 
+                     self.db_pass,
+                     self.db_host,
+                     self.db_port,
+                     self.db_name)
         if self.dbengine == None:
             engine = create_engine(db_string, echo_pool=True)
             self.dbengine = engine

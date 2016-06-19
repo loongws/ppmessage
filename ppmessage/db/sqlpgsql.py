@@ -22,24 +22,14 @@ import traceback
 class SqlInstance(SqlNone):
 
     def __init__(self, _db_config):
-
-        self.pgsql_config = None
-        _pgsql = _db_config.get(SQL.PGSQL.lower())
-        if _pgsql == None:
-            logging.error("PGSQL not configed.")
-            reutrn
-        self.pgsql_config = _pgsql
+        self.pgsql_config = _db_config
         
-        DB_NAME = _pgsql.get("db_name")
-        DB_PASS = _pgsql.get("db_pass")
-        DB_USER = _pgsql.get("db_user")
-        DB_HOST = _pgsql.get("db_host")
-
-        self.dbhost = DB_HOST
-        self.dbname = DB_NAME
-        self.dbuser = DB_USER
-        self.dbpassword = DB_PASS
-
+        self.db_name = _pgsql.get("db_name")
+        self.db_pass = _pgsql.get("db_pass")
+        self.db_user = _pgsql.get("db_user")
+        self.db_host = _pgsql.get("db_host")
+        self.db_port = _pgsql.get("db_port")
+        
         super(SqlInstance, self).__init__()
         return
 
@@ -47,15 +37,14 @@ class SqlInstance(SqlNone):
         return SQL.PGSQL
         
     def createEngine(self):
-
-        if self.pgsql_config == None:
-            logging.error("can not create engine for not configed.")
-            return None
+        db_string = "postgresql+psycopg2://%s:%s@%s:%s/%s" % (
+            self.db_user, 
+            self.db_pass,
+            self.db_host,
+            self.db_port,
+            self.db_name
+        )
         
-        db_string = "postgresql+psycopg2://%s:%s@%s/%s" % (self.dbuser, 
-                                                           self.dbpassword,
-                                                           self.dbhost,
-                                                           self.dbname)
         if self.dbengine == None:
             self.dbengine = create_engine(db_string, echo_pool=True)
         # it will create a thread local session for every single web request

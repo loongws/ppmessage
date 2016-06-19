@@ -49,7 +49,7 @@ def _get_config():
         return None
     
     _config = json.loads(_r)
-    if _config.get("configed") == None or _config.get("configed") == False:
+    if _config.get("configed") == None:
         logging.error("PPMessage system not configed")
         return None
     

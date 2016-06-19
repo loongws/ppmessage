@@ -20,6 +20,7 @@ def _get_instance():
     if _config == None:
         logging.error("db not configed")
         return None
+
     if _config.get("type").upper() == SQL.SQLITE:
         from .sqlsqlite import SqlInstance
     elif _config.get("type").upper() == SQL.PGSQL:
@@ -30,7 +31,7 @@ def _get_instance():
         logging.error("db type not supported: %s" % _config.get("type"))
         return None
     
-    return SqlInstance(_config)
+    return SqlInstance(_config.get(_config.get("type").lower()))
 
 def getDBSessionClass():
     db = _get_instance()
