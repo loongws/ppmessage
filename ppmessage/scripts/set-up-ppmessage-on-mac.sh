@@ -26,6 +26,25 @@ brew install \
 
 brew tap homebrew/services
 
+function download_geolite2() 
+{
+    #SCRIPT=$(readlink -f "$0")
+    #BASEDIR=$(dirname "${SCRIPT}")
+    BASEDIR=$(dirname "$BASH_SOURCE")
+    APIDIR="${BASEDIR}"/../api/geolite2
+    wget --directory-prefix="${APIDIR}" -c http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
+    GEOFILE=GeoLite2-City.mmdb.gz
+    GEOPATH="${APIDIR}"/GeoLite2-City.mmdb.gz
+    
+    echo "${GEOPATH}"
+    echo $(readlink -e "${GEOPATH}")
+    AGEOPATH=$(readlink -e "${GEOPATH}")
+    STEM=$(basename "${GEOFILE}" .gz)
+    gunzip -c "${AGEOPATH}" > "${APIDIR}"/"${STEM}"
+}
+    
+download_geolite2
+
 # some python modules need libmaxminddb, install it before run 'pip install ...'
 cd /tmp
 git clone --recursive https://github.com/maxmind/libmaxminddb
@@ -78,18 +97,4 @@ sudo pip install \
      xlrd
 
 
-function download_geolite2() 
-{
-    SCRIPT=$(readlink -f "$0")
-    BASEDIR=$(dirname "${SCRIPT}")
-    APIDIR="${BASEDIR}"/../api/geolite2
-    wget --directory-prefix="${APIDIR}" -c http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
-    GEOFILE=GeoLite2-City.mmdb.gz
-    GEOPATH="${APIDIR}"/GeoLite2-City.mmdb.gz
-    STEM=$(basename "${GEOFILE}" .gz)
-    gunzip -c "${GEOPATH}" > /"${APIDIR}"/"${STEM}"
-}
-
-download_geolite2
-    
 echo "Finish install the PPMessage requirements successfully, have fun with PPMessage"
