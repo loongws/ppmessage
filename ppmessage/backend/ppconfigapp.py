@@ -31,6 +31,7 @@ import os
 import json
 import uuid
 import redis
+import errno    
 import logging
 
 import tornado.web
@@ -73,6 +74,18 @@ class ConfigStatusHandler(tornado.web.RequestHandler):
         return
 
 class DatabaseHandler(tornado.web.RequestHandler):
+
+    def _mkdir_p(self, _path):
+        _path = os.path.dirname(_path)
+        try:
+            os.makedirs(_path)
+        except OSError as exc:  # Python >2.5
+            if exc.errno == errno.EEXIST and os.path.isdir(path):
+                pass
+            else:
+                raise
+        return
+    
     def _dump_db_config(self, _db_config):
         _config = {
             "db": _db_config
@@ -82,11 +95,14 @@ class DatabaseHandler(tornado.web.RequestHandler):
     
     def _sqlite(self, _request):
         logging.info(_request)
+
         _db_file_path = _request.get("sqlite").get("db_file_path")
         if _db_file_path == None or len(_db_file_path) == 0:
             logging.error("db_file_path is required for sqlite")
             return _return(self, -1)
+        
         try:
+            self._mkdir_p(_db_file_path)
             open(_db_file_path, "w").close()
         except:
             logging.error("sqlite db_file_path can not create")
@@ -99,7 +115,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
             }
         }
 
-        if create_database_tables(_config.get(SQL.SQLITE.lower())):
+        if create_sqlite_tables(_config.get(SQL.SQLITE.lower())):
             self._dump_db_config(_config)
             return _return(self, 0)
         return _return(self, -1)
