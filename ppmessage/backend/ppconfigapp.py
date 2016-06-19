@@ -8,14 +8,28 @@
 #
 
 from ppmessage.core.constant import SQL
+from ppmessage.core.constant import API_LEVEL
+from ppmessage.core.constant import REDIS_HOST
+from ppmessage.core.constant import REDIS_PORT
+from ppmessage.core.constant import CONFIG_STATUS
 from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.main import AbstractWebService
 from ppmessage.core.singleton import singleton
-from ppmessage.core.utils.config import _get_config
 
+from ppmessage.core.p12converter import der2pem
+
+from ppmessage.core.utils.config import _get_config
+from ppmessage.core.utils.config import _dump_config
+
+from ppmessage.db.create import create_pgsql_db
+from ppmessage.db.create import create_mysql_db
+from ppmessage.db.create import create_mysql_tables
+from ppmessage.db.create import create_pgsql_tables
 from ppmessage.db.create import create_sqlite_tables
 
 import os
+import uuid
+import redis
 import logging
 
 import tornado.web
@@ -32,19 +46,19 @@ class PPConfigHandler(tornado.web.RequestHandler):
 
 class ConfigStatusHandler(tornado.web.RequestHandler):
     def post(self, id=None):
-        _status = {"status": "NONE"}
+        _status = {"status": CONFIG_STATUS.NONE}
         if _get_config() == None:
             pass  
         elif _get_config().get("db") and _get_config().get("team") and _get_config().get("apns") and _get_config.get("gcm"):
-            _status["status"] = "ANDROID"
+            _status["status"] = CONFIG_STATUS.ANDROID
         elif _get_config().get("db") and _get_config().get("team") and _get_config().get("apns"):
-            _status["status"] = "IOS"
+            _status["status"] = CONFIG_STATUS.IOS
         elif _get_config().get("db") and _get_config().get("team"):
-            _status["status"] = "FIRST"
+            _status["status"] = CONFIG_STATUS.FIRST
         elif _get_config().get("db"):
-            _status["status"] = "DATABASE"
+            _status["status"] = CONFIG_STATUS.DATABASE
         else:
-            _status["status"] = "NONE"
+            _status["status"] = CONFIG_STATUS.NONE
         self.write(_status)
         self.flush()
         return
@@ -58,6 +72,13 @@ class DatabaseHandler(tornado.web.RequestHandler):
             self.send_error(520-_code)
         return
 
+    def _dump_db_config(self, _db_config):
+        _config = {
+            "db": _db_config
+        }
+        _dump_config(_config)
+        return
+    
     def _sqlite(self):
         _db_file_path = _request.get("db_file_path")
         if _db_file_path == None or len(_db_file_path) == 0:
@@ -164,19 +185,314 @@ class DatabaseHandler(tornado.web.RequestHandler):
         return self._return(-1)
 
 class FirstHandler(tornado.web.RequestHandler):
+    def __init__(self, *args, **kwargs):
+        self._user_uuid = None
+        self._app_uuid = None
+        super(FirstHandler, self).__init__(*args, **kwargs)
+
+    def _return(self, _code):
+        
+    def _check_request(self, _request):
+        if _request.get("user_fullname") == None or \
+           _request.get("user_email") == None or \
+           _request.get("user_password") == None or \
+           _request.get("user_language") == None or \
+           _request.get("team_name") == None:
+            self._return(-1)
+            return False
+        return True
+
+    def _create_user(self, _request):
+        from ppmessage.db.models import DeviceUser
+        
+        _user_email = _request.get("user_email")
+        _user_fullname = _request.get("user_fullname")
+        _user_password = _request.get("user_password")
+        _user_language = _request.get("user_language")
+
+        _user_uuid = str(uuid.uuid1())
+        _row = DeviceUser(uuid=_user_uuid,
+                          user_email=_user_email,
+                          user_password=_user_password,
+                          user_language=_user_language)
+        
+        _row.create_redis_cache(self.application.redis)
+        _row.async_add(self.application.redis)
+        self._user_uuid = _user_uuid
+        return True
+
+    def _create_team(self, _request):
+        from ppmessage.db.models import AppInfo
+        
+        _app_name = _request.get("team_name")
+        _app_uuid = str(uuid.uuid1())
+        _user_uuid = self._user_uuid
+        _app_key = str(uuid.uuid1())
+        _app_secret = str(uuid.uuid1())
+
+        _row = ApiInfo(uuid=_app_uuid, 
+                       app_name=_app_name,
+                       user_uuid=_user_uuid,
+                       app_key=_app_key,
+                       app_secret=_app_secret)
+        _row.create_redis_cache(self.application.redis)
+        _row.async_add(self.application.redis)
+        self._app_uuid = _app_uuid
+        return True
+
+    def _create_data(self, _request):
+        _user_uuid = self._user_uuid
+        _app_uuid = self._app_uuid
+        
+        _row = AppUserData(
+            uuid=str(uuid.uuid1())
+            app_uuid = _app_uuid,
+            user_uuid=_user_uuid,
+            is_service_user = True,
+            is_owner_user = True,
+            is_portal_user = False                                    
+        )
+        _row.create_redis_cache(self.application.redis)
+        _row.async_add(self.application.redis)
+        return True
+
+    def _create_api(self, _request):
+        from ppmessage.db.models import ApiInfo
+        import hashlib
+        import base64
+        _app_uuid = self._app_uuid
+        _user_uuid = self._user_uuid
+
+        def _encode(_key):
+            _key = hashlib.sha1(_key).hexdigest()
+            _key = base64.b64encode(_key)
+            return _key
+
+        def _info(_type):
+            _row = ApiInfo(uuid=str(uuid.uuid1()),
+                           user_uuid=_user_uuid,
+                           app_uuid=_app_uuid,
+                           api_level=_type,
+                           api_key=_encode(str(uuid.uuid1())),
+                           api_secret=_encode(str(uuid.uuid1())))
+            _row.create_redis.cache(self.application.redis)
+            _row.async_add(self.application.redis)
+            return {uuid:_row.uuid, key:_row.api_key, secret:_row.api_secret}
+
+        _config = {
+            API_LEVEL.PPCOM.lower(): _info(API_LEVEL.PPCOM),
+            API_LEVEL.PPKEFU.lower(): _info(API_LEVEL.PPKEFU),
+            API_LEVEL.PPCONSOLE.lower(): _info(API_LEVEL.PPCONSOLE),
+            API_LEVEL.PPCONSOLE_BEFORE_LOGIN.lower(): _info(PPCONSOLE_BEFORE_LOGIN),
+            API_LEVEL.THIRD_PARTY_KEFU.lower(): _info(API_LEVEL.THIRD_PARTY_KEFU),
+            API_LEVEL.THIRD_PARTY_CONSOLE.lower(): _info(API_LEVEL.THIRD_PARTY_CONSOLE)
+        }
+
+        self._api = _config
+        return True
+
+    def _cur_dir():
+        return os.path.dirname(__file__)
+    
+    def _dist_ppcom(self, _request):
+        from ppmessage.ppcom.config import config
+        return config(self._api.get(API_LEVEL.PPCOM.lower()))
+
+    def _dist_ppkefu(self, _request):
+        from ppmessage.ppkefu.config import config
+        return config(self._api.get(API_LEVEL.PPKEFU.lower()))
+
+    def _dist_ppconsole(self, _request):
+        from ppmessage.ppconsole.config import config
+        return config(self._api.get(API_LEVEL.PPCONSOLE.lower()))
+
+    def _dist(self, _request):
+        if not self._dist_ppcom(_request):
+            return False
+        if not self._dist_ppkefu(_request):
+            return False
+        if not self._dist_ppconsole(_request):
+            return False  
+        return True
+
+    def _dump_config(self, _request):
+        _config = _get_config()
+        _config["api"] = self._api
+        _config["team"] = {
+            "app_uuid": self._app_uuid
+        }
+        _config["configed"] = True
+        _dump_config(_config)
+        return True
+    
     def post(self, id=None):
         logging.info("firsthandler")
-        return
+
+        _request = json.loads(self.request.body)
+        if not self._check_request(_request):
+            return self._return(-1)
+        
+        if not self._create_user(_request):
+            return self._return(-1)
+
+        if not self._create_team(_request):
+            return self.return(-1)
+
+        if not self._create_data(_request):
+            return self.return(-1)
+
+        if not self._create_api(_request):
+            return self.return(-1)
+        
+        if not self._dist(_request):
+            return self.return(-1)
+
+        self._dump_config(_request)
+        return self._return(0)
 
 class IOSHandler(tornado.web.RequestHandler):
-    def post(self, id=None):
-        logging.info("ioshandler")
+    def _return(self, _code):
+        if _code >= 0:
+            self.write({"error_code": _code})
+            self.flush()
+        else:
+            self.send_error(520-_code)
         return
 
+    def _check_ios(self, _request):
+        if self.request.files == None len(self.request.files) == 0:
+            return False
+        
+        self._dev_cert_file = self.request.files.get("dev_cert")
+        if self._dev_cert_file != None:
+            self._dev_cert_file = self._dev_cert_file[0]
+
+        self._pro_cert_file = self.request.files.get("pro_cert")
+        if self._pro_cert_file != None:
+            self._pro_cert_file = self._pro_cert_file[0]
+
+        self._com_cert_file = self.request.files.get("com_cert")
+        if self._com_cert_file != None:
+            self._com_cert_file = self._com_cert_file[0]
+
+        self._dev_cert_password = _request.get("dev_cert_password")
+        self._pro_cert_password = _request.get("pro_cert_password")
+        self._com_cert_password = _request.get("com_cert_password")
+        return True
+    
+    def _save_db(self, _request):
+        _dev_pem = None
+        _pro_pem = None
+        _com_pem = None
+        
+        if self._dev_cert_file != None and self._dev_cert_password != None:
+            _dev_pem = der2pem(self._dev_cert_file, self._dev_cert_password)
+        if self._pro_cert_file != None and self._pro_cert_password != None:
+            _pro_pem = der2pem(self._pro_cert_file, self._pro_cert_password)
+        if self._com_cert_file != None and self._com_cert_password != None:
+            _com_pem = der2pem(self._com_cert_file, self._com_cert_password)
+
+        _app_uuid = _get_config.get("team").get("app_uuid")
+        _row = APNSSetting(
+            uuid=str(uuid.uuid1()),
+            name=_app_uuid
+            app_uuid=_app_uuid,
+            production_pem=_pro_pem,
+            development_pem=_dev_pem,
+            combination_pem=_com_pem
+        )
+        _row.create_redis_keys(self.application.redis)
+        _row.async_add(self.application.redis)
+        return True
+
+    def _dump_config(self, _request):
+        _config = _get_config()
+        _config["ios"] = {
+            "configed": True
+        }
+        _dump_config(_config)
+        return
+    
+    def post(self, id=None):
+        logging.info("ioshandler")
+
+        if not self._check_ios(_request):
+            return self._return(-1)
+
+        if not self._save_db(_request):
+            return self._return(-1)
+
+        self._dump_config(_request)
+        return self._return(0)
+
 class AndroidHandler(tornado.web.RequestHandler):
+    def _return(self, _code):
+        if _code >= 0:
+            self.write({"error_code": _code})
+            self.flush()
+        else:
+            self.send_error(520-_code)
+        return
+
+    def _check_android(self, _request):
+        _type = _request.get("type")
+        if _type == None:
+            return False
+
+        if _type == "GCM" and _request_get("api_key") == None:
+            return False
+
+        if _type == "JPUSH" and _request_get("master_secret") == None:
+            return False
+        
+        return True
+    
+    def _dump_mqtt_config(self, _request):
+        _config = _get_config()
+        _config["android"] = {
+            "type": "MQTT"
+        }
+        _dump_config(_config)
+        return self._return(0)
+
+    def _dump_gcm_config(self, _request):
+        _config = _get_config()
+        _config["android"] = {
+            "type": "GCM",
+            "gcm": {
+                api_key: _request.get("api_key")
+            }
+        }
+        _dump_config(_config)
+        return self._return(0)
+
+    def _dump_jpush_config(self, _request):
+        _config = _get_config()
+        _config["android"] = {
+            "type": "JPUSH",
+            "jpush": {
+                api_key: _request.get("master_secret")
+            }
+        }
+        _dump_config(_config)
+        return self._return(0)
+    
     def post(self, id=None):
         logging.info("Androidhandler")
-        return
+        
+        if not self._check_android(_request):
+            return self._return(-1)
+
+        if _request.get("type") == "MQTT":
+            return self._dump_mqtt_config(_request)
+
+        if _request.get("type") == "GCM":
+            return self._dump_gcm_config(_request)
+
+        if _request.get("type") == "JPUSH":
+            return self._dump_jpush_config(_request)
+
+        return self._return(-1)
 
 @singleton
 class PPConfigDelegate():
@@ -216,9 +532,11 @@ class PPConfigWebService(AbstractWebService):
 class PPConfigApp(tornado.web.Application):
     
     def __init__(self):
-        settings = {}
-        settings["debug"] = True
-        settings["cookie_secret"] = "24oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo="
+        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+        settings = {
+            "debug": True,
+            "cookie_secret": "24oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo="
+        }
         tornado.web.Application.__init__(self, PPConfigWebService.get_handlers(), **settings)
 
     def get_delegate(self, name):

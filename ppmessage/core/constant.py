@@ -30,6 +30,14 @@ class Enum(set):
 Animals = Enum(["DOG", "CAT", "HORSE"])
 # Animals.DOG == "DOG"
 
+CONFIG_STATUS = Enum([
+    "NONE",
+    "DATABASE",
+    "FIRST",
+    "IOS",
+    "ANDROID",
+])
+
 SQL = Enum([
     "NONE",
     "MYSQL",
