@@ -1,5 +1,4 @@
 import backend
-import bootstrap
 
 """
 version format, MAIN.SUB.HOTFIX.DEV
