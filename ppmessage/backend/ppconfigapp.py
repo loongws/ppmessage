@@ -80,7 +80,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
         try:
             os.makedirs(_path)
         except OSError as exc:  # Python >2.5
-            if exc.errno == errno.EEXIST and os.path.isdir(path):
+            if exc.errno == errno.EEXIST and os.path.isdir(_path):
                 pass
             else:
                 raise
