@@ -17,6 +17,7 @@ from handlers.getwebservicehandlers import getWebServiceHandlers
 import os
 import sys
 import redis
+import logging
 
 from geoip2 import database
 from tornado.web import Application

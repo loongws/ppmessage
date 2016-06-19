@@ -105,7 +105,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
             self._mkdir_p(_db_file_path)
             open(_db_file_path, "w").close()
         except:
-            logging.error("sqlite db_file_path can not create")
+            logging.error("sqlite %s can not create" % _db_file_path)
             return _return(self, -1)
         
         _config = {

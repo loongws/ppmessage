@@ -32,6 +32,18 @@ function ppmessage_need_root()
     fi
 }
 
+function download_geolite2() 
+{
+    SCRIPT=$(readlink -f "$0")
+    BASEDIR=$(dirname "${SCRIPT}")
+    APIDIR="${BASEDIR}"/../api/geolite2
+    wget --directory-prefix="${APIDIR}" -c http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
+    GEOFILE=GeoLite2-City.mmdb.gz
+    GEOPATH="${APIDIR}"/GeoLite2-City.mmdb.gz
+    STEM=$(basename "${GEOFILE}" .gz)
+    gunzip -c "${GEOPATH}" > /"${APIDIR}"/"${STEM}"
+}
+    
 ppmessage_need_root
 
 apt-get update
@@ -123,9 +135,6 @@ pip install \
 pip install hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
 
 
-cd ppmessage/api/geolite2
-wget -c http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
-gunzip GeoLite2-City.mmdb.gz
-cd -
+download_geolite2
 
 echo "Finish install the requirements of PPMessage, next to run dist.sh with different arguments to start PPMessage."

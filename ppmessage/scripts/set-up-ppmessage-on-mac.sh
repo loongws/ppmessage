@@ -77,9 +77,19 @@ sudo pip install \
      tornado \
      xlrd
 
-cd ppmessage/api/geolite2
-wget -c http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
-gunzip GeoLite2-City.mmdb.gz
-cd -
 
+function download_geolite2() 
+{
+    SCRIPT=$(readlink -f "$0")
+    BASEDIR=$(dirname "${SCRIPT}")
+    APIDIR="${BASEDIR}"/../api/geolite2
+    wget --directory-prefix="${APIDIR}" -c http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
+    GEOFILE=GeoLite2-City.mmdb.gz
+    GEOPATH="${APIDIR}"/GeoLite2-City.mmdb.gz
+    STEM=$(basename "${GEOFILE}" .gz)
+    gunzip -c "${GEOPATH}" > /"${APIDIR}"/"${STEM}"
+}
+
+download_geolite2
+    
 echo "Finish install the PPMessage requirements successfully, have fun with PPMessage"
