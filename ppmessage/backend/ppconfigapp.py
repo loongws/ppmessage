@@ -28,18 +28,19 @@ from ppmessage.db.create import create_pgsql_tables
 from ppmessage.db.create import create_sqlite_tables
 
 import os
+import json
 import uuid
 import redis
 import logging
 
 import tornado.web
 
-def _return(_app, _code):
+def _return(_handler, _code):
     if _code >= 0:
         _handler.write({"error_code": _code})
         _handler.flush()
     else:
-        _handler.send_error(520-_code)
+        _handler.send_error(404)
     return
 
 class PPConfigHandler(tornado.web.RequestHandler):
