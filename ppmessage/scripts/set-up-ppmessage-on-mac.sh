@@ -26,11 +26,6 @@ brew install \
 
 brew tap homebrew/services
 
-# install cnpm, bower and gulp
-sudo npm install -g cnpm
-sudo npm install -g bower
-sudo npm install -g gulp
-
 # some python modules need libmaxminddb, install it before run 'pip install ...'
 cd /tmp
 git clone --recursive https://github.com/maxmind/libmaxminddb
@@ -81,5 +76,10 @@ sudo pip install \
      sqlalchemy \
      tornado \
      xlrd
+
+cd ppmessage/api/geolite2
+wget -c http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
+gunzip GeoLite2-City.mmdb.gz
+cd -
 
 echo "Finish install the PPMessage requirements successfully, have fun with PPMessage"

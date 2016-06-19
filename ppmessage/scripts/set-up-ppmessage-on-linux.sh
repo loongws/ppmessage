@@ -78,15 +78,6 @@ apt-get install -y \
     redis-server \
     wget
 
-# nodejs 4.x
-curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
-apt-get install -y nodejs
-
-# install gulp, cnpm and bower
-npm install -g cnpm
-npm install -g bower
-npm install -g gulp
-
 # some python modules need libmaxminddb, install it before run 'pip install ...'
 cd /tmp
 git clone --recursive https://github.com/maxmind/libmaxminddb
@@ -131,5 +122,10 @@ pip install \
 
 pip install hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
 
+
+cd ppmessage/api/geolite2
+wget -c http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
+gunzip GeoLite2-City.mmdb.gz
+cd -
 
 echo "Finish install the requirements of PPMessage, next to run dist.sh with different arguments to start PPMessage."
