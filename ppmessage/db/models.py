@@ -993,24 +993,15 @@ class MessageAudioFileInfo(CommonMixin, BaseModel):
         return
         
 class APNSSetting(CommonMixin, BaseModel):
-    """
-    if in developing the apns use sandbox cert
-    if in production the apns use production cert
-    """
     __tablename__ = "apns_settings"
 
     app_uuid = Column("app_uuid", String(64))
     name = Column("name", String(64))
-    
-    is_development = Column("is_development", Boolean)
-    is_production = Column("is_production", Boolean)
-
-    production_p12 = Column("production_p12", LargeBinary)
-    development_p12 = Column("development_p12", LargeBinary)
 
     production_pem = Column("production_pem", LargeBinary)
     development_pem = Column("development_pem", LargeBinary)
-
+    combination_pem = Column("combination_pem", LargeBinary)
+    
     def __init__(self, *args, **kwargs):
         super(APNSSetting, self).__init__(*args, **kwargs)
         return

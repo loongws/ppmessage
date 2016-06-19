@@ -34,6 +34,14 @@ import logging
 
 import tornado.web
 
+def _return(_app, _code):
+    if _code >= 0:
+        _handler.write({"error_code": _code})
+        _handler.flush()
+    else:
+        _handler.send_error(520-_code)
+    return
+
 class PPConfigHandler(tornado.web.RequestHandler):
     def get(self, id=None):
         _dir = os.path.dirname(os.path.abspath(__file__))
@@ -64,14 +72,6 @@ class ConfigStatusHandler(tornado.web.RequestHandler):
         return
 
 class DatabaseHandler(tornado.web.RequestHandler):
-    def _return(self, _code):
-        if _code >= 0:
-            self.write({"error_code": _code})
-            self.flush()
-        else:
-            self.send_error(520-_code)
-        return
-
     def _dump_db_config(self, _db_config):
         _config = {
             "db": _db_config
@@ -83,12 +83,12 @@ class DatabaseHandler(tornado.web.RequestHandler):
         _db_file_path = _request.get("db_file_path")
         if _db_file_path == None or len(_db_file_path) == 0:
             logging.error("db_file_path is required for sqlite")
-            return self._return(-1)
+            return _return(self, -1)
         try:
             open(_db_file_path, "w").close()
         except:
             logging.error("sqlite db_file_path can not create")
-            return self._return(-1)
+            return _return(self, -1)
         
         _config = {
             "type": SQL.SQLITE.lower(),
@@ -99,8 +99,8 @@ class DatabaseHandler(tornado.web.RequestHandler):
 
         if create_database_tables(_config.get(SQL.SQLITE.lower())):
             self._dump_db_config(_config)
-            return self._return(0)
-        return self._return(-1)
+            return _return(self, 0)
+        return _return(self, -1)
 
     def _mysql(self):
         _db_name = _request.get("db_name")
@@ -112,7 +112,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
         if _db_name == None or _db_host == None or _db_port == None\
            or _db_user == None or _db_pass == None:
             logging.error("mysql required db paramters not provided.")
-            self.self._return(-1)
+            self._return(self, -1)
 
         _config = {
             "type": SQL.MYSQL.lower(),
@@ -127,9 +127,9 @@ class DatabaseHandler(tornado.web.RequestHandler):
         if create_mysql_db(_config.get(SQL.MYSQL.lower())):
             if create_mysql_tables(_config.get(SQL.MYSQL.lower())):
                 self._dump_db_config(_config)
-                return self._return(0)
+                return _return(self, 0)
         
-        return self._return(-1)
+        return _return(self, -1)
 
     def _pgsql(self):
         
@@ -142,7 +142,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
         if _db_name == None or _db_host == None or _db_port == None\
            or _db_user == None or _db_pass == None:
             logging.error("mysql required db paramters not provided.")
-            self._return(-1)
+            _return(self, -1)
 
         _config = {
             "type": SQL.PGSQL.lower(),
@@ -157,9 +157,9 @@ class DatabaseHandler(tornado.web.RequestHandler):
         if create_mysql_db(_config.get(SQL.PGSQL.lower())):
             if create_mysql_tables(_config.get(SQL.PGSQL.lower())):
                 self._dump_db_config(_config)
-                return self._return(0)
+                return _return(self, 0)
         
-        return self._return(-1)
+        return _return(self, -1)
     
     def post(self, id=None):        
         _request = json.loads(self.request.body)
@@ -168,11 +168,11 @@ class DatabaseHandler(tornado.web.RequestHandler):
         _config = _get_config()
         if _config != None:
             logging.error("config already existed.")
-            return self._return(-1)
+            return _return(self, -1)
         
         if _type == None or len(_type) == 0:
             logging.error("type is required.")
-            return self._return(-1)
+            return _return(self, -1)
 
         _type = _type.upper()
         if _type == SQL.SQLITE:
@@ -182,15 +182,13 @@ class DatabaseHandler(tornado.web.RequestHandler):
         if _type == SQL.PGSQL:
             return self._pgsql(_request)
 
-        return self._return(-1)
+        return _return(self, -1)
 
 class FirstHandler(tornado.web.RequestHandler):
     def __init__(self, *args, **kwargs):
         self._user_uuid = None
         self._app_uuid = None
         super(FirstHandler, self).__init__(*args, **kwargs)
-
-    def _return(self, _code):
         
     def _check_request(self, _request):
         if _request.get("user_fullname") == None or \
@@ -198,7 +196,7 @@ class FirstHandler(tornado.web.RequestHandler):
            _request.get("user_password") == None or \
            _request.get("user_language") == None or \
            _request.get("team_name") == None:
-            self._return(-1)
+            _return(self, -1)
             return False
         return True
 
@@ -245,7 +243,7 @@ class FirstHandler(tornado.web.RequestHandler):
         _app_uuid = self._app_uuid
         
         _row = AppUserData(
-            uuid=str(uuid.uuid1())
+            uuid=str(uuid.uuid1()),
             app_uuid = _app_uuid,
             user_uuid=_user_uuid,
             is_service_user = True,
@@ -330,37 +328,30 @@ class FirstHandler(tornado.web.RequestHandler):
 
         _request = json.loads(self.request.body)
         if not self._check_request(_request):
-            return self._return(-1)
+            return _return(self, -1)
         
         if not self._create_user(_request):
-            return self._return(-1)
+            return _return(self, -1)
 
         if not self._create_team(_request):
-            return self.return(-1)
+            return self._return(-1)
 
         if not self._create_data(_request):
-            return self.return(-1)
+            return self._return(-1)
 
         if not self._create_api(_request):
-            return self.return(-1)
+            return self._return(-1)
         
         if not self._dist(_request):
-            return self.return(-1)
+            return self._return(-1)
 
         self._dump_config(_request)
-        return self._return(0)
+        return _return(self, 0)
 
 class IOSHandler(tornado.web.RequestHandler):
-    def _return(self, _code):
-        if _code >= 0:
-            self.write({"error_code": _code})
-            self.flush()
-        else:
-            self.send_error(520-_code)
-        return
 
     def _check_ios(self, _request):
-        if self.request.files == None len(self.request.files) == 0:
+        if self.request.files == None or len(self.request.files) == 0:
             return False
         
         self._dev_cert_file = self.request.files.get("dev_cert")
@@ -395,7 +386,7 @@ class IOSHandler(tornado.web.RequestHandler):
         _app_uuid = _get_config.get("team").get("app_uuid")
         _row = APNSSetting(
             uuid=str(uuid.uuid1()),
-            name=_app_uuid
+            name=_app_uuid,
             app_uuid=_app_uuid,
             production_pem=_pro_pem,
             development_pem=_dev_pem,
@@ -417,23 +408,16 @@ class IOSHandler(tornado.web.RequestHandler):
         logging.info("ioshandler")
 
         if not self._check_ios(_request):
-            return self._return(-1)
+            return _return(self, -1)
 
         if not self._save_db(_request):
-            return self._return(-1)
+            return _return(self, -1)
 
         self._dump_config(_request)
-        return self._return(0)
+        return _return(self, 0)
 
 class AndroidHandler(tornado.web.RequestHandler):
-    def _return(self, _code):
-        if _code >= 0:
-            self.write({"error_code": _code})
-            self.flush()
-        else:
-            self.send_error(520-_code)
-        return
-
+    
     def _check_android(self, _request):
         _type = _request.get("type")
         if _type == None:
@@ -453,7 +437,7 @@ class AndroidHandler(tornado.web.RequestHandler):
             "type": "MQTT"
         }
         _dump_config(_config)
-        return self._return(0)
+        return _return(self, 0)
 
     def _dump_gcm_config(self, _request):
         _config = _get_config()
@@ -464,7 +448,7 @@ class AndroidHandler(tornado.web.RequestHandler):
             }
         }
         _dump_config(_config)
-        return self._return(0)
+        return _return(self, 0)
 
     def _dump_jpush_config(self, _request):
         _config = _get_config()
@@ -475,13 +459,13 @@ class AndroidHandler(tornado.web.RequestHandler):
             }
         }
         _dump_config(_config)
-        return self._return(0)
+        return _return(self, 0)
     
     def post(self, id=None):
         logging.info("Androidhandler")
         
         if not self._check_android(_request):
-            return self._return(-1)
+            return _return(self, -1)
 
         if _request.get("type") == "MQTT":
             return self._dump_mqtt_config(_request)
@@ -492,7 +476,7 @@ class AndroidHandler(tornado.web.RequestHandler):
         if _request.get("type") == "JPUSH":
             return self._dump_jpush_config(_request)
 
-        return self._return(-1)
+        return _return(self, -1)
 
 @singleton
 class PPConfigDelegate():
