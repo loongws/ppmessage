@@ -26,9 +26,8 @@ function $yvAjaxService($state, $timeout, $http, $cookies, yvConstants) {
             return _api_post(_url, _data);
         },
 
-        database: function () {
+        database: function (_data) {
             var _url = "/database";
-            var _data = {};
             return _api_post(_url, _data);
         },
 

@@ -80,8 +80,9 @@ class DatabaseHandler(tornado.web.RequestHandler):
         _dump_config(_config)
         return
     
-    def _sqlite(self):
-        _db_file_path = _request.get("db_file_path")
+    def _sqlite(self, _request):
+        logging.info(_request)
+        _db_file_path = _request.get("sqlite").get("db_file_path")
         if _db_file_path == None or len(_db_file_path) == 0:
             logging.error("db_file_path is required for sqlite")
             return _return(self, -1)
