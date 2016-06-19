@@ -91,7 +91,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
         if _db_name == None or _db_host == None or _db_port == None\
            or _db_user == None or _db_pass == None:
             logging.error("mysql required db paramters not provided.")
-            self._return(-1)
+            self.self._return(-1)
 
         _config = {
             "type": SQL.MYSQL.lower(),
@@ -108,7 +108,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
                 self._dump_db_config(_config)
                 return self._return(0)
         
-        return self.return(-1)
+        return self._return(-1)
 
     def _pgsql(self):
         
@@ -138,7 +138,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
                 self._dump_db_config(_config)
                 return self._return(0)
         
-        return self.return(-1)
+        return self._return(-1)
     
     def post(self, id=None):        
         _request = json.loads(self.request.body)
@@ -147,13 +147,11 @@ class DatabaseHandler(tornado.web.RequestHandler):
         _config = _get_config()
         if _config != None:
             logging.error("config already existed.")
-            self.write(json.dumps(_return_error))
-            return
+            return self._return(-1)
         
         if _type == None or len(_type) == 0:
             logging.error("type is required.")
-            self.write(json.dumps(_return_error))
-            return
+            return self._return(-1)
 
         _type = _type.upper()
         if _type == SQL.SQLITE:
@@ -163,8 +161,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
         if _type == SQL.PGSQL:
             return self._pgsql(_request)
 
-        self._return(-1)
-        return
+        return self._return(-1)
 
 class FirstHandler(tornado.web.RequestHandler):
     def post(self, id=None):
