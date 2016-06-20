@@ -153,7 +153,7 @@ function ConfigIOSController($scope, $mdDialog, yvAjax, FileUploader) {
 
         var _transfer_complete = function(_d) {
             console.log("_transfer_compelete ", _d);
-            $mdDialog.success("");
+            $mdDialog.hide("success");
         };
 
         var _transfer_failed = function(_d) {

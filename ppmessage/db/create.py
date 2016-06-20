@@ -21,6 +21,7 @@ def create_sqlite_tables(_db_config):
     return True
 
 def create_mysql_db(_db_config):
+    _db_config = _db_config.get("mysql")
     _db_string = "mysql+mysqlconnector://%s:%s@%s:%s?charst=utf8" % \
                  (_db_config.get("db_user"), _db_config.get("db_pass"),
                   _db_config.get("db_host"), _db_config.get("db_port"))
@@ -37,6 +38,7 @@ def create_mysql_tables(_db_config):
     return True
 
 def create_pgsql_db(_db_config):
+    _db_config = _db_config.get("pgsql")
     _db_string = "mysql+psycopg2://%s:%s@%s:%s/postgres" % \
                  (_db_config.get("db_user"), _db_config.get("db_pass"),
                   _db_config.get("db_host"), _db_config.get("db_port"))

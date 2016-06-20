@@ -122,7 +122,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
             }
         }
 
-        if create_sqlite_tables(_config.get("sqlite")):
+        if create_sqlite_tables(_config):
             self._dump_db_config(_config)
             return _return(self, 0)
         return _return(self, -1)
@@ -149,8 +149,8 @@ class DatabaseHandler(tornado.web.RequestHandler):
                 "db_pass": _db_pass
             }
         }
-        if create_mysql_db(_config.get("mysql")):
-            if create_mysql_tables(_config.get("mysql")):
+        if create_mysql_db(_config):
+            if create_mysql_tables(_config):
                 self._dump_db_config(_config)
                 return _return(self, 0)
         
@@ -182,9 +182,8 @@ class DatabaseHandler(tornado.web.RequestHandler):
             }
         }
 
-        logging.info(_config)
-        if create_pgsql_db(_config.get("pgsql")):
-            if create_pgsql_tables(_config.get("pgsql")):
+        if create_pgsql_db(_config):
+            if create_pgsql_tables(_config):
                 self._dump_db_config(_config)
                 return _return(self, 0)
         
@@ -194,7 +193,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
         _request = json.loads(self.request.body)
 
         _config = _get_config()
-        if _config != None:
+        if _config != None and _config.get("config_status") != CONFIG_STATUS.SERVER:
             logging.error("config already existed.")
             return _return(self, -1)
 
