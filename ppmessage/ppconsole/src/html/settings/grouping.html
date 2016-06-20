@@ -17,7 +17,7 @@
     </div>
     <div class="con">
       <div class="le">
-        <p id="default_highlight"><a ng-click="get_all_service()">{{ "application.grouping.ALL_SERVICE_USER" | translate }}（{{team.service_user_list.length}}）</a></p>
+        <p id="default_highlight"><a ng-click="get_all_service()">{{ "application.grouping.ALL_SERVICE_USER" | translate }}({{team.service_user_list.length}})</a></p>
         <ul>
           <li ng-repeat="group in team.group_list | orderBy: 'createtime' " id="colored_group_{{$index}}" class="not_exist">
             

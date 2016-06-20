@@ -52,11 +52,17 @@ if __name__ == "__main__":
     import sys
     reload(sys)
     sys.setdefaultencoding('utf-8')
+
+    from ppmessage.core.utils.config import _get_config
+    if _get_config() == None:
+        print("PPMessage not configed")
+        sys.exit(1)
+    
     _d = {
-        "app_uuid": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA==",
-        "api_uuid": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA==",
-        "api_key": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA==",
-        "api_secret": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA=="
+        "app_uuid": _get_config().get("team").get("app_uuid"),
+        "api_uuid": _get_config().get("api").get("ppconsole").get("uuid"),
+        "api_key": _get_config().get("api").get("ppconsole").get("key"),
+        "api_secret": _get_config().get("api").get("ppconsole").get("secret")
     }
     config(_d)
 

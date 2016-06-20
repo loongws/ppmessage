@@ -8,7 +8,7 @@
 		<div class="left historynews-selectdate">
 		  <div class="input-group">
 			<p class="input-group-addon">
-			  <span style="color:#777;">请选择查询日期:</span>
+			  <span style="color:#777;">Select Date:</span>
 			</p>
 			<input class="form-control" type="text" date-range is-single=true on-apply="select_date">
 		  </div>
@@ -34,7 +34,7 @@
 		
 		<div class="list-group-item" ng-repeat = "item in news_list | orderBy: '-news_date' ">
 		  <div class="user-image left" >
-			<img ng-src='{{ item.user_image }}' alt="头像" >
+			<img ng-src='{{ item.user_image }}'>
 		  </div>
 		  <div class="news-detail left">
 			<p class="user-name">

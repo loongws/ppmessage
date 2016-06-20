@@ -30,7 +30,7 @@ module.exports = {
 
         "../src/js/controllers/logout.js",
         "../src/js/controllers/signin.js",
-        // "../src/js/controllers/app.js",
+        "../src/js/controllers/app.js",
         
         "../src/js/controllers/policy/policy.js",
         "../src/js/controllers/policy/termofservice.js",

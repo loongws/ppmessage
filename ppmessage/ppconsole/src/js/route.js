@@ -42,25 +42,6 @@ angular.module("this_app.route", ["ui.router", "this_app.constants"])
                 controller: "RecoverPasswordCtrl"
             })
 
-            .state("app.policy", {
-                abstract: true,
-                url: "/policy",
-                templateUrl: yvConstants.TEMPLATE_PREFIX + "policy/policy.html",
-                controller: "PolicyCtrl"
-            })
-
-            .state("app.policy.termofservice", {
-                url: "/termofservice",
-                templateUrl: yvConstants.TEMPLATE_PREFIX + "policy/termofservice.html",
-                controller: "TermOfServiceCtrl"
-            })
-
-            .state("app.policy.privacypolicy", {
-                url: "/privacypolicy",
-                templateUrl: yvConstants.TEMPLATE_PREFIX + "policy/privacypolicy.html",
-                controller: "PrivacyPolicyCtrl"
-            })
-
              .state("app.resetpassword", {
                 url: "/resetpassword/:email",
                 templateUrl: yvConstants.TEMPLATE_PREFIX + "settings/resetpassword.html",
