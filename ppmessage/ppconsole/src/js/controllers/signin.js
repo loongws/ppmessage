@@ -1,5 +1,5 @@
 angular.module("this_app")
-    .controller("SignupMdCtrl", function($scope, $state, $stateParams, $timeout, $translate, $cookieStore, yvAjax, yvUtil, yvUser, yvTransTags, yvConstants, yvDebug, yvLogin, yvAppService) {
+    .controller("SignInCtrl", function($scope, $state, $stateParams, $timeout, $translate, $cookieStore, yvAjax, yvUtil, yvUser, yvTransTags, yvConstants, yvDebug, yvLogin, yvAppService) {
 
         $scope.user = {
             user_status: "OWNER_2",
@@ -27,52 +27,6 @@ angular.module("this_app")
                 } );
         };
                 
-        var signup = function(user) {
-            // first try to get token
-            get_token( function(response) {
-                var credentialsToken = response.access_token;
-                console.log(response);
-                var copyUser = angular.extend(
-                    angular.copy(user),
-                    {
-                        user_password: sha1( user.user_password ),
-                        app_uuid: yvConstants.PPMESSAGE_APP.uuid
-                    }
-                );
-                
-                yvAjax.signup(copyUser, credentialsToken)
-                    .success(function(data) {
-                        if (data.error_code == 0) {
-                            yvAjax.login(copyUser).success(function(data) {
-                                if ( data.error_code == 0 ) {
-                                    yvLogin.updateActiveUserCookieKey( data.user_uuid );
-                                    yvLogin.updateLoginedUserCookieKey( data.user_uuid, data.access_token );
-                                }
-                                yvLogin.updateLoginedUser( copyUser );
-                                yvLogin.setLogined( true );
-                                $state.go("app.settings.overview")
-                            }).error(function(data) {
-                                console.error("signup error");
-                                $scope.toast_error_string("SERVICE_ERROR_TAG");
-                            });
-                        } else {
-                            if (data.error_code == yvAjax.API_ERR.EX_USER) {
-                                $scope.toast_error_string("EMAIL_USED_TAG");
-                            } else {
-                                $scope.toast_error_string("SERVICE_ERROR_TAG");
-                            }
-                        }
-                    })
-                    .error(function(data) {
-                        console.error("create portal user error");
-                    });
-                
-            }, function(error) {
-                // get token error
-                $scope.toast_error_string("SERVICE_ERROR_TAG");
-            } );
-        };
-
         var signin = function(user) {
             var password = sha1($scope.user.user_password);
             yvAjax.login({user_email: $scope.user.user_email, user_password: password})
@@ -119,7 +73,7 @@ angular.module("this_app")
                 .error(function(data) {
                     $scope.toast_error_string("SIGNIN_FAILED_TAG");
                 });
-
+            
         };
 
         var send_email = function(user) {
@@ -143,10 +97,6 @@ angular.module("this_app")
             });
         };
         
-        $scope.sign_up_form_submit = function() {
-            signup($scope.user);
-        };
-
         $scope.sign_in_form_submit = function() {
             signin($scope.user);
         };
@@ -165,17 +115,12 @@ angular.module("this_app")
             }
         };
 
-        $scope.ui = {selected_index: 0};
-        if ($stateParams.sign_what && $stateParams.sign_what == "signup") {
+        if ($stateParams.sign_what && $stateParams.sign_what == "signin") {
             $scope.ui.selected_index = 0;
         }
 
-        if ($stateParams.sign_what && $stateParams.sign_what == "signin") {
-            $scope.ui.selected_index = 1;
-        }
-
         if ($stateParams.sign_what && $stateParams.sign_what == "reset") {
-            $scope.ui.selected_index = 2;
+            $scope.ui.selected_index = 1;
         }
         
     }); // end login ctrl

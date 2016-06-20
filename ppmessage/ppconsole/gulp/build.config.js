@@ -24,17 +24,14 @@ module.exports = {
         "../src/js/services/application/grouping.js",
         "../src/js/services/application/people.js",
         "../src/js/services/application/callback.js",
+
         "../src/js/services/app.js",
         "../src/js/services/logineduser.js",
 
         "../src/js/controllers/logout.js",
-        "../src/js/controllers/signupmd.js",
-        "../src/js/controllers/checkinbox.js",
-        "../src/js/controllers/app.js",
-        "../src/js/controllers/createteam.js",
-        "../src/js/controllers/startteam.js",
-        "../src/js/controllers/createaccount.js",
-
+        "../src/js/controllers/signin.js",
+        // "../src/js/controllers/app.js",
+        
         "../src/js/controllers/policy/policy.js",
         "../src/js/controllers/policy/termofservice.js",
         "../src/js/controllers/policy/privacypolicy.js",
@@ -43,19 +40,14 @@ module.exports = {
         "../src/js/controllers/settings/teamprofile.js",
         "../src/js/controllers/settings/integrate.js",
         "../src/js/controllers/settings/account.js",
-        "../src/js/controllers/settings/createapplication.js",
         "../src/js/controllers/settings/profile.js",
         "../src/js/controllers/settings/people.js",
         "../src/js/controllers/settings/welcome.js",
         "../src/js/controllers/settings/messageroute.js",
-        "../src/js/controllers/settings/robot.js",
         "../src/js/controllers/settings/grouping.js",
 
         "../src/js/controllers/statistics/overview.js",
         "../src/js/controllers/statistics/historymessage.js",
-
-        "../src/js/controllers/about.js",
-        "../src/js/controllers/appuser.js",
 
         "../src/js/controllers/404.js",
 

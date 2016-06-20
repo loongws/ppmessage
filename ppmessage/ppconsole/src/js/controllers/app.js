@@ -2,12 +2,8 @@ angular.module("this_app")
     .controller("AppCtrl", function($window, $scope, $rootScope, $location, $state, $translate, $timeout, $cookies, $filter, toastr, yvAjax, yvUser, yvUtil, yvDebug, yvLogin, yvAppService, yvConstants, yvLoginedUser, yvTransTags) {
 
         $scope._languages = [
-            {
-                lang: "zh-CN",
-            },            
-            {
-                lang: "en",
-            },
+            {lang: "zh-CN"},            
+            {lang: "en"},
         ];
 
         var isLogin = yvLogin.isLogined();
@@ -59,16 +55,7 @@ angular.module("this_app")
         };
         
         $scope.main = function() {
-            window.open("https://www.ppmessage.com");
-            //$state.go("app.main");
-        };
-
-        $scope.blog = function() {
-            window.open("http://blog.ppmessage.cn");
-        };
-        
-        $scope.forum = function() {
-            window.open("http://forum.ppmessage.cn");
+            window.open("https://ppmessage.com");
         };
         
         $scope.switch_to_english = function () {
@@ -101,7 +88,7 @@ angular.module("this_app")
         };
 
         $scope.login = function() {
-            $state.go("login");
+            $state.go("app.signin");
         };
 
         $scope.show_settings_menu = function() {
@@ -115,7 +102,7 @@ angular.module("this_app")
             var body = {
                 user_email: userEmail,
                 user_password: password,
-                user_uuid: userUuid,
+                user_uuid: userUuid
             };
             console.log("autologin with: %s", body);
             body = yvUtil.base64_encode(JSON.stringify(body));
@@ -138,13 +125,12 @@ angular.module("this_app")
                 $scope.isAdminUser = false;
             });
             $timeout(function() {
-                $state.go("app.signup-md", {sign_what: "signin"});
+                $state.go("app.signin");
             });
         };
-
+        
         $scope.toast_error_string = function(str) {
             var _local_str = $filter("translate")("global." + str);
-            console.log(_local_str);
             $timeout( function() {
                 toastr.error(_local_str);
             });
@@ -152,23 +138,17 @@ angular.module("this_app")
 
         $scope.toast_success_string = function(str) {
             var _local_str = $filter("translate")("global." + str);
-            console.log(_local_str);
             $timeout( function() {
                 toastr.success(_local_str);
             });
         };
-
+        
         $scope.$on("$destroy", function() {
-            
         });
 
-        var _init = function() {
-            // Event: login successful
-            $rootScope.$on( yvConstants.BROADCAST_EVENT_KEY.LOGIN_FINISHED , function( event, args ) {
-                isLogin = true;
-            } );            
-        };
-
-        _init();
-
-    }); // end app ctrl
+        // Event: login successful
+        $rootScope.$on(yvConstants.BROADCAST_EVENT_KEY.LOGIN_FINISHED, function( event, args ) {
+            isLogin = true;
+        });    
+        
+    });

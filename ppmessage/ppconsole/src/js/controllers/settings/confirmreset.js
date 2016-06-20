@@ -6,7 +6,7 @@ angular.module("this_app")
     			$state.go("app.main");
     			return;
        		};
-       		$state.go("app.signup-md", {sign_what: "signin"});
+       		$state.go("app.signin"});
     	}
 
     	var _init = function() {

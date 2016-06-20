@@ -18,10 +18,10 @@ angular.module("this_app.route", ["ui.router", "this_app.constants"])
                 controller: "AppCtrl"
             })
 
-            .state("app.signup-md", {
-                url: "/signup-md/:sign_what",
-                templateUrl: yvConstants.TEMPLATE_PREFIX + "signup-md.html",
-                controller: "SignupMdCtrl"
+            .state("app.signin", {
+                url: "/signin",
+                templateUrl: yvConstants.TEMPLATE_PREFIX + "signin.html",
+                controller: "SignInCtrl"
             })
 
             .state("app.error", {
@@ -147,6 +147,6 @@ angular.module("this_app.route", ["ui.router", "this_app.constants"])
             })
         ;
       
-        $urlRouterProvider.otherwise("/app/signup-md/signin");
+        $urlRouterProvider.otherwise("/app/signin");
 
     });

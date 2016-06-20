@@ -7,7 +7,6 @@ var gutil = require('gulp-util');
 var concat = require('gulp-concat');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
-var args = require("get-gulp-args")();
 var replace = require('gulp-replace');
 var cleanCss = require('gulp-clean-css');
 var ngAnnotate = require('gulp-ng-annotate');
