@@ -3,17 +3,18 @@ angular.module("this_app")
 
         var CONFIG_STATUS = {
             NONE: 0,
-            DATABASE: 1,
-            FIRST: 2,
-            IOS: 3,
-            ANDROID: 4,
-            RESTART: 5
+            SERVER: 1,
+            DATABASE: 2,
+            FIRST: 3,
+            IOS: 4,
+            ANDROID: 5,
+            RESTART: 6
         };
 
         $scope._config_status = CONFIG_STATUS.NONE;
         
         $scope.get_database_status = function() {
-            if ($scope._config_status == CONFIG_STATUS.NONE) {
+            if ($scope._config_status < CONFIG_STATUS.DATABASE) {
                 return "N/A";
             }
             return "OK";
@@ -41,7 +42,8 @@ angular.module("this_app")
         };
 
         $scope.should_disable_initialize_database = function() {
-            if ($scope._config_status == CONFIG_STATUS.NONE) {
+            if ($scope._config_status == CONFIG_STATUS.NONE ||
+                $scope._config_status == CONFIG_STATUS.SERVER) {
                 return false;
             }
             return true;
@@ -148,6 +150,7 @@ angular.module("this_app")
         $scope._init_config_status = function() {
             yvAjax.status().success(function(data) {
                 $scope._config_status = CONFIG_STATUS[data.status];
+                console.log($scope._config_status);
             }).error(function() {
             });
         };

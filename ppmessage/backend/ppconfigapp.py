@@ -57,9 +57,9 @@ class PPConfigHandler(tornado.web.RequestHandler):
 class ConfigStatusHandler(tornado.web.RequestHandler):
     def post(self, id=None):
         _status = {"status": CONFIG_STATUS.NONE}
-        if _get_config() == None:
-            pass
-        _status["status"] = _get_config().get("config_status")
+        if _get_config() != None:
+            _status["status"] = _get_config().get("config_status")
+        logging.info(_status)
         self.write(_status)
         self.flush()
         return

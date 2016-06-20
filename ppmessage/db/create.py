@@ -7,19 +7,14 @@
 # db/create.py
 #
 
+from .dbinstance import BaseModel
+from .dbinstance import getDatabaseEngine
+
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-BaseModel = declarative_base()
-
-# try load one but stupid load all
-from ppmessage.db.models import DeviceUser
-
 import logging
 
-def create_sqlite_tables(_db_config):
-    from sqlsqlite import SqlInstance
-    _db = SqlInstance(_db_config)
-    _engine = _db.createEngine()
+def create_sqlite_tables(_db_config):    
+    _engine = getDatabaseEngine(_db_config)
     if _engine == None:
         return False
     BaseModel.metadata.create_all(_engine)
@@ -35,9 +30,7 @@ def create_mysql_db(_db_config):
     return True
 
 def create_mysql_tables(_db_config):
-    from sqlmysql import SqlInstance
-    _db = SqlInstance(_db_config)
-    _engine = _db.createEngine()
+    _engine = getDatabaseEngine(_db_config)
     if _engine == None:
         return False
     BaseModel.metadata.create_all(_engine)
@@ -56,9 +49,7 @@ def create_pgsql_db(_db_config):
     return True
 
 def create_pgsql_tables(_db_config):
-    from sqlpgsql import SqlInstance
-    _db = SqlInstance(_db_config)
-    _engine = _db.createEngine()
+    _engine = getDatabaseEngine(_db_config)
     if _engine == None:
         return False
     BaseModel.metadata.create_all(_engine)

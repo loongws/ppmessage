@@ -15,8 +15,15 @@ BaseModel = declarative_base()
 
 import logging
 
-def _get_instance():
-    _config = get_config_db()
+def _get_instance(config=None):
+    logging.info(config)
+    _config = None
+    
+    if config == None:
+        _config = get_config_db()
+    else:
+        _config = config
+        
     if _config == None:
         logging.error("db not configed")
         return None
@@ -40,8 +47,8 @@ def getDBSessionClass():
     db.createEngine()
     return db.getSessionClass()
 
-def getDatabaseEngine():
-    db = _get_instance()
+def getDatabaseEngine(config=None):
+    db = _get_instance(config)
     if db == None:
         return None
     return db.createEngine()
