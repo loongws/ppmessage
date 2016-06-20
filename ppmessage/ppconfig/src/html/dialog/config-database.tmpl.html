@@ -1,0 +1,126 @@
+<md-dialog aria-label="Config PPMessage Server and Database"  ng-cloak>
+  <form ng-submit="confirm()">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Config PPMessage Server And Database</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="static/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>Config Server and Database</h2>
+
+        <p style="padding-bottom: 20px;">
+          Config your server and database for PPMessage. If not sure what you should do here, choose default and confirm.
+        </p>
+
+        <md-card class="md-whiteframe-z2" flex="66">
+
+          <md-input-container class="md-block">
+            <label>Server Name</label>
+            <input ng-model="database.server.name" required>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Server Port</label>
+            <input ng-model="database.server.port" required>
+          </md-input-container>
+
+        </md-card>
+
+        <md-card class="md-whiteframe-z2" flex="66">
+          
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Database Type</label>
+            <md-select ng-model="database.type">
+              <md-option ng-repeat="db_type in database.types" value="{{db_type}}">
+                {{db_type}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+
+          <div ng-if="should_show_sqlite()" style="padding-top:20px;">
+            <md-input-container class="md-block">
+              <label>Database File Path</label>
+              <input ng-model="database.sqlite.db_file_path" required>
+            </md-input-container>
+          </div>
+          
+          <div ng-if="should_show_mysql()" style="padding-top:20px;">
+            <md-input-container class="md-block">
+              <label>Database Name</label>
+              <input ng-model="database.mysql.db_name" required>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+              <label>Database Host</label>
+              <input ng-model="database.mysql.db_host" required>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+              <label>Database Port</label>
+              <input ng-model="database.mysql.db_port" required>
+            </md-input-container>
+            
+            <md-input-container class="md-block">
+              <label>Database User</label>
+              <input ng-model="database.mysql.db_user" required>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+              <label>Database User Password</label>
+              <input ng-model="database.mysql.db_password">
+            </md-input-container>
+          </div>
+
+          <div ng-if="should_show_pgsql()" style="padding-top:20px;">
+            <md-input-container class="md-block">
+              <label>Database Name</label>
+              <input ng-model="database.pgsql.db_name" required>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+              <label>Database Host</label>
+              <input ng-model="database.pgsql.db_host" required>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+              <label>Database Port</label>
+              <input ng-model="database.pgsql.db_port" required>
+            </md-input-container>
+            
+            <md-input-container class="md-block">
+              <label>Database User</label>
+              <input ng-model="database.pgsql.db_user" required>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+              <label>Database User Password</label>
+              <input ng-model="database.pgsql.db_password">
+            </md-input-container>          
+          </div>
+        </md-card>
+        
+        <p></p>
+      </div>
+    </md-dialog-content>
+    
+    <md-dialog-actions layout="row">
+      <span flex></span>
+
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+      
+      <md-button type="submit">
+        Confirm
+      </md-button>
+      
+    </md-dialog-actions>
+    
+  </form>
+</md-dialog>

@@ -58,17 +58,8 @@ class ConfigStatusHandler(tornado.web.RequestHandler):
     def post(self, id=None):
         _status = {"status": CONFIG_STATUS.NONE}
         if _get_config() == None:
-            pass  
-        elif _get_config().get("db") and _get_config().get("team") and _get_config().get("apns") and _get_config.get("gcm"):
-            _status["status"] = CONFIG_STATUS.ANDROID
-        elif _get_config().get("db") and _get_config().get("team") and _get_config().get("apns"):
-            _status["status"] = CONFIG_STATUS.IOS
-        elif _get_config().get("db") and _get_config().get("team"):
-            _status["status"] = CONFIG_STATUS.FIRST
-        elif _get_config().get("db"):
-            _status["status"] = CONFIG_STATUS.DATABASE
-        else:
-            _status["status"] = CONFIG_STATUS.NONE
+            pass
+        _status["status"] = _get_config().get("config_status")
         self.write(_status)
         self.flush()
         return
@@ -87,8 +78,19 @@ class DatabaseHandler(tornado.web.RequestHandler):
         return
     
     def _dump_db_config(self, _db_config):
+        _config = _get_config()
+        _config["config_status"] = CONFIG_STATUS.DATABASE
+        _config["db"] = _db_config
+        _dump_config(_config)
+        return
+
+    def _dump_server_config(self, _server_config):
+        """
+        sever config is first
+        """
         _config = {
-            "db": _db_config
+            "config_status": CONFIG_STATUS.SERVER,
+            "server": _server_config
         }
         _dump_config(_config)
         return
@@ -96,7 +98,12 @@ class DatabaseHandler(tornado.web.RequestHandler):
     def _sqlite(self, _request):
         logging.info(_request)
 
-        _db_file_path = _request.get("sqlite").get("db_file_path")
+        _db_file_path = _request.get(SQL.SQLITE.lower())
+        if _db_file_path == None:
+            logging.error("%s not in %s" % (SQL.SQLITE.lower(), str(_request)))
+            return _return(self, -1)
+        
+        _db_file_path = _db_file_path.get("db_file_path")
         if _db_file_path == None or len(_db_file_path) == 0:
             logging.error("db_file_path is required for sqlite")
             return _return(self, -1)
@@ -181,17 +188,27 @@ class DatabaseHandler(tornado.web.RequestHandler):
     
     def post(self, id=None):        
         _request = json.loads(self.request.body)
-        _type = _request.get("type")
 
         _config = _get_config()
         if _config != None:
             logging.error("config already existed.")
             return _return(self, -1)
-        
+
+        # SERVER
+        _server = _request.get("server")
+        if _server == None or _server.get("name") == None or _server.get("port") == None:
+            logging.error("server is required.")
+            return _return(self, -1)
+
+        self._dump_server_config(_server)
+
+        # DB
+        _type = _request.get("type")
+
         if _type == None or len(_type) == 0:
             logging.error("type is required.")
             return _return(self, -1)
-
+        
         _type = _type.upper()
         if _type == SQL.SQLITE:
             return self._sqlite(_request)

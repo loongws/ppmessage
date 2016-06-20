@@ -1,4 +1,4 @@
-function InitializeDatabaseController($scope, $mdDialog, yvAjax) {
+function ConfigServerController($scope, $mdDialog, yvAjax) {
 
     var DATABASE_TYPE = {
         SQLITE: "SQLITE",
@@ -7,24 +7,31 @@ function InitializeDatabaseController($scope, $mdDialog, yvAjax) {
     };
 
     $scope.database = {
-        type: DATABASE_TYPE.SQLITE,
-        types: angular.copy(DATABASE_TYPE),
-        sqlite: {
-            db_file_path: "/user/local/var/db/sqlite/ppmessage.db"
+        server: {
+            name: "127.0.0.1",
+            port: 8945,
         },
-        mysql: {
-            db_host: "127.0.0.1",
-            db_port: "3306",
-            db_user: "root",
-            db_password: "password",
-            db_name: "ppmessage"
-        },
-        pgsql: {
-            db_host: "127.0.0.1",
-            db_port: "5432",
-            db_user: "postgresql",
-            db_password: "password",
-            db_name: "ppmessage"
+        
+        db: {
+            type: DATABASE_TYPE.SQLITE,
+            types: angular.copy(DATABASE_TYPE),
+            sqlite: {
+                db_file_path: "/user/local/var/db/sqlite/ppmessage.db"
+            },
+            mysql: {
+                db_host: "127.0.0.1",
+                db_port: "3306",
+                db_user: "root",
+                db_password: "password",
+                db_name: "ppmessage"
+            },
+            pgsql: {
+                db_host: "127.0.0.1",
+                db_port: "5432",
+                db_user: "postgresql",
+                db_password: "password",
+                db_name: "ppmessage"
+            }
         }
     };
 
@@ -41,21 +48,21 @@ function InitializeDatabaseController($scope, $mdDialog, yvAjax) {
     };
 
     $scope.should_show_mysql = function() {
-        if ($scope.database.type == DATABASE_TYPE.MYSQL) {
+        if ($scope.database.db.type == DATABASE_TYPE.MYSQL) {
             return true;
         }
         return false;
     };
 
     $scope.should_show_sqlite = function() {
-        if ($scope.database.type == DATABASE_TYPE.SQLITE) {
+        if ($scope.database.db.type == DATABASE_TYPE.SQLITE) {
             return true;
         }
         return false;
     };
 
     $scope.should_show_pgsql = function() {
-        if ($scope.database.type == DATABASE_TYPE.PGSQL) {
+        if ($scope.database.db.type == DATABASE_TYPE.PGSQL) {
             return true;
         }
         return false;

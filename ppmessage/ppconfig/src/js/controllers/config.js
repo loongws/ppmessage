@@ -77,8 +77,8 @@ angular.module("this_app")
 
         $scope.initialize_database = function(ev) {
             $mdDialog.show({
-                controller: InitializeDatabaseController,
-                templateUrl: 'templates/dialog/initialize-database.tmpl.html',
+                controller: ConfigServerController,
+                templateUrl: 'templates/dialog/config-server.tmpl.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose:true

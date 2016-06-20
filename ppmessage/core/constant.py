@@ -32,6 +32,7 @@ Animals = Enum(["DOG", "CAT", "HORSE"])
 
 CONFIG_STATUS = Enum([
     "NONE",
+    "SERVER",
     "DATABASE",
     "FIRST",
     "IOS",

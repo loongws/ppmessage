@@ -11,5 +11,8 @@
   "private": true,
   "dependencies": {
     "jquery": "^1.12.1"
+  },
+  "resolutions": {
+    "angular": "1.5.7"
   }
 }
