@@ -1,51 +1,31 @@
 <div style="position:relative;" layout="column">
   
   <div layout="row" layout-align="center" style="padding-bottom:120px;">
-    <md-content class="md-padding" flex-xs flex-sm flex-gt-sm="55" flex-gt-lg="33" layout="column">
-      <md-content class="md-padding">
-        <h2>{{ "global.USER_ACCOUNT_TAG" | translate }}</h2>
-      </md-content>
+    <div layout="column" flex="66">
+      <h2>{{ "global.USER_ACCOUNT_TAG" | translate }}</h2>
 
-      <md-tabs md-dynamic-height md-border-bottom md-center-tabs md-selected="ui.selected_index" class="md-padding" style="border: 1px solid #e1e1e1;">
+      <md-card class="md-whiteframe-z2">
+        <md-content class="md-padding">
+          <form name="sign_in_form" ng-submit="sign_in_form_submit()">
 
-        <md-tab label="{{ 'global.SIGNIN_TAG' | translate }}">
-          <md-content class="md-padding">
-            <form name="sign_in_form" ng-submit="sign_in_form_submit()">
+            <md-input-container class="md-block">
+              <label>Email</label>
+              <input ng-model="user.user_email" type="email" required>
+            </md-input-container>
 
-              <md-input-container class="md-block">
-                <label>Email</label>
-                <input ng-model="user.user_email" type="email" required>
-              </md-input-container>
-
-              <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
-                <label>Password</label>
-                <input type="{{ user.password_input_type }}" ng-model="user.user_password" required>
-                <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
-                <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
-              </md-input-container>
-              
-              <md-button class="md-raised" type="submit">{{ 'global.SIGNIN_TAG' | translate }}</md-button>
-              
-            </form>
-          </md-content>  
-        </md-tab>
-        
-        <md-tab label="{{ 'global.RESET_PASSWORD_TAG' | translate }}">
-          <md-content class="md-padding">
-            <form name="reset_password_form" ng-submit="reset_password_form_submit()">
-              
-              <md-input-container class="md-block">
-                <label>Email</label>
-                <input ng-model="user.user_email" type="email" required>
-              </md-input-container>
-
-              <md-button class="md-raised" type="submit">{{ 'global.SEND_NEW_PASSWORD_TAG' | translate }}</md-button>              
-            </form>
-          </md-content>  
-        </md-tab>
-
-      </md-tabs>
-    </md-content>
+            <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
+              <label>Password</label>
+              <input type="{{ user.password_input_type }}" ng-model="user.user_password" required>
+              <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
+              <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
+            </md-input-container>
+            
+            <md-button class="md-raised" type="submit">{{ 'global.SIGNIN_TAG' | translate }}</md-button>
+            
+          </form>
+        </md-content>  
+      </md-card>
+    </div>
   </div>
 </div>
 

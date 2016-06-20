@@ -97,16 +97,28 @@ class MainApplication(tornado.web.Application):
             self.total_delegates[name].run_periodic()
         return
 
+    def load_db_to_cache(self):
+        if _get_config() == None:
+            self.redis.flushdb()
+            return
+        else:
+            from ppmessage.core.utils.db2cache import load
+            load(self.redis)
+        return
+
 def _main():
     tornado.options.parse_command_line()
 
     _app = MainApplication()
+
+    _app.load_db_to_cache()
     
     tornado.httpserver.HTTPServer(_app).listen(tornado.options.options.port)
     _app.run_periodic()
 
     #mqtt_message_main()
 
+    
     _str = "Access http://127.0.0.1:%d/ to %s PPMessage."
     if _get_config() == None:
         logging.info(_str % (tornado.options.options.port, "config"))

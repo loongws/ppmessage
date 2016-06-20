@@ -16,7 +16,6 @@ BaseModel = declarative_base()
 import logging
 
 def _get_instance(config=None):
-    logging.info(config)
     _config = None
     
     if config == None:
