@@ -128,6 +128,8 @@ class DatabaseHandler(tornado.web.RequestHandler):
         return _return(self, -1)
 
     def _mysql(self, _request):
+        _request = _request.get("mysql") 
+
         _db_name = _request.get("db_name")
         _db_host = _request.get("db_host")
         _db_port = _request.get("db_port")
