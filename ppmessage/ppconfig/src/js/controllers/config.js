@@ -10,66 +10,66 @@ angular.module("this_app")
             RESTART: 5
         };
 
-        var _config_status = CONFIG_STATUS.NONE;
+        $scope._config_status = CONFIG_STATUS.NONE;
         
         $scope.get_database_status = function() {
-            if (_config_status == CONFIG_STATUS.NONE) {
+            if ($scope._config_status == CONFIG_STATUS.NONE) {
                 return "N/A";
             }
             return "OK";
         };
 
         $scope.get_first_status = function() {
-            if (_config_status >= CONFIG_STATUS.FIRST) {
+            if ($scope._config_status >= CONFIG_STATUS.FIRST) {
                 return "OK";
             }
             return "N/A";
         };
 
         $scope.get_apns_status = function() {
-            if (_config_status >= CONFIG_STATUS.IOS) {
+            if ($scope._config_status >= CONFIG_STATUS.IOS) {
                 return "OK";
             }
             return "N/A";
         };
 
         $scope.get_android_push_status = function() {
-            if (_config_status == CONFIG_STATUS.ANDROID) {
+            if ($scope._config_status == CONFIG_STATUS.ANDROID) {
                 return "OK";
             }
             return "N/A";
         };
 
         $scope.should_disable_initialize_database = function() {
-            if (_config_status == CONFIG_STATUS.NONE) {
+            if ($scope._config_status == CONFIG_STATUS.NONE) {
                 return false;
             }
             return true;
         };
         
         $scope.should_disable_create_first = function() {
-            if (_config_status == CONFIG_STATUS.DATABASE) {
+            if ($scope._config_status == CONFIG_STATUS.DATABASE) {
                 return false;
             }
             return true;
         };
         
         $scope.should_disable_config_apns = function() {
-            if (_config_status == CONFIG_STATUS.FIRST) {
+            if ($scope._config_status == CONFIG_STATUS.FIRST) {
                 return false;
             }
             return true;
         };
         
         $scope.should_disable_config_android_push = function() {
-            if (_config_status == CONFIG_STATUS.IOS) {
+            if ($scope._config_status == CONFIG_STATUS.IOS) {
                 return false;
             }
             return true;
         };
 
         $scope.should_disable_restart = function() {
-            if (_config_status >= CONFIG_STATUS.ANDROID) {
+            if ($scope._config_status >= CONFIG_STATUS.ANDROID) {
                 return false;
             }
             return true;
@@ -83,11 +83,8 @@ angular.module("this_app")
                 targetEvent: ev,
                 clickOutsideToClose:true
             }).then(function(answer) {
-                $scope.status = 'You said the information was "' + answer + '".';
-                _config_status = CONFIG_STATUS.DATABASE;
+                $scope._init_config_status();
             }, function() {
-                $scope.status = 'You cancelled the dialog.';
-                console.log($scope.status)
             });
         };
                 
@@ -99,10 +96,8 @@ angular.module("this_app")
                 targetEvent: ev,
                 clickOutsideToClose:true
             }).then(function(answer) {
-                $scope.status = 'You said the information was "' + answer + '".';
-                _config_status = CONFIG_STATUS.FIRST;
+                $scope._init_config_status();
             }, function() {
-                $scope.status = 'You cancelled the dialog.';
             });
         };
         
@@ -115,10 +110,8 @@ angular.module("this_app")
                 targetEvent: ev,
                 clickOutsideToClose:true
             }).then(function(answer) {
-                $scope.status = 'You said the information was "' + answer + '".';
-                _config_status = CONFIG_STATUS.IOS;
+                $scope._init_config_status();
             }, function() {
-                $scope.status = 'You cancelled the dialog.';
             });
         
         };
@@ -132,10 +125,8 @@ angular.module("this_app")
                 targetEvent: ev,
                 clickOutsideToClose:true
             }).then(function(answer) {
-                $scope.status = 'You said the information was "' + answer + '".';
-                _config_status = CONFIG_STATUS.ANDROID;
+                $scope._init_config_status();
             }, function() {
-                $scope.status = 'You cancelled the dialog.';
             });
         
         };
@@ -148,11 +139,19 @@ angular.module("this_app")
                 targetEvent: ev,
                 clickOutsideToClose:true
             }).then(function(answer) {
-                _config_status = CONFIG_STATUS.RESTART;
+                $scope._init_config_status();
             }, function() {
             });
 
         };
 
+        $scope._init_config_status = function() {
+            yvAjax.status().success(function(data) {
+                $scope._config_status = CONFIG_STATUS[data.status];
+            }).error(function() {
+            });
+        };
+
+        $scope._init_config_status();
         
     }); // end login ctrl

@@ -86,7 +86,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
 
     def _dump_server_config(self, _server_config):
         """
-        sever config is first
+        server config is first
         """
         _config = {
             "config_status": CONFIG_STATUS.SERVER,
@@ -112,7 +112,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
             self._mkdir_p(_db_file_path)
             open(_db_file_path, "w").close()
         except:
-            logging.error("sqlite %s can not create" % _db_file_path)
+            logging.error("sqlite: can not create %s" % _db_file_path)
             return _return(self, -1)
         
         _config = {
@@ -122,12 +122,12 @@ class DatabaseHandler(tornado.web.RequestHandler):
             }
         }
 
-        if create_sqlite_tables(_config.get(SQL.SQLITE.lower())):
+        if create_sqlite_tables(_config.get("sqlite")):
             self._dump_db_config(_config)
             return _return(self, 0)
         return _return(self, -1)
 
-    def _mysql(self):
+    def _mysql(self, _request):
         _db_name = _request.get("db_name")
         _db_host = _request.get("db_host")
         _db_port = _request.get("db_port")
@@ -137,7 +137,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
         if _db_name == None or _db_host == None or _db_port == None\
            or _db_user == None or _db_pass == None:
             logging.error("mysql required db paramters not provided.")
-            self._return(self, -1)
+            return _return(self, -1)
 
         _config = {
             "type": SQL.MYSQL.lower(),
@@ -149,14 +149,16 @@ class DatabaseHandler(tornado.web.RequestHandler):
                 "db_pass": _db_pass
             }
         }
-        if create_mysql_db(_config.get(SQL.MYSQL.lower())):
-            if create_mysql_tables(_config.get(SQL.MYSQL.lower())):
+        if create_mysql_db(_config.get("mysql")):
+            if create_mysql_tables(_config.get("mysql")):
                 self._dump_db_config(_config)
                 return _return(self, 0)
         
         return _return(self, -1)
 
-    def _pgsql(self):
+    def _pgsql(self, _request):
+
+        _request = _request.get("pgsql")
         
         _db_name = _request.get("db_name")
         _db_host = _request.get("db_host")
@@ -171,7 +173,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
 
         _config = {
             "type": SQL.PGSQL.lower(),
-            "mysql": {
+            "pgsql": {
                 "db_name": _db_name,
                 "db_host": _db_host,
                 "db_port": _db_port,
@@ -179,8 +181,10 @@ class DatabaseHandler(tornado.web.RequestHandler):
                 "db_pass": _db_pass
             }
         }
-        if create_mysql_db(_config.get(SQL.PGSQL.lower())):
-            if create_mysql_tables(_config.get(SQL.PGSQL.lower())):
+
+        logging.info(_config)
+        if create_pgsql_db(_config.get("pgsql")):
+            if create_pgsql_tables(_config.get("pgsql")):
                 self._dump_db_config(_config)
                 return _return(self, 0)
         
@@ -203,19 +207,23 @@ class DatabaseHandler(tornado.web.RequestHandler):
         self._dump_server_config(_server)
 
         # DB
-        _type = _request.get("type")
-
+        _db = _request.get("db")
+        if _db == None:
+            logging.error("db is required.")
+            return _return(self, -1)
+        
+        _type = _db.get("type")
         if _type == None or len(_type) == 0:
             logging.error("type is required.")
             return _return(self, -1)
         
         _type = _type.upper()
         if _type == SQL.SQLITE:
-            return self._sqlite(_request)
+            return self._sqlite(_db)
         if _type == SQL.MYSQL:
-            return self._mysql(_request)
+            return self._mysql(_db)
         if _type == SQL.PGSQL:
-            return self._pgsql(_request)
+            return self._pgsql(_db)
 
         return _return(self, -1)
 
@@ -231,7 +239,7 @@ class FirstHandler(tornado.web.RequestHandler):
            _request.get("user_password") == None or \
            _request.get("user_language") == None or \
            _request.get("team_name") == None:
-            _return(self, -1)
+            logging.info("check request false: %s" % _request)
             return False
         return True
 
@@ -249,7 +257,7 @@ class FirstHandler(tornado.web.RequestHandler):
                           user_password=_user_password,
                           user_language=_user_language)
         
-        _row.create_redis_cache(self.application.redis)
+        _row.create_redis_keys(self.application.redis)
         _row.async_add(self.application.redis)
         self._user_uuid = _user_uuid
         return True
@@ -263,17 +271,18 @@ class FirstHandler(tornado.web.RequestHandler):
         _app_key = str(uuid.uuid1())
         _app_secret = str(uuid.uuid1())
 
-        _row = ApiInfo(uuid=_app_uuid, 
+        _row = AppInfo(uuid=_app_uuid, 
                        app_name=_app_name,
                        user_uuid=_user_uuid,
                        app_key=_app_key,
                        app_secret=_app_secret)
-        _row.create_redis_cache(self.application.redis)
+        _row.create_redis_keys(self.application.redis)
         _row.async_add(self.application.redis)
         self._app_uuid = _app_uuid
         return True
 
     def _create_data(self, _request):
+        from ppmessage.db.models import AppUserData
         _user_uuid = self._user_uuid
         _app_uuid = self._app_uuid
         
@@ -285,7 +294,7 @@ class FirstHandler(tornado.web.RequestHandler):
             is_owner_user = True,
             is_portal_user = False                                    
         )
-        _row.create_redis_cache(self.application.redis)
+        _row.create_redis_keys(self.application.redis)
         _row.async_add(self.application.redis)
         return True
 
@@ -308,19 +317,18 @@ class FirstHandler(tornado.web.RequestHandler):
                            api_level=_type,
                            api_key=_encode(str(uuid.uuid1())),
                            api_secret=_encode(str(uuid.uuid1())))
-            _row.create_redis.cache(self.application.redis)
+            _row.create_redis_keys(self.application.redis)
             _row.async_add(self.application.redis)
-            return {uuid:_row.uuid, key:_row.api_key, secret:_row.api_secret}
+            return {"uuid":_row.uuid, "key":_row.api_key, "secret":_row.api_secret}
 
         _config = {
             API_LEVEL.PPCOM.lower(): _info(API_LEVEL.PPCOM),
             API_LEVEL.PPKEFU.lower(): _info(API_LEVEL.PPKEFU),
             API_LEVEL.PPCONSOLE.lower(): _info(API_LEVEL.PPCONSOLE),
-            API_LEVEL.PPCONSOLE_BEFORE_LOGIN.lower(): _info(PPCONSOLE_BEFORE_LOGIN),
+            API_LEVEL.PPCONSOLE_BEFORE_LOGIN.lower(): _info(API_LEVEL.PPCONSOLE_BEFORE_LOGIN),
             API_LEVEL.THIRD_PARTY_KEFU.lower(): _info(API_LEVEL.THIRD_PARTY_KEFU),
             API_LEVEL.THIRD_PARTY_CONSOLE.lower(): _info(API_LEVEL.THIRD_PARTY_CONSOLE)
         }
-
         self._api = _config
         return True
 
@@ -328,16 +336,35 @@ class FirstHandler(tornado.web.RequestHandler):
         return os.path.dirname(__file__)
     
     def _dist_ppcom(self, _request):
-        from ppmessage.ppcom.config import config
-        return config(self._api.get(API_LEVEL.PPCOM.lower()))
+        from ppmessage.ppcom.config.config import config
+        _d = {
+            "ssl": _get_config().get("server").get("ssl"),
+            "server_name": _get_config().get("server").get("name"),
+            "server_port": _get_config().get("server").get("port"),
+            "key": self._api.get(API_LEVEL.PPCOM.lower()).get("key"),
+            "secret": self._api.get(API_LEVEL.PPCOM.lower()).get("secret"),
+        }
+        config(_d)
+        return True
 
     def _dist_ppkefu(self, _request):
-        from ppmessage.ppkefu.config import config
-        return config(self._api.get(API_LEVEL.PPKEFU.lower()))
+        from ppmessage.ppkefu.config.config import config
+        _d = {
+            "key": self._api.get(API_LEVEL.PPKEFU.lower()).get("key")
+        }
+        config(_d)
+        return True
 
     def _dist_ppconsole(self, _request):
-        from ppmessage.ppconsole.config import config
-        return config(self._api.get(API_LEVEL.PPCONSOLE.lower()))
+        from ppmessage.ppconsole.config.config import config
+        _d = {
+            "app_uuid": self._app_uuid,
+            "api_uuid": self._api.get(API_LEVEL.PPCONSOLE.lower()).get("uuid"),
+            "api_key": self._api.get(API_LEVEL.PPCONSOLE.lower()).get("key"),
+            "api_secret": self._api.get(API_LEVEL.PPCONSOLE.lower()).get("secret")
+        }
+        config(_d)
+        return True
 
     def _dist(self, _request):
         if not self._dist_ppcom(_request):
@@ -350,6 +377,7 @@ class FirstHandler(tornado.web.RequestHandler):
 
     def _dump_config(self, _request):
         _config = _get_config()
+        _config["config_status"] = CONFIG_STATUS.FIRST
         _config["api"] = self._api
         _config["team"] = {
             "app_uuid": self._app_uuid
@@ -369,44 +397,48 @@ class FirstHandler(tornado.web.RequestHandler):
             return _return(self, -1)
 
         if not self._create_team(_request):
-            return self._return(-1)
+            return _return(self, -1)
 
         if not self._create_data(_request):
-            return self._return(-1)
+            return _return(self, -1)
 
         if not self._create_api(_request):
-            return self._return(-1)
+            return _return(self, -1)
         
         if not self._dist(_request):
-            return self._return(-1)
+            return _return(self, -1)
 
         self._dump_config(_request)
         return _return(self, 0)
 
 class IOSHandler(tornado.web.RequestHandler):
 
-    def _check_ios(self, _request):
+    def _check_request(self):
         if self.request.files == None or len(self.request.files) == 0:
             return False
+
+        logging.info(self.request.files)
         
         self._dev_cert_file = self.request.files.get("dev_cert")
         if self._dev_cert_file != None:
-            self._dev_cert_file = self._dev_cert_file[0]
+            self._dev_cert_file = self._dev_cert_file[0].get("body")
 
         self._pro_cert_file = self.request.files.get("pro_cert")
         if self._pro_cert_file != None:
-            self._pro_cert_file = self._pro_cert_file[0]
+            self._pro_cert_file = self._pro_cert_file[0].get("body")
 
         self._com_cert_file = self.request.files.get("com_cert")
         if self._com_cert_file != None:
-            self._com_cert_file = self._com_cert_file[0]
+            self._com_cert_file = self._com_cert_file[0].get("body")
 
-        self._dev_cert_password = _request.get("dev_cert_password")
-        self._pro_cert_password = _request.get("pro_cert_password")
-        self._com_cert_password = _request.get("com_cert_password")
+        self._dev_cert_password = self.get_argument("dev_cert_password")
+        self._pro_cert_password = self.get_argument("pro_cert_password")
+        self._com_cert_password = self.get_argument("com_cert_password")
         return True
     
-    def _save_db(self, _request):
+    def _save_db(self):
+        from ppmessage.db.models import APNSSetting
+        
         _dev_pem = None
         _pro_pem = None
         _com_pem = None
@@ -418,7 +450,7 @@ class IOSHandler(tornado.web.RequestHandler):
         if self._com_cert_file != None and self._com_cert_password != None:
             _com_pem = der2pem(self._com_cert_file, self._com_cert_password)
 
-        _app_uuid = _get_config.get("team").get("app_uuid")
+        _app_uuid = _get_config().get("team").get("app_uuid")
         _row = APNSSetting(
             uuid=str(uuid.uuid1()),
             name=_app_uuid,
@@ -431,8 +463,9 @@ class IOSHandler(tornado.web.RequestHandler):
         _row.async_add(self.application.redis)
         return True
 
-    def _dump_config(self, _request):
+    def _dump_config(self):
         _config = _get_config()
+        _config["config_status"] = CONFIG_STATUS.IOS
         _config["ios"] = {
             "configed": True
         }
@@ -440,20 +473,20 @@ class IOSHandler(tornado.web.RequestHandler):
         return
     
     def post(self, id=None):
-        logging.info("ioshandler")
-
-        if not self._check_ios(_request):
+        
+        logging.info("ioshandler: %s" % str(self.request))
+        if not self._check_request():
             return _return(self, -1)
 
-        if not self._save_db(_request):
+        if not self._save_db():
             return _return(self, -1)
 
-        self._dump_config(_request)
+        self._dump_config()
         return _return(self, 0)
 
 class AndroidHandler(tornado.web.RequestHandler):
     
-    def _check_android(self, _request):
+    def _check_request(self, _request):
         _type = _request.get("type")
         if _type == None:
             return False
@@ -468,6 +501,7 @@ class AndroidHandler(tornado.web.RequestHandler):
     
     def _dump_mqtt_config(self, _request):
         _config = _get_config()
+        _config["config_status"] = CONFIG_STATUS.ANDROID
         _config["android"] = {
             "type": "MQTT"
         }
@@ -476,6 +510,7 @@ class AndroidHandler(tornado.web.RequestHandler):
 
     def _dump_gcm_config(self, _request):
         _config = _get_config()
+        _config["config_status"] = CONFIG_STATUS.ANDROID
         _config["android"] = {
             "type": "GCM",
             "gcm": {
@@ -487,6 +522,7 @@ class AndroidHandler(tornado.web.RequestHandler):
 
     def _dump_jpush_config(self, _request):
         _config = _get_config()
+        _config["config_status"] = CONFIG_STATUS.ANDROID
         _config["android"] = {
             "type": "JPUSH",
             "jpush": {
@@ -497,9 +533,11 @@ class AndroidHandler(tornado.web.RequestHandler):
         return _return(self, 0)
     
     def post(self, id=None):
-        logging.info("Androidhandler")
+
+        _request = json.loads(self.request.body)
+        logging.info("Androidhandler %s" % _request)
         
-        if not self._check_android(_request):
+        if not self._check_request(_request):
             return _return(self, -1)
 
         if _request.get("type") == "MQTT":

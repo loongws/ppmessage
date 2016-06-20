@@ -16,7 +16,12 @@ import hashlib
 def _cur_dir():
     return os.path.dirname(__file__)
 
-def _replace(_api_uuid, _api_key, _api_secret, _app_uuid):
+def _replace(_d):
+    _api_uuid = _d.get("api_uuid")
+    _app_uuid = _d.get("app_uuid")
+    _api_key = _d.get("api_key")
+    _api_secret = _d.get("api_secret")
+    
     TEMPLATE_MIN_JS = "../../resource/assets/ppconsole/static/dist/ppconsole-template.min.js"
     MIN_JS = "../../resource/assets/ppconsole/static/dist/ppconsole.min.js"
     
@@ -34,23 +39,25 @@ def _replace(_api_uuid, _api_key, _api_secret, _app_uuid):
                          .replace('{ppconsole_api_secret}', _api_secret)\
                          .replace('{ppmessage_app_uuid}', _app_uuid)
                 
-        with open(MIN_JS, "w") as _of:
+        with open(_js_n_path, "w") as _of:
             _of.write(_js_str)
 
     return
 
-def config(_api_uuid, _api_key, _api_secret, _app_uuid):
-    _replace(_api_uuid, _api_key, _api_secret, _app_uuid)
+def config(_d):
+    _replace(_d)
     return
 
 if __name__ == "__main__":
     import sys
     reload(sys)
     sys.setdefaultencoding('utf-8')
-    _app_uuid = "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA=="
-    _api_uuid = "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA=="
-    _api_key = "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA=="
-    _api_secret = "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA=="    
-    config(_api_uuid, _api_key, _api_secret, _app_uuid)
+    _d = {
+        "app_uuid": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA==",
+        "api_uuid": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA==",
+        "api_key": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA==",
+        "api_secret": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA=="
+    }
+    config(_d)
 
         

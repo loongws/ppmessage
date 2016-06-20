@@ -21,24 +21,34 @@
 
         <md-input-container class="md-block">
           <label>Developer Certificate (.p12) </label>
-          <input ng-model="ios.dev_cert_file_path" type="file" accept="application/x-pkcs12" required>
+          <input type="file" accept="application/x-pkcs12"  onchange="angular.element(this).scope().getFileDetails(this, 'dev_cert')" required>
         </md-input-container>
 
         <md-input-container class="md-block">
           <label>Developer Certificate Password</label>
-          <input ng-model="ios.dev_cert_password">
+          <input ng-model="ios.passwords.dev_cert_password">
         </md-input-container>
 
         <md-input-container class="md-block">
           <label>Production Certificate (.p12) </label>
-          <input ng-model="ios.proc_cert_file_path" type="file" accept="application/x-pkcs12" required>
+          <input type="file" accept="application/x-pkcs12" onchange="angular.element(this).scope().getFileDetails(this, 'pro_cert')" required>
         </md-input-container>
 
         <md-input-container class="md-block">
           <label>Production Certificate Password</label>
-          <input ng-model="ios.pro_cert_password">
+          <input ng-model="ios.passwords.pro_cert_password">
         </md-input-container>
-        
+
+        <md-input-container class="md-block">
+          <label>Combination Certificate (.p12) </label>
+          <input type="file" accept="application/x-pkcs12"  onchange="angular.element(this).scope().getFileDetails(this, 'com_cert')" required>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Combination Certificate Password</label>
+          <input ng-model="ios.passwords.com_cert_password">
+        </md-input-container>
+
         <p></p>
       </div>
     </md-dialog-content>

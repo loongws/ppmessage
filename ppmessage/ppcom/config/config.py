@@ -16,7 +16,15 @@ import hashlib
 def _cur_dir():
     return os.path.dirname(__file__)
 
-def _replace(_api_key, _api_secret, _ssl, _host, _port):
+def _replace(_d):
+
+    logging.info(_d)
+    _api_key = _d.get("key")
+    _api_secret = _d.get("secret")
+    _ssl = _d.get("ssl")
+    _host = _d.get("server_name")
+    _port = str(_d.get("server_port"))
+    
     TEMPLATE_MIN_JS = "../../resource/assets/ppcom/assets/pp-library-template.min.js"
     MIN_JS = "../../resource/assets/ppcom/assets/pp-library.min.js"
     
@@ -43,6 +51,10 @@ def _replace(_api_key, _api_secret, _ssl, _host, _port):
         http = "https://"
         ws = "wss://"
 
+    import sys
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
+
     with open(_template_min_js, "r") as _t:
         _str = _t.read()
         _str = _str\
@@ -61,17 +73,19 @@ def _replace(_api_key, _api_secret, _ssl, _host, _port):
     
     return 
 
-def config(_key, _secret, _ssl, _host, _port):
-    _replace(_key, _secret, _ssl, _host, _port)
+def config(_dict):
+    _replace(_dict)
     return
 
 if __name__ == "__main__":
     import sys
     reload(sys)
     sys.setdefaultencoding('utf-8')
-    _key = "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA=="
-    _secret = "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA=="
-    _ssl = "off"
-    _host = "ppmessage.com"
-    _port = "80"
-    config(_key, _secret, _ssl, _host, _port)
+    _d = {
+        "key": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA==",
+        "secret": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA==",
+        "ssl": "off",
+        "server_name":  "ppmessage.com",
+        "server_port": "80"
+    }
+    config(_d)

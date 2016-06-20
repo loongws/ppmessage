@@ -29,7 +29,7 @@ def create_mysql_db(_db_config):
     _db_string = "mysql+mysqlconnector://%s:%s@%s:%s?charst=utf8" % \
                  (_db_config.get("db_user"), _db_config.get("db_pass"),
                   _db_config.get("db_host"), _db_config.get("db_port"))
-    _engine = sqlalchemy.create_engine(_db_string)
+    _engine = create_engine(_db_string)
     _engine.execute("CREATE DATABASE %s" % _db_config.get("db_name")) #create db
     _engine.execute("USE %s" % _db_config.get("db_name")) 
     return True
@@ -48,7 +48,7 @@ def create_pgsql_db(_db_config):
                  (_db_config.get("db_user"), _db_config.get("db_pass"),
                   _db_config.get("db_host"), _db_config.get("db_port"))
 
-    _engine = sqlalchemy.create_engine(_db_string)
+    _engine = create_engine(_db_string)
     _conn = _engine.connect()
     _conn.execute("commit")
     _conn.execute("create database %s" % _db_config.get("db_name"))

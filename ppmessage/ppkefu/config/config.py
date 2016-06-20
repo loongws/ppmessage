@@ -16,7 +16,9 @@ import hashlib
 def _cur_dir():
     return os.path.dirname(__file__)
 
-def _replace_api_key(_api_key):
+def _replace(_d):
+    _key = _d.get("key")
+    
     JS_BUILD_PATH = "../../resource/assets/ppkefu/assets/js"
     PPKEFU_TEMPLATE_MIN_JS = "ppkefu-template.min.js"
     
@@ -51,13 +53,13 @@ def _replace_html_file(_js_name):
 
     return
 
-def config(_key):
-    _replace_api_key(_key)
+def config(_d):
+    _replace(_d)
     return
 
 if __name__ == "__main__":
     import sys
     reload(sys)
     sys.setdefaultencoding('utf-8')
-    _key = "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA=="
-    config(_key)
+    _d = { "key":"NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA=="}
+    config(_d)

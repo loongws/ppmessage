@@ -20,32 +20,29 @@ function $yvAjaxService($state, $timeout, $http, $cookies, yvConstants) {
     };
 
     return {
-        status: function () {
+        status: function() {
             var _url = "/status";
             var _data = {};
             return _api_post(_url, _data);
         },
 
-        database: function (_data) {
+        database: function(_data) {
             var _url = "/database";
             return _api_post(_url, _data);
         },
 
-        first: function () {
+        first: function(_data) {
             var _url = "/first";
-            var _data = {};
             return _api_post(_url, _data);
         },
 
-        ios: function () {
+        ios: function(_data) {
             var _url = "/ios";
-            var _data = {};
             return _api_post(_url, _data);
         },
 
-        android: function () {
+        android: function(_data) {
             var _url = "/android";
-            var _data = {};
             return _api_post(_url, _data);
         },
 

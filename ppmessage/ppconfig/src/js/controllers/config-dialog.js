@@ -16,20 +16,20 @@ function ConfigServerController($scope, $mdDialog, yvAjax) {
             type: DATABASE_TYPE.SQLITE,
             types: angular.copy(DATABASE_TYPE),
             sqlite: {
-                db_file_path: "/user/local/var/db/sqlite/ppmessage.db"
+                db_file_path: "/usr/local/var/db/sqlite/ppmessage.db"
             },
             mysql: {
                 db_host: "127.0.0.1",
                 db_port: "3306",
                 db_user: "root",
-                db_password: "password",
+                db_pass: "test",
                 db_name: "ppmessage"
             },
             pgsql: {
                 db_host: "127.0.0.1",
                 db_port: "5432",
-                db_user: "postgresql",
-                db_password: "password",
+                db_user: "postgres",
+                db_pass: "test",
                 db_name: "ppmessage"
             }
         }
@@ -107,8 +107,7 @@ function CreateFirstController($scope, $mdDialog, yvAjax) {
     };
 
     $scope.confirm = function() {
-        yvAjax.first().success(function(){
-            console.log("first user successfully");
+        yvAjax.first($scope.user).success(function(){
             $mdDialog.hide("success");
         }).error(function(){
             console.log("first user create failed");
@@ -117,13 +116,20 @@ function CreateFirstController($scope, $mdDialog, yvAjax) {
     
 }
 
-function ConfigIOSController($scope, $mdDialog, yvAjax) {
+function ConfigIOSController($scope, $mdDialog, yvAjax, FileUploader) {
 
     $scope.ios = {
-        dev_cert_file_path: null,
-        dev_cert_password: null,
-        pro_cert_file_path: null,
-        pro_cert_password: null,
+        files: {
+            dev_cert: null,
+            pro_cert: null,
+            com_cert: null
+        },
+        
+        passwords: {
+            dev_cert_password: null,
+            pro_cert_password: null,
+            com_cert_password: null
+        }
     };
 
     $scope.hide = function() {
@@ -139,16 +145,95 @@ function ConfigIOSController($scope, $mdDialog, yvAjax) {
     };
 
     $scope.confirm = function() {
-        $mdDialog.hide("success");
+        console.log($scope.ios);
+
+        var _update_progress = function(_d) {
+            console.log("_update_progress ", _d);
+        };
+
+        var _transfer_complete = function(_d) {
+            console.log("_transfer_compelete ", _d);
+            $mdDialog.success("");
+        };
+
+        var _transfer_failed = function(_d) {
+            console.log("_transfer_failed ", _d);
+        };
+
+        var _transfer_canceled = function(_d) {
+            console.log("_transfer_canceled ", _d);
+        };
+        
+        //FILL FormData WITH FILE DETAILS.
+        var data = new FormData();
+
+        for(var i in $scope.ios.files) {
+            data.append(i, $scope.ios.files[i]);
+        }
+
+        for(var i in $scope.ios.passwords) {
+            data.append(i, $scope.ios.passwords[i]);
+        }
+
+        console.log(data);
+        
+        // ADD LISTENERS.
+        var objXhr = new XMLHttpRequest();
+        objXhr.addEventListener("progress", _update_progress, false);
+        objXhr.addEventListener("load", _transfer_complete, false);
+        objXhr.addEventListener("error", _transfer_failed);
+        objXhr.addEventListener("abort", _transfer_canceled);
+        
+        // SEND FILE DETAILS TO THE API.
+        objXhr.open("POST", "/ppconfig/ios");
+        objXhr.send(data);
     };
 
     $scope.pass = function() {
-        yvAjax.ios().success(function(){
-            console.log("ios successfully");
-            $mdDialog.hide("success");
-        }).error(function(){
-            console.log("ios failed");
-        });
+        $mdDialog.hide("success");
+    };
+
+    var uploader = $scope.uploader = new FileUploader({
+        url:"/ios",
+        
+    });
+
+    uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+        console.info('onWhenAddingFileFailed', item, filter, options);
+    };
+    uploader.onAfterAddingFile = function(fileItem) {
+        console.info('onAfterAddingFile', fileItem);
+    };
+    uploader.onAfterAddingAll = function(addedFileItems) {
+        console.info('onAfterAddingAll', addedFileItems);
+    };
+    uploader.onBeforeUploadItem = function(item) {
+        console.info('onBeforeUploadItem', item);
+    };
+    uploader.onProgressItem = function(fileItem, progress) {
+        console.info('onProgressItem', fileItem, progress);
+    };
+    uploader.onProgressAll = function(progress) {
+        console.info('onProgressAll', progress);
+    };
+    uploader.onSuccessItem = function(fileItem, response, status, headers) {
+        console.info('onSuccessItem', fileItem, response, status, headers);
+    };
+    uploader.onErrorItem = function(fileItem, response, status, headers) {
+        console.info('onErrorItem', fileItem, response, status, headers);
+    };
+    uploader.onCancelItem = function(fileItem, response, status, headers) {
+        console.info('onCancelItem', fileItem, response, status, headers);
+    };
+    uploader.onCompleteItem = function(fileItem, response, status, headers) {
+        console.info('onCompleteItem', fileItem, response, status, headers);
+    };
+    uploader.onCompleteAll = function() {
+        console.info('onCompleteAll');
+    };
+
+    $scope.getFileDetails = function (e, name) {
+        $scope.ios.files[name] = e.files[0];
     };
 }
 
@@ -186,8 +271,7 @@ function ConfigAndroidController($scope, $mdDialog, yvAjax) {
     };
 
     $scope.confirm = function() {
-        yvAjax.android().success(function(){
-            console.log("android successfully");
+        yvAjax.android($scope.android).success(function(){
             $mdDialog.hide("success");
         }).error(function(){
             console.log("android failed");
@@ -204,6 +288,8 @@ function ConfigAndroidController($scope, $mdDialog, yvAjax) {
         }
         return false;
     };
+
+    
 }
 
 function RestartController($scope, $mdDialog) {

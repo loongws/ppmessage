@@ -47,12 +47,7 @@ def _get_config():
     if _r == None or len(_r) == 0:
         logging.error("PPMessage system not configed")
         return None
-    
-    _config = json.loads(_r)
-    if _config.get("configed") == None:
-        logging.error("PPMessage system not configed")
-        return None
-    
+        
     return json.loads(_r)
 
 def _dump_config(_config):

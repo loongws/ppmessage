@@ -15,7 +15,7 @@ module.exports = {
 
         "../src/js/services/ajax.js",
         "../src/js/controllers/app.js",
-        "../src/js/controllers/database.js",        
+        "../src/js/controllers/config-dialog.js",        
         "../src/js/controllers/config.js",
         
         "../src/js/bootstrap.js"
