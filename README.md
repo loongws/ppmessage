@@ -74,7 +74,7 @@ Open your browser to access http://127.0.0.1:8945
 
 ## LICENSE 
 
-> Please read license carefully, you can use it freely, but not skip the license.
+> Please read license carefully, you can use it freely, but not cross the license.
 
 [Apache License Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
