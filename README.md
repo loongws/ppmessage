@@ -76,7 +76,7 @@ Open your browser to access http://127.0.0.1:8945
 
 > Please read license carefully, you can use it freely, but not skip the license.
 
-[Apache License Version 2.0](LICENSE.md)
+[Apache License Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 Copyright (c) 2010-2016, PPMESSAGE team and contributors - https://www.ppmessage.com and https://github.com/PPMESSAGE/ppmessage
 
