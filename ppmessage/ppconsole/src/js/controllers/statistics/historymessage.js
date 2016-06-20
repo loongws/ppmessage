@@ -255,7 +255,7 @@ angular.module("this_app")
             var _ans = getMatchedConversation($scope.search_target);
             $scope.search_target = "";
             if(_ans.length == 0) {
-                alert('没有任何匹配的结果');
+                alert('No Results');
                 return;
             }
 

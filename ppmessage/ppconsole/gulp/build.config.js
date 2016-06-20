@@ -6,10 +6,12 @@ module.exports = {
     scriptFiles: [
         "../src/js/version.js",
         "../src/js/global.js",
-        "../src/js/thisapp.js",
+
         "../src/js/constants.js",
         "../src/js/i18n.js",
         "../src/js/route.js",
+
+        "../src/js/thisapp.js",
 
         "../src/js/services/rest.js",
         "../src/js/services/ajax.js",
@@ -21,6 +23,7 @@ module.exports = {
         "../src/js/services/log.js",
         "../src/js/services/debug.js",
         "../src/js/services/login.js",
+
         "../src/js/services/application/grouping.js",
         "../src/js/services/application/people.js",
         "../src/js/services/application/callback.js",
@@ -32,10 +35,6 @@ module.exports = {
         "../src/js/controllers/signin.js",
         "../src/js/controllers/app.js",
         
-        "../src/js/controllers/policy/policy.js",
-        "../src/js/controllers/policy/termofservice.js",
-        "../src/js/controllers/policy/privacypolicy.js",
-
         "../src/js/controllers/settings/settings.js",
         "../src/js/controllers/settings/teamprofile.js",
         "../src/js/controllers/settings/integrate.js",
@@ -49,8 +48,6 @@ module.exports = {
         "../src/js/controllers/statistics/overview.js",
         "../src/js/controllers/statistics/historymessage.js",
 
-        "../src/js/controllers/404.js",
-
         "../src/js/directives/focusme.js",
         "../src/js/directives/uniform.js",
         "../src/js/directives/slimscroll.js",
@@ -58,7 +55,6 @@ module.exports = {
         "../src/js/directives/daterange.js",
         "../src/js/directives/href.js",
 
-        "../src/js/directives/userinfosettings.js",
         "../src/js/directives/clipboard.js",
         "../src/js/directives/colorpicker.js",
 

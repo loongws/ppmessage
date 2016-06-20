@@ -2,14 +2,12 @@
 angular.module("this_app.services", []);
 
 angular.module("this_app", [
-    "720kb.tooltips",
     "base64",
     "ngCookies",
-    "ngAnimate",
     "toastr",
+    "blockUI",
     "angularUtils.directives.dirPagination",
     "angularFileUpload",
-    "blockUI",
     "ui.router",
     "ngMaterial",
     "this_app.constants",

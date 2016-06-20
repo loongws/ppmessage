@@ -96,7 +96,7 @@ gulp.task("cache", function(done) {
     gulp.src(buildConfig.html)
         .pipe(cache("templates.js", {
             root: "templates",
-            module: "this-app"
+            module: "this_app"
         }))
         .pipe(gulp.dest(buildConfig.buildPath))
         .pipe(uglify())
