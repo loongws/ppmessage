@@ -175,7 +175,7 @@ function RestartController($scope, $mdDialog, yvAjax) {
         yvAjax.restart($scope.user).success(function(){
             $mdDialog.hide("success");
         }).error(function(){
-            console.log("restart failed");
+            $mdDialog.hide("success");
         });
     };
 

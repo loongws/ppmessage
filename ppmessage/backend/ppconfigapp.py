@@ -414,7 +414,7 @@ class FirstHandler(tornado.web.RequestHandler):
         return _return(self, 0)
 
 class RestartHandler(tornado.web.RequestHandler):    
-    def _dump_restart_config(self, _server_config):
+    def _dump_restart_config(self):
         _config = _get_config()
         _config["config_status"] = CONFIG_STATUS.RESTART
         _dump_config(_config)
@@ -437,7 +437,7 @@ class RestartHandler(tornado.web.RequestHandler):
             logging.error("can not restart for config_status: %s." % _config.get("config_status"))
             return _return(self, -1)
 
-        self._dump_server_config(_server)
+        self._dump_restart_config()
         _return(self, 0)
         self._restart()
 
