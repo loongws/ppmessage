@@ -151,7 +151,7 @@ function CreateFirstController($scope, $mdDialog, yvAjax) {
 
 }
 
-function RestartController($scope, $mdDialog) {
+function RestartController($scope, $mdDialog, yvAjax) {
     $scope.user = {
         user_password: "",
     
