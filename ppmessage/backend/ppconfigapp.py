@@ -419,7 +419,16 @@ class RestartHandler(tornado.web.RequestHandler):
         _config["config_status"] = CONFIG_STATUS.RESTART
         _dump_config(_config)
         return
-    
+
+    def _restart(self):
+        import sys
+        import os
+        """Restarts the current program.
+        Note: this function does not return. Any cleanup action (like
+        saving data) must be done before calling this function."""
+        python = sys.executable
+        os.execl(python, python, * sys.argv)
+            
     def post(self, id=None):        
         _request = json.loads(self.request.body)
 
@@ -430,8 +439,7 @@ class RestartHandler(tornado.web.RequestHandler):
 
         self._dump_server_config(_server)
         _return(self, 0)
-        from ppmessage.backend.main import _main
-        reload(_main)
+        self._restart()
 
 @singleton
 class PPConfigDelegate():
