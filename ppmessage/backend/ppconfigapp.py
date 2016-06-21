@@ -96,11 +96,11 @@ class ServerHandler(tornado.web.RequestHandler):
         # SERVER
         _server = _request
         if _server == None or _server.get("name") == None or _server.get("port") == None:
-            logging.error("server is required.")
+            logging.error("config server not run for wrong request: %s." % _server)
             return _return(self, -1)
 
         self._dump_server_config(_server)
-        return _return(self, -1)
+        return _return(self, 0)
 
 class DatabaseHandler(tornado.web.RequestHandler):
     
@@ -209,12 +209,11 @@ class DatabaseHandler(tornado.web.RequestHandler):
         _request = json.loads(self.request.body)
 
         _config = _get_config()
-        if _config != None and _config.get("config_status") != CONFIG_STATUS.SERVER:
-            logging.error("not correct status: %s for config database ." % _config.get("config_status"))
+        if _config == None or _config.get("config_status") != CONFIG_STATUS.SERVER:
+            logging.error("not correct status to config database.")
             return _return(self, -1)
 
         _db = _request
-        
         _type = _db.get("type")
         if _type == None or len(_type) == 0:
             logging.error("type is required.")
@@ -414,6 +413,26 @@ class FirstHandler(tornado.web.RequestHandler):
         self._dump_config(_request)
         return _return(self, 0)
 
+class RestartHandler(tornado.web.RequestHandler):    
+    def _dump_restart_config(self, _server_config):
+        _config = _get_config()
+        _config["config_status"] = CONFIG_STATUS.RESTART
+        _dump_config(_config)
+        return
+    
+    def post(self, id=None):        
+        _request = json.loads(self.request.body)
+
+        _config = _get_config()
+        if _config == None or _config.get("config_status") != CONFIG_STATUS.FIRST:
+            logging.error("can not restart for config_status: %s." % _config.get("config_status"))
+            return _return(self, -1)
+
+        self._dump_server_config(_server)
+        _return(self, 0)
+        from ppmessage.backend.main import _main
+        reload(_main)
+
 @singleton
 class PPConfigDelegate():
     def __init__(self, app):
@@ -439,6 +458,7 @@ class PPConfigWebService(AbstractWebService):
             (r"/server", ServerHandler),
             (r"/database", DatabaseHandler),
             (r"/first", FirstHandler),
+            (r"/restart", RestartHandler),
             (r"/static/(.*)", tornado.web.StaticFileHandler, _a_settings),
         ]
 
