@@ -230,6 +230,7 @@ function ppmessage_gulp()
     cd ppmessage/ppkefu/gulp; gulp; cd -;
     cd ppmessage/ppcom/gulp; gulp; cd -;
     cd ppmessage/ppconsole/gulp; gulp; cd -;
+    cd ppmessage/ppconfig/gulp; gulp; cd -;
 }
 
 function ppmessage_bower()
@@ -238,6 +239,7 @@ function ppmessage_bower()
     cd ppmessage/ppcom/bower; bower install --allow-root; cd -;
     cd ppmessage/ppkefu/bower; bower install --allow-root; cd -;
     cd ppmessage/ppconsole/bower; bower install --allow-root; cd -;
+    cd ppmessage/ppconfig/bower; bower install --allow-root; cd -;
 }
 
 function ppmessage_npm()
@@ -246,6 +248,7 @@ function ppmessage_npm()
     cd ppmessage/ppcom/gulp; npm install; cd -;
     cd ppmessage/ppkefu/gulp; npm install; cd -;
     cd ppmessage/ppconsole/gulp; npm install; cd -;
+    cd ppmessage/ppconfig/gulp; npm install; cd -;
 }
 
 function ppmessage_cnpm()
@@ -254,6 +257,12 @@ function ppmessage_cnpm()
     cd ppmessage/ppcom/gulp; cnpm install; cd -;
     cd ppmessage/ppkefu/gulp; cnpm install; cd -;
     cd ppmessage/ppconsole/gulp; cnpm install; cd -;
+}
+
+function ppmessage_build()
+{
+    echo "building $1"
+    cd ppmessage/$1/gulp; gulp; cd -;
 }
 
 function ppmessage_bootstrap()
@@ -281,6 +290,10 @@ case "$1" in
 
     bootstrap)
         ppmessage_bootstrap
+        ;;
+
+    build-ppconfig)
+        ppmessage_build "ppconfig"
         ;;
 
     dev)

@@ -9,7 +9,6 @@
 
 import os
 import json
-import scss
 import logging
 import hashlib
 
