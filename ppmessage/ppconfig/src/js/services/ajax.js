@@ -38,13 +38,15 @@ function $yvAjaxService($state, $timeout, $http, $cookies, yvConstants) {
 
         first: function(_data) {
             var _url = "/first";
-            _data.user_password = sha1(_data.user_password);
+            var _d = angular.copy(_data);
+            _d.user_password = sha1(_n.user_password);
             return _api_post(_url, _data);
         },
         
         restart: function(_data) {
             var _url = "/restart";
-            _data.user_password = sha1(_data.user_password);
+            var _d = angular.copy(_data);
+            _d.user_password = sha1(_d.user_password);
             return _api_post(_url, _data);
         },
 
