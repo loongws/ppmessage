@@ -35,8 +35,7 @@ CONFIG_STATUS = Enum([
     "SERVER",
     "DATABASE",
     "FIRST",
-    "IOS",
-    "ANDROID",
+    "RESTART"
 ])
 
 SQL = Enum([

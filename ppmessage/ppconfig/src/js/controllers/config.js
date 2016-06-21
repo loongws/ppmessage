@@ -6,9 +6,7 @@ angular.module("this_app")
             SERVER: 1,
             DATABASE: 2,
             FIRST: 3,
-            IOS: 4,
-            ANDROID: 5,
-            RESTART: 6
+            RESTART: 4
         };
 
         $scope._config_status = CONFIG_STATUS.NONE;
@@ -27,23 +25,15 @@ angular.module("this_app")
             return "N/A";
         };
 
-        $scope.get_apns_status = function() {
-            if ($scope._config_status >= CONFIG_STATUS.IOS) {
-                return "OK";
+        $scope.should_disable_config_server = function() {
+            if ($scope._config_status == CONFIG_STATUS.NONE) {
+                return false;
             }
-            return "N/A";
+            return true;
         };
 
-        $scope.get_android_push_status = function() {
-            if ($scope._config_status == CONFIG_STATUS.ANDROID) {
-                return "OK";
-            }
-            return "N/A";
-        };
-
-        $scope.should_disable_initialize_database = function() {
-            if ($scope._config_status == CONFIG_STATUS.NONE ||
-                $scope._config_status == CONFIG_STATUS.SERVER) {
+        $scope.should_disable_config_database = function() {
+            if ($scope._config_status == CONFIG_STATUS.SERVER) {
                 return false;
             }
             return true;
@@ -55,32 +45,31 @@ angular.module("this_app")
             }
             return true;
         };
-        
-        $scope.should_disable_config_apns = function() {
+                
+        $scope.should_disable_restart = function() {
             if ($scope._config_status == CONFIG_STATUS.FIRST) {
                 return false;
             }
             return true;
         };
-        
-        $scope.should_disable_config_android_push = function() {
-            if ($scope._config_status == CONFIG_STATUS.IOS) {
-                return false;
-            }
-            return true;
-        };
 
-        $scope.should_disable_restart = function() {
-            if ($scope._config_status >= CONFIG_STATUS.ANDROID) {
-                return false;
-            }
-            return true;
-        };
-
-        $scope.initialize_database = function(ev) {
+        $scope.config_server = function(ev) {
             $mdDialog.show({
                 controller: ConfigServerController,
                 templateUrl: 'templates/dialog/config-server.tmpl.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose:true
+            }).then(function(answer) {
+                $scope._init_config_status();
+            }, function() {
+            });
+        };
+        
+        $scope.config_database = function(ev) {
+            $mdDialog.show({
+                controller: ConfigDatabaseController,
+                templateUrl: 'templates/dialog/config-database.tmpl.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose:true
@@ -103,36 +92,6 @@ angular.module("this_app")
             });
         };
         
-        $scope.config_ios = function(ev) {
-
-            $mdDialog.show({
-                controller: ConfigIOSController,
-                templateUrl: 'templates/dialog/config-ios.tmpl.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose:true
-            }).then(function(answer) {
-                $scope._init_config_status();
-            }, function() {
-            });
-        
-        };
-
-        $scope.config_android = function(ev) {
-
-            $mdDialog.show({
-                controller: ConfigAndroidController,
-                templateUrl: 'templates/dialog/config-android.tmpl.html',
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose:true
-            }).then(function(answer) {
-                $scope._init_config_status();
-            }, function() {
-            });
-        
-        };
-
         $scope.restart_ppmessage = function(ev) {
             $mdDialog.show({
                 controller: RestartController,

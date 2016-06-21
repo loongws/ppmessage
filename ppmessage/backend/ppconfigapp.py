@@ -16,8 +16,6 @@ from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.main import AbstractWebService
 from ppmessage.core.singleton import singleton
 
-from ppmessage.core.p12converter import der2pem
-
 from ppmessage.core.utils.config import _get_config
 from ppmessage.core.utils.config import _dump_config
 
@@ -44,6 +42,17 @@ def _return(_handler, _code):
         _handler.send_error(404)
     return
 
+def _mkdir_p(_path):
+    _path = os.path.dirname(_path)
+    try:
+        os.makedirs(_path)
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(_path):
+            pass
+        else:
+            raise
+    return
+
 class PPConfigHandler(tornado.web.RequestHandler):
     def get(self, id=None):
         _dir = os.path.dirname(os.path.abspath(__file__))
@@ -64,26 +73,7 @@ class ConfigStatusHandler(tornado.web.RequestHandler):
         self.flush()
         return
 
-class DatabaseHandler(tornado.web.RequestHandler):
-
-    def _mkdir_p(self, _path):
-        _path = os.path.dirname(_path)
-        try:
-            os.makedirs(_path)
-        except OSError as exc:  # Python >2.5
-            if exc.errno == errno.EEXIST and os.path.isdir(_path):
-                pass
-            else:
-                raise
-        return
-    
-    def _dump_db_config(self, _db_config):
-        _config = _get_config()
-        _config["config_status"] = CONFIG_STATUS.DATABASE
-        _config["db"] = _db_config
-        _dump_config(_config)
-        return
-
+class ServerHandler(tornado.web.RequestHandler):    
     def _dump_server_config(self, _server_config):
         """
         server config is first
@@ -95,9 +85,33 @@ class DatabaseHandler(tornado.web.RequestHandler):
         _dump_config(_config)
         return
     
-    def _sqlite(self, _request):
-        logging.info(_request)
+    def post(self, id=None):        
+        _request = json.loads(self.request.body)
 
+        _config = _get_config()
+        if _config != None and _config.get("config_status") == CONFIG_STATUS.SERVER:
+            logging.error("server config already existed.")
+            return _return(self, -1)
+
+        # SERVER
+        _server = _request
+        if _server == None or _server.get("name") == None or _server.get("port") == None:
+            logging.error("server is required.")
+            return _return(self, -1)
+
+        self._dump_server_config(_server)
+        return _return(self, -1)
+
+class DatabaseHandler(tornado.web.RequestHandler):
+    
+    def _dump_db_config(self, _db_config):
+        _config = _get_config()
+        _config["config_status"] = CONFIG_STATUS.DATABASE
+        _config["db"] = _db_config
+        _dump_config(_config)
+        return
+    
+    def _sqlite(self, _request):
         _db_file_path = _request.get(SQL.SQLITE.lower())
         if _db_file_path == None:
             logging.error("%s not in %s" % (SQL.SQLITE.lower(), str(_request)))
@@ -109,7 +123,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
             return _return(self, -1)
         
         try:
-            self._mkdir_p(_db_file_path)
+            _mkdir_p(_db_file_path)
             open(_db_file_path, "w").close()
         except:
             logging.error("sqlite: can not create %s" % _db_file_path)
@@ -160,7 +174,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
 
     def _pgsql(self, _request):
 
-        _request = _request.get("pgsql")
+        _request = _request.get(SQL.PGSQL.lower())
         
         _db_name = _request.get("db_name")
         _db_host = _request.get("db_host")
@@ -196,22 +210,10 @@ class DatabaseHandler(tornado.web.RequestHandler):
 
         _config = _get_config()
         if _config != None and _config.get("config_status") != CONFIG_STATUS.SERVER:
-            logging.error("config already existed.")
+            logging.error("not correct status: %s for config database ." % _config.get("config_status"))
             return _return(self, -1)
 
-        # SERVER
-        _server = _request.get("server")
-        if _server == None or _server.get("name") == None or _server.get("port") == None:
-            logging.error("server is required.")
-            return _return(self, -1)
-
-        self._dump_server_config(_server)
-
-        # DB
-        _db = _request.get("db")
-        if _db == None:
-            logging.error("db is required.")
-            return _return(self, -1)
+        _db = _request
         
         _type = _db.get("type")
         if _type == None or len(_type) == 0:
@@ -412,146 +414,6 @@ class FirstHandler(tornado.web.RequestHandler):
         self._dump_config(_request)
         return _return(self, 0)
 
-class IOSHandler(tornado.web.RequestHandler):
-
-    def _check_request(self):
-        if self.request.files == None or len(self.request.files) == 0:
-            return False
-
-        logging.info(self.request.files)
-        
-        self._dev_cert_file = self.request.files.get("dev_cert")
-        if self._dev_cert_file != None:
-            self._dev_cert_file = self._dev_cert_file[0].get("body")
-
-        self._pro_cert_file = self.request.files.get("pro_cert")
-        if self._pro_cert_file != None:
-            self._pro_cert_file = self._pro_cert_file[0].get("body")
-
-        self._com_cert_file = self.request.files.get("com_cert")
-        if self._com_cert_file != None:
-            self._com_cert_file = self._com_cert_file[0].get("body")
-
-        self._dev_cert_password = self.get_argument("dev_cert_password")
-        self._pro_cert_password = self.get_argument("pro_cert_password")
-        self._com_cert_password = self.get_argument("com_cert_password")
-        return True
-    
-    def _save_db(self):
-        from ppmessage.db.models import APNSSetting
-        
-        _dev_pem = None
-        _pro_pem = None
-        _com_pem = None
-        
-        if self._dev_cert_file != None and self._dev_cert_password != None:
-            _dev_pem = der2pem(self._dev_cert_file, self._dev_cert_password)
-        if self._pro_cert_file != None and self._pro_cert_password != None:
-            _pro_pem = der2pem(self._pro_cert_file, self._pro_cert_password)
-        if self._com_cert_file != None and self._com_cert_password != None:
-            _com_pem = der2pem(self._com_cert_file, self._com_cert_password)
-
-        _app_uuid = _get_config().get("team").get("app_uuid")
-        _row = APNSSetting(
-            uuid=str(uuid.uuid1()),
-            name=_app_uuid,
-            app_uuid=_app_uuid,
-            production_pem=_pro_pem,
-            development_pem=_dev_pem,
-            combination_pem=_com_pem
-        )
-        _row.create_redis_keys(self.application.redis)
-        _row.async_add(self.application.redis)
-        return True
-
-    def _dump_config(self):
-        _config = _get_config()
-        _config["config_status"] = CONFIG_STATUS.IOS
-        _config["ios"] = {
-            "configed": True
-        }
-        _dump_config(_config)
-        return
-    
-    def post(self, id=None):
-        
-        logging.info("ioshandler: %s" % str(self.request))
-        if not self._check_request():
-            return _return(self, -1)
-
-        if not self._save_db():
-            return _return(self, -1)
-
-        self._dump_config()
-        return _return(self, 0)
-
-class AndroidHandler(tornado.web.RequestHandler):
-    
-    def _check_request(self, _request):
-        _type = _request.get("type")
-        if _type == None:
-            return False
-
-        if _type == "GCM" and _request_get("api_key") == None:
-            return False
-
-        if _type == "JPUSH" and _request_get("master_secret") == None:
-            return False
-        
-        return True
-    
-    def _dump_mqtt_config(self, _request):
-        _config = _get_config()
-        _config["config_status"] = CONFIG_STATUS.ANDROID
-        _config["android"] = {
-            "type": "MQTT"
-        }
-        _dump_config(_config)
-        return _return(self, 0)
-
-    def _dump_gcm_config(self, _request):
-        _config = _get_config()
-        _config["config_status"] = CONFIG_STATUS.ANDROID
-        _config["android"] = {
-            "type": "GCM",
-            "gcm": {
-                api_key: _request.get("api_key")
-            }
-        }
-        _dump_config(_config)
-        return _return(self, 0)
-
-    def _dump_jpush_config(self, _request):
-        _config = _get_config()
-        _config["config_status"] = CONFIG_STATUS.ANDROID
-        _config["android"] = {
-            "type": "JPUSH",
-            "jpush": {
-                api_key: _request.get("master_secret")
-            }
-        }
-        _dump_config(_config)
-        return _return(self, 0)
-    
-    def post(self, id=None):
-
-        _request = json.loads(self.request.body)
-        logging.info("Androidhandler %s" % _request)
-        
-        if not self._check_request(_request):
-            return _return(self, -1)
-
-        if _request.get("type") == "MQTT":
-            return self._dump_mqtt_config(_request)
-
-        if _request.get("type") == "GCM":
-            return self._dump_gcm_config(_request)
-
-        if _request.get("type") == "JPUSH":
-            return self._dump_jpush_config(_request)
-
-        return _return(self, -1)
-
 @singleton
 class PPConfigDelegate():
     def __init__(self, app):
@@ -574,10 +436,9 @@ class PPConfigWebService(AbstractWebService):
         handlers=[
             (r"/", PPConfigHandler),
             (r"/status", ConfigStatusHandler),
+            (r"/server", ServerHandler),
             (r"/database", DatabaseHandler),
             (r"/first", FirstHandler),
-            (r"/ios", IOSHandler),
-            (r"/android", AndroidHandler),
             (r"/static/(.*)", tornado.web.StaticFileHandler, _a_settings),
         ]
 

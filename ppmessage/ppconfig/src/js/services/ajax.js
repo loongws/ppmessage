@@ -25,6 +25,11 @@ function $yvAjaxService($state, $timeout, $http, $cookies, yvConstants) {
             var _data = {};
             return _api_post(_url, _data);
         },
+        
+        server: function(_data) {
+            var _url = "/server";
+            return _api_post(_url, _data);
+        },
 
         database: function(_data) {
             var _url = "/database";
@@ -36,14 +41,9 @@ function $yvAjaxService($state, $timeout, $http, $cookies, yvConstants) {
             var _url = "/first";
             return _api_post(_url, _data);
         },
-
-        ios: function(_data) {
-            var _url = "/ios";
-            return _api_post(_url, _data);
-        },
-
-        android: function(_data) {
-            var _url = "/android";
+        
+        restart: function(_data) {
+            var _url = "/restart";
             return _api_post(_url, _data);
         },
 

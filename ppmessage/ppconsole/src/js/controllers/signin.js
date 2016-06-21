@@ -75,34 +75,9 @@ angular.module("this_app")
                 });
             
         };
-
-        var send_email = function(user) {
-            var _s = function() {
-                $scope.toast_success_string("SEND_NEW_PASSWORD_SUCCESS_TAG");
-            };
-            var _e = function() {
-                $scope.toast_error_string("SEND_NEW_PASSWORD_FAILED_TAG");
-            };
-            
-            get_token(function(response) {
-                var credentialsToken = response.access_token;
-                console.log(response);
-                yvAjax.send_new_password({user_email: user.user_email}, credentialsToken).success(function() {
-                    _s();
-                }).error(function() {
-                    _e();
-                });
-            }, function() {
-                _e();
-            });
-        };
         
         $scope.sign_in_form_submit = function() {
             signin($scope.user);
-        };
-
-        $scope.reset_password_form_submit = function() {
-            send_email($scope.user);
         };
 
         $scope.show_user_password = function(show) {
@@ -114,13 +89,5 @@ angular.module("this_app")
                 $scope.user.password_input_type = "password";
             }
         };
-
-        if ($stateParams.sign_what && $stateParams.sign_what == "signin") {
-            $scope.ui.selected_index = 0;
-        }
-
-        if ($stateParams.sign_what && $stateParams.sign_what == "reset") {
-            $scope.ui.selected_index = 1;
-        }
         
     }); // end login ctrl
