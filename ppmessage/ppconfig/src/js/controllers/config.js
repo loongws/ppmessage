@@ -10,7 +10,14 @@ angular.module("this_app")
         };
 
         $scope._config_status = CONFIG_STATUS.NONE;
-        
+
+        $scope.get_server_status = function() {
+            if ($scope._config_status == CONFIG_STATUS.NONE) {
+                return "N/A";
+            }
+            return "OK";
+        };
+
         $scope.get_database_status = function() {
             if ($scope._config_status < CONFIG_STATUS.DATABASE) {
                 return "N/A";
