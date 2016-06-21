@@ -37,13 +37,14 @@ function $yvAjaxService($state, $timeout, $http, $cookies, yvConstants) {
         },
 
         first: function(_data) {
-            _data.user_password = sha1(_data.user_password);
             var _url = "/first";
+            _data.user_password = sha1(_data.user_password);
             return _api_post(_url, _data);
         },
         
         restart: function(_data) {
             var _url = "/restart";
+            _data.user_password = sha1(_data.user_password);
             return _api_post(_url, _data);
         },
 

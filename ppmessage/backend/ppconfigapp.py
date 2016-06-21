@@ -68,7 +68,11 @@ class ConfigStatusHandler(tornado.web.RequestHandler):
         _status = {"status": CONFIG_STATUS.NONE}
         if _get_config() != None:
             _status["status"] = _get_config().get("config_status")
-        logging.info(_status)
+
+        if _status["status"] == CONFIG_STATUS.RESTART:
+            self.redirect("/")
+            return
+        
         self.write(_status)
         self.flush()
         return
