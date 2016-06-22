@@ -5,10 +5,11 @@
 # All rights reserved
 #
 # getipaddress.py
+#
 
 import socket
 
-def getIPAddress():
+def get_ip_address():
     """
     Returns the actual ip of the local machine.
 

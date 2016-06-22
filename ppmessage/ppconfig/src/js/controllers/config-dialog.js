@@ -15,7 +15,7 @@ function ConfigServerController($scope, $mdDialog, yvAjax) {
         languages: angular.copy(LANGUAGE),
         language: LANGUAGE.zh_cn,
         
-        name: "127.0.0.1",
+        name: $scope._config_status.ip,
         port: 8945,
 
         identicon_store: "/usr/local/opt/ppmessage/identicon",

@@ -19,6 +19,7 @@ from ppmessage.core.singleton import singleton
 
 from ppmessage.core.utils.config import _get_config
 from ppmessage.core.utils.config import _dump_config
+from ppmessage.core.utils.getipaddress import get_ip_address
 
 from ppmessage.db.create import create_pgsql_db
 from ppmessage.db.create import create_mysql_db
@@ -85,7 +86,7 @@ class PPConfigHandler(tornado.web.RequestHandler):
 
 class ConfigStatusHandler(tornado.web.RequestHandler):
     def post(self, id=None):
-        _status = {"status": CONFIG_STATUS.NONE}
+        _status = {"status": CONFIG_STATUS.NONE, "ip": get_ip_address()}
         if _get_config() != None:
             _status["status"] = _get_config().get("config_status")
 

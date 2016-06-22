@@ -33,7 +33,7 @@ from ppmessage.core.constant import TIMEOUT_WEBSOCKET_OFFLINE
 from ppmessage.core.main import AbstractWebService
 from ppmessage.core.singleton import singleton
 
-from ppmessage.core.utils.getipaddress import getIPAddress
+from ppmessage.core.utils.getipaddress import get_ip_address
 from ppmessage.core.utils.datetimestring import now_to_string
 
 from ppmessage.db.models import AppInfo
@@ -97,7 +97,7 @@ class PCSocketDelegate():
         return
 
     def register_service(self, _port):
-        _ip = getIPAddress()
+        _ip = get_ip_address()
         self.register.update({"host": _ip, "port": _port})
         
         _key = PCSocketInfo.__tablename__ + \

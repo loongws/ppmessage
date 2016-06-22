@@ -9,52 +9,52 @@ angular.module("this_app")
             RESTART: 4
         };
 
-        $scope._config_status = CONFIG_STATUS.NONE;
+        $scope._config_status = { status: CONFIG_STATUS.NONE, ip: "127.0.0.1" };
 
         $scope.get_server_status = function() {
-            if ($scope._config_status == CONFIG_STATUS.NONE) {
+            if ($scope._config_status.status == CONFIG_STATUS.NONE) {
                 return "N/A";
             }
             return "OK";
         };
 
         $scope.get_database_status = function() {
-            if ($scope._config_status < CONFIG_STATUS.DATABASE) {
+            if ($scope._config_status.status < CONFIG_STATUS.DATABASE) {
                 return "N/A";
             }
             return "OK";
         };
 
         $scope.get_first_status = function() {
-            if ($scope._config_status >= CONFIG_STATUS.FIRST) {
+            if ($scope._config_status.status >= CONFIG_STATUS.FIRST) {
                 return "OK";
             }
             return "N/A";
         };
 
         $scope.should_disable_config_server = function() {
-            if ($scope._config_status == CONFIG_STATUS.NONE) {
+            if ($scope._config_status.status == CONFIG_STATUS.NONE) {
                 return false;
             }
             return true;
         };
 
         $scope.should_disable_config_database = function() {
-            if ($scope._config_status == CONFIG_STATUS.SERVER) {
+            if ($scope._config_status.status == CONFIG_STATUS.SERVER) {
                 return false;
             }
             return true;
         };
         
         $scope.should_disable_create_first = function() {
-            if ($scope._config_status == CONFIG_STATUS.DATABASE) {
+            if ($scope._config_status.status == CONFIG_STATUS.DATABASE) {
                 return false;
             }
             return true;
         };
                 
         $scope.should_disable_restart = function() {
-            if ($scope._config_status == CONFIG_STATUS.FIRST) {
+            if ($scope._config_status.status == CONFIG_STATUS.FIRST) {
                 return false;
             }
             return true;
@@ -62,6 +62,7 @@ angular.module("this_app")
 
         $scope.config_server = function(ev) {
             $mdDialog.show({
+                scope: $scope.$new(),
                 controller: ConfigServerController,
                 templateUrl: 'templates/dialog/config-server.tmpl.html',
                 parent: angular.element(document.body),
@@ -115,7 +116,8 @@ angular.module("this_app")
 
         $scope._init_config_status = function() {
             yvAjax.status().success(function(data) {
-                $scope._config_status = CONFIG_STATUS[data.status];
+                $scope._config_status.status = CONFIG_STATUS[data.status];
+                $scope._config_status.ip = data.ip;
                 console.log($scope._config_status);
             }).error(function() {
             });

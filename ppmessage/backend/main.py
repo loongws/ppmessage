@@ -17,6 +17,7 @@ from ppmessage.core.constant import CONFIG_STATUS
 from ppmessage.core.main import get_total_handlers
 from ppmessage.core.main import get_total_delegates
 from ppmessage.core.utils.config import _get_config
+from ppmessage.core.utils.getipaddress import get_ip_address
 
 from ppmessage.core.downloadhandler import DownloadHandler
 
@@ -119,11 +120,11 @@ def _main():
 
     #mqtt_message_main()
     
-    _str = "Access http://127.0.0.1:%d/ to %s PPMessage."
+    _str = "Access http://%s:%d/ to %s PPMessage."
     if _get_config() == None or _get_config().get("config_status") != CONFIG_STATUS.RESTART:
-        logging.info(_str % (tornado.options.options.port, "config"))
+        logging.info(_str % (get_ip_address(), tornado.options.options.port, "config"))
     else:
-        logging.info(_str % (tornado.options.options.port, "use"))
+        logging.info(_str % (get_ip_address(), tornado.options.options.port, "use"))
     tornado.ioloop.IOLoop.instance().start()
     return
 
