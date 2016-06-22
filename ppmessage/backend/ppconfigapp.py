@@ -47,6 +47,7 @@ def _insert_into(_row):
         traceback.print_exc()
     finally:
         _class.remove()
+    return
 
 def _return(_handler, _code):
     if _code >= 0:
@@ -331,15 +332,18 @@ class FirstHandler(tornado.web.RequestHandler):
             return _key
 
         def _info(_type):
-            _row = ApiInfo(uuid=str(uuid.uuid1()),
+            _uuid = str(uuid.uuid1())
+            _key = _encode(str(uuid.uuid1()))
+            _secret = _encode(str(uuid.uuid1()))
+            _row = ApiInfo(uuid=_uuid,
                            user_uuid=_user_uuid,
                            app_uuid=_app_uuid,
                            api_level=_type,
-                           api_key=_encode(str(uuid.uuid1())),
-                           api_secret=_encode(str(uuid.uuid1())))
+                           api_key=_key,
+                           api_secret=_secret)
             _row.create_redis_keys(self.application.redis)
             _insert_into(_row)
-            return {"uuid":_row.uuid, "key":_row.api_key, "secret":_row.api_secret}
+            return {"uuid":_uuid, "key":_key, "secret":_secret}
 
         _config = {
             API_LEVEL.PPCOM.lower(): _info(API_LEVEL.PPCOM),

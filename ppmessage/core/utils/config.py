@@ -38,14 +38,12 @@ def _get_config():
     _config_file = _CONFIG_PATH
 
     if not os.path.exists(_config_file):
-        logging.error("PPMesage system not configed")
         return None
 
     _f = open(_config_file, "r")
     _r = _f.read()
     _f.close()
     if _r == None or len(_r) == 0:
-        logging.error("PPMessage system not configed")
         return None
         
     return json.loads(_r)
