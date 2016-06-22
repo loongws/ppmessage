@@ -127,9 +127,10 @@ function ConfigDatabaseController($scope, $mdDialog, yvAjax) {
 function CreateFirstController($scope, $mdDialog, yvAjax) {
     
     $scope.user = {
+        user_status: "OWNER_2",
         user_fullname: "Guijin Ding",
         user_email: "dingguijin@gmail.com",
-        user_password: "x1y2",
+        user_password: "x",
         team_name: "PPMessage",
 
         user_password_is_visible: false,

@@ -37,6 +37,7 @@ angular.module("this_app")
                         yvAjax.get_user_detail_with_password(data.user_uuid)
                             .success(function(data) {
                                 yvDebug.d('get_user_detail', data);
+
                                 if (data.error_code != 0) {
                                     yvLog.w("get detail failed %s", data);
                                     return;
@@ -46,24 +47,18 @@ angular.module("this_app")
                                 yvLogin.setLogined( true );
                                 
                                 var _url = yvConstants.USER_STATUS[data.user_status];
+
                                 if (data.user_status == "SERVICE") {
                                     yvLogin.updateActiveUser( data );
                                     $scope.start_ppmessage(true);
-                                    return;
-                                }
-
-                                if (data.user_status == "ADMIN") {
-                                    _url = yvConstants.USER_STATUS["OWNER_2"];
-                                    yvAppService.getApps( function( apps ) {
-                                        $state.go(_url);
-                                    } );
                                     return;
                                 }
                                 
                                 if (data.user_status == "OWNER_2") {
                                     $state.go(_url);
                                 }
-                                
+
+                                yvDebug.d("do not know how to handle user_status: %s", data.user_status);
                                 return;
                             });
                     } else {
