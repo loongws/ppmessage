@@ -60,7 +60,6 @@ def _return(_handler, _code):
     return
 
 def _mkdir_p(_path):
-    _path = os.path.dirname(_path)
     try:
         os.makedirs(_path)
     except OSError as exc:  # Python >2.5
@@ -109,6 +108,18 @@ class ServerHandler(tornado.web.RequestHandler):
         }
         _dump_config(_config)
         return
+
+    def _create_server_stores(self, _request):
+        _generic_store = _request.get("generic_store")
+        _identicon_store = _request.get("identicon_store")
+
+        try:
+            _mkdir_p(_generic_store)
+            _mkdir_p(_identicon_store)
+        except:
+            return False
+        
+        return True
     
     def post(self, id=None):        
         _request = json.loads(self.request.body)
@@ -120,10 +131,15 @@ class ServerHandler(tornado.web.RequestHandler):
 
         # SERVER
         _server = _request
-        if _server == None or _server.get("name") == None or _server.get("port") == None:
-            logging.error("config server not run for wrong request: %s." % _server)
+        if _server == None or _server.get("name") == None or _server.get("port") == None or \
+           _server.get("language") == None or _server.get("identicon_store") == None or _server.get("generic_store") == None:
+            logging.error("config server wrong for request: %s." % _server)
             return _return(self, -1)
 
+        if not self._create_server_stores(_server):
+            logging.error("config server not run for wrong request: %s." % _server)
+            return _return(self, -1)
+         
         _server["ssl"]= "off"
         self._dump_server_config(_server)
         return _return(self, 0)
@@ -149,7 +165,8 @@ class DatabaseHandler(tornado.web.RequestHandler):
             return _return(self, -1)
         
         try:
-            _mkdir_p(_db_file_path)
+            _dir = os.path.dirname(_db_file_path)
+            _mkdir_p(_dir)
             open(_db_file_path, "w").close()
         except:
             logging.error("sqlite: can not create %s" % _db_file_path)
