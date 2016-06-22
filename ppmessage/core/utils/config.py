@@ -59,7 +59,7 @@ def get_config_language():
     _config = _get_config()
     if _config == None:
         return None
-    return _config.get("language")
+    return _config.get("server").get("language").get("locale")
 
 def get_config_server_ssl():
     _config = _get_config()
@@ -71,7 +71,7 @@ def get_config_server_name():
     _config = _get_config()
     if _config == None:
         return None
-    return _config().get("server").get("name")
+    return _config.get("server").get("name")
 
 def get_config_server_port():
     _config = _get_config()

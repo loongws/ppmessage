@@ -155,7 +155,7 @@ module.exports = {
 
         // MODULE JQuery
         "../src/main/jquery/jquery-module-begin.js",
-        "../../resource/assets/ppcom/assets/bower_components/jquery/dist/jquery.js",
+        "../../resource/share/ppcom/bower_components/jquery/dist/jquery.js",
         "../src/main/jquery/jquery-module-end.js",
 
         // RUN

@@ -1,21 +1,19 @@
 {
-  "name": "ppmessage-bower",
+  "name": "ppkefu-bower",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#v1.3.1",
-    "angular-translate": "~2.8.1",
-    "angular-file-upload": "1.1.5",
-    "angular-block-ui": "~0.2.2",
-    "angular-base64": "^2.0.5",
-    "Jcrop": "~2.0.4",
-    "angular-cookies": "~1.4.8"
+      "ionic": "driftyco/ionic-bower#v1.3.1",
+      "angular-translate": "~2.8.1",
+      "angular-file-upload": "1.1.5",
+      "angular-block-ui": "~0.2.2",
+      "angular-base64": "^2.0.5",
+      "jquery": "~2.2.4",
+      "Jcrop": "~2.0.4",
+      "angular-cookies": "~1.4.8"
   },
   "resolutions": {
     "angular": "1.5.7",
     "angular-animate": "1.5.3",
     "angular-sanitize": "1.5.3"
   },
-  "dependencies": {
-    "ng-jcrop": "^2.1.2"
-  }
 }

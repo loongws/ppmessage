@@ -1,18 +1,15 @@
 {
-  "name": "ppcom",
-  "authors": [
-    "Guijin Ding <dingguijin@gmail.com>"
-  ],
-  "description": "",
-  "main": "",
-  "moduleType": [],
-  "license": "Apache-2.0",
-  "homepage": "",
-  "private": true,
-  "dependencies": {
-    "jquery": "^1.12.1"
-  },
-  "resolutions": {
-    "angular": "1.5.7"
-  }
+    "name": "ppcom",
+    "authors": [
+        "Guijin Ding <dingguijin@gmail.com>"
+    ],
+    "description": "",
+    "main": "",
+    "moduleType": [],
+    "license": "Apache-2.0",
+    "homepage": "https://ppmessage.com",
+    "private": true,
+    "dependencies": {
+        "jquery": "~2.2.4"
+    }
 }
