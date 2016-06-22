@@ -206,7 +206,9 @@ Ctrl.$composerContainer = (function() {
         };
 
         this.isSendButtonShow = function() {
-            return inMobile;
+            //return inMobile;
+            //FIXME: send not working for android/ios
+            return false;
         };
 
         this.onSendButtonInit = function() {
