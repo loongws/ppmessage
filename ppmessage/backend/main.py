@@ -99,7 +99,7 @@ class MainApplication(tornado.web.Application):
         return
 
     def load_db_to_cache(self):
-        if _get_config() == None:
+        if _get_config() == None or _get_config().get("config_status") != CONFIG_STATUS.RESTART:
             self.redis.flushdb()
             return
         else:
@@ -121,7 +121,7 @@ def _main():
 
     
     _str = "Access http://127.0.0.1:%d/ to %s PPMessage."
-    if _get_config() == None:
+    if _get_config() == None or _get_config().get("config_status") != CONFIG_STATUS.RESTART:
         logging.info(_str % (tornado.options.options.port, "config"))
     else:
         logging.info(_str % (tornado.options.options.port, "use"))

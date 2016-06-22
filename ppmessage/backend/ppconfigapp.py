@@ -263,7 +263,6 @@ class FirstHandler(tornado.web.RequestHandler):
         if _request.get("user_fullname") == None or \
            _request.get("user_email") == None or \
            _request.get("user_password") == None or \
-           _request.get("user_language") == None or \
            _request.get("team_name") == None:
             logging.info("check request false: %s" % _request)
             return False
@@ -275,11 +274,12 @@ class FirstHandler(tornado.web.RequestHandler):
         _user_email = _request.get("user_email")
         _user_fullname = _request.get("user_fullname")
         _user_password = _request.get("user_password")
-        _user_language = _request.get("user_language")
+        _user_language = _get_config().get("server").get("language").get("locale")
 
         _user_uuid = str(uuid.uuid1())
         _row = DeviceUser(uuid=_user_uuid,
                           user_email=_user_email,
+                          user_fullname=_user_fullname,
                           user_password=_user_password,
                           user_language=_user_language)
         

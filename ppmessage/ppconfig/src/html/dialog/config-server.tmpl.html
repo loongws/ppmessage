@@ -21,29 +21,40 @@
 
         <md-card class="md-whiteframe-z2" flex="66">
 
-          <md-input-container class="md-block">
-            <label>Server Name</label>
-            <input ng-model="server.name" required>
-          </md-input-container>
-          
-          <md-input-container class="md-block">
-            <label>Server Port</label>
-            <input ng-model="server.port" required>
-          </md-input-container>
+          <md-content layout-padding>
 
-          <md-input-container class="md-block">
-            <label>Identicon Store Directory</label>
-            <input ng-model="server.identicon_store" required>
-          </md-input-container>
+            <md-input-container class="md-block" >
+              <label>Server Language</label>
+              <md-select ng-model="server.language">
+                <md-option ng-repeat="language in server.languages" ng-value="language">
+                  {{language.name}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+            
+            <md-input-container class="md-block">
+              <label>Server Name</label>
+              <input ng-model="server.name" required>
+            </md-input-container>
+            
+            <md-input-container class="md-block">
+              <label>Server Port</label>
+              <input ng-model="server.port" required>
+            </md-input-container>
 
-          <md-input-container class="md-block">
-            <label>Generic Store Directory</label>
-            <input ng-model="server.generic_store" required>
-          </md-input-container>
+            <md-input-container class="md-block">
+              <label>Identicon Store Directory</label>
+              <input ng-model="server.identicon_store" required>
+            </md-input-container>
 
+            <md-input-container class="md-block">
+              <label>Generic Store Directory</label>
+              <input ng-model="server.generic_store" required>
+            </md-input-container>
+
+          </md-content>
         </md-card>
         
-        <p></p>
       </div>
     </md-dialog-content>
     

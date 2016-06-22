@@ -1,8 +1,23 @@
 function ConfigServerController($scope, $mdDialog, yvAjax) {
+    var LANGUAGE = {
+        zh_cn: {
+            name: "Simplified Chinese",
+            locale: "zh_CN"
+        },
+        
+        en_us: {
+            name: "English",
+            locale: "en_US"
+        }
+    };
 
     $scope.server = {
+        languages: angular.copy(LANGUAGE),
+        language: LANGUAGE.zh_cn,
+        
         name: "127.0.0.1",
         port: 8945,
+
         identicon_store: "/usr/local/opt/ppmessage/identicon",
         generic_store: "/usr/local/opt/ppmessage/generic",
 
@@ -110,17 +125,11 @@ function ConfigDatabaseController($scope, $mdDialog, yvAjax) {
 }
 
 function CreateFirstController($scope, $mdDialog, yvAjax) {
-    var LANGUAGE = {
-        CHINESE: "CHINESE",
-        ENGLISH: "ENGLISH"
-    };
     
     $scope.user = {
-        languages: angular.copy(LANGUAGE),
         user_fullname: "Guijin Ding",
         user_email: "dingguijin@gmail.com",
-        user_password: "YouGiveLoveABadName",
-        user_language: LANGUAGE.CHINESE,
+        user_password: "x1y2",
         team_name: "PPMessage",
 
         user_password_is_visible: false,
