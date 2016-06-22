@@ -4,7 +4,9 @@ function ConfigServerController($scope, $mdDialog, yvAjax) {
         name: "127.0.0.1",
         port: 8945,
         identicon_store: "/usr/local/opt/ppmessage/identicon",
-        generic_store: "/usr/local/opt/ppmessage/generic"
+        generic_store: "/usr/local/opt/ppmessage/generic",
+
+        disable_submit: false
     };
 
     $scope.hide = function() {
@@ -20,9 +22,11 @@ function ConfigServerController($scope, $mdDialog, yvAjax) {
     };
 
     $scope.confirm = function() {
+        $scope.server.disable_submit = true;
         yvAjax.server($scope.server).success(function(){
             $mdDialog.hide("success");
         }).error(function(){
+            $scope.server.disable_submit = false;
             console.log("server config failed");
         });
     };    
@@ -56,7 +60,9 @@ function ConfigDatabaseController($scope, $mdDialog, yvAjax) {
             db_user: "postgres",
             db_pass: "test",
             db_name: "ppmessage"
-        }
+        },
+
+        disable_submit: false
     };
 
     $scope.hide = function() {
@@ -93,9 +99,11 @@ function ConfigDatabaseController($scope, $mdDialog, yvAjax) {
     };
 
     $scope.confirm = function() {
+        $scope.database.disable_submit = true;
         yvAjax.database($scope.database).success(function(){
             $mdDialog.hide("success");
         }).error(function(){
+            $scope.database.disable_submit = false;
             console.log("database config failed");
         });
     };
@@ -116,7 +124,9 @@ function CreateFirstController($scope, $mdDialog, yvAjax) {
         team_name: "PPMessage",
 
         user_password_is_visible: false,
-        password_input_type: "password"
+        password_input_type: "password",
+
+        disable_submit: false
     };
 
     $scope.hide = function() {
@@ -132,9 +142,11 @@ function CreateFirstController($scope, $mdDialog, yvAjax) {
     };
 
     $scope.confirm = function() {
+        $scope.user.disable_submit = true;
         yvAjax.first($scope.user).success(function(){
             $mdDialog.hide("success");
         }).error(function(){
+            $scope.user.disable_submit = false;
             console.log("first user create failed");
         });
     };
@@ -157,6 +169,8 @@ function RestartController($scope, $mdDialog, yvAjax) {
     
         user_password_is_visible: false,
         password_input_type: "password",
+
+        disable_submit: false
     };
 
     $scope.hide = function() {
@@ -172,10 +186,11 @@ function RestartController($scope, $mdDialog, yvAjax) {
     };
 
     $scope.confirm = function() {
-        yvAjax.restart($scope.user).success(function(){
+        $scope.user.disable_submit = true;
+        yvAjax.restart($scope.user).success(function() {
             $mdDialog.hide("success");
         }).error(function(){
-            $mdDialog.hide("success");
+            $scope.user.disable_submit = false;
         });
     };
 

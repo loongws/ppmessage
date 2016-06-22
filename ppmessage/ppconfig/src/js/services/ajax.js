@@ -40,14 +40,14 @@ function $yvAjaxService($state, $timeout, $http, $cookies, yvConstants) {
             var _url = "/first";
             var _d = angular.copy(_data);
             _d.user_password = sha1(_d.user_password);
-            return _api_post(_url, _data);
+            return _api_post(_url, _d);
         },
         
         restart: function(_data) {
             var _url = "/restart";
             var _d = angular.copy(_data);
             _d.user_password = sha1(_d.user_password);
-            return _api_post(_url, _data);
+            return _api_post(_url, _d);
         },
 
         API_ERR: API_ERR,

@@ -12,6 +12,7 @@
 from ppmessage.core.constant import MAIN_PORT
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
+from ppmessage.core.constant import CONFIG_STATUS
 
 from ppmessage.core.main import get_total_handlers
 from ppmessage.core.main import get_total_delegates
@@ -54,7 +55,7 @@ tornado.options.define("port", default=MAIN_PORT, help="", type=int)
 
 class EntryHandler(tornado.web.RequestHandler):
     def get(self):
-        if _get_config() == None:
+        if _get_config() == None or _get_config().get("config_status") != CONFIG_STATUS.RESTART:
             self.redirect("/ppconfig/")
         else:
             self.redirect("/ppconsole/")

@@ -70,6 +70,10 @@ def _mkdir_p(_path):
 
 class PPConfigHandler(tornado.web.RequestHandler):
     def get(self, id=None):
+        if _get_config() != None and _get_config().get("config_status") == CONFIG_STATUS.RESTART:
+            self.redirect("/ppconsole/")
+            return
+        
         _dir = os.path.dirname(os.path.abspath(__file__))
         _html_path = _dir + "/../resource/html/ppconfig-index.html" 
         _html_file = open(_html_path, "rb")
@@ -85,7 +89,7 @@ class ConfigStatusHandler(tornado.web.RequestHandler):
             _status["status"] = _get_config().get("config_status")
 
         if _status["status"] == CONFIG_STATUS.RESTART:
-            self.redirect("/")
+            logging.error("should not request config for PPMessage already configed.")
             return
         
         self.write(_status)
@@ -118,6 +122,7 @@ class ServerHandler(tornado.web.RequestHandler):
             logging.error("config server not run for wrong request: %s." % _server)
             return _return(self, -1)
 
+        _server["ssl"]= "off"
         self._dump_server_config(_server)
         return _return(self, 0)
 
@@ -411,9 +416,9 @@ class FirstHandler(tornado.web.RequestHandler):
         return True
     
     def post(self, id=None):
-        logging.info("firsthandler")
-
         _request = json.loads(self.request.body)
+
+        logging.info("firstrequest: %s" % _request)
         if not self._check_request(_request):
             return _return(self, -1)
         
@@ -443,14 +448,9 @@ class RestartHandler(tornado.web.RequestHandler):
         return
 
     def _restart(self):
-        import sys
-        import os
-        """Restarts the current program.
-        Note: this function does not return. Any cleanup action (like
-        saving data) must be done before calling this function."""
-        python = sys.executable
-        os.execl(python, python, * sys.argv)
-            
+        from ppmessage.core.utils.restart import restart
+        return restart("main.py")
+        
     def post(self, id=None):        
         _request = json.loads(self.request.body)
 

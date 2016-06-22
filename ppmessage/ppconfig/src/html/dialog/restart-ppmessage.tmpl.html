@@ -19,14 +19,15 @@
           Now you have configed PPMessage completely. After you restart PPMessage, PPMessage automatically run with the configed data. For security reason, you need provide the first user password.
         </p>
 
-        <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
-          <label>User Password</label>
-          <input type="{{ user.password_input_type }}" ng-model="user.user_password" required>
-          <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
-          <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
-        </md-input-container>
-        
-      
+        <md-card class="md-whiteframe-z2" flex="66">
+          <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
+            <label>User Password</label>
+            <input type="{{ user.password_input_type }}" ng-model="user.user_password" required>
+            <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
+            <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
+          </md-input-container>
+          <md-card>
+            
         <p></p>
       </div>
     </md-dialog-content>
@@ -38,7 +39,7 @@
         Cancel
       </md-button>
       
-      <md-button type="submit">
+      <md-button type="submit" ng-disabled="user.disabled_submit">
         Restart
       </md-button>
       

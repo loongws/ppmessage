@@ -15,40 +15,43 @@
       <div class="md-dialog-content">
         <h2>Create First User</h2>
 
+        
         <p style="padding-bottom: 20px;">
           Here will create service team and first user of the team, and the user is the leader of the team.
         </p>
 
-        <md-input-container class="md-block" flex-gt-sm>
-          <label>Language</label>
-          <md-select ng-model="user.user_language">
-            <md-option ng-repeat="language in user.languages" value="{{language}}">
-              {{language}}
-            </md-option>
-          </md-select>
-        </md-input-container>
+        <md-card class="md-whiteframe-z2" flex="66">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Language</label>
+            <md-select ng-model="user.user_language">
+              <md-option ng-repeat="language in user.languages" value="{{language}}">
+                {{language}}
+              </md-option>
+            </md-select>
+          </md-input-container>
 
-        <md-input-container class="md-block">
-          <label>Team Name</label>
-          <input ng-model="user.team_name" required md-no-asterisk>
-        </md-input-container>
-        
-        <md-input-container class="md-block">
-          <label>User Full Name</label>
-          <input ng-model="user.user_fullname" required md-no-asterisk>
-        </md-input-container>
+          <md-input-container class="md-block">
+            <label>Team Name</label>
+            <input ng-model="user.team_name" required md-no-asterisk>
+          </md-input-container>
+          
+          <md-input-container class="md-block">
+            <label>User Full Name</label>
+            <input ng-model="user.user_fullname" required md-no-asterisk>
+          </md-input-container>
 
-        <md-input-container class="md-block">
-          <label>User Email</label>
-          <input ng-model="user.user_email" type="email" required md-no-asterisk>
-        </md-input-container>
+          <md-input-container class="md-block">
+            <label>User Email</label>
+            <input ng-model="user.user_email" type="email" required md-no-asterisk>
+          </md-input-container>
 
-        <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
-          <label>User Password</label>
-          <input type="{{ user.password_input_type }}" ng-model="user.user_password" required>
-          <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
-          <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
-        </md-input-container>
+          <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
+            <label>User Password</label>
+            <input type="{{ user.password_input_type }}" ng-model="user.user_password" required>
+            <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
+            <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
+          </md-input-container>
+        </md-card>
         
         <p></p>
       </div>
@@ -61,7 +64,7 @@
         Cancel
       </md-button>
       
-      <md-button type="submit">
+      <md-button type="submit" ng-disabled="user.disable_submit">
         Confirm
       </md-button>
       
