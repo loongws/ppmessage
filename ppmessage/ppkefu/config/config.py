@@ -18,38 +18,21 @@ def _cur_dir():
 def _replace(_d):
     _key = _d.get("key")
     
-    JS_BUILD_PATH = "../../resource/assets/ppkefu/assets/js"
-    PPKEFU_TEMPLATE_MIN_JS = "ppkefu-template.min.js"
-    
-    _ppkefu_js_dir = os.path.join(_cur_dir(), JS_BUILD_PATH)
-    _ppkefu_js_path = os.path.join(_ppkefu_js_dir, PPKEFU_TEMPLATE_MIN_JS)
+    TEMPLATE_MIN_JS = "../../resource/assets/ppkefu/assets/js/ppkefu-template.min.js"
+    MIN_JS = "../../resource/assets/ppkefu/assets/js/ppkefu.min.js"
 
-    if not os.path.exists(_ppkefu_js_path):
-        logging.error("no such file: %s" % _ppkefu_js_path)
+    _template = os.path.join(_cur_dir(), TEMPLATE_MIN_JS)
+    _min = os.path.join(_cur_dir(), MIN_JS)
+    
+    if not os.path.exists(_template):
+        logging.error("no such file: %s" % _template)
         return
 
-    with open(_ppkefu_js_path, "r") as _f:
+    with open(_template, "r") as _f:
         _ppkefu_js_str = _f.read()
-        _ppkefu_js_str = _ppkefu_js_str.replace("{{app_key}}", _key)
-        _out_file_name = "ppkefu.min.%s.js" % hashlib.sha1(_ppkefu_js_str).hexdigest()[:8]
-        _out_file = os.path.join(_ppkefu_js_dir, _out_file_name)
-        with open(_out_file, "w") as _of:
+        _ppkefu_js_str = _ppkefu_js_str.replace("{{api_key}}", _key)
+        with open(_min, "w") as _of:
             _of.write(_ppkefu_js_str)
-
-    return _out_file_name
-
-def _replace_html_file(_js_name):
-    HTML_TEMPLATE_PATH = "../../resource/html/ppkefu-index.html.template"
-    HTML_PATH = "../../resource/html/ppkefu-index.html"
-    _template_path = os.path.join(_cur_dir(), HTML_TEMPLATE_PATH)
-    _html_path = os.path.join(_cur_dir(), HTML_PATH)
-    
-    with open(_template_pat) as _t:
-        _t_str = _t.read(_template_path, "r")
-        _n_str = _t_str.replace("{{ppkefu.min.js}}", _js_name)
-        with opne(_html_path, "w") as _html:
-            _html.write(_n_str)
-
     return
 
 def config(_d):
@@ -58,7 +41,18 @@ def config(_d):
 
 if __name__ == "__main__":
     import sys
+
     reload(sys)
     sys.setdefaultencoding('utf-8')
-    _d = { "key":"NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA=="}
+
+    from ppmessage.core.constant import API_LEVEL
+    from ppmessage.core.constant import CONFIG_STATUS
+    from ppmessage.core.utils.config import _get_config
+    if _get_config() == None or _get_config().get("config_status") != CONFIG_STATUS.RESTART:
+        print("can not config for no config data prepared.")
+        sys.exit()
+        
+    _d = {
+        "key": _get_config().get("api").get(API_LEVEL.PPKEFU.lower()).get("key")
+    }
     config(_d)

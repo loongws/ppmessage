@@ -98,7 +98,6 @@ function generate_lib_js(done) {
     gulp.src(src)
         .pipe(concat("lib.js"))
         .pipe(gulp.dest(buildConfig.halfBuildPath))
-        .pipe(uglify())
         .on("error", function(e) {
             console.log(e);
             done();

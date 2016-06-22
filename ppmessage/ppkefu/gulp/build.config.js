@@ -147,17 +147,14 @@ module.exports = {
         "../src/lib/base64binary.js",
         "../src/lib/moment-with-zh-cn-locale.js",
 
-        // "../../resource/share/bower_components/base64/base64.js",
-
-        "../../resource/share/bower_components/Jcrop/js/jquery.min.js",
-        "../../resource/share/bower_components/Jcrop/js/Jcrop.js",
-
-        "../../resource/share/bower_components/ionic/js/ionic.bundle.js",
-        "../../resource/share/bower_components/angular-cookies/angular-cookies.js",
-        "../../resource/share/bower_components/angular-translate/angular-translate.js",
+        "../../resource/share/bower_components/jquery/dist/jquery.min.js",
+        "../../resource/share/bower_components/Jcrop/js/Jcrop.min.js",
+        "../../resource/share/bower_components/ionic/js/ionic.bundle.min.js",
+        "../../resource/share/bower_components/angular-cookies/angular-cookies.min.js",
+        "../../resource/share/bower_components/angular-translate/angular-translate.min.js",
         "../../resource/share/bower_components/angular-block-ui/dist/angular-block-ui.js",
-        "../../resource/share/bower_components/angular-file-upload/angular-file-upload.js",
-        "../../resource/share/bower_components/angular-base64/angular-base64.js"
+        "../../resource/share/bower_components/angular-file-upload/dist/angular-file-upload.min.js",
+        "../../resource/share/bower_components/angular-base64/angular-base64.min.js"
     ],
 
     libCss: [
