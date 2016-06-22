@@ -265,6 +265,19 @@ function ppmessage_build()
     cd ppmessage/$1/gulp; gulp; cd -;
 }
 
+function ppmessage_apply_config()
+{
+    echo "Apply config for ppconsole"
+    python ppmessage/ppconsole/config/config.py
+
+    echo "Apply config for ppkefu"
+    python ppmessage/ppkefu/config/config.py
+
+    echo "Apply config for ppcom"
+    python ppmessage/ppcom/config/config.py
+
+}
+
 function ppmessage_bootstrap()
 {
     if [ ! -f ./ppmessage/bootstrap/config.py ];
@@ -296,6 +309,22 @@ case "$1" in
         ppmessage_build "ppconfig"
         ;;
 
+    build-ppconsole)
+        ppmessage_build "ppconsole"
+        ;;
+
+    build-ppkefu)
+        ppmessage_build "ppkefu"
+        ;;
+
+    build-ppcom)
+        ppmessage_build "ppcom"
+        ;;
+
+    apply-config)
+        ppmessage_apply_config
+        ;;
+    
     dev)
         ppmessage_need_root
         ppmessage_dev

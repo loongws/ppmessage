@@ -31,8 +31,22 @@ import uuid
 import redis
 import errno    
 import logging
+import traceback
 
 import tornado.web
+
+def _insert_into(_row):
+    from ppmessage.db.dbinstance import getDBSessionClass
+    _class = getDBSessionClass()
+    _session = _class()
+    try:
+        _session.add(_row)
+        _session.commit()
+    except:
+        _session.rollback()
+        traceback.print_exc()
+    finally:
+        _class.remove()
 
 def _return(_handler, _code):
     if _code >= 0:
@@ -264,7 +278,7 @@ class FirstHandler(tornado.web.RequestHandler):
                           user_language=_user_language)
         
         _row.create_redis_keys(self.application.redis)
-        _row.async_add(self.application.redis)
+        _insert_into(_row)
         self._user_uuid = _user_uuid
         return True
 
@@ -283,7 +297,7 @@ class FirstHandler(tornado.web.RequestHandler):
                        app_key=_app_key,
                        app_secret=_app_secret)
         _row.create_redis_keys(self.application.redis)
-        _row.async_add(self.application.redis)
+        _insert_into(_row)
         self._app_uuid = _app_uuid
         return True
 
@@ -301,7 +315,7 @@ class FirstHandler(tornado.web.RequestHandler):
             is_portal_user = False                                    
         )
         _row.create_redis_keys(self.application.redis)
-        _row.async_add(self.application.redis)
+        _insert_into(_row)
         return True
 
     def _create_api(self, _request):
@@ -324,7 +338,7 @@ class FirstHandler(tornado.web.RequestHandler):
                            api_key=_encode(str(uuid.uuid1())),
                            api_secret=_encode(str(uuid.uuid1())))
             _row.create_redis_keys(self.application.redis)
-            _row.async_add(self.application.redis)
+            _insert_into(_row)
             return {"uuid":_row.uuid, "key":_row.api_key, "secret":_row.api_secret}
 
         _config = {

@@ -76,15 +76,34 @@ def config(_dict):
     _replace(_dict)
     return
 
+def _main():
+    # _d = {
+    #     "key": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA==",
+    #     "secret": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA==",
+    #     "ssl": "off",
+    #     "server_name":  "ppmessage.com",
+    #     "server_port": "80"
+    # }
+    from ppmessage.core.constant import API_LEVEL
+    from ppmessage.core.utils.config import _get_config
+    if _get_config() == None or _get_config().get("api") == None:
+        print("PPMessage not configed.")
+        return
+    
+    _api = _get_config().get("api")
+    _d = {
+        "key": _api.get(API_LEVEL.PPCOM.lower()).get("key"),
+        "secret": _api.get(API_LEVEL.PPCOM.lower()).get("secret"),
+        "ssl": "off",
+        "server_name": _get_config().get("server").get("name"),
+        "server_port": _get_config().get("server").get("port")
+    }
+    config(_d)
+
+    return
+
 if __name__ == "__main__":
     import sys
     reload(sys)
     sys.setdefaultencoding('utf-8')
-    _d = {
-        "key": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA==",
-        "secret": "NGY3YjM2MGM1ZDExNTRlOGRiNDcxNjhjNjA2Y2ExMDE1YmNiOTVkNA==",
-        "ssl": "off",
-        "server_name":  "ppmessage.com",
-        "server_port": "80"
-    }
-    config(_d)
+    _main()
