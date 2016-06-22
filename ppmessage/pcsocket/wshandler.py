@@ -136,6 +136,10 @@ class WSHandler(tornado.websocket.WebSocketHandler):
 
         _key = ApiTokenData.__tablename__ + ".api_token." + self.api_token
         _token = self.redis.get(_key)
+        if _token == None or len(_token) == 0:
+            self.send_ack({"code": DIS_ERR.NOTOKEN, "what": DIS_WHAT.AUTH})
+            return
+
         _token = json.loads(_token)
         if _token[1] != API_LEVEL.PPCOM and _token[1] != API_LEVEL.PPKEFU and _token[1] != API_LEVEL.THIRD_PARTY_KEFU:
             self.send_ack({"code": DIS_ERR.WRLEVEL, "what": DIS_WHAT.AUTH})
