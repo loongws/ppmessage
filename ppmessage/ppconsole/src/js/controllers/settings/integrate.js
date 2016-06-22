@@ -39,33 +39,7 @@ angular.module("this_app")
             _generate_enterprise_link();
             _generate_embedded_code();
         };
-        
-        // clip integrate code to clipboard
-        var code_client = new ZeroClipboard(document.getElementById("code_clip_action"));
-        code_client.on("ready", function( readyEvent ) {            
-            code_client.on( "aftercopy", function( event ) {
-                $scope.set_flash_style( 0 );
-                $scope.set_update_string( $scope.lang[ 'application.profile.COPY_SUCCESSFUL_TAG' ] );
-            });
-        } );
-        
-        // clip integrate code to clipboard
-        // The ZeroClipboard library using an invisible Adobe Flash movie and a JavaScript interface.
-        var copyEl = document.getElementById("link_clip_action");
-        var client = new ZeroClipboard( copyEl );
-        client.on("ready", function( readyEvent ) {
-            client.on( "aftercopy", function( event ) {
-                $scope.set_flash_style( 0 );
-                $scope.set_update_string( $scope.lang[ 'application.profile.COPY_SUCCESSFUL_TAG' ] );
-            } );
-        } );
-        client.on( 'error', function( errorEvent ) {
-            angular.element( copyEl ).bind( 'click' , function( e ) {
-                $scope.set_flash_style( 1 );
-                $scope.set_update_string( $scope.lang[ 'application.profile.COPY_FAIL_TAG' ] );    
-            } );
-        } );
-                
+                      
         var _logined = function() {
             yvLogin.prepare( function( errorCode ) {
                 _on_team_ok();

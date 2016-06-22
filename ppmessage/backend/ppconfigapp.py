@@ -11,6 +11,7 @@ from ppmessage.core.constant import SQL
 from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
+from ppmessage.core.constant import USER_STATUS
 from ppmessage.core.constant import CONFIG_STATUS
 from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.main import AbstractWebService
@@ -279,6 +280,7 @@ class FirstHandler(tornado.web.RequestHandler):
         _user_uuid = str(uuid.uuid1())
         _row = DeviceUser(uuid=_user_uuid,
                           user_email=_user_email,
+                          user_status=USER_STATUS.OWNER_2,
                           user_fullname=_user_fullname,
                           user_password=_user_password,
                           user_language=_user_language)

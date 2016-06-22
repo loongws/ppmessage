@@ -364,7 +364,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     PREVIEW: "Preview",
                     URL_LINK: "Url",
                     DEMO_DEPLOY_TO: "PPMessage has deploy to this website for preview",
-                    COPY_CODE_TO_BODY: "Copy the code below, and paste between <body></body>"
+                    COPY_CODE_TO_BODY: "Copy the code below, and paste it into html body."
                 },
 
                 teamprofile: {
@@ -787,7 +787,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     PREVIEW: "马上看看",
                     URL_LINK: "生成链接",
                     DEMO_DEPLOY_TO: "PPMessage已经部署在下面的网页链接上",
-                    COPY_CODE_TO_BODY: "复制下面的代码并置于<body></body>元素之间"
+                    COPY_CODE_TO_BODY: "复制下面的代码并置于 HTML 文件的 <body> </body> 元素之间"
                 },
 
                 teamprofile: {

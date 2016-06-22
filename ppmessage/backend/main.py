@@ -118,7 +118,6 @@ def _main():
     _app.run_periodic()
 
     #mqtt_message_main()
-
     
     _str = "Access http://127.0.0.1:%d/ to %s PPMessage."
     if _get_config() == None or _get_config().get("config_status") != CONFIG_STATUS.RESTART:

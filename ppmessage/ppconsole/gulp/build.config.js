@@ -72,7 +72,6 @@ module.exports = {
         "../../resource/share/bower_components/jquery/dist/jquery.min.js",
         "../../resource/share/bower_components/bootstrap/dist/js/bootstrap.min.js",
         "../../resource/share/bower_components/moment/min/moment-with-locales.min.js",
-        "../../resource/share/bower_components/zeroclipboard/dist/ZeroClipboard.min.js",
         "../../resource/share/bower_components/tinycolor/tinycolor.js",
         "../../resource/share/bower_components/bootstrap-colorpickersliders/dist/bootstrap.colorpickersliders.min.js",
         "../../resource/share/bower_components/bootstrap-daterangepicker/daterangepicker.js",
