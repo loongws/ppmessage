@@ -12,6 +12,7 @@
     </md-toolbar>
 
     <md-dialog-content>
+
       <div class="md-dialog-content">
         <h2>Restart PPMessage With Configuration</h2>
 
@@ -20,16 +21,17 @@
         </p>
 
         <md-card class="md-whiteframe-z2" flex="66">
-          <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
-            <label>User Password</label>
-            <input type="{{ user.password_input_type }}" ng-model="user.user_password" required>
-            <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
-            <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
-          </md-input-container>
-          <md-card>
-            
-        <p></p>
+          <md-content layout-padding>
+            <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
+              <label>User Password</label>
+              <input type="{{ user.password_input_type }}" ng-model="user.user_password" required>
+              <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
+              <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
+            </md-input-container>
+          </md-content>
+        </md-card>
       </div>
+      
     </md-dialog-content>
     
     <md-dialog-actions layout="row">
