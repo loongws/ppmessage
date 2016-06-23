@@ -52,8 +52,10 @@ if __name__ == "__main__":
     reload(sys)
     sys.setdefaultencoding('utf-8')
 
+    from ppmessage.core.constant import CONFIG_STATUS
     from ppmessage.core.utils.config import _get_config
-    if _get_config() == None:
+    
+    if _get_config() == None or _get_config().get("config_status") != CONFIG_STATUS.RESTART:
         print("PPMessage not configed")
         sys.exit(1)
     
