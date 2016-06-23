@@ -432,7 +432,8 @@ class FirstHandler(tornado.web.RequestHandler):
         _config["config_status"] = CONFIG_STATUS.FIRST
         _config["api"] = self._api
         _config["team"] = {
-            "app_uuid": self._app_uuid
+            "app_uuid": self._app_uuid,
+            "name": _request.get("team_name")
         }
         _config["user"] = {
             "user_uuid": self._user_uuid,
