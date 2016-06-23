@@ -137,7 +137,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         _key = ApiTokenData.__tablename__ + ".api_token." + self.api_token
         _token = self.redis.get(_key)
         if _token == None or len(_token) == 0:
-            self.send_ack({"code": DIS_ERR.NOTOKEN, "what": DIS_WHAT.AUTH})
+            self.send_ack({"code": DIS_ERR.NODBKEY, "what": DIS_WHAT.AUTH})
             return
 
         _token = json.loads(_token)

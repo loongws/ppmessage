@@ -19,7 +19,9 @@ from ppmessage.db.models import FileInfo
 
 import os
 import uuid
+import json
 import redis
+import logging
 import hashlib
 
 from tornado.web import Application
@@ -36,7 +38,7 @@ class UploadFileHandler(RequestHandler):
         return int(self.request.headers['Content-Length'])
 
     @asynchronous
-    def post(self):
+    def post(self, id=None):
         
         _redis = self.application.redis        
         logging.info(self.request.body)
@@ -125,7 +127,7 @@ class UploadWebService(AbstractWebService):
 
     @classmethod
     def get_handlers(cls):
-        return [(r"/upload", UploadFileHandler)]
+        return [(r"/upload/(.*)", UploadFileHandler)]
 
     @classmethod
     def get_delegate(cls, app):

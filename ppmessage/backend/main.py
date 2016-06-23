@@ -84,9 +84,11 @@ class MainApplication(tornado.web.Application):
         
         handlers = [(r"/", EntryHandler)]
         for i in self.total_handlers:
-            handler = ("/" + i["name"].lower() + i["handler"][0], i["handler"][1])
+            _name = "/" + i["name"].lower() + i["handler"][0]
+                        
+            handler = (_name, i["handler"][1])
             if len(i["handler"]) == 3:
-                handler = ("/" + i["name"].lower() + i["handler"][0], i["handler"][1], i["handler"][2])
+                handler = (_name, i["handler"][1], i["handler"][2])
             handlers.append(handler)
 
         tornado.web.Application.__init__(self, handlers, **settings)        
