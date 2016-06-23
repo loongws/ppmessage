@@ -41,14 +41,19 @@ def create_mysql_tables(_db_config):
 
 def create_pgsql_db(_db_config):
     _db_config = _db_config.get("pgsql")
-    _db_string = "mysql+psycopg2://%s:%s@%s:%s/postgres" % \
+    _db_string = "postgresql+psycopg2://%s:%s@%s:%s/postgres" % \
                  (_db_config.get("db_user"), _db_config.get("db_pass"),
                   _db_config.get("db_host"), _db_config.get("db_port"))
 
     _engine = create_engine(_db_string)
     _conn = _engine.connect()
     _conn.execute("commit")
+
+    _conn.connection.set_isolation_level(0)
+    _conn.execute("drop database if exists %s" % _db_config.get("db_name"))
     _conn.execute("create database %s" % _db_config.get("db_name"))
+    _conn.connection.set_isolation_level(1)
+
     _conn.close()
     return True
 

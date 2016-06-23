@@ -108,29 +108,23 @@ cd -
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
 pip install \
+    psycopg2 \
     StringGenerator \
     axmlparserpy \
     beautifulsoup4 \
-    biplist \
-    cffi \
+    paramiko \
     cryptography \
-    evernote \
     filemagic \
     geoip2 \
     identicon \
-    ipython \
-    jieba \
-    paramiko \
     paho-mqtt \
     pillow \
     ppmessage-mqtt \
-    pyipa \
     pypinyin \
     pyparsing \
     python-dateutil \
     python-gcm \
     python-magic \
-    qiniu \
     qrcode \
     readline \
     redis \
@@ -138,9 +132,5 @@ pip install \
     sqlalchemy \
     tornado \
     xlrd
-
-pip install hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
-
-
 
 echo "Finish install the requirements of PPMessage, next to run dist.sh with different arguments to start PPMessage."

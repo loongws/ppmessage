@@ -24,11 +24,11 @@ class SqlInstance(SqlNone):
     def __init__(self, _db_config):
         self.pgsql_config = _db_config
         
-        self.db_name = _pgsql.get("db_name")
-        self.db_pass = _pgsql.get("db_pass")
-        self.db_user = _pgsql.get("db_user")
-        self.db_host = _pgsql.get("db_host")
-        self.db_port = _pgsql.get("db_port")
+        self.db_name = self.pgsql_config.get("db_name")
+        self.db_pass = self.pgsql_config.get("db_pass")
+        self.db_user = self.pgsql_config.get("db_user")
+        self.db_host = self.pgsql_config.get("db_host")
+        self.db_port = self.pgsql_config.get("db_port")
         
         super(SqlInstance, self).__init__()
         return
