@@ -185,8 +185,10 @@ class DatabaseHandler(tornado.web.RequestHandler):
         return _return(self, -1)
 
     def _mysql(self, _request):
-        _request = _request.get("mysql") 
-
+        logging.info(_request)
+        _request = _request.get(SQL.MYSQL.lower()) 
+        logging.info(_request)
+        
         _db_name = _request.get("db_name")
         _db_host = _request.get("db_host")
         _db_port = _request.get("db_port")
@@ -208,6 +210,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
                 "db_pass": _db_pass
             }
         }
+
         if create_mysql_db(_config):
             if create_mysql_tables(_config):
                 self._dump_db_config(_config)

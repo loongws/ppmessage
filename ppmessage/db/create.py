@@ -22,10 +22,12 @@ def create_sqlite_tables(_db_config):
 
 def create_mysql_db(_db_config):
     _db_config = _db_config.get("mysql")
-    _db_string = "mysql+mysqlconnector://%s:%s@%s:%s?charst=utf8" % \
+    _db_string = "mysql+mysqlconnector://%s:%s@%s:%s" % \
                  (_db_config.get("db_user"), _db_config.get("db_pass"),
                   _db_config.get("db_host"), _db_config.get("db_port"))
-    _engine = create_engine(_db_string)
+    logging.info(_db_string)
+    _engine = create_engine(_db_string) # default utf-8
+    _engine.execute("DROP DATABASE IF EXISTS %s" % _db_config.get("db_name"))
     _engine.execute("CREATE DATABASE %s" % _db_config.get("db_name")) #create db
     _engine.execute("USE %s" % _db_config.get("db_name")) 
     return True
