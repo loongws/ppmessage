@@ -133,7 +133,7 @@ angular.module("this_app").
                 },
                 link: _link,
                 // controller: "MessageCtrl",
-                templateUrl: yvConstants.STATIC_PREFIX + "html/directive/message.html"
+                templateUrl: "templates/directive/message.html"
             };
 
         }]);
