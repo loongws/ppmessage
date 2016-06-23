@@ -27,7 +27,6 @@ from tornado.ioloop import IOLoop
 from tornado.web import asynchronous
 from tornado.web import RequestHandler
 
-
 @singleton
 class BackendQueue(Queue):
     pass

@@ -39,7 +39,7 @@ from ppmessage.backend.dispatcher import DispatcherWebService
 from ppmessage.backend.identiconapp import IdenticonWebService
 from ppmessage.backend.ppconsoleapp import PPConsoleWebService
 from ppmessage.pcsocket.pcsocketapp import PCSocketWebService
-from ppmessage.file.uploadapplication import UploadWebService
+from ppmessage.backend.tornadouploadapp import UploadWebService
 from ppmessage.file.downloadapplication import DownloadWebService
 
 from ppmessage.backend.message import mqtt_message_main
