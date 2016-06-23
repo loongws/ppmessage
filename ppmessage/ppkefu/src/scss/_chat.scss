@@ -94,14 +94,13 @@
     }
     
     .yv-chat-image {
-        height: 150px;
         min-width: 1px;
         line-height: 0;
         overflow: hidden;
         background-color: transparent;
         
         >img {
-            height: 100%;
+            max-height: 150px;
             cursor: pointer;
         }
     }
