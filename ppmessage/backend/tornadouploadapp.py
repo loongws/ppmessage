@@ -18,6 +18,7 @@ from ppmessage.core.utils.config import get_config_server_generic_store
 from ppmessage.db.models import FileInfo
 
 import os
+import uuid
 import redis
 import hashlib
 
@@ -26,7 +27,10 @@ from tornado.web import RequestHandler
 from tornado.web import asynchronous
 
 class UploadFileHandler(RequestHandler):
-        
+    """
+    FIXME: with api_token check
+    """
+    
     @property
     def content_length(self):
         return int(self.request.headers['Content-Length'])
@@ -55,6 +59,7 @@ class UploadFileHandler(RequestHandler):
             return
 
         _uuid = str(uuid.uuid1())
+        
         _file_name = _info.get("filename") or _uuid
         _file_type = _info.get("content_type") or "application/octet-stream"
         _file_body = _info.get("body") or ""
@@ -77,11 +82,7 @@ class UploadFileHandler(RequestHandler):
             self.finish()
             return 
 
-        _new_name = _uuid
-        if _file_name != _uuid:
-            _new_name = _uuid + "-" + _file_name
-            
-        _new_path = _generic_store + os.path.sep + _new_name
+        _new_path = _generic_store + os.path.sep + _uuid
 
         with open(_new_path, "w") as _of:
             _of.write(_file_body)
