@@ -11,11 +11,10 @@ from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import PP_WEB_SERVICE
 
-from ppmessage.core.main import AbstractWebService
 from ppmessage.core.singleton import singleton
+from ppmessage.core.main import AbstractWebService
 
 from ppmessage.core.downloadhandler import DownloadHandler
-from ppmessage.core.identiconhandler import IdenticonHandler
 
 import redis
 from tornado.web import Application
@@ -35,8 +34,7 @@ class DownloadWebService(AbstractWebService):
 
     @classmethod
     def get_handlers(cls):
-        return [("/download/([^\/]+)?$", DownloadHandler, {"path": "/"}),
-                ("/identicon/([^\/]+)?$", IdenticonHandler, {"path": "/"})]
+        return [("/download/([^\/]+)?$", DownloadHandler, {"path": "/"})]
 
     @classmethod
     def get_delegate(cls, app):
@@ -50,8 +48,7 @@ class DownloadApplication(Application):
         handlers = []
 
         self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
-        DownloadHandler.set_cls_redis(self.redis)
-        
+        DownloadHandler.set_cls_redis(self.redis)        
         Application.__init__(self, DownloadWebService.get_handlers(), **settings)
 
         return

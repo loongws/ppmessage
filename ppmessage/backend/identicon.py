@@ -4,11 +4,13 @@
 # Guijin Ding, dingguijin@gmail.com.
 # All rights reserved.
 #
-# backend/ppconsole.py
+# backend/identicon.py
+#
+# A single process to handle anonymous avatar
 #
 
-from ppmessage.core.constant import PPCONSOLE_PORT
-from ppmessage.backend.ppconsoleapp import PPConsoleApp
+from ppmessage.core.constant import IDENTICON_PORT
+from ppmessage.backend.identiconapp import IdenticonApp
 
 import os
 import logging
@@ -17,7 +19,7 @@ import tornado.ioloop
 import tornado.options
 import tornado.httpserver
 
-tornado.options.define("port", default=PPCONSOLE_PORT, help="", type=int)
+tornado.options.define("port", default=IENDTICON_PORT, help="", type=int)
 
 def _main():
     import sys
@@ -25,10 +27,10 @@ def _main():
     sys.setdefaultencoding('utf-8')
     tornado.options.parse_command_line()
 
-    _app = PPConsoleApp()
+    _app = IdenticonApp()
     http_server = tornado.httpserver.HTTPServer(_app)
 
-    logging.info("Starting ppconsole ... with port: %d" % tornado.options.options.port)
+    logging.info("Starting identicon... with port: %d" % tornado.options.options.port)
 
     http_server.listen(tornado.options.options.port)
     tornado.ioloop.IOLoop.instance().start()

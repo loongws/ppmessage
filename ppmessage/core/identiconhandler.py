@@ -34,7 +34,7 @@ class IdenticonHandler(StaticFileHandler):
         _identicon_store = get_config_server_identicon_store()
         if _identicon_store == None:
             logging.error("Identicon store not configed")
-            return path
+            return None
         _p = _identicon_store + os.path.sep + path
         return _p
 

@@ -30,7 +30,7 @@ def _icon_url(_file_name):
         return None
 
     _port = str(_port)
-    _post = "/identicon/" + _file_name
+    _post = "/identicon/identicon/" + _file_name
     _protocol = "http"
     if _ssl == "on":
         _protocol = "https"

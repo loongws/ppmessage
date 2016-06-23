@@ -36,6 +36,7 @@ from ppmessage.backend.mqttpush import MqttPushWebService
 from ppmessage.iospush.iospushapp import IOSPushWebService
 from ppmessage.backend.ppconfigapp import PPConfigWebService
 from ppmessage.backend.dispatcher import DispatcherWebService
+from ppmessage.backend.identiconapp import IdenticonWebService
 from ppmessage.backend.ppconsoleapp import PPConsoleWebService
 from ppmessage.pcsocket.pcsocketapp import PCSocketWebService
 from ppmessage.file.uploadapplication import UploadWebService
