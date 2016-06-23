@@ -1,0 +1,75 @@
+<md-dialog aria-label="Config Apple Push Network Service"  ng-cloak>
+  <form ng-submit="confirm()">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Config Apple Push Network Service</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="static/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>Initialize Database</h2>
+
+        <p style="padding-bottom: 20px;">
+          To push message to your iOS app, you should upload your Apple Push Network Service certificates.
+        </p>
+
+        <md-input-container class="md-block">
+          <label>Developer Certificate (.p12) </label>
+          <input type="file" accept="application/x-pkcs12"  onchange="angular.element(this).scope().getFileDetails(this, 'dev_cert')" required>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Developer Certificate Password</label>
+          <input ng-model="ios.passwords.dev_cert_password">
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Production Certificate (.p12) </label>
+          <input type="file" accept="application/x-pkcs12" onchange="angular.element(this).scope().getFileDetails(this, 'pro_cert')" required>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Production Certificate Password</label>
+          <input ng-model="ios.passwords.pro_cert_password">
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Combination Certificate (.p12) </label>
+          <input type="file" accept="application/x-pkcs12"  onchange="angular.element(this).scope().getFileDetails(this, 'com_cert')">
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Combination Certificate Password</label>
+          <input ng-model="ios.passwords.com_cert_password">
+        </md-input-container>
+
+        <p></p>
+      </div>
+    </md-dialog-content>
+    
+    <md-dialog-actions layout="row">
+
+      <md-button ng-click="pass()">
+        No iOS Push, Please Pass
+      </md-button>
+
+      <span flex></span>
+
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+
+      <md-button type="submit">
+        Confirm
+      </md-button>
+      
+    </md-dialog-actions>
+    
+  </form>
+</md-dialog>

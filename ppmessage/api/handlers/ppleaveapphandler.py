@@ -45,7 +45,7 @@ class PPLeaveAppHandler(BaseHandler):
             return False
         
         _row = AppUserData(uuid=_data_uuid)
-        _row.async_delete()
+        _row.async_delete(_redis)
         _row.delete_redis_keys(_redis)
 
         _key = DeviceUser.__tablename__ + ".uuid." + _user_uuid
@@ -55,7 +55,7 @@ class PPLeaveAppHandler(BaseHandler):
 
         # FIXME: a lot of user db message should be removed
         _row = DeviceUser(uuid=_user_uuid)
-        _row.async_delete()
+        _row.async_delete(_redis)
         _row.delete_redis_keys(_redis)
         return True
     

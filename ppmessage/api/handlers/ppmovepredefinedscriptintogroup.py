@@ -34,7 +34,7 @@ class PPMovePredefinedScriptIntoGroup(BaseHandler):
         self.application.redis.srem(_key, _script_uuid)
 
         _row = PredefinedScript(uuid=_script_uuid, group_uuid=_group_uuid)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         _row.update_redis_keys(self.application.redis)
         return
     

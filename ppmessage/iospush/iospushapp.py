@@ -8,11 +8,16 @@
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import IOSPUSH_SRV
+from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.constant import REDIS_IOSPUSH_KEY
+
+from ppmessage.core.singleton import singleton
+from ppmessage.core.main import AbstractWebService
 
 from Queue import Queue
 from tornado.web import Application
 from tornado.web import RequestHandler
+from tornado.ioloop import PeriodicCallback
 
 import copy
 import json
@@ -23,28 +28,14 @@ import datetime
 
 from .pushthreadhandler import PushThreadHandler
 
-class PushHandler(RequestHandler):
-    """
-    not use the web request for internal message, use redis list instead.
-    """
-    def post(self):
-        #self.application.redis.rpush(self.application.push_key, self.request.body)
-        return
-
-class IOSPushApp(Application):
-    
-    def __init__(self):
+@singleton
+class IOSPushDelegate():
+    def __init__(self, app):
+        self.redis = app.redis
         self.apns = {}
         self.request_count = 0
         self.push_key = REDIS_IOSPUSH_KEY
-        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
-        self.push_thread = PushThreadHandler(self)
-        
-        settings = {}
-        settings["debug"] = True
-        handlers = []
-        handlers.append(("/"+IOSPUSH_SRV.PUSH, PushHandler))
-        Application.__init__(self, handlers, **settings)
+        self.push_thread = PushThreadHandler(self)    
         return
 
     def outdate(self):
@@ -78,3 +69,33 @@ class IOSPushApp(Application):
             self.push_thread.task(push_request)
         return
 
+    def run_periodic(self):
+        # set the periodic check outdated connection
+        PeriodicCallback(self.outdate, 1000*60*5).start()
+        # set the periodic check push request every 200 ms
+        PeriodicCallback(self.push, 200).start()
+        return
+
+class IOSPushWebService(AbstractWebService):
+
+    @classmethod
+    def name(cls):
+        return PP_WEB_SERVICE.IOSPUSH
+
+    @classmethod
+    def get_handlers(cls):
+        return []
+
+    @classmethod
+    def get_delegate(cls, app):
+        return IOSPushDelegate(app)
+
+class IOSPushApp(Application):
+    
+    def __init__(self):
+        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)    
+        return
+
+    def get_delegate(self, name):
+        return IOSPushDelegate(self)
+    

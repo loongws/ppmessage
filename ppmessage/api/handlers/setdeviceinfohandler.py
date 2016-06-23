@@ -80,7 +80,7 @@ class SetDeviceInfoHandler(BaseHandler):
 
         _row = DeviceInfo(**_values)
         _row.update_redis_keys(_redis)
-        _row.async_update()        
+        _row.async_update(_redis)        
         return
 
     def initialize(self):

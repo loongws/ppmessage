@@ -7,7 +7,7 @@
 
 from ppmessage.db.models import FileInfo
 from ppmessage.core.redis import redis_hash_to_dict
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
+from ppmessage.core.utils.config import get_config_server_generic_store
 
 from tornado.web import RequestHandler
 from shutil import move
@@ -28,6 +28,11 @@ class UploadFileHandler(RequestHandler):
     def post(self):
 
         logging.info(self.request.body)
+        _generic_store = get_config_server_generic_store()
+        if _generic_store == None:
+            logging.error("Generic store not configed")
+            return
+        
         _field_name = "file"
         _field_file_name = _field_name + ".name"
         _field_file_path = _field_name + ".path"
@@ -76,8 +81,6 @@ class UploadFileHandler(RequestHandler):
             return 
 
         _fuuid = str(uuid.uuid1())
-        _server_config = BOOTSTRAP_DATA.get("server")
-        _generic_store = _server_config.get("generic_store")
         _new_path = _generic_store + os.path.sep + _fuuid
         move(_file_path, _new_path)
 
@@ -93,7 +96,7 @@ class UploadFileHandler(RequestHandler):
         }
         _row = FileInfo(**_add)
         _row.create_redis_keys(_redis)
-        _row.async_add()
+        _row.async_add(_redis)
 
         _r = {}
         _r["fuuid"] = _fuuid

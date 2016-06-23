@@ -5,31 +5,36 @@
 # All rights are reserved
 #
 
-from ppmessage.core.srv.signal import async_signal_cache_add
-from ppmessage.core.srv.signal import async_signal_cache_delete
-from ppmessage.core.srv.signal import async_signal_cache_update
-
+from ppmessage.core.constant import CACHE_TYPE
+from ppmessage.core.constant import REDIS_CACHE_KEY
 from ppmessage.core.utils.copyrow import copy_row_to_dict
+from ppmessage.core.utils.datetimeencoder import DateTimeEncoder
 
 from sqlalchemy import Column
 from sqlalchemy import String
 from sqlalchemy import DateTime
 
+import json
 import uuid
 import logging
 import datetime
 
-def _async_add(_obj):
+def _async_cache(_redis, _type, _data):
+    _key = REDIS_CACHE_KEY
+    _redis.rpush(_key, json.dumps({"type": _type, "data": _data}, cls=DateTimeEncoder))
+    return
+
+def _async_add(_obj, _redis):
     _values = copy_row_to_dict(_obj)
     _add = {
         "table": _obj.__tablename__,
         "key": "uuid." + _obj.uuid,
         "values": _values
     }
-    async_signal_cache_add(_add)
+    _async_cache(_redis, CACHE_TYPE.CREATE, _add)
     return
 
-def _async_update(_obj):
+def _async_update(_obj, _redis):
     _values = copy_row_to_dict(_obj)
 
     if "uuid" not in _values:
@@ -42,15 +47,15 @@ def _async_update(_obj):
         "key": "uuid." + _obj.uuid,
         "values": _values
     }
-    async_signal_cache_update(_update)
+    _async_cache(_redis, CACHE_TYPE.UPDATE, _update)
     return
 
-def _async_delete(_obj):
+def _async_delete(_obj, _redis):
     _del = {
         "table": _obj.__tablename__,
         "values": {"uuid": _obj.uuid}
     }
-    async_signal_cache_delete(_del)
+    _async_cache(_redis, CACHE_TYPE.DELETE, _del)
     return
     
 def _create_redis_hash(_obj, _redis, _is_update=False, _is_load=False):
@@ -123,14 +128,14 @@ class CommonMixin(object):
         _delete_redis_hash(self, _redis)
         return
     
-    def async_add(self):
-        _async_add(self)
+    def async_add(self, _redis):
+        _async_add(self, _redis)
         return
 
-    def async_update(self):
-        _async_update(self)
+    def async_update(self, _redis):
+        _async_update(self, _redis)
         return
 
-    def async_delete(self):
-        _async_delete(self)
+    def async_delete(self, _redis):
+        _async_delete(self, _redis)
         return

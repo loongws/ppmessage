@@ -10,9 +10,13 @@
 
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
+from ppmessage.core.constant import PP_WEB_SERVICE
+from ppmessage.core.constant import REDIS_SEND_NOTIFICATION_KEY
+
+from ppmessage.core.singleton import singleton
+from ppmessage.core.main import AbstractWebService
 
 from ppmessage.send.sendhandler import SendHandler
-from ppmessage.core.constant import REDIS_SEND_NOTIFICATION_KEY
 
 import json
 import redis
@@ -21,9 +25,10 @@ import tornado.web
 import tornado.ioloop
 import tornado.options
 
-class SendApp(tornado.web.Application):
-    def __init__(self):
-        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+@singleton
+class SendDelegate():
+    def __init__(self, app):
+        self.redis = app.redis
         self.send_handler = SendHandler(self)
         return
     
@@ -41,13 +46,41 @@ class SendApp(tornado.web.Application):
             self.send_handler.task(body)
         return
 
-if __name__ == "__main__":
+    def run_periodic(self):
+        # set the periodic check send every 50 ms
+        tornado.ioloop.PeriodicCallback(self.send_loop, 50).start()
+        return
+    
+class SendWebService(AbstractWebService):
+
+    @classmethod
+    def name(cls):
+        return PP_WEB_SERVICE.SEND
+
+    @classmethod
+    def get_handlers(cls):
+        return []
+
+    @classmethod
+    def get_delegate(cls, app):
+        return SendDelegate(app)
+    
+class SendApp(tornado.web.Application):
+    def __init__(self):
+        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+        return
+    
+    def get_delegate(self, name):
+        return SendDelegate(self)
+
+def _main():
     tornado.options.parse_command_line()
     
     _app = SendApp()
-    # set the periodic check send every 50 ms
-    tornado.ioloop.PeriodicCallback(_app.send_loop, 50).start()
-
+    _app.get_delegate("").run_periodic()
+    
     logging.info("Starting send service......")
     tornado.ioloop.IOLoop.instance().start()
-    
+        
+if __name__ == "__main__":
+    _main()

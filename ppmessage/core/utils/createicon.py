@@ -1,30 +1,39 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2010-2016 YVertical.
-# Guijin Ding, dingguijin@gmail.com
+# Copyright (C) 2010-2016 PPMessage.
+# Guijin Ding, dingguijin@gmail.com.
+# All rights reserved.
 #
+# core/utils/createicon.py
 #
 
 from .identicon import Identicon
-from .getipaddress import getIPAddress
+from .config import get_config_server_ssl
+from .config import get_config_server_port
+from .config import get_config_server_name
+from .config import get_config_server_identicon_store
 
-from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import FileInfo
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
+from ppmessage.db.models import DeviceUser
 from ppmessage.core.imageconverter import ImageConverter
 
 import os
 import hashlib
 
 def _icon_url(_file_name):
-    _post = "/identicon/" + _file_name
-    _server_name = BOOTSTRAP_DATA.get("server").get("name")
-    _ssl = BOOTSTRAP_DATA.get("nginx").get("ssl")
+    _ssl = get_config_server_ssl()
+    _port = get_config_server_port()
+    _server_name = get_config_server_name()
+
+    if _ssl == None or _port == None or _server_name == None:
+        logging.error("no ssl/port/server_name configed")
+        return None
+
+    _port = str(_port)
+    _post = "/identicon/identicon/" + _file_name
     _protocol = "http"
-    _port = BOOTSTRAP_DATA.get("nginx").get("listen")
     if _ssl == "on":
         _protocol = "https"
-        _port = BOOTSTRAP_DATA.get("nginx").get("ssl_listen")
     _url = _protocol + "://" + _server_name + ":" + _port + _post
     return _url
 
@@ -32,12 +41,20 @@ def create_user_icon(_uuid):
     _image = Identicon(_uuid, 64)
     _image = _image.draw_image()
     _file_name = _uuid + ".png"
-    _identicon_store = BOOTSTRAP_DATA.get("server").get("identicon_store")
+    _identicon_store = get_config_server_identicon_store()
+    if _identicon_store == None:
+        logging.error("no identicon_store configed")
+        return None
     _path = _identicon_store + os.path.sep + _file_name
     _image.save(_path)
     return _icon_url(_file_name)
 
 def create_group_icon(_redis, _users):
+    _identicon_store = get_config_server_identicon_store()
+    if _identicon_store == None:
+        logging.error("no identicon_store configed")
+        return None
+    
     if len(_users) == 0:
         return None
     
@@ -57,7 +74,6 @@ def create_group_icon(_redis, _users):
         logging.error("conversation icon data is None, will not create icon file")
         return None
     _file_name = hashlib.sha1("".join(_users)).hexdigest() + ".png"
-    _identicon_store = BOOTSTRAP_DATA.get("server").get("identicon_store")
     _file_path = _identicon_store + os.path.sep + _file_name
     _file = open(_file_path, "wb")
     _file.write(_data)

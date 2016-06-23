@@ -97,7 +97,7 @@ class TokenHandler(RequestHandler):
         
         _row = ApiTokenData(uuid=str(uuid.uuid1()), api_code=_api_code, api_token=_api_token,
                             app_uuid=_app_uuid, api_uuid=_api_uuid, api_level=_api_level)
-        _row.async_add()
+        _row.async_add(_redis)
         _row.create_redis_keys(_redis)
 
         self.set_header("Content-Type", "application/json")
@@ -157,7 +157,7 @@ class TokenHandler(RequestHandler):
         
         _row = ApiTokenData(uuid=str(uuid.uuid1()), api_code=_api_code, api_token=_api_token,
                             app_uuid=_app_uuid, api_uuid=_api_uuid, api_level=_api_level)
-        _row.async_add()
+        _row.async_add(_redis)
         _row.create_redis_keys(_redis)
 
         self.set_header("Content-Type", "application/json")

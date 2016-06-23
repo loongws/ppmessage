@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
-# All rights reserved
+# Guijin Ding, dingguijin@gmail.com.
+# All rights reserved.
 #
 # backend/amd.py 
 # The entry for amd (automatic message distribution)
@@ -16,12 +16,17 @@ from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 
+from ppmessage.core.constant import PP_WEB_SERVICE
+
 from ppmessage.core.constant import REDIS_AMD_KEY
 from ppmessage.core.constant import REDIS_ACK_NOTIFICATION_KEY
 
 from ppmessage.core.constant import CONVERSATION_TYPE
 from ppmessage.core.constant import CONVERSATION_STATUS
 from ppmessage.core.constant import SERVICE_USER_STATUS
+
+from ppmessage.core.singleton import singleton
+from ppmessage.core.main import AbstractWebService
 
 from ppmessage.db.models import AppInfo
 from ppmessage.db.models import OrgGroup
@@ -45,13 +50,19 @@ import tornado.options
 import uuid
 import json
 import redis
+import random
 import logging
 import datetime
-import random
 
-class AmdApp(tornado.web.Application):
-    def __init__(self):
-        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+@singleton
+class AmdDelegate():
+    def __init__(self, app):
+        self.redis = app.redis
+        return
+
+    def run_periodic(self):
+        # every 2000ms check dispatcher task
+        tornado.ioloop.PeriodicCallback(self.task_loop, 2000).start()
         return
 
     def _apps(self):
@@ -66,12 +77,6 @@ class AmdApp(tornado.web.Application):
             return None
         _pcsocket_dict = redis_hash_to_dict(self.redis, PCSocketInfo, _pcsocket_uuid)
         return _pcsocket_dict
-
-    def _back_to_queue(self, _app_uuid, _user_uuid, _device_uuid, _group_uuid):
-        _key = REDIS_AMD_KEY + ".app_uuid." + _app_uuid
-        _value = {"user_uuid":_user_uuid, "device_uuid":_device_uuid, "group_uuid":_group_uuid} 
-        self.redis.lpush(_key, json.dumps(_value))
-        return
     
     def _ack_error(self, _device_uuid, _code=DIS_ERR.CONVERSATION):
         _body = {
@@ -159,7 +164,6 @@ class AmdApp(tornado.web.Application):
         if len(_ready_users) == 0:
             logging.info("waiting group user ready: %s" % _group_uuid)
             self._ack_waiting(_device_uuid)
-            self._back_to_queue(_app_uuid, _user_uuid, _device_uuid, _group_uuid)
             return False
 
         _allocated_user = random.randint(0, len(_ready_users)-1)
@@ -177,7 +181,7 @@ class AmdApp(tornado.web.Application):
                                 status=CONVERSATION_STATUS.NEW,
                                 conversation_type=CONVERSATION_TYPE.P2S)
 
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
         
         _row = ConversationUserData(uuid=str(uuid.uuid1()),
@@ -187,7 +191,7 @@ class AmdApp(tornado.web.Application):
                                     conversation_name=_allocated_user_dict["user_fullname"],
                                     conversation_icon=_allocated_user_dict["user_icon"],
                                     conversation_status=CONVERSATION_STATUS.NEW)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
 
         _row = ConversationUserData(uuid=str(uuid.uuid1()),
@@ -197,7 +201,7 @@ class AmdApp(tornado.web.Application):
                                     conversation_name=_portal_user_dict["user_fullname"],
                                     conversation_icon=_portal_user_dict["user_icon"],
                                     conversation_status=CONVERSATION_STATUS.NEW)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
         
         self._ack_success(_device_uuid, _conversation_uuid)
@@ -223,7 +227,7 @@ class AmdApp(tornado.web.Application):
                                user_uuid=_user_uuid,
                                status=CONVERSATION_STATUS.NEW,
                                conversation_type=CONVERSATION_TYPE.P2S)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
 
         _conversation_name = []
@@ -239,7 +243,7 @@ class AmdApp(tornado.web.Application):
                                     conversation_name=_conversation_name,
                                     conversation_icon=_group_icon,
                                     conversation_status=CONVERSATION_STATUS.NEW)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
 
         for _user in _allocated_users:
@@ -250,7 +254,7 @@ class AmdApp(tornado.web.Application):
                                         conversation_name=_portal_user_name,
                                         conversation_icon=_portal_user_icon,
                                         conversation_status=CONVERSATION_STATUS.NEW)
-            _row.async_add()
+            _row.async_add(self.redis)
             _row.create_redis_keys(self.redis)
         
         self._ack_success(_device_uuid, _conversation_uuid)
@@ -305,7 +309,7 @@ class AmdApp(tornado.web.Application):
                                user_uuid=_user_uuid,
                                status=CONVERSATION_STATUS.NEW,
                                conversation_type=CONVERSATION_TYPE.P2S)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
         
         _row = ConversationUserData(uuid=str(uuid.uuid1()),
@@ -315,7 +319,7 @@ class AmdApp(tornado.web.Application):
                                     conversation_name=_allocated_user_name,
                                     conversation_icon=_allocated_user_icon,
                                     conversation_status=CONVERSATION_STATUS.NEW)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
 
         _row = ConversationUserData(uuid=str(uuid.uuid1()),
@@ -325,7 +329,7 @@ class AmdApp(tornado.web.Application):
                                     conversation_name=_portal_user_name,
                                     conversation_icon=_portal_user_icon,
                                     conversation_status=CONVERSATION_STATUS.NEW)
-        _row.async_add()
+        _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
         
         self._ack_success(_device_uuid, _conversation_uuid)
@@ -357,31 +361,80 @@ class AmdApp(tornado.web.Application):
         """
         every 2000ms check all app queue
         """
-        _app_uuids = self._apps()
-        for _app_uuid in _app_uuids:
-            _key = REDIS_AMD_KEY + ".app_uuid." + _app_uuid
-            logging.info("amd queue size: %d, app_uuid:%s." % (self.redis.llen(_key), _app_uuid))
-            while True:
-                _request = self.redis.lpop(_key)
-                if _request == None:
-                    break
-                _request = json.loads(_request)
-                _user_uuid = _request.get("user_uuid")
-                _device_uuid = _request.get("device_uuid")
-                _group_uuid = _request.get("group_uuid")
-                _continue = self._task(_app_uuid, _user_uuid, _device_uuid, _group_uuid)
-                if not _continue:
-                    break
+        _hashs = set()
+
+        _len = self.redis.llen(REDIS_AMD_KEY) 
+        if _len == 0:
+            return
+
+        logging.info("amd queue size: %d" % _len)
+        
+        while True:
+            _hash = self.redis.lpop(REDIS_AMD_KEY)
+            if _hash == None or len(_hash) == 0:
+                break
+            _hashs.add(_hash)
+            
+        for _hash in _hashs:
+            _key = REDIS_AMD_KEY + ".amd_hash." + _hash
+            _value = self.redis.get(_key)
+
+            if _value == None or len(_value) == 0:
+                continue
+            
+            _request = json.loads(_value)
+            _app_uuid = _request.get("app_uuid")
+            _user_uuid = _request.get("user_uuid")
+            _device_uuid = _request.get("device_uuid")
+            _group_uuid = _request.get("group_uuid")
+            _continue = self._task(_app_uuid, _user_uuid, _device_uuid, _group_uuid)
+            # _continue True means got allocated or meets error
+            # _continue False means need continue waiting
+            
+            if not _continue:
+                self.redis.rpush(REDIS_AMD_KEY, _hash)
+            else:
+                _key = REDIS_AMD_KEY+".app_uuid."+_app_uuid
+                if self.redis.exists(_key):
+                    self.redis.srem(_key, _hash)
+                self.redis.delete(_key)
+                
         return
 
-if __name__ == "__main__":
+class AmdWebService(AbstractWebService):
+
+    @classmethod
+    def name(cls):
+        return PP_WEB_SERVICE.AMD
+
+    @classmethod
+    def get_handlers(cls):
+        return []
+
+    @classmethod
+    def get_delegate(cls, app):
+        return AmdDelegate(app)
+
+class AmdApp(tornado.web.Application):
+    def __init__(self):
+        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+        tornado.web.Application.__init__(self, [], **{"debug":True})
+        return
+
+    def get_delegate(self, name):
+        return AmdDelegate(self)
+    
+def _main():
     import sys
     reload(sys)
     sys.setdefaultencoding('utf8')
     tornado.options.parse_command_line()
     _app = AmdApp()
-    # every 2000ms check dispatcher task
-    tornado.ioloop.PeriodicCallback(_app.task_loop, 2000).start()
+    _delegate = _app.get_delegate("").run_periodic()
+    
     logging.info("Starting amd service......")
     tornado.ioloop.IOLoop.instance().start()
+    return
     
+if __name__ == "__main__":
+    _main()

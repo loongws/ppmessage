@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2010-2016 .
-# Guijin Ding, dingguijin@gmail.com
+# Copyright (C) 2010-2016 PPMessage.
+# Guijin Ding, dingguijin@gmail.com.
+# All rights are reserved.
 #
+# cache/updatehandler.py
 #
 
 from ppmessage.db.dbinstance import getDBSessionClass
-from ppmessage.db.sqlmysql import BaseModel
+from ppmessage.db.dbinstance import BaseModel
 from ppmessage.db.models import DeviceUser
 
 from sqlalchemy import String
@@ -31,9 +33,6 @@ def _get_class_by_tablename(tablename):
 
 class UpdateHandler():
   
-    def __init__(self, _app):
-        self.app = _app
-
     def task(self, _data):
         if "table" not in _data or \
            "values" not in _data or \
@@ -41,7 +40,7 @@ class UpdateHandler():
             logging.error("update not enough parameters: %s" % str(_data))
             return
 
-        #logging.info("update with %s" % str(_data))
+        logging.info("update with %s" % str(_data))
 
         _cls = _get_class_by_tablename(_data["table"])
         if _cls == None:
@@ -87,7 +86,7 @@ class UpdateHandler():
         try:
             _i = _session.query(_cls).filter_by(**_kd).scalar()
             if not _i:
-                logging.error("update %s to:%s with:%s" % (_data["table"], str(_rowdata), str(_kd)))
+                logging.error("error to update %s to:%s with:%s" % (_data["table"], str(_rowdata), str(_kd)))
                 return
             
             for _k in _rowdata:

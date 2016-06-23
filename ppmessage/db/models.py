@@ -17,7 +17,7 @@ from ppmessage.core.redis import row_to_redis_hash
 from ppmessage.core.redis import redis_hash_to_dict
 from ppmessage.core.imageconverter import ImageConverter
 
-from .sqlmysql import BaseModel
+from .dbinstance import BaseModel
 from .commonmixin import CommonMixin
 from .dbinstance import getDBSessionClass
 
@@ -993,24 +993,15 @@ class MessageAudioFileInfo(CommonMixin, BaseModel):
         return
         
 class APNSSetting(CommonMixin, BaseModel):
-    """
-    if in developing the apns use sandbox cert
-    if in production the apns use production cert
-    """
     __tablename__ = "apns_settings"
 
     app_uuid = Column("app_uuid", String(64))
     name = Column("name", String(64))
-    
-    is_development = Column("is_development", Boolean)
-    is_production = Column("is_production", Boolean)
-
-    production_p12 = Column("production_p12", LargeBinary)
-    development_p12 = Column("development_p12", LargeBinary)
 
     production_pem = Column("production_pem", LargeBinary)
     development_pem = Column("development_pem", LargeBinary)
-
+    combination_pem = Column("combination_pem", LargeBinary)
+    
     def __init__(self, *args, **kwargs):
         super(APNSSetting, self).__init__(*args, **kwargs)
         return
@@ -1027,7 +1018,7 @@ class APNSSetting(CommonMixin, BaseModel):
         if _obj == None:
             return
         _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"]
-        _redis.remove(_key)
+        _redis.delete(_key)
 
         CommonMixin.delete_redis_keys(self, _redis)
         return
@@ -1778,11 +1769,11 @@ class ApiInfo(CommonMixin, BaseModel):
         if _obj == None:
             return
         _key = self.__tablename__ + ".api_key." + _obj["api_key"]
-        _redis.remove(_key)
+        _redis.delete(_key)
 
         _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
                ".user_uuid." + _obj["user_uuid"] + ".api_level." + _obj["api_level"]
-        _redis.remove(_key)
+        _redis.delete(_key)
         
         CommonMixin.delete_redis_keys(self, _redis)
         return
@@ -1807,6 +1798,10 @@ class ApiTokenData(CommonMixin, BaseModel):
     def create_redis_keys(self, _redis, *args, **kwargs):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
 
+        _key = self.__tablename__ + ".app_uuid." + self.app_uuid + \
+               ".api_token." + self.api_token
+        _redis.set(_key, self.uuid)
+        
         _key = self.__tablename__ + ".api_token." + self.api_token
         _v = json.dumps([self.api_uuid, self.api_level])
         _redis.set(_key, _v)
@@ -1827,9 +1822,13 @@ class ApiTokenData(CommonMixin, BaseModel):
         if _obj == None:
             return
         _key = self.__tablename__ + ".api_token." + _obj["api_token"]
-        _redis.remove(_key)
+        _redis.delete(_key)
         _key = self.__tablename__ + ".api_code." + _obj["api_code"]
-        _redis.remove(_key)
+        _redis.delete(_key)
+        _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
+               ".api_token." + _obj["api_token"]
+        _redis.delete(_key)
+        
         CommonMixin.delete_redis_keys(self, _redis)
         return
 

@@ -11,7 +11,11 @@ from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import REDIS_EMAIL_KEY
 
-from ppmessage.bootstrap.config import BOOTSTRAP_CONFIG
+from ppmessage.core.constant import PP_WEB_SERVICE
+
+from ppmessage.core.main import AbstractWebService
+from ppmessage.core.singleton import singleton
+from ppmessage.core.utils.config import get_config_email
 
 import tornado.ioloop
 import tornado.options
@@ -22,9 +26,16 @@ import redis
 import json
 import sys
 
+global_email_config = {
+    "service_type": "mailgun",
+    "domain_name": "mg.ppmessage.com",
+    "from_email": "service@ppmessage.com",
+    "from_name": "PPMessage Service",
+    "private_api_key": "key-7d5cf0ffe7c013db67b3f4af98108f3d",
+}
+
 class MailGunWorker():
-    def __init__(self, app):
-        self.app = app
+    def __init__(self):
         return
 
     def config(self, email_config):
@@ -63,14 +74,16 @@ class MailGunWorker():
 
 class EmailWorker():
     def __init__(self, app):
-        self.email_app = app
+        self.app = app
         self.service_mapping = {
             "mailgun": MailGunWorker            
         }
         return
 
     def work(self, email_request):
-        _email = BOOTSTRAP_CONFIG.get("email")
+        _email = get_config_email()
+        if _email == None:
+            _email = global_email_config
         _type = _email.get("service_type")
         _worker_class = self.service_mapping.get(_type)
         if _worker_class == None:
@@ -81,13 +94,15 @@ class EmailWorker():
         _worker_object.work(email_request)
         return
 
-class EmailApp():
-    def __init__(self):
-        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+@singleton
+class PPEmailDelegate():
+    def __init__(self, app):
+        self.app = app
+        self.redis = app.redis
         self.email_key = REDIS_EMAIL_KEY
         self.email_worker = EmailWorker(self)
         return
-
+    
     def send(self):
         while True:
             _request = self.redis.lpop(self.email_key)
@@ -97,11 +112,40 @@ class EmailApp():
             self.email_worker.work(_request)
         return
 
-if __name__ == "__main__":
+    def run_periodic(self):
+        tornado.ioloop.PeriodicCallback(self.send, 1000).start() 
+        return
+    
+class PPEmailWebService(AbstractWebService):
+
+    @classmethod
+    def name(cls):
+        return PP_WEB_SERVICE.PPEMAIL
+
+    @classmethod
+    def get_handlers(cls):
+        return []
+
+    @classmethod
+    def get_delegate(cls, app):
+        return PPEmailDelegate(app)
+
+class PPEmailApp():
+    def __init__(self):
+        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+        return
+    
+    def get_delegate(self, name):
+        return PPEmailDelegate(self)
+    
+def _main():
     tornado.options.parse_command_line()
-    _app = EmailApp()
+    _app = PPEmailApp()
+    _app.get_delegate("").run_periodic()
     # set the periodic check email request to send every 1000 ms
-    tornado.ioloop.PeriodicCallback(_app.send, 1000).start()    
     logging.info("Email service starting...")
     tornado.ioloop.IOLoop.instance().start()
+    return
 
+if __name__ == "__main__":
+    _main()

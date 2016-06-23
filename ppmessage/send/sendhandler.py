@@ -13,7 +13,6 @@ class SendHandler():
     
     def __init__(self, _app):
         self._app = _app
-        self._redis = _app.redis
         return
     
     def task(self, _body):

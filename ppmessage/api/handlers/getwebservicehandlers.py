@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
-# All rights reserved
+# Guijin Ding, dingguijin@gmail.com.
+# All rights reserved.
 #
 
 from .getyvobjectdetailhandler import GetYVObjectDetailHandler
@@ -233,13 +233,7 @@ def getWebServiceHandlers():
     handler_list.append((r"/PPKEFU_SET_READY", PPKefuSetReady))
     handler_list.append((r"/PPKEFU_SET_REST", PPKefuSetRest))
     handler_list.append((r"/PPKEFU_SET_SERVICE_USER_STATUS", PPKefuSetServiceUserStatus))
-    
-    # handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT", PPGetAllPredefinedScript))
-    # handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT_GROUP", PPGetAllPredefinedScriptGroup))
-    # handler_list.append(("/PP_GET_PREDEFINED_SCRIPT_WITH_GROUP", PPGetPredefinedScriptWithGroup))
-
-    # handler_list.append(("/PP_CANCEL_WAITING_CREATE_CONVERSATION", PPCancelWaitingCreateConversation))
-    
+        
     handler_list.append(("/PPCONSOLE_SEND_NEW_PASSWORD", PPConsoleSendNewPassword))
 
     handler_list.append((r"/PP_ADD_PREDEFINED_SCRIPT", PPAddPredefinedScript))

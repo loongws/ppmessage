@@ -71,7 +71,7 @@ class SetDeviceUserHandler(BaseHandler):
         if len(_values) > 1:
             _row = DeviceUser(**_values)
             _row.update_redis_keys(_redis)
-            _row.async_update()
+            _row.async_update(_redis)
 
         return
 

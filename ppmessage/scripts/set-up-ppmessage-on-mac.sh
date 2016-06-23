@@ -3,8 +3,10 @@
 # version: 0.2
 # maintainer: Jin He <jin.he@ppmessage.com>
 # description: a shell script to deploy PPMessage on Mac
-
-MYSQL_CONNECTOR_PYTHON_VERSION=2.1.3
+#
+# version: 0.3
+# remove nginx/mysql/ffmpeg/scikit
+#
 
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -18,20 +20,30 @@ brew install \
      libjpeg \
      libffi \
      lame \
-     mysql \
      mercurial \
      nodejs \
      redis
 
 brew tap homebrew/services
-brew tap homebrew/nginx
-brew install nginx-full --with-upload-module
-brew install ffmpeg --with-fdk-aac --with-opencore-amr --with-libvorbis --with-opus
 
-# install cnpm, bower and gulp
-sudo npm install -g cnpm
-sudo npm install -g bower
-sudo npm install -g gulp
+function download_geolite2() 
+{
+    #SCRIPT=$(readlink -f "$0")
+    #BASEDIR=$(dirname "${SCRIPT}")
+    BASEDIR=$(dirname "$BASH_SOURCE")
+    APIDIR="${BASEDIR}"/../api/geolite2
+    wget --directory-prefix="${APIDIR}" -c http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
+    GEOFILE=GeoLite2-City.mmdb.gz
+    GEOPATH="${APIDIR}"/GeoLite2-City.mmdb.gz
+    
+    echo "${GEOPATH}"
+    echo $(readlink -e "${GEOPATH}")
+    AGEOPATH=$(readlink -e "${GEOPATH}")
+    STEM=$(basename "${GEOFILE}" .gz)
+    gunzip -c "${AGEOPATH}" > "${APIDIR}"/"${STEM}"
+}
+    
+download_geolite2
 
 # some python modules need libmaxminddb, install it before run 'pip install ...'
 cd /tmp
@@ -60,8 +72,6 @@ sudo pip install \
      evernote \
      filemagic \
      geoip2 \
-     green \
-     git+https://github.com/senko/python-video-converter.git \
      hg+https://dingguijin@bitbucket.org/dingguijin/apns-client \
      identicon \
      ipython \
@@ -84,16 +94,10 @@ sudo pip install \
      supervisor \
      sqlalchemy \
      tornado \
-     xlrd \
-     numpy \
-     matplotlib \
-     scipy \
-     scikit-learn
+     xlrd
 
-cd /tmp
-wget http://cdn.mysql.com//Downloads/Connector-Python/mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz
-tar -xzvf mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION.tar.gz
-cd mysql-connector-python-$MYSQL_CONNECTOR_PYTHON_VERSION
-sudo python setup.py install
+
+pip install git+https://github.com/senko/python-video-converter.git \
+    hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
 
 echo "Finish install the PPMessage requirements successfully, have fun with PPMessage"

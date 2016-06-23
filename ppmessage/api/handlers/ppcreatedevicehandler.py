@@ -41,7 +41,7 @@ class PPCreateDeviceHandler(BaseHandler):
 
         _v["uuid"] = self._user_uuid
         _row = DeviceUser(**_v)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         _row.update_redis_keys(self.application.redis)
         return
 
@@ -68,7 +68,7 @@ class PPCreateDeviceHandler(BaseHandler):
         _device_uuid = str(uuid.uuid1())
         _row = DeviceInfo(uuid=_device_uuid, app_uuid=self._app_uuid, user_uuid=self._user_uuid, is_ppcom_device=True,
                           device_ostype=self._device_ostype, terminal_uuid=_terminal_uuid)
-        _row.async_add()
+        _row.async_add(self.application.redis)
         _row.create_redis_keys(self.application.redis)
 
         self._user(_device_uuid)
