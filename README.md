@@ -49,7 +49,7 @@ bash ppmessage/scripts/set-up-ppmessage-on-linux.sh
 bash ppmessage/scripts/set-up-ppmessage-on-mac.sh
 ```
 
-> Run
+> Run and check log
 
 ```bash
 ./ppmessage.py
@@ -59,11 +59,11 @@ bash ppmessage/scripts/set-up-ppmessage-on-mac.sh
 
 
 ```bash
-Open your browser to access http://127.0.0.1:8945
+Open your browser to access `http://127.0.0.1:8945`, watch the log of `ppmessage.py` to use your URL.
 
 ```
 
-> Not working, what? Please file an issue on Github, thanks. Enjoy!
+> Not working yet? Please file an issue on Github, thanks. Enjoy!
 
 ## DOCUMENTS
 
