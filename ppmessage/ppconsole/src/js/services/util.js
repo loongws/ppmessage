@@ -103,7 +103,7 @@ function $yvUtilService($rootScope, $translate, $http, $base64, yvConstants, yvL
             return {
                 
                 getFileDownloadUrl: function(fid, fname) {
-                    var url = '/download/' + fid;
+                    var url = '/download/download/' + fid;
                     fname && (url += "?file_name=" + fname);
                     return url;
                 },
