@@ -315,7 +315,7 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
             _current_server.api_url = pre + "/api";
             _current_server.auth_url = pre + "/ppauth";
             _current_server.pcapp_url = pre + "/ppkefu";
-            _current_server.upload_url = pre + "/upload";
+            _current_server.upload_url = pre + "/upload/upload";
         },
 
         get_server: function () {
