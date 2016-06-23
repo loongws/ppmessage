@@ -9,8 +9,8 @@
 #
 #
 
-from ppmessage.pcsocket.pcsocketapp import PCSocketApp
 from ppmessage.core.constant import PCSOCKET_PORT
+from ppmessage.pcsocket.pcsocketapp import PCSocketApp
 
 import logging
 import tornado.ioloop
@@ -19,33 +19,19 @@ import tornado.httpserver
 
 tornado.options.define("port", default=PCSOCKET_PORT, help="", type=int)  
 
-if __name__ == "__main__":
-
+def _main():
     tornado.options.parse_command_line()
-    _port = tornado.options.options.port
     _app = PCSocketApp()
 
-    _app.register_service(str(_port))
-    
+    _app.get_delegate("").run_periodic()
     _http_server = tornado.httpserver.HTTPServer(_app)
+    _port = tornado.options.options.port
     _http_server.listen(_port)
-
-    # set the periodic check online every 1000 ms
-    tornado.ioloop.PeriodicCallback(_app.online_loop, 1000).start()
-
-    # set the periodic check typing every 1000 ms
-    tornado.ioloop.PeriodicCallback(_app.typing_loop, 1000).start()
-
-    # set the periodic check logout every 1000 ms
-    tornado.ioloop.PeriodicCallback(_app.logout_loop, 1000).start()
-
-    # set the periodic check ack every 100 ms
-    tornado.ioloop.PeriodicCallback(_app.ack_loop, 100).start()
-
-    # set the periodic check push every 50 ms
-    tornado.ioloop.PeriodicCallback(_app.push_loop, 50).start()
 
     logging.info("Starting pcsocket service......")
     tornado.ioloop.IOLoop.instance().start()
+
+if __name__ == "__main__":
+    _main()
     
 

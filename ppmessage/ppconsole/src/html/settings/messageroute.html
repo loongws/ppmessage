@@ -1,0 +1,32 @@
+<div class="boxed-group">
+  <h3>{{ "settings.menu.MESSAGE_DISPATCH_TAG" | translate }}</h3>
+  <div class="boxed-group-inner clearfix">
+    <div class="type_panel">
+
+      <div class="switch small yan">
+        <input id="radioSwitch1" type="radio" name="testGroup" ng-model="current_app.app_route_policy" value="BROADCAST">
+        <label for="radioSwitch1" style="float:left;"></label>
+        <div class="line">
+          {{ "statistics.messageroute.ALL" | translate }}
+        </div>
+      </div>
+
+      <div class="switch small yan">
+        <input id="radioSwitch2" type="radio" name="testGroup" ng-model="current_app.app_route_policy" value="SMART">
+        <label for="radioSwitch2" style="float:left;"></label>
+        <div class="line">
+          {{ "statistics.messageroute.SMART" | translate }}
+        </div>
+      </div>
+
+      <div class="switch small yan">
+        <input id="radioSwitch3" type="radio" name="testGroup" ng-model="current_app.app_route_policy" value="GROUP">
+        <label for="radioSwitch3" style="float:left;"></label>
+        <div class="line">
+          {{ "statistics.messageroute.GROUP" | translate }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -33,7 +33,7 @@ class PPAddPredefinedScript(BaseHandler):
         
         _row = PredefinedScript(uuid=_uuid, app_uuid=_app_uuid, group_uuid=_group_uuid,
                                 script_question=_script_question, script_answer=_script_answer)
-        _row.async_add()
+        _row.async_add(self.application.redis)
         _row.create_redis_keys(self.application.redis)
         _ret = self.getReturnData()
         _ret = copy.deepcopy(_request)

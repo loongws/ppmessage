@@ -25,7 +25,7 @@ class PPRemovePredefinedScript(BaseHandler):
             return
 
         _row = PredefinedScript(uuid=_script_uuid)
-        _row.async_delete()
+        _row.async_delete(self.application.redis)
         _row.delete_redis_keys(self.application.redis)
         return
     

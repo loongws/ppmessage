@@ -44,7 +44,7 @@ class PPUpdateConversationMemberHandler(BaseHandler):
                 "conversation_type": self._conv["conversation_type"],
             }
             _row = ConversationUserData(**_values)
-            _row.async_add()
+            _row.async_add(_redis)
             _row.create_redis_keys(_redis)
         return
     
@@ -59,13 +59,13 @@ class PPUpdateConversationMemberHandler(BaseHandler):
             if _uuid == None:
                 continue
             _row = ConversationUserData(uuid=_uuid)
-            _row.async_delete()
+            _row.async_delete(_redis)
             _row.delete_redis_keys(_redis)
         return
 
     def _update_group(self):
         _row = ConversationInfo(uuid=self._conv.get("uuid"), group_uuid=self._group_uuid)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         _row.update_redis_keys(self.application.redis)
         return
         

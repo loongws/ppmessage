@@ -11,7 +11,7 @@ from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 
 from ppmessage.db.models import DeviceUser
-from ppmessage.db.sqlmysql import BaseModel
+from ppmessage.db.dbinstance import BaseModel
 
 import sys
 import redis

@@ -63,7 +63,7 @@ class PPUpdateOrgGroupHandler(BaseHandler):
         del _group["updatetime"]
 
         _row = OrgGroup(**_group)
-        _row.async_update()
+        _row.async_update(_redis)
         _row.update_redis_keys(_redis)
         return
 

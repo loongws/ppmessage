@@ -37,7 +37,7 @@ class PPUpdateConversationHandler(BaseHandler):
             return
 
         _row = ConversationInfo(uuid=_conv_uuid, assigned_uuid=_assigned_uuid)
-        _row.async_update()
+        _row.async_update(_redis)
         _row.update_redis_keys(_redis)
 
         _rdata = self.getReturnData()

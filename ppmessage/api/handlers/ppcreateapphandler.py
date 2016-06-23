@@ -55,7 +55,7 @@ def _create_apiinfo(_handler, user_uuid, app_uuid, api_level):
         "api_secret": encode(str(uuid.uuid1())),
     }
     _row = ApiInfo(**_row_data)
-    _row.async_add()
+    _row.async_add(_redis)
     _row.create_redis_keys(_redis)
     return
 
@@ -96,7 +96,7 @@ def create_app(_handler, _app_name, _user_uuid):
         _app_values["company_name"] = _company_name
         
     _row = AppInfo(**_app_values)
-    _row.async_add()
+    _row.async_add(_redis)
     _row.create_redis_keys(_redis)
                 
     _data_uuid = str(uuid.uuid1())
@@ -110,7 +110,7 @@ def create_app(_handler, _app_name, _user_uuid):
         "is_portal_user": False
     }
     _row = AppUserData(**_data)
-    _row.async_add()
+    _row.async_add(_redis)
     _row.create_redis_keys(_redis)
 
     # create api_info

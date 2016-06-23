@@ -4,17 +4,17 @@
 # Guijin Ding, dingguijin@gmail.com
 # All rights reserved
 #
-# init/upload.py 
+# backend/upload.py 
 # The entry of upload file service
 #
 #
 
-from ppmessage.file.uploadapplication import UploadApplication
 from ppmessage.core.constant import FILEUPLOAD_PORT
+from ppmessage.file.uploadapplication import UploadApplication
 
-import tornado.httpserver
 import tornado.ioloop
 import tornado.options
+import tornado.httpserver
 
 import logging
 

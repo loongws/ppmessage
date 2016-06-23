@@ -81,7 +81,7 @@ class AuthHandler(RequestHandler):
             return
 
         _row = ApiTokenData(**{ "uuid": _token_data_uuid, "is_code_authorized": True })
-        _row.async_update()
+        _row.async_update(_redis)
         _row.update_redis_keys(_redis)
         
         _token_data = redis_hash_to_dict(_redis, ApiTokenData, _token_data_uuid)
@@ -130,7 +130,7 @@ class AuthHandler(RequestHandler):
         
         _row = ApiTokenData(uuid=str(uuid.uuid1()), api_code=_api_code, api_token=_api_token,
                             app_uuid=_app_uuid, api_uuid=_api_uuid, api_level=_api_level)
-        _row.async_add()
+        _row.async_add(_redis)
         _row.create_redis_keys(_redis)
 
         if _request_dict.get("redirect_uri") != None:

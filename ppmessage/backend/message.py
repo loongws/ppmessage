@@ -39,8 +39,11 @@ class my_authenticate(authenticate):
             return False
         return True
 
-if __name__ == "__main__":
+def mqtt_message_main():
     parse_command_line()
     mqtt_authenticate(my_authenticate)
     mqtt_server()
+    return
 
+if __name__ == "__main__":
+    mqtt_message_main()

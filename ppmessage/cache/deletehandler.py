@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
+# Guijin Ding, dingguijin@gmail.com.
+# All rights are reserved.
 #
+# cache/deletehandler.py
 #
 
 from ppmessage.db.dbinstance import getDBSessionClass
-from ppmessage.db.sqlmysql import BaseModel
-
-# fake load db models
+from ppmessage.db.dbinstance import BaseModel
 from ppmessage.db.models import DeviceUser
 
 import traceback
@@ -26,11 +26,9 @@ def _get_class_by_tablename(tablename):
   return None
 
 class DeleteHandler():
-    def __init__(self, _app):
-        self.app = _app
     
     def task(self, _data):
-        if "table" not in _data or\
+        if "table" not in _data or \
            "values" not in _data:
             logging.error("Error add request %s.", str(_data))
             return

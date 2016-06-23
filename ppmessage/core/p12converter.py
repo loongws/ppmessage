@@ -27,12 +27,12 @@ def _randomFile(_suffix):
     return _name
 
 
-def der2pem(_data):
+def der2pem(_data, _pass):
     _p12 = _randomFileWithData(_data, ".p12")
     _cert = _randomFile(".pem")
     _key = _randomFile(".pem")
     _key_np = _randomFile(".pem")
-    _tp = "1qsxdr5"
+    _tp = _pass
     
     _command = "openssl pkcs12 -clcerts -nokeys -out %s -in %s -password pass: -passin pass:" % (_cert, _p12)
     _command = _command.split(" ")

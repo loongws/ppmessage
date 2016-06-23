@@ -213,11 +213,11 @@ class Proc():
             "task_status": TASK_STATUS.PENDING,
         }
         _row = MessagePushTask(**_task)
-        _row.async_add()
+        _row.async_add(self._redis)
         _row.create_redis_keys(self._redis)
 
         _row = ConversationInfo(uuid=_conversation_uuid, latest_task=_task.uuid)
-        _row.async_update()
+        _row.async_update(self._redis)
         _row.update_redis_keys(self._redis)
 
         _m = {"task_uuid": _task.uuid}

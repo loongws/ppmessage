@@ -60,7 +60,7 @@ class PPKefuLoginHandler(BaseHandler):
 
     def _offline_device(self, _device_uuid):
         _row = DeviceInfo(**{"uuid": _device_uuid, "device_is_online": False})
-        _row.async_update()
+        _row.async_update(self.application.redis)
         _row.update_redis_keys(self.application.redis)
         return
     
@@ -103,7 +103,7 @@ class PPKefuLoginHandler(BaseHandler):
 
         _row = DeviceInfo(**_values)
         _row.create_redis_keys(self.application.redis)
-        _row.async_add()
+        _row.async_add(self.application.redis)
         return _values
 
     def _user_with_email(self):
@@ -131,7 +131,7 @@ class PPKefuLoginHandler(BaseHandler):
         else:
             _values["mobile_device_uuid"] = _device_uuid
         _row = DeviceUser(**_values)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         _row.update_redis_keys(self.application.redis)
         return
 
@@ -145,7 +145,7 @@ class PPKefuLoginHandler(BaseHandler):
         else:
             _values["service_user_status"] = SERVICE_USER_STATUS.READY
         _row = DeviceUser(**_values)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         _row.update_redis_keys(self.application.redis)
         return
 
@@ -156,7 +156,7 @@ class PPKefuLoginHandler(BaseHandler):
         }
         _row = DeviceInfo(**_values)
         _row.update_redis_keys(self.application.redis)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         return
 
     def _update_device_with_token(self, _device_uuid, _token):
@@ -178,7 +178,7 @@ class PPKefuLoginHandler(BaseHandler):
         }
         _row = DeviceInfo(**_values)
         _row.update_redis_keys(self.application.redis)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         return
     
     def _update_device_with_is_development(self, _device_uuid, _is_development):
@@ -188,7 +188,7 @@ class PPKefuLoginHandler(BaseHandler):
         }
         _row = DeviceInfo(**_values)
         _row.update_redis_keys(self.application.redis)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         return
 
     def _reset_device_of_user(self, _user_uuid):
@@ -198,7 +198,7 @@ class PPKefuLoginHandler(BaseHandler):
         else:
             _v["mobile_device_uuid"] = ""
         _row = DeviceUser(**_v)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         _row.update_redis_keys(self.application.redis)
         return
 
@@ -234,7 +234,7 @@ class PPKefuLoginHandler(BaseHandler):
         }
         _row = DeviceInfo(**_values)
         _row.update_redis_keys(self.application.redis)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         return
 
     def _user_online_status(self):

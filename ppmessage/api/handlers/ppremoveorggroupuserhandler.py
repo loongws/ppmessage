@@ -39,7 +39,7 @@ class PPRemoveOrgGroupUserHandler(BaseHandler):
             return False
         
         _row = OrgUserGroupData(uuid=_data_uuid)
-        _row.async_delete()
+        _row.async_delete(_redis)
         _row.delete_redis_keys(_redis)
         return True
     

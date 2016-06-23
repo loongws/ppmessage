@@ -41,7 +41,7 @@ class PPCreateOrgGroupHandler(BaseHandler):
             is_distributor=_is_distributor,
         )
         
-        _row.async_add()
+        _row.async_add(_redis)
         _row.create_redis_keys(_redis)
                 
         _group = redis_hash_to_dict(_redis, OrgGroup, _row.uuid)

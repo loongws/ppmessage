@@ -30,7 +30,7 @@ def update_group_icon(_redis, _group_uuid):
         _group_icon = create_group_icon(_redis, _users)
     _row = OrgGroup(uuid=_group_uuid, group_icon=_group_icon)
     _row.update_redis_keys(_redis)
-    _row.async_update()
+    _row.async_update(_redis)
     return
 
 class PPAddOrgGroupUserHandler(BaseHandler):
@@ -51,10 +51,10 @@ class PPAddOrgGroupUserHandler(BaseHandler):
             if _data_uuid != None:
                 _row = OrgUserGroupData(uuid=_data_uuid)
                 _row.delete_redis_keys(_redis)
-                _row.async_delete()
+                _row.async_delete(_redis)
 
         _row = OrgUserGroupData(uuid=str(uuid.uuid1()), group_uuid=_group_uuid, user_uuid=_user_uuid)
-        _row.async_add()
+        _row.async_add(_redis)
         _row.create_redis_keys(_redis)
         return
     

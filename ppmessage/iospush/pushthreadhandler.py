@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
+# Guijin Ding, dingguijin@gmail.com.
 #
 #
 
 from ppmessage.core.constant import APNS_TITLE
 from ppmessage.core.constant import MESSAGE_TYPE
 from ppmessage.core.constant import MESSAGE_SUBTYPE
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
+
+from ppmessage.core.utils.config import _get_config
 
 from apnsclient import Message
 from apnsmdmclient import get_apns
@@ -57,11 +58,14 @@ class PushThreadHandler():
         _data = json.loads(_data)
         _config = _data.get("config")
         _body = _data.get("body")
-        #_app_uuid = _data.get("app_uuid")
         
         # FIXME: so far not support for every team has APN cert
-        _app_uuid = BOOTSTRAP_DATA["team"]["app_uuid"]
+        if _get_config() == None:
+            logging.error("PPMessage not configed")
+            return
         
+        _app_uuid = _get_config().get("team").get("app_uuid")
+                
         if _config == None or _body == None:
             logging.error("Illegal ios push: %s." % str(_data))
             return

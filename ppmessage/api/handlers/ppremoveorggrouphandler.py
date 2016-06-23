@@ -39,7 +39,7 @@ class PPRemoveOrgGroupHandler(BaseHandler):
             return
 
         _row = OrgGroup(uuid=_group_uuid)
-        _row.async_delete()
+        _row.async_delete(_redis)
         _row.delete_redis_keys(_redis)
         return
 
