@@ -108,7 +108,6 @@ cd -
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
 pip install \
-    psycopg2 \
     StringGenerator \
     axmlparserpy \
     beautifulsoup4 \
@@ -133,4 +132,8 @@ pip install \
     tornado \
     xlrd
 
+
+# to support mysql/postgresql needs more installation
+# apt-get install mysql-server postgresql libpq-dev
+# pip install psycopg2
 echo "Finish install the requirements of PPMessage, next to run ppmessage.py to start PPMessage."
