@@ -133,4 +133,4 @@ pip install \
     tornado \
     xlrd
 
-echo "Finish install the requirements of PPMessage, next to run dist.sh with different arguments to start PPMessage."
+echo "Finish install the requirements of PPMessage, next to run ppmessage.py to start PPMessage."
