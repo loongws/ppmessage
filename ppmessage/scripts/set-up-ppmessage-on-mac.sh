@@ -97,4 +97,7 @@ sudo pip install \
      xlrd
 
 
+pip install git+https://github.com/senko/python-video-converter.git \
+    hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
+
 echo "Finish install the PPMessage requirements successfully, have fun with PPMessage"
