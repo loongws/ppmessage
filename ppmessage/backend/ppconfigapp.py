@@ -434,6 +434,12 @@ class FirstHandler(tornado.web.RequestHandler):
         _config["team"] = {
             "app_uuid": self._app_uuid
         }
+        _config["user"] = {
+            "user_uuid": self._user_uuid,
+            "user_email": _request.get("user_email"),
+            "user_fullname": _request.get("user_fullname"),
+            "user_password": _request.get("user_password")
+        }
         _config["configed"] = True
         _dump_config(_config)
         return True
@@ -482,6 +488,10 @@ class RestartHandler(tornado.web.RequestHandler):
             logging.error("can not restart for config_status: %s." % _config.get("config_status"))
             return _return(self, -1)
 
+        if _request.get("user_password") != _config.get("user").get("user_password"):
+            logging.error("can not restart PPMessage for user_password not match.")
+            return _return(self, -1)
+        
         self._dump_restart_config()
         _return(self, 0)
         self._restart()
