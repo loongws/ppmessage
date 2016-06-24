@@ -51,7 +51,7 @@ def load_ip2geo():
     _mmdb = _api_path + os.path.sep + "geolite2" + os.path.sep + _mmdb
     
     if not os.path.exists(_mmdb):
-        logging.error("no geolite2 mmdb, run scripts/download_geolite2.sh to download and restart api.")
+        logging.error("no geolite2 mmdb, run setup scripts to download and restart api.")
         return None
     
     _reader = database.Reader(_mmdb)

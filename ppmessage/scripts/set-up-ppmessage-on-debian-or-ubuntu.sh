@@ -108,6 +108,7 @@ cd -
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
 pip install \
+    hg+https://dingguijin@bitbucket.org/dingguijin/apns-client \
     StringGenerator \
     axmlparserpy \
     beautifulsoup4 \
@@ -131,9 +132,6 @@ pip install \
     sqlalchemy \
     tornado \
     xlrd
-
-pip install git+https://github.com/senko/python-video-converter.git \
-    hg+https://dingguijin@bitbucket.org/dingguijin/apns-client
 
 # to support mysql/postgresql needs more installation
 # apt-get install mysql-server postgresql libpq-dev
