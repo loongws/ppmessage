@@ -50,14 +50,13 @@ class MailGunWorker():
         return email_config
     
     def work(self, email_request):
-        logging.info("email_request: %s" % str(email_request))
         _to = email_request.get("to")
         if not isinstance(_to, list):
             logging.error("email to should be a list: %s" % str(type(_to)))
             return
-        _subject = email_request.get("subject")
-        _text = email_request.get("text")
-        _html = email_request.get("html")
+        _subject = email_request.get("subject") or ""
+        _text = email_request.get("text") or ""
+        _html = email_request.get("html") or ""
         _data = {
             "from": "%s <%s>" % (self.from_name, self.from_email),
             "to": _to,
@@ -66,10 +65,7 @@ class MailGunWorker():
         }
         if _html != None:
             _data["html"] = _html
-        
-        logging.info("sending email via: %s to: %s" % (self.api_url, " ".join(_to)))
         _r = requests.post(self.api_url, auth=("api", self.private_api_key), data=_data)
-        logging.info(_r.json())
         return
 
 class EmailWorker():
@@ -89,7 +85,7 @@ class EmailWorker():
         if _worker_class == None:
             logging.error("No worker for the mail service: %s" % _service_name)
             return
-        _worker_object = _worker_class(self)
+        _worker_object = _worker_class()
         _worker_object.config(_email)
         _worker_object.work(email_request)
         return
@@ -117,7 +113,6 @@ class PPEmailDelegate():
         return
     
 class PPEmailWebService(AbstractWebService):
-
     @classmethod
     def name(cls):
         return PP_WEB_SERVICE.PPEMAIL
