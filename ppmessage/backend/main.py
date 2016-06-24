@@ -33,7 +33,7 @@ from ppmessage.backend.gcmpush import GcmPushWebService
 from ppmessage.backend.ppkefuapp import PPKefuWebService
 from ppmessage.backend.ppauthapp import PPAuthWebService
 from ppmessage.backend.mqttpush import MqttPushWebService
-from ppmessage.iospush.iospushapp import IOSPushWebService
+from ppmessage.iospush2.iospushapp import IOSPushWebService
 from ppmessage.backend.ppconfigapp import PPConfigWebService
 from ppmessage.backend.dispatcher import DispatcherWebService
 from ppmessage.backend.identiconapp import IdenticonWebService
