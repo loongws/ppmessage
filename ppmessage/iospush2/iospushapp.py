@@ -32,12 +32,11 @@ from .pushthreadhandler import PushThreadHandler
 class IOSPushDelegate():
     def __init__(self, app):
         self.redis = app.redis
-        self.apns = {}
-        self.request_count = 0
+        self.apns_collection = {}
         self.push_key = REDIS_IOSPUSH_KEY
-        self.push_thread = PushThreadHandler(self)    
+        self.push_thread = PushThreadHandler()    
         return
-
+    
     def outdate(self):
         """
         every 5 five minutes check what connection
@@ -45,8 +44,8 @@ class IOSPushDelegate():
         """
         
         _delta = datetime.timedelta(minutes=5)
-        for _i in self.apns:
-            _apns = self.apns.get(_i)
+        for _i in self.apns_collection:
+            _apns = self.apns_collection.get(_i)
             if _apns == None:
                 continue
             for _j in _apns:
@@ -58,18 +57,58 @@ class IOSPushDelegate():
                 _apn.apns_session.outdate(_delta)
         return
 
+    def _create_apns(self, _app_uuid):
+        from ppmessage.db.models import AppInfo
+        _key = AppInfo.__tablename__ + ".uuid." + _app_uuid
+
+        if self.redis.hget(_key, "enable_apns_push") == "False":
+            return None
+
+        from ppmessage.db.models import APNSSetting
+        _key = APNSSetting.__tablename__ + ".app_uuid." + _app_uuid
+        _uuid = self.redis.get(_key)
+        if _uuid == None:
+            return None
+
+        _key = APNSSetting.__tablename__ + ".uuid." + _uuid
+        _combination_pem = self.redis.hget(_key, "combination_pem")
+        if _combination_pem == None:
+            return None
+
+        _file = os.path.abspath(os.path.join(os.path.dirname(__file__), "../certs/%s-combination.pem" % _app_uuid))
+        with open(_file, "w") as _wf:
+            _wf.write(_wf, _combination_pem)
+            
+        _apns = {"combination_pem": _file}
+        return _apns
+    
     def push(self):
         """
         every 200ms check push request
         """
         while True:
-            push_request = self.redis.lpop(self.push_key)
-            if push_request == None:
+            _request = self.redis.lpop(self.push_key)
+            if _request == None:
                 return
-            self.push_thread.task(push_request)
+
+            _request = json.loads(_request)
+            if _request == None:
+                continue
+
+            _app_uuid = _request.get("app_uuid")
+            _apns = self.apns_collection.get(_app_uuid)
+            if _apns == None:
+                _apns = self._create_apns(_app_uuid)
+                if _apns == None:
+                    continue
+                else:
+                    self.apns_collection[_app_uuid] = _apns
+            
+            self.push_thread.task(_apns, _request)
         return
 
     def run_periodic(self):
+        
         # set the periodic check outdated connection
         PeriodicCallback(self.outdate, 1000*60*5).start()
         # set the periodic check push request every 200 ms

@@ -7,6 +7,9 @@
 # version: 0.3
 # remove nginx/mysql/ffmpeg/scikit
 #
+# version: 0.4
+# remove apns-client
+#
 
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -61,33 +64,25 @@ make && sudo make install
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
 sudo pip install \
+     apns2 \
      StringGenerator \
-     axmlparserpy \
      beautifulsoup4 \
-     biplist \
-     evernote \
      filemagic \
      geoip2 \
-     hg+https://dingguijin@bitbucket.org/dingguijin/apns-client \
      identicon \
-     ipython \
      jieba \
      paramiko \
      paho-mqtt \
      pillow \
      ppmessage-mqtt \
-     pyipa \
      pypinyin \
      pyparsing \
      python-dateutil \
      python-gcm \
      python-magic \
-     qiniu \
      qrcode \
      readline \
      redis \
-     rq \
-     supervisor \
      sqlalchemy \
      tornado \
      xlrd

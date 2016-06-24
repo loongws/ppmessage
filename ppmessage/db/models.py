@@ -1244,7 +1244,11 @@ class AppInfo(CommonMixin, BaseModel):
     robot_train_method = Column("robot_train_method", String(32))
 
     robot_user_uuid = Column("robot_user_uuid", String(64))
-    
+
+    enable_apns_push = Column("enable_apns_push", Boolean)
+    enable_mqtt_push = Column("enable_mqtt_push", Boolean)
+    enable_gcm_push = Column("enable_gcm_push", Boolean)
+        
     __table_args__ = (
     )
 

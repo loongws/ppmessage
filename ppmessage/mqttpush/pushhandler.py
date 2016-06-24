@@ -9,7 +9,7 @@ from ppmessage.core.constant import APNS_TITLE
 from ppmessage.core.constant import MESSAGE_TYPE
 from ppmessage.core.constant import MESSAGE_SUBTYPE
 
-from ppmessage.iospush.pushtitle import push_title
+from ppmessage.core.utils.pushtitle import push_title
 
 from .mqttclient import MQTTClient
 

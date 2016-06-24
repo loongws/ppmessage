@@ -335,6 +335,7 @@ class AbstractPolicy(Policy):
             _count = self._redis.zcard(_key)
 
         _is_dev = bool(_device.get("is_development"))
+
         _config = {
             "is_development": _is_dev,
             "user_language": _user.get("user_language"),
@@ -346,8 +347,9 @@ class AbstractPolicy(Policy):
         _push = {
             "config": _config,
             "body": self._task.get("message_body"),
-            "app": _app_uuid
+            "app_uuid": _app_uuid
         }
+        
         logging.info("push ios: %s" % str(_push))
         self._redis.rpush(REDIS_IOSPUSH_KEY, json.dumps(_push))
         return
