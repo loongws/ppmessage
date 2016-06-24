@@ -34,7 +34,7 @@ class IOSPushDelegate():
         self.redis = app.redis
         self.apns_collection = {}
         self.push_key = REDIS_IOSPUSH_KEY
-        self.push_thread = PushThreadHandler(self)    
+        self.push_thread = PushThreadHandler()    
         return
     
     def outdate(self):
