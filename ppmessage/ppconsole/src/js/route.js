@@ -126,6 +126,13 @@ angular.module("this_app.route", ["ui.router", "this_app.constants"])
                 templateUrl: yvConstants.TEMPLATE_PREFIX + "settings/account.html",
                 controller: "SettingsAccountCtrl"
             })
+
+            .state("app.settings.push", {
+                url: "/push",
+                templateUrl: yvConstants.TEMPLATE_PREFIX + "settings/push.html",
+                controller: "SettingsPushCtrl"
+            })
+
         ;
       
         $urlRouterProvider.otherwise("/app/signin");

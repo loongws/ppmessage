@@ -44,6 +44,7 @@ module.exports = {
         "../src/js/controllers/settings/welcome.js",
         "../src/js/controllers/settings/messageroute.js",
         "../src/js/controllers/settings/grouping.js",
+        "../src/js/controllers/settings/push.js",
 
         "../src/js/controllers/statistics/overview.js",
         "../src/js/controllers/statistics/historymessage.js",
@@ -94,7 +95,8 @@ module.exports = {
         "../../resource/share/bower_components/angular-tooltips/dist/angular-tooltips.min.js",
         "../../resource/share/bower_components/angular-toastr/dist/angular-toastr.tpls.js",
         "../../resource/share/bower_components/angular-material/angular-material.min.js",
-        
+        "../../resource/share/bower_components/lf-ng-md-file-input/dist/lf-ng-md-file-input.min.js",
+        "../../resource/share/bower_components/ng-file-upload/ng-file-upload.min.js",
     ],
     
     cssFiles: [
@@ -112,7 +114,8 @@ module.exports = {
         "../../resource/share/bower_components/bootstrap-daterangepicker/daterangepicker.css",
         "../../resource/share/bower_components/angular-tooltips/dist/angular-tooltips.min.css",
         "../../resource/share/bower_components/angular-toastr/dist/angular-toastr.min.css",
-        "../../resource/share/bower_components/angular-material/angular-material.min.css"
+        "../../resource/share/bower_components/angular-material/angular-material.min.css",
+        "../../resource/share/bower_components/lf-ng-md-file-input/dist/lf-ng-md-file-input.min.css"
     ],
 
     fontFiles: [

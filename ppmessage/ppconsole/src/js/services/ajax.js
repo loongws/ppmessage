@@ -100,7 +100,7 @@ function $yvAjaxService($state, $timeout, $http, $cookieStore, yvUser, yvConstan
         ppconsole_get_message_number_by_range : function(app_uuid, begin, end) {
             return _apiPost("/PPCONSOLE_GET_MESSAGE_NUMBER_BY_RANGE", {app_uuid: app_uuid, begin_date: begin, end_date: end});
         },
-
+        
         logout: function(user_uuid) {
             return _apiPost("/PPCONSOLE_LOGOUT", {user_uuid: user_uuid});
         },

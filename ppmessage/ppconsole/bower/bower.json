@@ -40,7 +40,9 @@
     "angular-messages": "^1.5.5",
     "font-awesome": "Font-Awesome#^4.6.2",
     "material-design-icons": "^2.2.3",
-    "angular-toastr": "^1.7.0"
+    "angular-toastr": "^1.7.0",
+    "lf-ng-md-file-input": "^1.4.7",
+    "ng-file-upload": "^12.0.4"
   },
   "resolutions": {
     "angular": "1.5.7",

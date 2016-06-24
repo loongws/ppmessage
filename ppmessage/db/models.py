@@ -1248,7 +1248,11 @@ class AppInfo(CommonMixin, BaseModel):
     enable_apns_push = Column("enable_apns_push", Boolean)
     enable_mqtt_push = Column("enable_mqtt_push", Boolean)
     enable_gcm_push = Column("enable_gcm_push", Boolean)
-        
+
+    gcm_api_key = Column("gcm_api_key", String(128))
+    apns_combination_pem_data = Column("apns_combination_pem_data", LargeBinary)
+    apns_combination_pem_password = Column("apns_combination_pem_password", String(32))
+    
     __table_args__ = (
     )
 
