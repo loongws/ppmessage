@@ -1,11 +1,14 @@
 #!/bin/bash
 
-# version: 0.3
+# version: 0.4
 # maintainer: Jin He <jin.he@ppmessage.com>
 # description: a shell script to deploy PPMessage on Debian and Ubuntu
 #
 # version: 0.3
 # remove ffmpeg/nginx/mysql/scikit
+#
+# version 0.4
+# remove apns-client
 #
 
 
@@ -108,9 +111,8 @@ cd -
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
 pip install \
-    hg+https://dingguijin@bitbucket.org/dingguijin/apns-client \
+    apns2 \
     StringGenerator \
-    axmlparserpy \
     beautifulsoup4 \
     paramiko \
     cryptography \
@@ -128,7 +130,6 @@ pip install \
     qrcode \
     readline \
     redis \
-    supervisor \
     sqlalchemy \
     tornado \
     xlrd
