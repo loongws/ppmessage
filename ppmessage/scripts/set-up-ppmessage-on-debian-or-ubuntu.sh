@@ -10,6 +10,9 @@
 # version 0.4
 # remove apns-client
 #
+# version 0.5
+# remove geolite2
+#
 
 
 function ppmessage_err()

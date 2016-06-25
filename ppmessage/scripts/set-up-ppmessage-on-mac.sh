@@ -10,6 +10,9 @@
 # version: 0.4
 # remove apns-client
 #
+# version: 0.5
+# remove geolite
+#
 
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
