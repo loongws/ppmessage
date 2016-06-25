@@ -49,7 +49,6 @@ Commands:
   npm                         Install node components.
   cnpm                        Install node components, using cnpm.
   gulp                        Run all gulp tasks.
-  bootstrap                   Bootstrap PPMessage with config.py.
   app-win32                   Create window desktop app.
   app-win64                   Create window desktop app.
   app-mac                     Create mac os x desktop app.
@@ -278,20 +277,6 @@ function ppmessage_apply_config()
 
 }
 
-function ppmessage_bootstrap()
-{
-    if [ ! -f ./ppmessage/bootstrap/config.py ];
-    then
-        ppmessage_err "create ppmessage/bootstrap/config.py first!"
-    fi
-
-    echo "bootstrap will create db tables, config PPMessage, cache db to redis based on config.py.";
-    python ppmessage/scripts/table.py;
-    python ppmessage/scripts/bootstrap.py;
-    python ppmessage/scripts/db2cache.py;
-}
-
-
 ### MAIN ###
 
 echo
@@ -300,10 +285,6 @@ ppmessage_options $*
 ppmessage_check_path
 
 case "$1" in
-
-    bootstrap)
-        ppmessage_bootstrap
-        ;;
 
     build-ppconfig)
         ppmessage_build "ppconfig"

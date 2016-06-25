@@ -10,6 +10,7 @@ angular.module("this_app", [
     "angularFileUpload",
     "ui.router",
     "ngMaterial",
+    "ngFileUpload",
     "this_app.constants",
     "this_app.i18n",
     "this_app.route",

@@ -10,6 +10,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
             COPYRIGHT_PPMESSAGE: "PPMESSAGE.",
 
             global: {
+                SUBMIT_TAG: "Submit",
+
                 DELETE_TEAM_TAG: "Delete Team",
                 DELETE_TEAM_NOTE_TAG: "Delete team will remove all your team data from this site. Any question please use the chat launcher button to contact the service agent.",
                 DELETE_TEAM_CONFIRM_TAG: "Confirm Delete",
@@ -75,6 +77,9 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
                 SEND_NEW_PASSWORD_SUCCESS_TAG: "Success to send new password to your email.",
                 SEND_NEW_PASSWORD_FAILED_TAG: "Fail to send new password to your email.",
+
+                UPDATE_PUSH_CONFIG_SUCCESS_TAG: "Success to update push config.",
+                UPDATE_PUSH_CONFIG_FAILED_TAG: "Failed to update push config.",
             },
             
             app: {
@@ -179,7 +184,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     SERVICE_GROUP_TAG: "Service users group",
                     APP_INTEGRAGE_TAG: "App integrate",
                     ACCOUT_CONFIG_TAG: "Account settings",
-                    ADVANCED_CONFIG_TAG: "Advanced settings"
+                    ADVANCED_CONFIG_TAG: "Advanced settings",
+                    PUSH_CONFIG_TAG: "Push settings",
                 },
                 
                 profile: {
@@ -501,6 +507,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 SEND_NEW_PASSWORD_SUCCESS_TAG: "成功邮寄新的密码",
                 SEND_NEW_PASSWORD_FAILED_TAG: "邮寄新的密码失败",
 
+                SUBMIT_TAG: "提交",
             },
 
             app: {

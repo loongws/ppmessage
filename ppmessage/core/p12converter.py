@@ -9,8 +9,10 @@
 
 from tempfile import mkstemp
 from os import unlink, close, write
+
 import time
 import base64
+import logging
 import subprocess
 
 def _randomFileWithData(_data, _suffix):
@@ -26,7 +28,6 @@ def _randomFile(_suffix):
     close(_handle)
     return _name
 
-
 def der2pem(_data, _pass):
     _p12 = _randomFileWithData(_data, ".p12")
     _cert = _randomFile(".pem")
@@ -34,26 +35,37 @@ def der2pem(_data, _pass):
     _key_np = _randomFile(".pem")
     _tp = _pass
     
-    _command = "openssl pkcs12 -clcerts -nokeys -out %s -in %s -password pass: -passin pass:" % (_cert, _p12)
+    _command = "openssl pkcs12 -clcerts -nokeys -out %s -in %s -passin pass:%s" % (_cert, _p12, _tp)
     _command = _command.split(" ")
 
-    _p = subprocess.Popen(_command, shell=False, stderr=subprocess.PIPE)
+    _p = subprocess.Popen(_command, shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     _r = _p.wait()
-    print _p.stderr.read()
+    _s = _p.stdout.read()
+    logging.info(_s)
+    if "error:" in _s:
+        return None
 
-    _command = "openssl pkcs12 -nocerts -out %s -in %s -password pass: -passin pass: -passout pass:%s" % (_key, _p12, _tp)
+    _command = "openssl pkcs12 -nocerts -out %s -in %s -passin pass:%s -passout pass:%s" % (_key, _p12, _tp, _tp)
     _command = _command.split(" ")
 
-    _p = subprocess.Popen(_command, shell=False, stderr=subprocess.PIPE)
+    _p = subprocess.Popen(_command, shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     _r = _p.wait()
-    print _p.stderr.read()
+    _s = _p.stdout.read()
 
+    logging.info(_s)
+    if "error:" in _s:
+        return None
+    
     _command = "openssl rsa -out %s -in %s -passin pass:%s" % (_key_np, _key, _tp)
     _command = _command.split(" ")
 
-    _p = subprocess.Popen(_command, shell=False, stderr=subprocess.PIPE)
+    _p = subprocess.Popen(_command, shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     _r = _p.wait()
-    print _p.stderr.read()
+    _s = _p.stdout.read()
+
+    logging.info(_s)
+    if "error:" in _s or "unable" in _s:
+        return None
     
     _d_cert = None
     _d_key = None

@@ -9,9 +9,10 @@
 
 from ppmessage.core.constant import DATETIME_FORMAT
 
-from sqlalchemy import DateTime
 from sqlalchemy import String
 from sqlalchemy import Boolean
+from sqlalchemy import DateTime
+from sqlalchemy import LargeBinary
 
 import json
 import logging
@@ -36,6 +37,7 @@ def redis_hash_to_dict(_redis, _cls, _uuid):
         if _v == None or _v == "None":
             _d[_i.name] = None
             continue
+
         _d[_i.name] = _v
         
         if isinstance(_i.type, DateTime):
@@ -44,6 +46,9 @@ def redis_hash_to_dict(_redis, _cls, _uuid):
             else:
                 _v = datetime.datetime.strptime(_v, DATETIME_FORMAT["basic"])
             _d[_i.name] = _v
+            continue
+
+        if isinstance(_i.type, LargeBinary):
             continue
         
         if not isinstance(_i.type, String):

@@ -12,6 +12,7 @@ from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.constant import REDIS_IOSPUSH_KEY
 
 from ppmessage.core.singleton import singleton
+from ppmessage.core.p12converter import der2pem
 from ppmessage.core.main import AbstractWebService
 
 from Queue import Queue
@@ -37,24 +38,7 @@ class IOSPushDelegate():
         self.push_thread = PushThreadHandler()    
         return
     
-    def outdate(self):
-        """
-        every 5 five minutes check what connection
-        is unused in 5 five minutes
-        """
-        
-        _delta = datetime.timedelta(minutes=5)
-        for _i in self.apns_collection:
-            _apns = self.apns_collection.get(_i)
-            if _apns == None:
-                continue
-            for _j in _apns:
-                _apn = _apns.get(_j)
-                if _apn == None:
-                    continue
-                if _apn.apns_session == None:
-                    continue
-                _apn.apns_session.outdate(_delta)
+    def outdate(self):        
         return
 
     def _create_apns(self, _app_uuid):
@@ -64,21 +48,17 @@ class IOSPushDelegate():
         if self.redis.hget(_key, "enable_apns_push") == "False":
             return None
 
-        from ppmessage.db.models import APNSSetting
-        _key = APNSSetting.__tablename__ + ".app_uuid." + _app_uuid
-        _uuid = self.redis.get(_key)
-        if _uuid == None:
-            return None
-
-        _key = APNSSetting.__tablename__ + ".uuid." + _uuid
-        _combination_pem = self.redis.hget(_key, "combination_pem")
+        _combination_pem = self.redis.hget(_key, "apns_combination_pem_data")
         if _combination_pem == None:
             return None
 
+        _combination_pem_password = self.redis.hget(_key, "apns_combination_pem_password")
+        _pem = der2pem(_combination_pem, _combination_pem_password)
+        
         _file = os.path.abspath(os.path.join(os.path.dirname(__file__), "../certs/%s-combination.pem" % _app_uuid))
         with open(_file, "w") as _wf:
-            _wf.write(_wf, _combination_pem)
-            
+            _wf.write(_wf, _pem)
+
         _apns = {"combination_pem": _file}
         return _apns
     
