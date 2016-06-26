@@ -1,7 +1,7 @@
 # Install PPMessage on Windows 7
 
 
-> Clone PPMessage Source or download source archive
+> Clone PPMessage Source or download source [archive](https://github.com/PPMESSAGE/ppmessage/archive/master.zip)
 
 
 ```bash
