@@ -23,6 +23,12 @@
 
 [Redis 64bit](https://github.com/MSOpenTech/redis/releases/download/win-3.0.503/Redis-x64-3.0.503.msi)
 
+> Install Python packages (Run Windows cmd with administrator role)
+
+```
+pip install -r ppmessage/scripts/requirements.txt
+```
+
 > Run PPMessage
 
 ```bash
