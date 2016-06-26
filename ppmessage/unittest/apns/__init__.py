@@ -1,1 +1,4 @@
-import converter
+try:
+    import converter
+except:
+    from . import converter

@@ -1,0 +1,10 @@
+gcm==0.3
+paho-mqtt==1.2
+Pillow==3.2.0
+ppmessage-mqtt==1.0.10
+pypinyin==0.12.1
+redis==2.10.5
+requests==2.10.0
+SQLAlchemy==1.0.13
+StringGenerator==0.1.9
+tornado==4.3

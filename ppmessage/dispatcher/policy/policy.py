@@ -43,8 +43,6 @@ from ppmessage.core.redis import redis_hash_to_dict
 from ppmessage.core.utils.datetimestring import datetime_to_timestamp
 from ppmessage.core.utils.datetimestring import datetime_to_microsecond_timestamp
 
-from apnsclient import Message
-
 from operator import itemgetter
 
 import uuid

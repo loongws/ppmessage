@@ -21,7 +21,10 @@ import hashlib
 import logging
 import datetime
 
-from Queue import Queue
+try:
+    from Queue import Queue
+except:
+    from queue import Queue
 
 from tornado.ioloop import IOLoop
 from tornado.web import asynchronous

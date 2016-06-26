@@ -22,7 +22,6 @@ from ppmessage.core.utils.createicon import create_user_icon
 import json
 import uuid
 import logging
-import urllib2
 
 from tornado.gen import coroutine
 from tornado.ioloop import IOLoop

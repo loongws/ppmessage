@@ -10,12 +10,17 @@
 from ppmessage.core.constant import THUMBNAIL_WIDTH
 from ppmessage.core.constant import THUMBNAIL_HEIGHT
 
+import os
 import base64
+import logging
+
 from PIL import Image
 from io import BytesIO
-from StringIO import StringIO
-import logging
-import os
+
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 class ImageConverter:
 
@@ -154,7 +159,7 @@ class ImageConverter:
                 else:
                     try:
                         icon_image = Image.open(icon)
-                    except IOError, e:
+                    except IOError as e:
                         icon_image = Image.open(default_icon_path)
                 icon_image.thumbnail(thumbnail_size)
                 region = icon_image.crop(thumbnail_box)

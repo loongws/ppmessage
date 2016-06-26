@@ -12,14 +12,13 @@ from ppmessage.core.constant import PP_WEB_SERVICE
 from ppmessage.core.singleton import singleton
 from ppmessage.core.main import AbstractWebService
 
-from handlers.getwebservicehandlers import getWebServiceHandlers
+from ppmessage.api.handlers.getwebservicehandlers import getWebServiceHandlers
 
 import os
 import sys
 import redis
 import logging
 
-from geoip2 import database
 from tornado.web import Application
 
 @singleton

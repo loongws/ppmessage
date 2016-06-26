@@ -8,10 +8,10 @@ def _main():
     with open(_file, "r") as _f:
         _s = der2pem(_f.read(), "x")
         if _s == None:
-            print "error"
+            print("error")
         else:
-            print "success"
-        print _s
+            print("success")
+        print(_s)
     return
 
 if __name__ == "__main__":

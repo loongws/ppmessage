@@ -281,7 +281,8 @@ class PCSocketDelegate():
         _users = self.redis.smembers(_key)
         for _user_uuid in _users:
             if _user_uuid == _ws.user_uuid:
-		continue
+                continue
+            
             _users.add(_user_uuid)
             _listen_key = REDIS_TYPING_LISTEN_KEY + ".user_uuid." + _user_uuid
             self.redis.sadd(_listen_key, _v)
