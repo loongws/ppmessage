@@ -16,7 +16,7 @@ from ppmessage.core.constant import USER_NAME
 from ppmessage.core.constant import USER_STATUS
 
 from ppmessage.core.redis import redis_hash_to_dict
-from ppmessage.core.utils.config import get_config_language
+from ppmessage.core.utils.config import _get_config
 from ppmessage.core.utils.createicon import create_user_icon
 
 import json
@@ -24,13 +24,81 @@ import uuid
 import logging
 import urllib2
 
+from tornado.gen import coroutine
+from tornado.ioloop import IOLoop
+from tornado.httpclient import HTTPRequest
+from tornado.httpclient import AsyncHTTPClient
+
 class PPCreateAnonymousHandler(BaseHandler):
-    
+
+    def _unknown_user_name(self):
+        _language = "en"
+        _locale_string = USER_NAME["en"]
+        if _get_config().get("server").get("language").get("locale").lower() == "zh_cn":
+            _locale_string = USER_NAME["cn"]
+        return _locale_string.get("unknown") + "." + _locale_string.get("user")
+
+    @coroutine
+    def _create_user_name(self, user_uuid=None, ip=None):
+        logging.info("create anonymous user_uuid: %s, ip: %s" % (user_uuid, ip))
+        if user_uuid == None or ip == None:
+            return
+        
+        url = "http://123.57.154.168:8099/IP2GEO/"
+        http_headers = {"Content-Type" : "application/json"}
+        
+        http_body = {
+            "ip": ip,
+            "language": _get_config().get("server").get("language").get("locale"),
+            "team_uuid": _get_config().get("team").get("app_uuid"),
+            "team_name": _get_config().get("team").get("name")
+        }
+        
+        http_request = HTTPRequest(
+            url, method='POST',
+            headers=http_headers,
+            validate_cert=False,
+            body=json.dumps(http_body)
+        )
+
+        http_client = AsyncHTTPClient()
+        response = yield http_client.fetch(http_request)
+
+        logging.info(response.body)
+        _body = json.loads(response.body)
+        
+        if _body == None or _body.get("error_code") != 0:
+            logging.error("cant get user name by ip: %s" % ip)
+            return
+        
+        _country = _body.get("country")
+        _state = _body.get("state")
+        _city = _body.get("city")
+        _location_user = []
+            
+        if _country != None and len(_country) != 0:
+            _location_user.append(_country)
+
+        if _state != None and len(_state) != 0:
+            _location_user.append(_state)
+
+        if _city != None and len(_city) != 0:
+            _location_user.append(_city)
+
+        if len(_location_user) == 0:
+            return
+        
+        _user_name = ".".join(_location_user)
+        _row = DeviceUser(uuid=user_uuid, user_name=_user_name, user_fullname=_user_name)
+        _row.update_redis_keys(self.application.redis)
+        _row.async_update(self.applicataion.redis)
+        return
+
     def _create(self, _ppcom_trace_uuid):
         _redis = self.application.redis
         _key = DeviceUser.__tablename__ + ".ppcom_trace_uuid." + _ppcom_trace_uuid
         _uuid = _redis.get(_key)
-        logging.info(_key)
+
         if _uuid != None:
             _user = redis_hash_to_dict(_redis, DeviceUser, _uuid)
             if _user != None:
@@ -43,7 +111,7 @@ class PPCreateAnonymousHandler(BaseHandler):
         
         _du_uuid = str(uuid.uuid1())
         _user_email = _du_uuid[:6] + "@" + self.app_uuid[:6]
-        _user_name = self._create_user_name()
+        _user_name = self._unknown_user_name()
         
         _values = {
             "uuid": _du_uuid,
@@ -79,57 +147,14 @@ class PPCreateAnonymousHandler(BaseHandler):
         _rdata["user_fullname"] = _user_name
         _rdata["user_email"] = _user_email
         _rdata["user_name"] = _user_name
+
+        _ip = self.request.headers.get("X-Real-Ip") or self.request.headers.get("remote_ip") or self.request.remote_ip
+        logging.info(str(self.request.headers))
+        logging.info("create anonymous ip: %s" % _ip)
+        IOLoop.instance().spawn_callback(self._create_user_name, user_uuid=_du_uuid, ip=_ip)
         return
     
-    def _create_user_name(self):
-        """
-        Get user nickName
-        """
-        _config_language = get_config_language().lower()
-        if _config_language == None:
-            logging.error("no lanuage config.")
-            return None
-        
-        _language = "en"
-        _string = USER_NAME["en"]
-
-        if _config_language == "zh_cn":
-            _language = "zh-CN"
-            _string = USER_NAME["cn"]
-
-        if _config_language == "zh_tw":
-            _language = "zh-TW"
-            _string = USER_NAME["tw"]
-
-        _ip = self.request.headers.get("X-Real-Ip") or self.request.headers.get("remote_ip")
-
-        if _ip == None or _ip == "127.0.0.1" or _ip == "localhost" or "192.168." in _ip:
-            return _string.get("local") + "." + _string.get("user")
-
-        _city = None
-        try:
-            _city = self.application.geoip_reader.city(_ip)
-        except:
-            logging.error("geoip failed: %s" % _ip)
-            _city = None
-            
-        if _city == None:
-            return _string.get("unknown") + "." + _string.get("user")
-        
-        _country_name = _city.country.names.get(_language)
-        _city_name = _city.city.names.get(_language)
-
-        if _city_name != None and _country_name != None:
-            return _country_name + "." + _city_name + "." + _string.get("user")
-
-        if _city_name != None:
-            return _city_name + "." + _string.get("user")
-        
-        if _country_name != None:
-            return _country_name + "." + _string.get("user")
-        
-        return _string.get("unknown") + "." + _string.get("user")
-
+    
     def initialize(self):
         self.addPermission(app_uuid=True)
         self.addPermission(api_level=API_LEVEL.PPCOM)

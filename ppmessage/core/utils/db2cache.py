@@ -12,9 +12,6 @@ from .datetimeencoder import DateTimeEncoder
 
 from ppmessage.db.dbinstance import getDBSessionClass
 
-from ppmessage.db.models import APNSSetting
-from ppmessage.db.models import AppPackageInfo
-
 from ppmessage.db.models import AppInfo
 from ppmessage.db.models import AppUserData
 
@@ -91,9 +88,6 @@ def load(_redis):
         
         MessagePushTask,
         MessagePush,
-        
-        APNSSetting,
-        AppPackageInfo,
         
         PCSocketInfo,
         PCSocketDeviceData,

@@ -10,6 +10,9 @@
 # version 0.4
 # remove apns-client
 #
+# version 0.5
+# remove geolite2
+#
 
 
 function ppmessage_err()
@@ -36,25 +39,6 @@ function ppmessage_need_root()
 }
 
 ppmessage_need_root
-
-function download_geolite2() 
-{
-    #SCRIPT=$(readlink -f "$0")
-    #BASEDIR=$(dirname "${SCRIPT}")
-    BASEDIR=$(dirname "$BASH_SOURCE")
-    APIDIR="${BASEDIR}"/../api/geolite2
-    wget --directory-prefix="${APIDIR}" -c http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz
-    GEOFILE=GeoLite2-City.mmdb.gz
-    GEOPATH="${APIDIR}"/GeoLite2-City.mmdb.gz
-    
-    echo "${GEOPATH}"
-    echo $(readlink -e "${GEOPATH}")
-    AGEOPATH=$(readlink -e "${GEOPATH}")
-    STEM=$(basename "${GEOFILE}" .gz)
-    gunzip -c "${AGEOPATH}" > "${APIDIR}"/"${STEM}"
-}
-    
-download_geolite2
 
 apt-get update
 
@@ -91,7 +75,6 @@ apt-get install -y \
     libpcre3-dev \
     libssl-dev \
     libtool \
-    mercurial \
     openssl \
     pkg-config \
     python \
@@ -100,27 +83,18 @@ apt-get install -y \
     redis-server \
     wget
 
-# some python modules need libmaxminddb, install it before run 'pip install ...'
-cd /tmp
-git clone --recursive https://github.com/maxmind/libmaxminddb
-cd libmaxminddb
-./bootstrap
-./configure
-make && make install
-cd -
 
 # "pip install -i http://pypi.douban.com/simple xxx" might be faster
 pip install \
     apns2 \
+    pillow \
     StringGenerator \
     beautifulsoup4 \
     paramiko \
     cryptography \
     filemagic \
-    geoip2 \
     identicon \
     paho-mqtt \
-    pillow \
     ppmessage-mqtt \
     pypinyin \
     pyparsing \

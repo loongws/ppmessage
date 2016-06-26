@@ -28,7 +28,6 @@ from ppmessage.db.models import AppGroupMenu
 from ppmessage.db.models import AppGroupDefaultRule
 from ppmessage.db.models import FileInfo
 from ppmessage.db.models import MessageAudioFileInfo
-from ppmessage.db.models import APNSSetting
 from ppmessage.db.models import OAuthSetting
 from ppmessage.db.models import OAuthInfo
 

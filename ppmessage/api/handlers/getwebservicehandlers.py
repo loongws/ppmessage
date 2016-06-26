@@ -13,8 +13,6 @@ from .setdeviceinfohandler import SetDeviceInfoHandler
 
 from .getunackedmessageshandler import GetUnackedMessagesHandler
 from .getunackedmessagehandler import GetUnackedMessageHandler
-from .getappversionhandler import GetAppVersionHandler
-
 from .getmessagehistoryhandler import GetMessageHistoryHandler
 
 from .ppcreateanonymoushandler import PPCreateAnonymousHandler
@@ -141,9 +139,6 @@ def getWebServiceHandlers():
 
     # get unacked messages
     handler_list.append((r"/GET_UNACKED_MESSAGE", GetUnackedMessageHandler))
-
-    # get app version to check the lastest version for the app
-    handler_list.append((r"/GET_APP_VERSION", GetAppVersionHandler))
 
     # get app version to check the lastest version for the app
     handler_list.append((r"/GET_MESSAGE_HISTORY", GetMessageHistoryHandler))
