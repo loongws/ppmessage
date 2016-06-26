@@ -18,7 +18,7 @@
 [Python 2.7.11](https://www.python.org/ftp/python/2.7.11/python-2.7.11.msi)
 
 
-> Download redis for windows
+> Redis for windows
 
 
 [Redis 64bit](https://github.com/MSOpenTech/redis/releases/download/win-3.0.503/Redis-x64-3.0.503.msi)
