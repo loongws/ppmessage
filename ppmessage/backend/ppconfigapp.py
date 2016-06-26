@@ -126,7 +126,7 @@ class ServerHandler(tornado.web.RequestHandler):
         return True
     
     def post(self, id=None):        
-        _request = json.loads(self.request.body)
+        _request = json.loads(self.request.body.decode("utf-8"))
 
         _config = _get_config()
         if _config != None and _config.get("config_status") == CONFIG_STATUS.SERVER:
@@ -256,7 +256,7 @@ class DatabaseHandler(tornado.web.RequestHandler):
         return _return(self, -1)
     
     def post(self, id=None):        
-        _request = json.loads(self.request.body)
+        _request = json.loads(self.request.body.decode("utf-8"))
 
         _config = _get_config()
         if _config == None or _config.get("config_status") != CONFIG_STATUS.SERVER:
@@ -359,8 +359,9 @@ class FirstHandler(tornado.web.RequestHandler):
         _user_uuid = self._user_uuid
 
         def _encode(_key):
-            _key = hashlib.sha1(_key).hexdigest()
-            _key = base64.b64encode(_key)
+            _key = hashlib.sha1(_key.encode("utf-8")).hexdigest()
+            _key = base64.b64encode(_key.encode("utf-8"))
+            _key = _key.decode("utf-8")
             return _key
 
         def _info(_type):
@@ -471,7 +472,7 @@ class FirstHandler(tornado.web.RequestHandler):
         return
     
     def post(self, id=None):
-        _request = json.loads(self.request.body)
+        _request = json.loads(self.request.body.decode("utf-8"))
 
         logging.info("firstrequest: %s" % _request)
         if not self._check_request(_request):
@@ -509,7 +510,7 @@ class RestartHandler(tornado.web.RequestHandler):
         return restart("main.py")
         
     def post(self, id=None):        
-        _request = json.loads(self.request.body)
+        _request = json.loads(self.request.body.decode("utf-8"))
 
         _config = _get_config()
         if _config == None or _config.get("config_status") != CONFIG_STATUS.FIRST:

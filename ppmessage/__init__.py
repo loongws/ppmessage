@@ -1,5 +1,9 @@
-import backend
-import unittest
+try:
+    import backend
+    import unittest
+except:
+    from . import backend
+    from . import unittest
 
 """
 version format, MAIN.SUB.HOTFIX.DEV

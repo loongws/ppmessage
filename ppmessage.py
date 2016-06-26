@@ -5,7 +5,7 @@ import ppmessage
 
 def _main():
     if len(sys.argv) == 1:
-        ppmessage.backend.main._main()
+        ppmessage.backend._main()
 
     elif len(sys.argv) == 2:
         if sys.argv[1] == "test_cert":

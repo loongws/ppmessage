@@ -9,7 +9,11 @@ from ppmessage.core.constant import MQTT_PORT
 from ppmessage.core.constant import MQTT_HOST
 
 from paho.mqtt import client as mqttc
-from Queue import Queue
+
+try:
+    from Queue import Queue
+except:
+    from queue import Queue
 
 import json
 import logging

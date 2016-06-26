@@ -59,7 +59,7 @@ class PPComCreateConversationHandler(BaseHandler):
         if _data_uuid != None:
             _key = ConversationUserData.__tablename__ + ".uuid." + _data_uuid
             _data = _redis.hmget(_key, ["conversation_name", "conversation_icon"])
-	    _r["conversation_name"] = _data[0]
+            _r["conversation_name"] = _data[0]
             _r["conversation_icon"] = _data[1]
         return
 

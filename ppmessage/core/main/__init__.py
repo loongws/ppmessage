@@ -7,6 +7,6 @@
 # core/main/__init__.py
 #
 
-from ppwebservice import AbstractWebService
-from ppwebservice import get_total_handlers
-from ppwebservice import get_total_delegates
+from .ppwebservice import AbstractWebService
+from .ppwebservice import get_total_handlers
+from .ppwebservice import get_total_delegates

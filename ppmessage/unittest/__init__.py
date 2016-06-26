@@ -1,1 +1,4 @@
-import apns
+try:
+    import apns
+except:
+    from . import apns

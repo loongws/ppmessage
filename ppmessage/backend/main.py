@@ -40,7 +40,7 @@ from ppmessage.pcsocket.pcsocketapp import PCSocketWebService
 from ppmessage.backend.tornadouploadapp import UploadWebService
 from ppmessage.file.downloadapplication import DownloadWebService
 
-from ppmessage.backend.message import mqtt_message_main
+#from ppmessage.backend.message import mqtt_message_main
 
 import os
 import sys

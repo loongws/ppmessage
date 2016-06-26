@@ -15,7 +15,6 @@ from ppmessage.core.singleton import singleton
 from ppmessage.core.p12converter import der2pem
 from ppmessage.core.main import AbstractWebService
 
-from Queue import Queue
 from tornado.web import Application
 from tornado.web import RequestHandler
 from tornado.ioloop import PeriodicCallback
