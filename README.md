@@ -10,7 +10,7 @@
 
 With PPMessage, you can chat with visitor or customer via Web or mobile App as open source [Intercom](http://intercom.io) alternative.
 
-PPMessage targets to run on Linux, macOS operating systems. PPMessage includes a clearly API system which could be integrated with any open source Content Management System like Wordpress, Drupal and any commercial system even an e-commerce system.
+PPMessage targets to run on Linux, macOS and even Windows operating systems. PPMessage includes a clearly API system which could be integrated with any open source Content Management System like Wordpress, Drupal and any commercial system even an e-commerce system.
 
 PPMessage includes a series of frontend SDK named **PPCom** which run on your visitor or customer side, and a series of frontend App named **PPKefu** which run on your service team side.
 
