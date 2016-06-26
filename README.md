@@ -49,6 +49,11 @@ bash ppmessage/scripts/set-up-ppmessage-on-linux.sh
 bash ppmessage/scripts/set-up-ppmessage-on-mac.sh
 ```
 
+> Under Windows
+
+
+Check [this](doc/en-us/install-ppmessage-on-windows.md)
+
 
 > Run and check log
 
@@ -64,7 +69,6 @@ Open your browser to access `http://127.0.0.1:8945`, watch the log of `ppmessage
 
 ```
 
-> Under Windows, we do not provide a script, you need install python3 or python2.7, redis, and pip install requirements manually.
 
 
 > Not working yet? Please file an issue on Github, thanks. Enjoy!
