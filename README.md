@@ -52,7 +52,7 @@ bash ppmessage/scripts/set-up-ppmessage-on-mac.sh
 > Under Windows
 
 
-Check [this](doc/en-us/install-ppmessage-on-windows.md)
+Check [this](ppmessage/doc/en-us/install-ppmessage-on-windows.md)
 
 
 > Run and check log
