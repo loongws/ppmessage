@@ -49,6 +49,8 @@ bash ppmessage/scripts/set-up-ppmessage-on-linux.sh
 bash ppmessage/scripts/set-up-ppmessage-on-mac.sh
 ```
 
+> Under Windows, needs install python3 or python2.7, redis, and pip install requirements
+
 > Run and check log
 
 ```bash
