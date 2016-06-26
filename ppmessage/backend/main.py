@@ -21,8 +21,6 @@ from ppmessage.core.utils.getipaddress import get_ip_address
 
 from ppmessage.core.downloadhandler import DownloadHandler
 
-from ppmessage.api.apiapp import load_ip2geo
-
 from ppmessage.api.apiapp import ApiWebService
 from ppmessage.backend.amd import AmdWebService
 from ppmessage.backend.send import SendWebService
@@ -75,10 +73,6 @@ class MainApplication(tornado.web.Application):
 
         DownloadHandler.set_cls_redis(self.redis)
         
-        self.geoip_reader = load_ip2geo()
-        if self.geoip_reader == None:
-            sys.exit()
-            
         self.total_handlers = get_total_handlers()
         self.total_delegates = get_total_delegates(self)
         
