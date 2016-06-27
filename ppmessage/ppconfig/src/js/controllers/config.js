@@ -1,5 +1,5 @@
 angular.module("this_app")
-    .controller("ConfigCtrl", function($scope, $state, $stateParams, $timeout, $translate, $mdDialog, yvAjax) {
+    .controller("ConfigCtrl", function($scope, $state, $stateParams, $timeout, $window, $translate, $mdDialog, yvAjax) {
 
         var CONFIG_STATUS = {
             NONE: 0,
@@ -108,7 +108,10 @@ angular.module("this_app")
                 targetEvent: ev,
                 clickOutsideToClose:true
             }).then(function(answer) {
-                $scope._init_config_status();
+                $timeout(function() {
+                    $window.location.reload();
+                    console.log("reload....");
+                }, 2000);
             }, function() {
             });
 

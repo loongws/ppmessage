@@ -73,6 +73,9 @@ from .pppagehistorymessagehandler import PPPageHistoryMessageHandler
 from .pppageonlineportaluserhandler import PPPageOnlinePortalUserHandler
 from .pppagedevicenavigationhandler import PPPageDeviceNavigationHandler
 
+from .pppageorggrouphandler import PPPageOrgGroupHandler
+from .pppageorggroupuserhandler import PPPageOrgGroupUserHandler
+
 from .ppkefuloginhandler import PPKefuLoginHandler
 from .ppkefulogouthandler import PPKefuLogoutHandler
 
@@ -208,7 +211,6 @@ def getWebServiceHandlers():
     handler_list.append((r"/PPKEFU_LOGOUT", PPKefuLogoutHandler))
 
     handler_list.append((r"/PP_GET_USER_DETAIL", PPGetUserDetailHandler))
-    handler_list.append((r"/PP_GET_ADMIN_DETAIL", PPGetAdminDetailHandler))
 
     handler_list.append((r"/PPCONSOLE_LOGOUT", PPConsoleLogoutHandler))
     handler_list.append((r"/PPCONSOLE_SIGNUP", PPConsoleSignupHandler))

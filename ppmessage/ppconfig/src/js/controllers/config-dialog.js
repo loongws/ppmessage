@@ -200,9 +200,6 @@ function RestartController($scope, $mdDialog, yvAjax) {
         $scope.user.disable_submit = true;
         yvAjax.restart($scope.user).success(function() {
             $mdDialog.hide("success");
-            $timeout(function() {
-                window.location.reload();
-            }, 1000);
         }).error(function(){
             $scope.user.disable_submit = false;
         });

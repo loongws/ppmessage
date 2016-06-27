@@ -42,7 +42,6 @@ class PPGetAppOwnedByUserHandler(BaseHandler):
 
         _r = self.getReturnData()
         _r["app"] = _app
-        _r["bill"] = _data
         return
         
     def initialize(self):
