@@ -11,7 +11,6 @@ from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import AppUserData
 from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import USER_STATUS
-from ppmessage.core.constant import PPMESSAGE_APP
 from ppmessage.core.redis import redis_hash_to_dict
 
 from ppmessage.api.error import API_ERR

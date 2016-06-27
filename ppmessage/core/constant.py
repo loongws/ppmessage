@@ -7,12 +7,7 @@
 # core/constant.py
 #
 
-DEV_MODE = True
-
-PPMESSAGE_APP = {}
-
 TIMEOUT_WEBSOCKET_OFFLINE = 60*1
-TIMEOUT_WEB_SESSION = 2*3600
 
 def enum(*sequential, **named):
     enums = dict(zip(sequential, range(len(sequential))), **named)
@@ -126,12 +121,6 @@ WEBSOCKET_STATUS = Enum([
     "CLOSE"
 ])
 
-CACHE_RUN_STATUS = Enum([
-    "NULL",
-    "RUNNING",
-    "DONE"
-])
-
 # OWNER and SERVICE are both PPMESSAGE user
 # OWNER_0 is user after signing up
 # OWNER_1 is user after creating first app
@@ -183,10 +172,6 @@ CACHE_SRV = Enum([
     "DELETE",
     "DELETE_NO_DB",
     "PING",
-])
-
-FUNC_SRV = Enum([
-    "FUNCTION",
 ])
 
 SEND_SRV = Enum([
@@ -256,16 +241,6 @@ MESSAGE_SUBTYPE = Enum([
     "LOGOUT",
 ])
 
-GROUP_EVENT = Enum([
-    "OPEN",
-    "LOCATION",
-    "FOLLOW",
-    "UNFOLLOW"
-])
-
-FUNCTION = Enum([
-    "WELCOME",
-])
 
 YVOBJECT = Enum([
     "DU",
@@ -294,23 +269,6 @@ CONVERSATION_MEMBER_ACTION = Enum([
     "REMOVE"
 ])
 
-APPGROUP_TYPE = Enum([
-    "PUBLIC",
-    "PRIVATE",
-])
-
-
-"""
-FUNC generate async message
-MSG return a sync message
-WEB open WEB from client APP
-"""
-
-APPMENU_TYPE = Enum([
-    "FUNC",
-    "MSG",
-    "WEB",
-])
 
 APNS_TITLE = {
     "ZH_CN" : {
@@ -340,13 +298,6 @@ APNS_TITLE = {
         "ACCEPT": "invitation accepted message",
         "DG_INVITED": "discussion group invitation message"
     },
-}
-
-WEB_SESSION_ID = {
-    "portal": "PPMESSAGE_PORTAL_SESSION_ID",
-    "user": "PPMESSAGE_USER_SESSION_ID",
-    "admin": "PPMESSAGE_ADMIN_SESSION_ID",
-    "channel": "PPMESSAGE_CHANNEL_SESSION_ID",
 }
 
 THUMBNAIL_WIDTH = 120
@@ -392,22 +343,13 @@ OAUTH_PORT = 8930
 
 MESSAGE_PORT = 8003
 
-# PPCOM USE
-PCSOCKET_HOST = "ppmessage.cn"
-if DEV_MODE:
-    PCSOCKET_HOST = "127.0.0.1"
+PCSOCKET_HOST = "127.0.0.1"
 PCSOCKET_PORT = 8931
 
 IOSPUSH_HOST = "127.0.0.1"
 IOSPUSH_PORT = 8932
-
-PORTAL_PORT = 80
-if DEV_MODE:
-    PORTAL_PORT = 8080
     
 PPCOM_PORT = 8934
-
-STA_PORT = 8935
 
 PPAUTOINSTALL_PORT = 8936
 PPAUTOINSTALL_HOST = "127.0.0.1"
@@ -421,9 +363,8 @@ MQTTPUSH_PORT = 8939
 GCMPUSH_HOST = "127.0.0.1"
 GCMPUSH_PORT = 8940
 
-PPHOME_PORT = 8941
-
 PPAUTH_PORT = 8943
+
 PPCONSOLE_PORT = 8944
 
 # all in one backend service port
@@ -486,11 +427,6 @@ SERVICE_USER_STATUS = Enum([
     "BUSY",
     "REST",
 ])
-
-WEB_TITLE = {
-    "user": "PPMessage | Open Source Plug and Play Customer Communication Message Platform - ppmessage.com",
-    "admin": "PPMessage | Open Source Plug and Play Customer Communication Message Platform - ppmessage.com",
-}
 
 USER_NAME = {
     "en": {

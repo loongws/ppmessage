@@ -12,7 +12,6 @@ from ppmessage.db.models import AppUserData
 from ppmessage.api.error import API_ERR
 from ppmessage.core.constant import API_LEVEL
 
-from ppmessage.core.constant import PPMESSAGE_APP
 from ppmessage.core.constant import USER_STATUS
 
 import json
