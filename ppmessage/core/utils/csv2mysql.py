@@ -11,7 +11,6 @@ from ppmessage.db.common.dbinstance import getDatabaseInstance
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import OrgGroup
 from ppmessage.db.models import OrgGroupUserData
-from ppmessage.db.models import OrgSubGroupData
 
 import traceback
 import csv

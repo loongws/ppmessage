@@ -7,12 +7,11 @@
 
 from .basehandler import BaseHandler
 
-from ppmessage.db.models import AdminUser
 from ppmessage.db.models import DeviceUser
 
 from ppmessage.api.error import API_ERR
-from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import YVOBJECT
+from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.redis import redis_hash_to_dict
 
 import pypinyin

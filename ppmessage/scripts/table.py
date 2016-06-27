@@ -5,29 +5,25 @@
 # All rights reserved
 #
 
-from ppmessage.bootstrap.config import BOOTSTRAP_CONFIG
 from ppmessage.core.constant import SQL
 
 from ppmessage.db.dbinstance import BaseModel
 from ppmessage.db.dbinstance import SqlInstance
 from ppmessage.db.dbinstance import getDatabaseEngine
 
-from ppmessage.db.models import AdminUser
-from ppmessage.db.models import DeviceUser
-from ppmessage.db.models import OrgGroup
-from ppmessage.db.models import OrgSubGroupData
-from ppmessage.db.models import OrgGroupUserData
 from ppmessage.db.models import DeviceInfo
+from ppmessage.db.models import DeviceUser
 
-from ppmessage.db.models import MessagePushTask
+from ppmessage.db.models import OrgGroup
+from ppmessage.db.models import OrgGroupUserData
+from ppmessage.db.models import OrgGroupSubGroupData
+
 from ppmessage.db.models import MessagePush
+from ppmessage.db.models import MessagePushTask
 
-from ppmessage.db.models import AppGroup
-from ppmessage.db.models import AppUserGroupData
-from ppmessage.db.models import AppGroupMenu
-from ppmessage.db.models import AppGroupDefaultRule
 from ppmessage.db.models import FileInfo
 from ppmessage.db.models import MessageAudioFileInfo
+
 from ppmessage.db.models import OAuthSetting
 from ppmessage.db.models import OAuthInfo
 
@@ -45,10 +41,10 @@ def _updateMessagePushTasksCharset(_engine):
 
 
 def _create_mysql_db():
-    DB_HOST = BOOTSTRAP_CONFIG.get("mysql").get("db_host")
-    DB_NAME = BOOTSTRAP_CONFIG.get("mysql").get("db_name")
-    DB_PASS = BOOTSTRAP_CONFIG.get("mysql").get("db_pass")
-    DB_USER = BOOTSTRAP_CONFIG.get("mysql").get("db_user")
+    DB_HOST = _get_config().get("db").get("mysql").get("db_host")
+    DB_NAME = _get_config().get("db").get("mysql").get("db_name")
+    DB_PASS = _get_config().get("db").get("mysql").get("db_pass")
+    DB_USER = _get_config().get("db").get("mysql").get("db_user")
 
     print "Drop MDM DB now, please wait..."
     

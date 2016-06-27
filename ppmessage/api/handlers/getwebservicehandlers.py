@@ -77,7 +77,6 @@ from .ppkefuloginhandler import PPKefuLoginHandler
 from .ppkefulogouthandler import PPKefuLogoutHandler
 
 from .ppgetuserdetailhandler import PPGetUserDetailHandler
-from .ppgetadmindetailhandler import PPGetAdminDetailHandler
 
 from .ppconsolelogouthandler import PPConsoleLogoutHandler
 from .ppconsolesignuphandler import PPConsoleSignupHandler

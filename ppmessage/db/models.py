@@ -169,82 +169,6 @@ class DeviceUser(CommonMixin, BaseModel):
             _redis.set(_key, _obj["uuid"])
         return
 
-class AdminUser(CommonMixin, BaseModel):
-    __tablename__ = "admin_users"    
-    user_name = Column("user_name", String(64))
-    user_firstname = Column("user_firstname", String(64))
-    user_lastname = Column("user_lastname", String(64))
-    user_fullname = Column("user_fullname", String(64))
-    user_email = Column("user_email", String(64))
-    user_password = Column("user_password", String(256))
-    user_icon = Column("user_icon", String(512))
-
-    # zh_cn/en_us/zh_tw
-    user_language = Column("user_language", String(32))
-
-    def __init__(self, *args, **kwargs):
-        super(AdminUser, self).__init__(*args, **kwargs)
-        return
-
-    def create_redis_keys(self, _redis, *args, **kwargs):
-        CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
-
-        _key = self.__tablename__ + ".user_email." + self.user_email
-        _redis.set(_key, self.uuid)
-        return
-    
-    def delete_redis_keys(self, _redis):
-        _obj = redis_hash_to_dict(_redis, AdminUser, self.uuid)
-        if _obj == None:
-            return
-        
-        _key = self.__tablename__ + ".user_email." + _obj["user_email"]
-        _redis.delete(_key)
-        
-        CommonMixin.delete_redis_keys(self, _redis)
-        return
-    
-class UserWebSession(CommonMixin, BaseModel):
-    __tablename__ = "user_web_sessions"
-    user_uuid = Column("user_uuid", String(64))
-    is_valid = Column("is_valid", Boolean)
-    language = Column("language", String(16))
-
-    __table_args__ = (
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(UserWebSession, self).__init__(*args, **kwargs)
-        return
-
-class AdminWebSession(CommonMixin, BaseModel):
-    __tablename__ = "admin_web_sessions"
-    user_uuid = Column("user_uuid", String(64))
-    is_valid = Column("is_valid", Boolean)
-    language = Column("language", String(16))
-
-    __table_args__ = (
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(AdminWebSession, self).__init__(*args, **kwargs)
-        return
-        
-class PortalWebSession(CommonMixin, BaseModel):
-    __tablename__ = "portal_web_sessions"
-    user_uuid = Column("user_uuid", String(64))
-    is_valid = Column("is_valid", Boolean)
-
-    # key/value
-    language = Column("language", String(16))
-
-    __table_args__ = (
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(PortalWebSession, self).__init__(*args, **kwargs)
-        return
-
 class UserOnlineStatusLog(CommonMixin, BaseModel):
     __tablename__ = "user_online_status_logs"
     app_uuid = Column("app_uuid", String(64))
@@ -591,10 +515,10 @@ class OrgGroup(CommonMixin, BaseModel):
         CommonMixin.delete_redis_keys(self, _redis)
         return
 
-
 class OrgGroupUserData(CommonMixin, BaseModel):
 
     __tablename__ = "org_group_user_datas"
+
     group_uuid = Column("group_uuid", String(64))
     user_uuid = Column("user_uuid", String(64))
     is_leader = Column("is_leader", Boolean)
@@ -649,7 +573,6 @@ class OrgGroupUserData(CommonMixin, BaseModel):
         CommonMixin.delete_redis_keys(self, _redis)
         return
 
-
 class OrgGroupSubGroupData(CommonMixin, BaseModel):
     __tablename__ = "org_group_sub_group_datas"
     group_uuid = Column("group_uuid", String(64))
@@ -661,146 +584,6 @@ class OrgGroupSubGroupData(CommonMixin, BaseModel):
         super(OrgGroupSubGroupData, self).__init__(*args, **kwargs)
         return
 
-class DiscussionGroup(CommonMixin, BaseModel):
-    __tablename__ = "discussion_groups"
-    app_uuid = Column("app_uuid", String(64))
-
-    # the owner of this group 
-    user_uuid = Column("user_uuid", String(64))
-
-    group_name = Column("group_name", String(64))
-    group_desc = Column("group_desc", String(128))
-
-    # fileinfo object
-    group_icon = Column("group_icon", String(512))
-
-    __table_args__ = (
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(DiscussionGroup, self).__init__(*args, **kwargs)
-        return
-
-class DiscussionUserGroupData(CommonMixin, BaseModel):
-    __tablename__ = "discussion_user_group_datas"
-    group_uuid = Column("group_uuid", String(64))
-    user_uuid = Column("user_uuid", String(64))
-
-    user_alias = Column("user_alias", String(64))
-    mute_notification = Column("mute_notification", Boolean)
-    
-    __table_args__ = (
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(DiscussionUserGroupData, self).__init__(*args, **kwargs)
-        return
-
-class AppGroup(CommonMixin, BaseModel):
-    __tablename__ = "app_groups"
-
-    # the owner is the group leader
-    user_uuid = Column("user_uuid", String(64))
-
-    group_name = Column("group_name", String(64))
-    group_desc = Column("group_desc", String(128))
-
-    # fileinfo object
-    group_icon = Column("group_icon", String(512))
-
-    # PRIVATE, PUBLIC, null is private
-    group_type = Column("group_type", String(16))
-    
-    __table_args__ = (
-        Index(
-            "_idx_appgroup",
-            "user_uuid",
-        ),
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(AppGroup, self).__init__(*args, **kwargs)
-        return
-
-class AppUserGroupData(CommonMixin, BaseModel):
-    __tablename__ = "app_user_group_datas"
-    group_uuid = Column("group_uuid", String(64))
-    user_uuid = Column("user_uuid", String(64))
-
-    __table_args__ = (
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(AppUserGroupData, self).__init__(*args, **kwargs)
-        return
-
-class AppMessageAction(CommonMixin, BaseModel):
-    __tablename__ = "app_message_actions"
-    user_uuid = Column("user_uuid", String(64))
-    message_type = Column("message_type", String(16))
-    message_subtype = Column("message_subtype", String(16))
-
-    title = Column("title", String(32))
-    body = Column("body", String(512))
-
-    def __init__(self, *args, **kwargs):
-        super(AppMessageAction, self).__init__(*args, **kwargs)
-        return
-
-class AppGroupMenu(CommonMixin, BaseModel):
-    __tablename__ = "app_group_menus"
-
-    group_uuid = Column("group_uuid", String(64))
-    menu_title = Column("menu_title", String(32))
-
-    # menu_type "MSG" which will send message to server
-    # menu_type "WEB" which let mobile open a inapp browser to go
-    menu_type = Column("menu_type", String(16))
-    menu_data = Column("menu_data", String(256))
-    # if menu_parent is not null, the menu is submenu item
-    menu_parent = Column("menu_parent", String(64))
-    # for root menu only support three
-    # for submenu only support five items
-    menu_pos = Column("menu_pos", Integer)
-
-    # if menu_type MSG needs message action
-    action_uuid = Column("action_uuid", String(64))
-
-    __table_args__ = (
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(AppGroupMenu, self).__init__(*args, **kwargs)
-        return
-
-
-class AppGroupDefaultRule(CommonMixin, BaseModel):
-    __tablename__ = "app_group_default_rules"
-    group_uuid = Column("group_uuid", String(64))
-
-    # app_message_actions uuid for return message
-    event_follow = Column("event_follow", String(64))
-    event_open = Column("event_open", String(64))
-
-    message_text = Column("message_text", String(64))
-    message_image = Column("message_image", String(64))
-    message_voice = Column("message_voice", String(64))
-    message_card = Column("message_card", String(64))
-    message_map = Column("message_map", String(64))
-
-    default_menu = Column("default_menu", String(64))
-    default_default = Column("default_default", String(64))
-
-    __table_args__ = (
-        Index(
-            "_idx_appgroup_defaultrule",
-            "group_uuid",
-        ),
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(AppGroupDefaultRule, self).__init__(*args, **kwargs)
-        return
 
 class MaterialRefInfo(CommonMixin, BaseModel):
     """
@@ -904,7 +687,6 @@ class FileInfo(CommonMixin, BaseModel):
         _redis.delete(_key)
         CommonMixin.delete_redis_keys(self, _redis)
         return
-
     
 class VideoMaterialInfo(CommonMixin, BaseModel):
     __tablename__ = "video_material_infos"
@@ -991,43 +773,6 @@ class MessageAudioFileInfo(CommonMixin, BaseModel):
     def __init__(self, *args, **kwargs):
         super(MessageAudioFileInfo, self).__init__(*args, **kwargs)
         return
-        
-class UserAppInfo(CommonMixin, BaseModel):
-
-    __tablename__ = "user_app_infos"
-
-    app_uuid = Column("app_uuid", String(64))
-    user_uuid = Column("user_uuid", String(64))
-    device_uuid = Column("device_uuid", String(64))
-
-    installed_version_name = Column("installed_version_name", String(32))
-    installed_version_code = Column("installed_version_code", String(32))
-
-    __table_args__ = (        
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(UserAppInfo, self).__init__(*args, **kwargs)
-        return
-
-class LicenseInfo(CommonMixin, BaseModel):
-
-    __tablename__ = "license_infos"
-
-    license_to_uuid = Column("license_to_uuid", String(64))
-    license_to_name = Column("license_to_name", String(64))
-
-    license_begin_date = Column("license_begin_date", DateTime)
-    license_end_date = Column("license_end_date", DateTime)
-    
-    license_user_count = Column("license_user_count", Integer)
-    license_issue_date = Column("license_issue_date", DateTime)
-
-    license_is_actived = Column("license_is_actived", Boolean)
-        
-    def __init__(self, *args, **kwargs):
-        super(LicenseInfo, self).__init__(*args, **kwargs)
-        return
 
 class OAuthSetting(CommonMixin, BaseModel):
     __tablename__ = "oauth_settings"
@@ -1041,7 +786,6 @@ class OAuthSetting(CommonMixin, BaseModel):
         super(OAuthSetting, self).__init__(*args, **kwargs)
         return
 
-
 class OAuthInfo(CommonMixin, BaseModel):
     __tablename__ = "oauth_infos"
 
@@ -1052,56 +796,6 @@ class OAuthInfo(CommonMixin, BaseModel):
     def __init__(self, *args, **kwargs):
         super(OAuthInfo, self).__init__(*args, **kwargs)
         return
-
-# for PPMESSAGE
-class AppBillingData(CommonMixin, BaseModel):
-    __tablename__ = "billing_datas"
-
-    app_uuid = Column("app_uuid", String(64))
-    agent_num = Column("agent_num", Integer)
-
-    begintime = Column("begintime", DateTime)
-    endtime = Column("endtime", DateTime)
-
-    trade_no = Column("trade_no", String(64))
-    pay_type = Column("pay_type", String(16))
-    user_uuid = Column("user_uuid", String(64))
-    currency_code = Column("currency_code",String(16))
-    amount = Column("amount", Float(10))
-
-    # only the latest one is valid
-    valid = Column("valid", Boolean)
-    
-    # billing check background thread change it
-    consumed = Column("consumed", Float(10))
-
-    # after upgrade billing then caculate the all billing before.
-    rest_total = Column("rest_total", Float(10))
-    
-    __table_args__ = (
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(AppBillingData, self).__init__(*args, **kwargs)
-        return
-    
-    def create_redis_keys(self, _redis, *args, **kwargs):
-        CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
-        _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".uuid." + self.uuid
-        _redis.set(_key, self.uuid)
-        return
-
-    def delete_redis_keys(self, _redis):
-        _obj = redis_hash_to_dict(_redis, AppBillingData, self.uuid)
-        if _obj == None:
-            return
-        _key = self.__tablename__ + \
-               ".app_uuid." + _obj["app_uuid"] + \
-               ".uuid." + _obj["uuid"]
-        _redis.delete(_key)
-        CommonMixin.delete_redis_keys(self, _redis)
-        return    
-
 
 class AppInfo(CommonMixin, BaseModel):
     __tablename__ = "app_infos"
@@ -1296,23 +990,6 @@ class AppUserData(CommonMixin, BaseModel):
         CommonMixin.delete_redis_keys(self, _redis)
         return
 
-    
-class DayStatistics(CommonMixin, BaseModel):
-    __tablename__ = "day_statistics"
-
-    app_uuid = Column("app_uuid", String(64))
-    day = Column("day", String(16))
-    agent = Column("agent", String(16))
-    customer = Column("customer", String(16))
-    message = Column("message", String(16))
-    
-    __table_args__ = (
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(DayStatistics, self).__init__(*args, **kwargs)
-        return
-    
 # for ppkefu
 class ConversationInfo(CommonMixin, BaseModel):
     __tablename__ = "conversation_infos"

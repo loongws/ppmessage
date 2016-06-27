@@ -19,7 +19,6 @@ from ppmessage.core.constant import PPCOM_LAUNCHER_STYLE
 from ppmessage.db.models import ApiInfo
 from ppmessage.db.models import AppInfo
 from ppmessage.db.models import AppUserData
-from ppmessage.db.models import AppBillingData
 from ppmessage.db.models import DeviceUser
 
 from ppmessage.api.error import API_ERR

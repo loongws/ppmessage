@@ -9,7 +9,6 @@ from .basehandler import BaseHandler
 
 from ppmessage.api.error import API_ERR
 from ppmessage.db.models import AppInfo
-from ppmessage.db.models import AppBillingData
 from ppmessage.core.redis import redis_hash_to_dict
 
 from ppmessage.core.constant import API_LEVEL
@@ -40,11 +39,6 @@ class PPGetAppOwnedByUserHandler(BaseHandler):
         if _app == None:
             self.setErrorCode(API_ERR.NO_APP)
             return
-        
-        _bill = _app.get("app_billing_uuid")
-        _data = None
-        if _bill != None:
-            _data = redis_hash_to_dict(_redis, AppBillingData, _bill)
 
         _r = self.getReturnData()
         _r["app"] = _app
