@@ -10,10 +10,7 @@
 
 ```
 
-> Choose Python, PPMessage support both Python 3 and Python 2
-
-
-[Python 3.5.1](https://www.python.org/ftp/python/3.5.1/python-3.5.1.exe)
+> Install Python, PPMessage support Python 2 so far.
 
 [Python 2.7.11](https://www.python.org/ftp/python/2.7.11/python-2.7.11.msi)
 
