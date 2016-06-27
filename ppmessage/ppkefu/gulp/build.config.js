@@ -152,14 +152,14 @@ module.exports = {
         "../../resource/share/ppkefu/bower_components/ionic/release/js/ionic.bundle.min.js",
         "../../resource/share/ppkefu/bower_components/angular-cookies/angular-cookies.min.js",
         "../../resource/share/ppkefu/bower_components/angular-translate/angular-translate.min.js",
-        "../../resource/share/ppkefu/bower_components/angular-block-ui/dist/angular-block-ui.js",
+        "../../resource/share/ppkefu/bower_components/angular-block-ui/dist/angular-block-ui.min.js",
         "../../resource/share/ppkefu/bower_components/angular-file-upload/dist/angular-file-upload.min.js",
         "../../resource/share/ppkefu/bower_components/angular-base64/angular-base64.min.js"
     ],
 
     libCss: [
         "../src/css/*.css",
-        "../../resource/share/ppkefu/bower_components/Jcrop/css/Jcrop.css",
-        "../../resource/share/ppkefu/bower_components/angular-block-ui/dist/angular-block-ui.css"
+        "../../resource/share/ppkefu/bower_components/Jcrop/css/Jcrop.min.css",
+        "../../resource/share/ppkefu/bower_components/angular-block-ui/dist/angular-block-ui.min.css"
     ]
 };

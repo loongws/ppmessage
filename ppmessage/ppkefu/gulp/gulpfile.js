@@ -9,6 +9,7 @@ var uglify = require("gulp-uglify");
 var concat = require("gulp-concat");
 var replace = require("gulp-replace");
 var cleanCss = require("gulp-clean-css");
+var childProcess = require("child_process");
 var templateCache = require("gulp-angular-templatecache");
 var buildConfig = require("./build.config.js");
 
@@ -19,6 +20,10 @@ gulp.task("lib-js", generate_lib_js);
 gulp.task("copy-jcrop-gif", copy_jcrop_gif);
 gulp.task("copy-ionic-fonts", copy_ionic_fonts);
 gulp.task("template-cache", generate_template_cache);
+
+gulp.task("watch-js", ["js"], function () {
+    childProcess.exec("python ../config/config.py");
+});
 
 gulp.task("default", [
     "scss",
@@ -33,7 +38,7 @@ gulp.task("default", [
 gulp.task("watch", ["default"], function() {
     gulp.watch(buildConfig.scss, ["scss"]);
     gulp.watch(buildConfig.css, ["lib-css"]);
-    gulp.watch(buildConfig.js, ["js"]);
+    gulp.watch(buildConfig.js, ["watch-js"]);
     gulp.watch(buildConfig.html, ["template-cache"]);
 });
 
@@ -63,6 +68,7 @@ function generate_js(done) {
 
     gulp.src(src)
         .pipe(concat("ppkefu-template.js"))
+        .pipe(replace("{{version}}", get_ppkefu_version()))
         .pipe(gulp.dest(buildConfig.halfBuildPath))
         .pipe(uglify())
         .on("error", function(e) {
@@ -79,11 +85,7 @@ function generate_scss(done) {
     var dest = buildConfig.buildCssPath;
 
     gulp.src(src)
-        .pipe(scss({
-            includePaths: [
-                "../../resource/share/bower_components/ionic/scss"
-            ]}
-        ))
+        .pipe(scss({includePaths: ["../../resource/share/bower_components/ionic/scss"]}))
         .pipe(gulp.dest(buildConfig.halfBuildPath))
         .pipe(cleanCss({ keepSpecialComments: 0 }))
         .pipe(rename({ extname: ".min.css" }))
@@ -142,22 +144,4 @@ function get_ppkefu_version() {
     var data = fs.readFileSync("package.json", "utf-8");
     var package = JSON.parse(data);
     return package.version;
-}
-
-function colorfulText(text) {
-    if (typeof text == "string" && text.length == 0) {
-        return gutil.colors.red("Not specified, resolve this issue and run gulp again.");
-    }
-    return gutil.colors.green(text);
-}
-
-function generate_head_js(done) {
-    var src = "../src/js/head.template.js";
-    var dst = "../src/js/head.js";
-    var ver = get_ppkefu_version();
-    
-    gulp.src(src)
-        .pipe(replace("{{version}}", ver))
-        .pipe(gulp.dest(dst))
-        .on("end", done);
 }
