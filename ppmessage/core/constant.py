@@ -7,8 +7,6 @@
 # core/constant.py
 #
 
-TIMEOUT_WEBSOCKET_OFFLINE = 60*1
-
 def enum(*sequential, **named):
     enums = dict(zip(sequential, range(len(sequential))), **named)
     return type('Enum', (), enums)
