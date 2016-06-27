@@ -11,7 +11,7 @@
           </md-switch>
           
           <md-input-container class="md-block">
-            <label>Universal Certificate PEM</label>
+            <label>Universal Certificate P12</label>
             <input ngf-select="read_pem($file)" ng-disabled="!push.enable_apns_push" ng-value="push.apns_combination_pem_file.name" ng-model="push.apns_combination_pem_file" accept="application/x-pkcs12" ngf-max-size="5MB" required />
           </md-input-container>
 
