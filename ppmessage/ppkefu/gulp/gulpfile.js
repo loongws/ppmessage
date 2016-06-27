@@ -151,10 +151,10 @@ function colorfulText(text) {
     return gutil.colors.green(text);
 }
 
-function generate_head_js() {
+function generate_head_js(done) {
     var src = "../src/js/head.template.js";
-    var dst = "../src/js/head.js"
-    var ver = get_ppkefu_version()
+    var dst = "../src/js/head.js";
+    var ver = get_ppkefu_version();
     
     gulp.src(src)
         .pipe(replace("{{version}}", ver))
