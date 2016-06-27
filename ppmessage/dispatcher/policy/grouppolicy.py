@@ -26,10 +26,10 @@ class GroupPolicy(AbstractPolicy):
     @classmethod
     def get_service_care_users(cls, _app_uuid, _user_uuid, _redis):
         _a_users = []
-        _key = OrgUserGroupData.__tablename__ + ".user_uuid." + _user_uuid
+        _key = OrgGroupUserData.__tablename__ + ".user_uuid." + _user_uuid
         _group_uuid = _redis.get(_key)
         if _group_uuid != None:
-            _key = OrgUserGroupData.__tablename__ + ".group_uuid." + _group_uuid
+            _key = OrgGroupUserData.__tablename__ + ".group_uuid." + _group_uuid
             _a_users = list(_redis.smembers(_key))
         _b_users = AbstractPolicy.app_users(_app_uuid, False, _redis)    
         return _a_users + _b_users

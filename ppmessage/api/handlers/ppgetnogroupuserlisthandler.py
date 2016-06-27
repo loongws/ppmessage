@@ -7,7 +7,7 @@
 
 from .basehandler import BaseHandler
 
-from ppmessage.db.models import OrgUserGroupData
+from ppmessage.db.models import OrgGroupUserData
 from ppmessage.db.models import AppUserData
 from ppmessage.db.models import DeviceUser
 
@@ -39,7 +39,7 @@ class PPGetNoGroupUserListHandler(BaseHandler):
                ".is_service_user.True"
         _users = list(_redis.smembers(_key))
         _pipe = _redis.pipeline()
-        _pre = OrgUserGroupData.__tablename__ + ".user_uuid."
+        _pre = OrgGroupUserData.__tablename__ + ".user_uuid."
         for _user_uuid in _users:
             _key = _pre + _user_uuid
             _pipe.exists(_key)

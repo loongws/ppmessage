@@ -13,7 +13,7 @@ from ppmessage.core.utils.datetimestring import string_to_datetime
 
 from ppmessage.core.constant import API_LEVEL
 
-from ppmessage.db.models import OrgUserGroupData
+from ppmessage.db.models import OrgGroupUserData
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import DeviceInfo
 from ppmessage.db.models import OrgGroup
@@ -37,7 +37,7 @@ def _online(_redis, _device_uuid):
     return False
 
 def _group(_redis, _user_uuid):
-    _key = OrgUserGroupData.__tablename__ + ".user_uuid." + _user_uuid
+    _key = OrgGroupUserData.__tablename__ + ".user_uuid." + _user_uuid
     _group_uuid = _redis.get(_key)
     if _group_uuid == None:
         return None
@@ -100,7 +100,7 @@ class PPGetOrgGroupUserListHandler(BaseHandler):
         _r = self.getReturnData()
         _r["list"] = []
         
-        _key = OrgUserGroupData.__tablename__ + ".group_uuid." + _group_uuid
+        _key = OrgGroupUserData.__tablename__ + ".group_uuid." + _group_uuid
         _users = _redis.smembers(_key)
         if _users == None or len(_users) == 0:
             return

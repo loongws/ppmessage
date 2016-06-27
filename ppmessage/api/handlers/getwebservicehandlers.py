@@ -202,6 +202,9 @@ def getWebServiceHandlers():
     handler_list.append((r"/PP_PAGE_ONLINE_PORTAL_USER", PPPageOnlinePortalUserHandler))
     handler_list.append((r"/PP_PAGE_DEVICE_NAVIGATION", PPPageDeviceNavigationHandler))
 
+    handler_list.append((r"/PP_PAGE_ORG_GROUP", PPPageOrgGroupHandler))
+    handler_list.append((r"/PP_PAGE_ORG_GROUP_USER", PPPageOrgGroupUserHandler))
+    
     handler_list.append((r"/PPKEFU_LOGIN", PPKefuLoginHandler))
     handler_list.append((r"/PPKEFU_LOGOUT", PPKefuLogoutHandler))
 

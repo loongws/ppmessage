@@ -9,7 +9,7 @@ from .basehandler import BaseHandler
 
 from ppmessage.api.error import API_ERR
 from ppmessage.db.models import OrgGroup
-from ppmessage.db.models import OrgUserGroupData
+from ppmessage.db.models import OrgGroupUserData
 
 from ppmessage.db.models import ConversationInfo
 from ppmessage.core.redis import redis_hash_to_dict
@@ -34,7 +34,7 @@ class PPGetAppOrgGroupListHandler(BaseHandler):
             _pi.hgetall(_key)
         _groups = _pi.execute()
 
-        _key_pre = OrgUserGroupData.__tablename__ + ".group_uuid."
+        _key_pre = OrgGroupUserData.__tablename__ + ".group_uuid."
         for _group in _groups:
             _key = _key_pre + _group.get("uuid")
             _users = _redis.smembers(_key)

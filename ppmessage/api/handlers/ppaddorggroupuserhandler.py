@@ -9,7 +9,7 @@ from .basehandler import BaseHandler
 
 from ppmessage.api.error import API_ERR
 from ppmessage.db.models import OrgGroup
-from ppmessage.db.models import OrgUserGroupData
+from ppmessage.db.models import OrgGroupUserData
 
 from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.redis import redis_hash_to_dict
@@ -21,7 +21,7 @@ import uuid
 import logging
 
 def update_group_icon(_redis, _group_uuid):
-    _key = OrgUserGroupData.__tablename__ + ".group_uuid." + _group_uuid
+    _key = OrgGroupUserData.__tablename__ + ".group_uuid." + _group_uuid
     _users = _redis.smembers(_key)
     _group_icon = None
     if len(_users) == 0:
@@ -37,23 +37,23 @@ class PPAddOrgGroupUserHandler(BaseHandler):
 
     def _add(self, _group_uuid, _user_uuid):
         _redis = self.application.redis
-        _key = OrgUserGroupData.__tablename__ + ".group_uuid." + _group_uuid
+        _key = OrgGroupUserData.__tablename__ + ".group_uuid." + _group_uuid
         if _redis.sismember(_key, _user_uuid) == True:
             logging.info("user: %s already in group:%s" % (_user_uuid, _group_uuid))
             return
 
         # if the user has been in another group
-        _key = OrgUserGroupData.__tablename__ + ".user_uuid." + _user_uuid
+        _key = OrgGroupUserData.__tablename__ + ".user_uuid." + _user_uuid
         _old_uuid = _redis.get(_key)
         if _old_uuid != None:
-            _key = OrgUserGroupData.__tablename__ + ".group_uuid." + _old_uuid + ".user_uuid." + _user_uuid
+            _key = OrgGroupUserData.__tablename__ + ".group_uuid." + _old_uuid + ".user_uuid." + _user_uuid
             _data_uuid = _redis.get(_key)
             if _data_uuid != None:
-                _row = OrgUserGroupData(uuid=_data_uuid)
+                _row = OrgGroupUserData(uuid=_data_uuid)
                 _row.delete_redis_keys(_redis)
                 _row.async_delete(_redis)
 
-        _row = OrgUserGroupData(uuid=str(uuid.uuid1()), group_uuid=_group_uuid, user_uuid=_user_uuid)
+        _row = OrgGroupUserData(uuid=str(uuid.uuid1()), group_uuid=_group_uuid, user_uuid=_user_uuid)
         _row.async_add(_redis)
         _row.create_redis_keys(_redis)
         return

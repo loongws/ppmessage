@@ -592,9 +592,9 @@ class OrgGroup(CommonMixin, BaseModel):
         return
 
 
-class OrgUserGroupData(CommonMixin, BaseModel):
+class OrgGroupUserData(CommonMixin, BaseModel):
 
-    __tablename__ = "org_user_group_datas"
+    __tablename__ = "org_group_user_datas"
     group_uuid = Column("group_uuid", String(64))
     user_uuid = Column("user_uuid", String(64))
     is_leader = Column("is_leader", Boolean)
@@ -603,7 +603,7 @@ class OrgUserGroupData(CommonMixin, BaseModel):
     )
 
     def __init__(self, *args, **kwargs):
-        super(OrgUserGroupData, self).__init__(*args, **kwargs)
+        super(OrgGroupUserData, self).__init__(*args, **kwargs)
         return
     
     def create_redis_keys(self, _redis, *args, **kwargs):
@@ -626,7 +626,7 @@ class OrgUserGroupData(CommonMixin, BaseModel):
         return
 
     def delete_redis_keys(self, _redis):
-        _obj = redis_hash_to_dict(_redis, OrgUserGroupData, self.uuid)
+        _obj = redis_hash_to_dict(_redis, OrgGroupUserData, self.uuid)
         if _obj == None or \
            _obj["group_uuid"] == None or\
            _obj["user_uuid"] == None:
@@ -650,15 +650,15 @@ class OrgUserGroupData(CommonMixin, BaseModel):
         return
 
 
-class OrgSubGroupData(CommonMixin, BaseModel):
-    __tablename__ = "org_sub_group_datas"
+class OrgGroupSubGroupData(CommonMixin, BaseModel):
+    __tablename__ = "org_group_sub_group_datas"
     group_uuid = Column("group_uuid", String(64))
     sub_group_uuid = Column("sub_group_uuid", String(64))
 
     __table_args__ = ()
 
     def __init__(self, *args, **kwargs):
-        super(OrgSubGroupData, self).__init__(*args, **kwargs)
+        super(OrgGroupSubGroupData, self).__init__(*args, **kwargs)
         return
 
 class DiscussionGroup(CommonMixin, BaseModel):

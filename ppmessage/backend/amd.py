@@ -35,7 +35,7 @@ from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import AppUserData
 from ppmessage.db.models import PCSocketInfo
 from ppmessage.db.models import PCSocketDeviceData
-from ppmessage.db.models import OrgUserGroupData
+from ppmessage.db.models import OrgGroupUserData
 from ppmessage.db.models import ConversationInfo
 from ppmessage.db.models import ConversationUserData
 
@@ -147,7 +147,7 @@ class AmdDelegate():
             self._ack_error(_device_uuid, DIS_ERR.CONVERSATION_NO_GROUP)
             return True
 
-        _key = OrgUserGroupData.__tablename__ + ".group_uuid." + _group_uuid
+        _key = OrgGroupUserData.__tablename__ + ".group_uuid." + _group_uuid
         _users = self.redis.smembers(_key)
         if _users == None or len(_users) == 0:
             logging.error("no service user in group: %s" % _group_uuid)

@@ -31,7 +31,7 @@ from ppmessage.core.constant import OS
 from ppmessage.db.models import OrgGroup
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import DeviceInfo
-from ppmessage.db.models import OrgUserGroupData
+from ppmessage.db.models import OrgGroupUserData
 from ppmessage.db.models import AppUserData
 from ppmessage.db.models import MessagePush
 from ppmessage.db.models import MessagePushTask
@@ -152,8 +152,7 @@ class AbstractPolicy(Policy):
 
     @classmethod
     def group_users(cls, _group_uuid, _redis):
-        _pattern = OrgUserGroupData.__tablename__ + \
-                   ".group_uuid." + _group_uuid
+        _pattern = OrgGroupUserData.__tablename__ + ".group_uuid." + _group_uuid
         _keys = _redis.smembers(_pattern)
         return list(_keys)
 

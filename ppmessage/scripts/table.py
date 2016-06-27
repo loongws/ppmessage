@@ -16,7 +16,7 @@ from ppmessage.db.models import AdminUser
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import OrgGroup
 from ppmessage.db.models import OrgSubGroupData
-from ppmessage.db.models import OrgUserGroupData
+from ppmessage.db.models import OrgGroupUserData
 from ppmessage.db.models import DeviceInfo
 
 from ppmessage.db.models import MessagePushTask

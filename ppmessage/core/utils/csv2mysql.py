@@ -10,7 +10,7 @@
 from ppmessage.db.common.dbinstance import getDatabaseInstance
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import OrgGroup
-from ppmessage.db.models import OrgUserGroupData
+from ppmessage.db.models import OrgGroupUserData
 from ppmessage.db.models import OrgSubGroupData
 
 import traceback
@@ -71,7 +71,7 @@ def Csv2Mysql(csv_file):
             try:
                 user_data_id = isUserDataExists(db_session, user_id, group_id)
                 if not user_data_id:
-                    user_data = OrgUserGroupData()
+                    user_data = OrgGroupUserData()
                     user_data.group_id = group_id
                     user_data.user_id = user_id
                     user_data.is_leader = isLeader(row[10])
@@ -111,9 +111,9 @@ def isGroupExists(db_session, _o):
 
 def isUserDataExists(db_session, _uid, _gid):
     try:
-        user_data = db_session.query(OrgUserGroupData)\
-                              .filter(OrgUserGroupData.group_id==_gid)\
-                              .filter(OrgUserGroupData.user_id==_uid).scalar()
+        user_data = db_session.query(OrgGroupUserData)\
+                              .filter(OrgGroupUserData.group_id==_gid)\
+                              .filter(OrgGroupUserData.user_id==_uid).scalar()
         if user_data:
             return True
         else:
