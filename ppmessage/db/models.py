@@ -749,53 +749,6 @@ class MultipleCardMaterialInfo(CommonMixin, BaseModel):
     def __init__(self, *args, **kwargs):
         super(MultipleCardMaterialInfo, self).__init__(*args, **kwargs)
         return
-        
-class MessageAudioFileInfo(CommonMixin, BaseModel):
-    """
-    MessageAudioFileInfo is related to chatting message
-    duration is the key for the table
-    """
-    __tablename__ = "message_audio_file_infos"
-
-    file_uuid = Column("file_uuid", String(64))
-
-    # audio/ogg, audio/wav, audio/amr, audio/mp3
-    mime = Column("mime", String(32))
-    duration = Column("duration", Integer)
-
-    __table_args__ = (
-        Index(
-            "_idx_message_audio_fileinfo",
-            "file_uuid"
-        ),
-    )
-
-    def __init__(self, *args, **kwargs):
-        super(MessageAudioFileInfo, self).__init__(*args, **kwargs)
-        return
-
-class OAuthSetting(CommonMixin, BaseModel):
-    __tablename__ = "oauth_settings"
-
-    app_name = Column("app_name", String(32))
-    app_id = Column("app_id", String(64))
-    app_key = Column("app_key", String(64))
-    domain_name = Column("domain_name", String(64))
-    
-    def __init__(self, *args, **kwargs):
-        super(OAuthSetting, self).__init__(*args, **kwargs)
-        return
-
-class OAuthInfo(CommonMixin, BaseModel):
-    __tablename__ = "oauth_infos"
-
-    user_uuid = Column("user_uuid", String(64))
-    app_name = Column("app_name", String(32))
-    access_token = Column("access_token", String(128))
-    
-    def __init__(self, *args, **kwargs):
-        super(OAuthInfo, self).__init__(*args, **kwargs)
-        return
 
 class AppInfo(CommonMixin, BaseModel):
     __tablename__ = "app_infos"
