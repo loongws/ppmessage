@@ -4,23 +4,27 @@
 # Ding Guijin, guijin.ding@yvertical.com
 #
 
-from ppmessage.core.constant import DEV_MODE
-from ppmessage.core.constant import CONVERSATION_TYPE
+from testConfig import config
+from testConfig import get_api_url
+from testConfig import get_token_url
 
 from ppmessage.db.models import DeviceUser
+from ppmessage.core.constant import DEV_MODE
+from ppmessage.core.constant import CONVERSATION_TYPE
+from ppmessage.core.utils.config import _get_config
 
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
-
-import tornado.httpclient
 import uuid
-import unittest
-import traceback
 import json
 import redis
 import hashlib
 import logging
+import unittest
+import traceback
+
+import tornado.httpclient
 
 class TestApiCase(unittest.TestCase):
+
     def setUp(self):
         self._redis = redis.Redis(db=1)
         self._access_token = self._get_access_token()
@@ -44,34 +48,24 @@ class TestApiCase(unittest.TestCase):
         return body.lstrip("&")
 
     def _get_access_token(self):
-        TOKEN_URI = "http://localhost:8080/ppauth/token"
+        TOKEN_URI = get_token_url()
         body = self._create_body_string({
             "grant_type": "client_credentials",
-            "client_id": BOOTSTRAP_DATA["PPCOM"]["api_key"],
-            "client_secret": BOOTSTRAP_DATA["PPCOM"]["api_secret"]
+            "client_id": _get_config().get("api").get("ppcom").get("key"),
+            "client_secret": _get_config().get("api").get("ppcom").get("secret")
         })
         request = tornado.httpclient.HTTPRequest(TOKEN_URI, method="POST", body=body)
         client = tornado.httpclient.HTTPClient()
         response = client.fetch(request)
         res_body = json.loads(response.body)
         return res_body.get("access_token")
-            
+    
     def _prepare(self, _cmd):
-
         self._headers = {
             "Content-Type": "application/json",
             "Authorization": "OAuth " + self._access_token
         }
-
-        _http = "https://"
-        _host = "ppmessage.cn"
-        _port = 80
-        if DEV_MODE:
-            _host = "localhost"
-            _http = "http://"
-            _port = 8080
-
-        self._url = _http + _host + ":" + str(_port) + "/api/" + _cmd
+        self._url = get_api_url() + "/" + _cmd
         return
     
     def _exec(self, _data):
@@ -100,17 +94,17 @@ class TestApiCase(unittest.TestCase):
         _api = "PP_CREATE_ANONYMOUS"
         _data = {
             "ppcom_trace_uuid": str(uuid.uuid1()),
-            "app_uuid": BOOTSTRAP_DATA["team"]["app_uuid"]
+            "app_uuid": _get_config().get("team").get("app_uuid")
         }
         self._prepare(_api)
         self._exec(_data)
         _user_uuid = self._get_return("user_uuid")
 
-        _api = "PP_CREATE_CONVERSATION"
+        _api = "PPCOM_CREATE_CONVERSATION"
         _data = {
             "user_uuid": _user_uuid,
             "conversation_type": CONVERSATION_TYPE.P2S,
-            "app_uuid": BOOTSTRAP_DATA["team"]["app_uuid"]
+            "app_uuid": _get_config().get("team").get("app_uuid")
         }
         self._prepare(_api)
         self._exec(_data)
@@ -125,7 +119,7 @@ class TestApiCase(unittest.TestCase):
         _data = {
             "user_uuid": _user_uuid,
             "conversation_uuid": _conversation_uuid,
-            "app_uuid": BOOTSTRAP_DATA["team"]["app_uuid"]
+            "app_uuid": _get_config().get("team").get("app_uuid")
         }
         self._prepare(_api)
         self._exec(_data)
@@ -137,9 +131,9 @@ class TestApiCase(unittest.TestCase):
         # from the view of a service user
         _api = "PP_GET_CONVERSATION_INFO"
         _data = {
-            "user_uuid": BOOTSTRAP_DATA["user"]["user_uuid"],
+            "user_uuid": _get_config().get("user").get("user_uuid"),
             "conversation_uuid": _conversation_uuid,
-            "app_uuid": BOOTSTRAP_DATA["team"]["app_uuid"]
+            "app_uuid": _get_config().get("team").get("app_uuid")
         }
         self._prepare(_api)
         self._exec(_data)
@@ -157,7 +151,7 @@ class TestApiCase(unittest.TestCase):
         _password = hashlib.sha1("123").hexdigest()
         _data = {
             "user_email": _email,
-            "app_uuid": BOOTSTRAP_DATA["team"]["app_uuid"],
+            "app_uuid": _get_config().get("team").get("app_uuid"),
             "is_service_user": True,
             "user_password": _password,
             "user_fullname": _email
@@ -166,12 +160,12 @@ class TestApiCase(unittest.TestCase):
         self._exec(_data)
         _user_uuid = self._get_return("uuid")
 
-        _api = "PP_CREATE_CONVERSATION"
+        _api = "PPCOM_CREATE_CONVERSATION"
         _data = {
             "user_uuid": _user_uuid,
             "conversation_type": CONVERSATION_TYPE.S2S,
-            "member_list": [BOOTSTRAP_DATA["user"]["user_uuid"]],
-            "app_uuid": BOOTSTRAP_DATA["team"]["app_uuid"]
+            "member_list": [_get_config().get("user").get("user_uuid")],
+            "app_uuid": _get_config().get("team").get("app_uuid")
         }
         self._prepare(_api)
         self._exec(_data)
@@ -187,7 +181,7 @@ class TestApiCase(unittest.TestCase):
         _data = {
             "user_uuid": _user_uuid,
             "conversation_uuid": _conversation_uuid,
-            "app_uuid": BOOTSTRAP_DATA["team"]["app_uuid"]
+            "app_uuid": _get_config().get("team").get("app_uuid")
         }
         self._prepare(_api)
         self._exec(_data)
@@ -199,9 +193,9 @@ class TestApiCase(unittest.TestCase):
         # from the view of other member(not creator) of this conversation
         _api = "PP_GET_CONVERSATION_INFO"
         _data = {
-            "user_uuid": BOOTSTRAP_DATA["user"]["user_uuid"],
+            "user_uuid": _get_config().get("user").get("user_uuid"),
             "conversation_uuid": _conversation_uuid,
-            "app_uuid": BOOTSTRAP_DATA["team"]["app_uuid"]
+            "app_uuid": _get_config().get("app").get("app_uuid")
         }
         self._prepare(_api)
         self._exec(_data)
@@ -211,7 +205,10 @@ class TestApiCase(unittest.TestCase):
             print item, "\t", self._return_data[item]
         
         return
+
+def _test():
+    unittest.main()
     
 if __name__ == "__main__":
-    unittest.main()
+    _test()
 
