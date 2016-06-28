@@ -200,7 +200,7 @@ class PPPageHistoryMessageHandler(BaseHandler):
             return
         
         _tasks.remove(_min_uuid)
-        self._return_tasks(_tasks)        
+        self._return_tasks(_tasks)
         return
     
     def initialize(self):

@@ -21,12 +21,12 @@ from .dbinstance import BaseModel
 from .commonmixin import CommonMixin
 from .dbinstance import getDBSessionClass
 
+from sqlalchemy import Float
 from sqlalchemy import Column
 from sqlalchemy import String
 from sqlalchemy import Integer
 from sqlalchemy import Boolean
 from sqlalchemy import DateTime
-from sqlalchemy import Float
 from sqlalchemy import LargeBinary
 
 from sqlalchemy import Index
@@ -111,14 +111,11 @@ class DeviceUser(CommonMixin, BaseModel):
 
     # lastest_send_message_time for idle algorithm
     latest_send_message_time = Column("latest_send_message_time", DateTime)
+
+    geolite_latitude = Column("geolite_latitude" Float)
+    geolite_longitude = Column("geolite_longitude", Float)
     
     __table_args__ = (
-        Index(
-            "_idx_device_users",
-            "user_name",
-            "user_email",
-            "user_fullname",
-        ),
     )
 
     def __init__(self, *args, **kwargs):
@@ -446,31 +443,12 @@ class OrgGroup(CommonMixin, BaseModel):
     app_uuid = Column("app_uuid", String(64))
     
     is_root = Column("is_root", Boolean)
-
-    # the user first access, the group will provide service
-    is_distributor = Column("is_distributor", Boolean)
     
     group_name = Column("group_name", String(64))
     group_desc = Column("group_desc", String(128))
     group_icon = Column("group_icon", String(512))
-
-    # smart/equal/send/all
-    group_route_algorithm = Column("group_route_algorithm", String(64))
-
-    # "08:00-20:00"
-    group_work_time_str = Column("group_work_time_str", String(32))
-
-    # show or not in ppcom
-    group_visible_for_ppcom = Column("group_visible_for_ppcom", Boolean)
-
-    # show order
-    group_visible_order_for_ppcom = Column("group_visible_order_for_ppcom", Integer)
     
     __table_args__ = (
-        Index(
-            "_idx_org_groups",
-            "group_name",
-        ),
     )
 
     def __init__(self, *args, **kwargs):
@@ -481,23 +459,10 @@ class OrgGroup(CommonMixin, BaseModel):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
         _key = self.__tablename__ + ".app_uuid." + self.app_uuid
         _redis.sadd(_key, self.uuid)
-
-        if self.is_distributor == True:
-            _key = self.__tablename__ + ".app_uuid." + self.app_uuid + \
-                   ".is_distributor." + str(self.is_distributor)
-            _redis.set(_key, self.uuid)
         return
 
     def update_redis_keys(self, _redis):
         CommonMixin.update_redis_keys(self, _redis)
-        _obj = redis_hash_to_dict(_redis, OrgGroup, self.uuid)
-        if _obj == None:
-            return
-        
-        if _obj["is_distributor"] == True:
-            _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
-                   ".is_distributor." + str(_obj["is_distributor"])
-            _redis.set(_key, _obj["uuid"])
         return
     
     def delete_redis_keys(self, _redis):
@@ -506,12 +471,6 @@ class OrgGroup(CommonMixin, BaseModel):
             return
         _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"]
         _redis.srem(_key, _obj["uuid"])
-
-        if _obj["is_distributor"] == True:
-            _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
-                   ".is_distributor." + str(_obj["is_distributor"])
-            _redis.delete(_key)
-
         CommonMixin.delete_redis_keys(self, _redis)
         return
 

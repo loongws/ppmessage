@@ -178,13 +178,16 @@ class PPPageOrgGroupHandler(BaseHandler):
         super(PPPageOrgGroupHandler, self)._Task()
         _body = json.loads(self.request.body)
         self._redis = self.application.redis
+        
         self._app_uuid = _body.get("app_uuid")
         self._user_uuid = _body.get("user_uuid")
-        self._page_offset = _body.get("page_offset")
         self._page_size = _body.get("page_size")
+        self._page_offset = _body.get("page_offset")
+
         self._max_uuid = _body.get("max_uuid")
         self._min_uuid = _body.get("min_uuid")
-        self._set_key = ConversationUserData.__tablename__ + ".app_uuid." + self._app_uuid + \
+
+        self._set_key = OrgGroup.__tablename__ + ".app_uuid." + self._app_uuid + \
                         ".user_uuid." + self._user_uuid + ".conversation_status." + CONVERSATION_STATUS.OPEN
         
         if self._app_uuid == None or self._user_uuid == None:
