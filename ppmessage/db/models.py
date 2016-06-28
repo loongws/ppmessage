@@ -112,7 +112,7 @@ class DeviceUser(CommonMixin, BaseModel):
     # lastest_send_message_time for idle algorithm
     latest_send_message_time = Column("latest_send_message_time", DateTime)
 
-    geolite_latitude = Column("geolite_latitude" Float)
+    geolite_latitude = Column("geolite_latitude", Float)
     geolite_longitude = Column("geolite_longitude", Float)
     
     __table_args__ = (
@@ -134,6 +134,7 @@ class DeviceUser(CommonMixin, BaseModel):
 
         _key = self.__tablename__ + ".statistics.all"
         _redis.incr(_key)
+
         
         return
 
