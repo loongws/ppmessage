@@ -138,6 +138,8 @@ class DeviceUser(CommonMixin, BaseModel):
         _key = self.__tablename__ + ".statistics.all"
         _redis.incr(_key)
 
+        if self.user_fullname != None:
+            self.add_redis_search_index(_redis, self.__tablename__, self.user_fullname, self.uuid)
         
         return
 
@@ -155,11 +157,22 @@ class DeviceUser(CommonMixin, BaseModel):
 
         _key = self.__tablename__ + ".statistics.all"
         _redis.decr(_key)
+
+        if _obj["user_fullname"] != None:
+            self.remove_redis_search_index(_redis, self.__tablename__, _obj["user_fullname"], self.uuid)
         
         CommonMixin.delete_redis_keys(self, _redis)
         return    
 
     def update_redis_keys(self, _redis):
+        if self.user_fullname != None and len(self.user_fullname) != 0:
+            self.add_redis_search_index(_redis, self.__tablename__, self.user_fullname, self.uuid)
+            
+            _key = self.__tablename__ + ".uuid." + self.uuid
+            _old = _redis.hget(_key, "user_fullname")
+            if _old != None and len(_old) != 0 and _old != self.user_fullname:
+                self.remove_redis_search_index(_redis, self.__tablename__, _old, self.uuid)
+
         CommonMixin.update_redis_keys(self, _redis)
         _obj = redis_hash_to_dict(_redis, DeviceUser, self.uuid)
         if _obj == None:
@@ -168,6 +181,7 @@ class DeviceUser(CommonMixin, BaseModel):
         if _obj["ppcom_trace_uuid"] != None:
             _key = self.__tablename__ + ".ppcom_trace_uuid." + _obj["ppcom_trace_uuid"]
             _redis.set(_key, _obj["uuid"])
+
         return
 
 class UserOnlineStatusLog(CommonMixin, BaseModel):
@@ -475,13 +489,15 @@ class OrgGroup(CommonMixin, BaseModel):
         return
 
     def update_redis_keys(self, _redis):
-        _key = self.__tablename__ + ".uuid." + self.uuid
-        _old = _redis.hget(_key, "group_name")
-        if _old != None and len(_old) != 0 and _old != self.group_name:
-            self.remove_redis_search_index(_redis, self.__tablename__, _old, self.uuid)
-            
+
         if self.group_name != None and len(self.group_name):
-            self.add_redis_search_index(_redis, self.__tablename__, self.group_name, self.uuid)        
+            self.add_redis_search_index(_redis, self.__tablename__, self.group_name, self.uuid)
+            
+            _key = self.__tablename__ + ".uuid." + self.uuid
+            _old = _redis.hget(_key, "group_name")
+            
+            if _old != None and len(_old) != 0 and _old != self.group_name:
+                self.remove_redis_search_index(_redis, self.__tablename__, _old, self.uuid)
 
         CommonMixin.update_redis_keys(self, _redis)
 

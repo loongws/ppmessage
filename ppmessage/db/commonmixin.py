@@ -149,7 +149,7 @@ class CommonMixin(object):
             return
         for _word in _words:
             _key = "%s.%s.%s" % (REDIS_SEARCH_KEY, _table, _word)
-            _redis.sadd(_uuid)
+            _redis.sadd(_key, _uuid)
         return
         
     def remove_redis_search_index(self, _redis, _table, _string, _uuid):
@@ -158,5 +158,5 @@ class CommonMixin(object):
             return
         for _word in _words:
             _key = "%s.%s.%s" % (REDIS_SEARCH_KEY, _table, _word)
-            _redis.srem(_uuid)
+            _redis.srem(_key, _uuid)
         return
