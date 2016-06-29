@@ -67,7 +67,7 @@ class PPPageOrgGroupHandler(BaseHandler):
         _groups = self._redis.smembers(self._set_key)
         _groups = _groups[_offset:_offset+_return_count]
     
-        returun self._return_details(_groups)
+        return self._return_details(_groups)
 
     def _Task(self):
         super(PPPageOrgGroupHandler, self)._Task()
