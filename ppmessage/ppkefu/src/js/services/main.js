@@ -205,7 +205,7 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
 
 
     function _update_noti_settings(key, value) {
-        if (["show_badge", "mute_notification", "silence_notification", "is_distributor_user"].indexOf(key) === -1) {
+        if (["show_badge", "mute_notification", "silence_notification"].indexOf(key) === -1) {
             return;
         }
 

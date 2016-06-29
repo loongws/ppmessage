@@ -22,9 +22,7 @@
           <li ng-repeat="group in team.group_list | orderBy: 'createtime' " id="colored_group_{{$index}}" class="not_exist">
             
             <a ng-click="checkout_to_group( group, $index )" >{{handle_group_name(group.group_name, 12)}}</a>
-            <!-- <i class="glyphicon glyphicon-pencil dd" ng-click="show_update_group_modal( group, $index )" ng-show="isGroupEditable(group)" ></i> -->
-            <!-- <i class="glyphicon glyphicon-trash dd" ng-click="remove_group( group, $index )" ng-show="isGroupEditable(group)" ></i> -->
-
+            
             <md-icon class="material-icons md-light md-24" ng-click="show_update_group_modal( group, $index )" ng-show="isGroupEditable(group)" > mode_edit </md-icon>
             <md-icon class="material-icons md-light md-24" ng-click="remove_group( group, $index )" ng-show="isGroupEditable(group)"> delete </md-icon>
             

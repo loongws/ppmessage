@@ -14,7 +14,6 @@ function ($scope, $ionicLoading, yvSys, yvAPI, yvUser, yvLog, yvMain, yvPush, yv
     
     var item_badge = _item("show_badge");
     var item_mute_noti = _item("mute_notification");
-    var item_distributor = _item("is_distributor_user");
     var item_silence_noti = _item("silence_notification");
     var item_mute_other = _item("mute_other_mobile_device");
 
@@ -34,7 +33,6 @@ function ($scope, $ionicLoading, yvSys, yvAPI, yvUser, yvLog, yvMain, yvPush, yv
         
         yvAPI.get_user_info(user.uuid, function (response) {
             user.show_badge = !!response.user_show_badge;
-            user.is_distributor_user = !!reponse.is_distributor_user;
             user.mute_notification = !!response.user_mute_notification;
             user.silence_notification = !!response.user_silence_notification;
             user.mute_other_mobile_device = !!response.user_mute_other_mobile_device;
@@ -44,17 +42,11 @@ function ($scope, $ionicLoading, yvSys, yvAPI, yvUser, yvLog, yvMain, yvPush, yv
 
     
     function _init_settings() {
-        // if (yvSys.in_android_app()) {
-        //     $scope.settings = [item_distributor];
-        //     return;
-        // }
-
         if (yvSys.in_mobile_app()) {
-            $scope.settings = [item_badge, item_mute_noti, item_silence_noti, item_distributor];
+            $scope.settings = [item_badge, item_mute_noti, item_silence_noti];
             return;
         }
-
-        $scope.settings = [item_mute_other, item_distributor];
+        $scope.settings = [item_mute_other];
     }
 
 
@@ -89,12 +81,7 @@ function ($scope, $ionicLoading, yvSys, yvAPI, yvUser, yvLog, yvMain, yvPush, yv
     
     function _update_user(key, value) {
         var data = {};
-                
-        if (key === "is_distributor_user") {
-            data[key] = value;
-        } else {
-            data["user_" + key] = value;
-        }
+        data["user_" + key] = value;
         
         yvAPI.update_user(data, function () {
             yvMain.update_noti_settings(key, value);

@@ -49,12 +49,6 @@ Commands:
   npm                         Install node components.
   cnpm                        Install node components, using cnpm.
   gulp                        Run all gulp tasks.
-  app-win32                   Create window desktop app.
-  app-win64                   Create window desktop app.
-  app-mac                     Create mac os x desktop app.
-  app-android                 Create mac os x desktop app.
-  app-ios                     Create mac os x desktop app.
-  app-auto-update             Update app version in server
 
 Options:
   -v                          Give more output.
