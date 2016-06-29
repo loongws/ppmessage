@@ -68,8 +68,7 @@
             yvAjax.create_org_group( {
                 app_uuid: yvUser.get_team().uuid,
                 group_name: settings.new_group_name,
-                group_desc: settings.new_group_desc,
-                is_distributor: settings.new_group_is_distributor,
+                group_desc: settings.new_group_desc
             } )
                 .success( function(data) { noError( data ) ? onSuccess( data ) : onError( data ); } )
                 .error( onError );

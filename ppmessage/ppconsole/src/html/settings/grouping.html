@@ -22,10 +22,11 @@
           <li ng-repeat="group in team.group_list | orderBy: 'createtime' " id="colored_group_{{$index}}" class="not_exist">
             
             <a ng-click="checkout_to_group( group, $index )" >{{handle_group_name(group.group_name, 12)}}</a>
-            <!-- <i class="material-icons" ng-show="group.is_distributor" >message</i> -->
-            <i class="glyphicon glyphicon-headphones" ng-show="group.is_distributor" ></i>
-            <i class="glyphicon glyphicon-pencil dd" ng-click="show_update_group_modal( group, $index )" ng-show="isGroupEditable(group)" ></i>
-            <i class="glyphicon glyphicon-trash dd" ng-click="remove_group( group, $index )" ng-show="isGroupEditable(group)" ></i>
+            <!-- <i class="glyphicon glyphicon-pencil dd" ng-click="show_update_group_modal( group, $index )" ng-show="isGroupEditable(group)" ></i> -->
+            <!-- <i class="glyphicon glyphicon-trash dd" ng-click="remove_group( group, $index )" ng-show="isGroupEditable(group)" ></i> -->
+
+            <md-icon class="material-icons md-light md-24" ng-click="show_update_group_modal( group, $index )" ng-show="isGroupEditable(group)" > mode_edit </md-icon>
+            <md-icon class="material-icons md-light md-24" ng-click="remove_group( group, $index )" ng-show="isGroupEditable(group)"> delete </md-icon>
             
           </li>
         </ul>
@@ -92,18 +93,11 @@
             </md-input-container>
           </div>
 
-          <div layout-gt-sm="row">
-            <md-switch ng-model="new_group_is_distributor" aria-label="">
-              {{ "application.grouping.DISTRIBUTOR_TAG" | translate }}
-            </md-switch>
-          </div>
-
         </form>
         
       </div>
       <div class="modal-footer">
         <md-button class="md-raised md-primary" ng-click="create_group()"> {{ "application.grouping.CREATE_GROUP" | translate }} </md-button>
-        <!-- <button type="submit" class="btn btn-primary" ng-click="create_group()" tabindex="5" >{{ "application.grouping.CREATE_GROUP" | translate }}</button> -->
       </div>
     </div>
   </div>
@@ -144,12 +138,6 @@
                 <div ng-message="md-maxlength">The description has to be less than 64 characters long.</div>
               </div>
             </md-input-container>
-          </div>
-
-          <div layout-gt-sm="row">
-            <md-switch ng-model="selected_group.is_distributor" aria-label="">
-              {{ "application.grouping.DISTRIBUTOR_TAG" | translate }}
-            </md-switch>
           </div>
         </form>
       </div>

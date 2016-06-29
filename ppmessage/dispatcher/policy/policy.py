@@ -145,8 +145,7 @@ class AbstractPolicy(Policy):
             return []
         _key = AppUserData.__tablename__ + \
                ".app_uuid." + _app_uuid + \
-               ".is_service_user.True" + \
-               ".is_distributor_user.True"
+               ".is_service_user.True"
         _users = _redis.smembers(_key)
         return list(_users)
 

@@ -443,7 +443,7 @@ class OrgGroup(CommonMixin, BaseModel):
 
     app_uuid = Column("app_uuid", String(64))
     
-    is_root = Column("is_root", Boolean)
+    parent_group_uuid = Column("parent_group_uuid", String(64))
     
     group_name = Column("group_name", String(64))
     group_desc = Column("group_desc", String(128))
@@ -824,7 +824,6 @@ class AppUserData(CommonMixin, BaseModel):
     is_portal_user = Column("is_portal_user", Boolean)
     is_service_user = Column("is_service_user", Boolean)
     is_owner_user = Column("is_owner_user", Boolean)
-    is_distributor_user = Column("is_distributor_user", Boolean)
 
     __table_args__ = (
     )
@@ -847,7 +846,6 @@ class AppUserData(CommonMixin, BaseModel):
         _d = {
             "is_owner_user": self.is_owner_user,
             "is_service_user": self.is_service_user,
-            "is_distributor_user": self.is_distributor_user,
         }
         _redis.set(_key, json.dumps(_d))
 
@@ -859,12 +857,6 @@ class AppUserData(CommonMixin, BaseModel):
         _key = self.__tablename__ + \
                ".app_uuid." + self.app_uuid + \
                ".is_service_user." + str(self.is_service_user)
-        _redis.sadd(_key, self.user_uuid)
-
-        _key = self.__tablename__ + \
-               ".app_uuid." + self.app_uuid + \
-               ".is_service_user." + str(self.is_service_user) + \
-               ".is_distributor_user." + str(self.is_distributor_user)
         _redis.sadd(_key, self.user_uuid)
 
         return
@@ -892,12 +884,6 @@ class AppUserData(CommonMixin, BaseModel):
         _key = self.__tablename__ + \
                ".app_uuid." + _obj["app_uuid"] + \
                ".is_service_user." + str(_obj["is_service_user"])
-        _redis.srem(_key, _obj["user_uuid"])
-
-        _key = self.__tablename__ + \
-               ".app_uuid." + _obj["app_uuid"] + \
-               ".is_service_user." + str(_obj["is_service_user"]) + \
-               ".is_distributor_user." + str(_obj["is_distributor_user"])
         _redis.srem(_key, _obj["user_uuid"])
         
         CommonMixin.delete_redis_keys(self, _redis)
