@@ -471,6 +471,7 @@ REDIS_PPKEFU_ONLINE_KEY = "redis_ppkefu_online_key"
 REDIS_PPCOM_ONLINE_KEY = "redis_ppcom_online_key"
 
 REDIS_CACHE_KEY = "redis_cache_key"
+REDIS_SEARCH_KEY = "redis_search_key"
 
 DATETIME_FORMAT = {
     "extra": '%Y-%m-%d %H:%M:%S %f',

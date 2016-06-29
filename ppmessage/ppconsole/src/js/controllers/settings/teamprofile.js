@@ -15,6 +15,11 @@ angular.module("this_app")
             $scope.team_info = {
                 app_uuid: null,
                 app_name: null,
+                ppcom: {
+                    api_uuid: null,
+                    api_key: null,
+                    api_secret: null,
+                },
                 ppconsole_thirdparty: {
                     api_uuid: null,
                     api_key: null,
@@ -129,6 +134,7 @@ angular.module("this_app")
             $scope.team_info.app_name = _own_team.app_name;
             var _get = yvAjax.get_api_info({app_uuid: app_uuid, user_uuid: yvUser.get_uuid()});
             _get.success(function(data) {
+                $scope.team_info.ppcom = data.ppcom;
                 $scope.team_info.ppconsole_thirdparty = data.ppconsole_thirdparty;
                 $scope.team_info.ppkefu_thirdparty = data.ppkefu_thirdparty;
             });
