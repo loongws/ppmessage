@@ -114,6 +114,10 @@ class DeviceUser(CommonMixin, BaseModel):
 
     geolite_latitude = Column("geolite_latitude", Float)
     geolite_longitude = Column("geolite_longitude", Float)
+
+
+    # which is uuid of other/third party system
+    ent_user_uuid = Column("ent_user_uuid", String(64))
     
     __table_args__ = (
     )
