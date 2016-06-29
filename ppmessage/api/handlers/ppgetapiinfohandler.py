@@ -24,6 +24,19 @@ class PPGetApiInfoHandler(BaseHandler):
         _r = self.getReturnData()
 
         _key = ApiInfo.__tablename__ + ".app_uuid." + _app_uuid + \
+               ".user_uuid." + _user_uuid + ".api_level." + API_LEVEL.PPCOM
+        _d = _redis.get(_key)
+        if _d != None and len(_d) > 0:
+            _a = json.loads(_d)
+            _ppcom = {
+                "api_uuid": _a[0],
+                "api_level": _a[1],
+                "api_key": _a[2],
+                "api_secret": _a[3],
+            }
+            _r["ppcom"] = _ppcom
+
+        _key = ApiInfo.__tablename__ + ".app_uuid." + _app_uuid + \
                ".user_uuid." + _user_uuid + ".api_level." + API_LEVEL.THIRD_PARTY_CONSOLE
         _d = _redis.get(_key)
         if _d != None and len(_d) > 0:

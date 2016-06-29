@@ -115,7 +115,6 @@ class DeviceUser(CommonMixin, BaseModel):
     geolite_latitude = Column("geolite_latitude", Float)
     geolite_longitude = Column("geolite_longitude", Float)
 
-
     # which is uuid of other/third party system
     ent_user_uuid = Column("ent_user_uuid", String(64))
     
@@ -356,10 +355,12 @@ class MessagePushTask(CommonMixin, BaseModel):
 
         if self.app_uuid != None:
             # by hour
-            _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".day." + self.createtime.strftime("%Y-%m-%d") + ".hour." + str(self.createtime.hour)
+            _key = self.__tablename__ + ".app_uuid." + self.app_uuid + \
+                   ".day." + self.createtime.strftime("%Y-%m-%d") + ".hour." + str(self.createtime.hour)
             _redis.incr(_key)
             # by day
-            _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".day." + self.createtime.strftime("%Y-%m-%d")
+            _key = self.__tablename__ + ".app_uuid." + self.app_uuid + \
+                   ".day." + self.createtime.strftime("%Y-%m-%d")
             _redis.incr(_key)
             # all messages
             _key = self.__tablename__ + ".app_uuid." + self.app_uuid
@@ -464,10 +465,32 @@ class OrgGroup(CommonMixin, BaseModel):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
         _key = self.__tablename__ + ".app_uuid." + self.app_uuid
         _redis.sadd(_key, self.uuid)
+
+        if self.parent_group_uuid == None:
+            _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".root_groups"
+            _redis.sadd(_key, self.uuid)
+
+        self.add_redis_search_index(_redis, self.__tablename__, self.group_name, self.uuid)
+        
         return
 
     def update_redis_keys(self, _redis):
+        _key = self.__tablename__ + ".uuid." + self.uuid
+        _old = _redis.hget(_key, "group_name")
+        if _old != None and len(_old) != 0 and _old != self.group_name:
+            self.remove_redis_search_index(_redis, self.__tablename__, _old, self.uuid)
+            
+        if self.group_name != None and len(self.group_name):
+            self.add_redis_search_index(_redis, self.__tablename__, self.group_name, self.uuid)        
+
         CommonMixin.update_redis_keys(self, _redis)
+
+        _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".root_groups"
+        if self.parent_group_uuid == None:
+            _redis.sadd(_key, self.uuid)
+        else:
+            _redis.srem(_key, self.uuid)
+
         return
     
     def delete_redis_keys(self, _redis):
@@ -476,6 +499,14 @@ class OrgGroup(CommonMixin, BaseModel):
             return
         _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"]
         _redis.srem(_key, _obj["uuid"])
+
+        if _obj.get("parenet_group_uuid") == None:
+            _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".root_groups"
+            _redis.srem(_key, self.uuid)
+
+        if _obj.get("group_name") != None:
+            self.remove_redis_search_index(_redis, self.__tablename__, _obj["group_name"], _obj["uuid"])
+
         CommonMixin.delete_redis_keys(self, _redis)
         return
 
@@ -485,7 +516,6 @@ class OrgGroupUserData(CommonMixin, BaseModel):
 
     group_uuid = Column("group_uuid", String(64))
     user_uuid = Column("user_uuid", String(64))
-    is_leader = Column("is_leader", Boolean)
 
     __table_args__ = (
     )
@@ -498,47 +528,43 @@ class OrgGroupUserData(CommonMixin, BaseModel):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
 
         _pi = _redis.pipeline()
-        _key = self.__tablename__ + \
-               ".group_uuid." + self.group_uuid
+
+        _key = self.__tablename__ + ".group_uuid." + self.group_uuid
         _pi.sadd(_key, self.user_uuid)
 
-        _key = self.__tablename__ + \
-               ".user_uuid." + self.user_uuid
-        _pi.set(_key, self.group_uuid)
+        _key = self.__tablename__ + ".user_uuid." + self.user_uuid
+        _pi.sadd(_key, self.group_uuid)
 
-        _key = self.__tablename__ + \
-               ".group_uuid." + self.group_uuid + \
+        _key = self.__tablename__ + ".group_uuid." + self.group_uuid + \
                ".user_uuid." + self.user_uuid
         _pi.set(_key, self.uuid)
+        
         _pi.execute()
         return
 
     def delete_redis_keys(self, _redis):
         _obj = redis_hash_to_dict(_redis, OrgGroupUserData, self.uuid)
-        if _obj == None or \
-           _obj["group_uuid"] == None or\
-           _obj["user_uuid"] == None:
+        if _obj == None or _obj["group_uuid"] == None or _obj["user_uuid"] == None:
             return
 
         _pi = _redis.pipeline()
-        _key = self.__tablename__ + \
-               ".group_uuid." + _obj["group_uuid"] 
+        _key = self.__tablename__ + ".group_uuid." + _obj["group_uuid"] 
         _pi.srem(_key, _obj["user_uuid"])
         
-        _key = self.__tablename__ + \
-               ".user_uuid." + _obj["user_uuid"] 
-        _pi.delete(_key)
+        _key = self.__tablename__ + ".user_uuid." + _obj["user_uuid"] 
+        _pi.srem(_key)
 
-        _key = self.__tablename__ + \
-               ".group_uuid." + _obj["group_uuid"] + \
+        _key = self.__tablename__ + ".group_uuid." + _obj["group_uuid"] + \
                ".user_uuid." + _obj["user_uuid"]
         _pi.delete(_key)
         _pi.execute()
+        
         CommonMixin.delete_redis_keys(self, _redis)
         return
 
 class OrgGroupSubGroupData(CommonMixin, BaseModel):
     __tablename__ = "org_group_sub_group_datas"
+
     group_uuid = Column("group_uuid", String(64))
     sub_group_uuid = Column("sub_group_uuid", String(64))
 
@@ -546,6 +572,29 @@ class OrgGroupSubGroupData(CommonMixin, BaseModel):
 
     def __init__(self, *args, **kwargs):
         super(OrgGroupSubGroupData, self).__init__(*args, **kwargs)
+        return
+    
+    def create_redis_keys(self, _redis, *args, **kwargs):
+        CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
+
+        _pi = _redis.pipeline()
+        _key = self.__tablename__ + ".group_uuid." + self.group_uuid
+        _pi.sadd(_key, self.sub_group_uuid)
+        _pi.execute()
+        
+        return
+
+    def delete_redis_keys(self, _redis):
+        _obj = redis_hash_to_dict(_redis, OrgGroupUserData, self.uuid)
+        if _obj == None or _obj["group_uuid"] == None or _obj["sub_group_uuid"] == None:
+            return
+
+        _pi = _redis.pipeline()
+        _key = self.__tablename__ + ".group_uuid." + _obj["group_uuid"] 
+        _pi.srem(_key, _obj["sub_group_uuid"])        
+        _pi.execute()
+        
+        CommonMixin.delete_redis_keys(self, _redis)
         return
 
 

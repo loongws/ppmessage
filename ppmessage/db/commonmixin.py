@@ -7,8 +7,11 @@
 
 from ppmessage.core.constant import CACHE_TYPE
 from ppmessage.core.constant import REDIS_CACHE_KEY
+from ppmessage.core.constant import REDIS_SEARCH_KEY
+
 from ppmessage.core.utils.copyrow import copy_row_to_dict
 from ppmessage.core.utils.datetimeencoder import DateTimeEncoder
+from ppmessage.core.utils.splitstring import split_chinese_string_to_words
 
 from sqlalchemy import Column
 from sqlalchemy import String
@@ -138,4 +141,22 @@ class CommonMixin(object):
 
     def async_delete(self, _redis):
         _async_delete(self, _redis)
+        return
+
+    def add_redis_search_index(self, _redis, _table, _string, _uuid):
+        _words = split_chinese_string_to_words(_string)
+        if _words == None or len(_words) == 0:
+            return
+        for _word in _words:
+            _key = "%s.%s.%s" % (REDIS_SEARCH_KEY, _table, _word)
+            _redis.sadd(_uuid)
+        return
+        
+    def remove_redis_search_index(self, _redis, _table, _string, _uuid):
+        _words = split_chinese_string_to_words(_string)
+        if _words == None or len(_words) == 0:
+            return
+        for _word in _words:
+            _key = "%s.%s.%s" % (REDIS_SEARCH_KEY, _table, _word)
+            _redis.srem(_uuid)
         return
