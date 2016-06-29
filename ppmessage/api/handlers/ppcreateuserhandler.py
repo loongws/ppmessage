@@ -42,11 +42,9 @@ def create_user(_redis, _request):
         
     if _is_service_user != None:
         _is_portal_user = not _is_service_user
-        _is_distributor_user = _is_service_user
     else:
         _is_service_user = False
         _is_portal_user = not _is_service_user
-        _is_distributor_user = _is_service_user
 
     if _user_status == None:
         _user_status = USER_STATUS.THIRDPARTY
@@ -74,8 +72,7 @@ def create_user(_redis, _request):
         "app_uuid": _app_uuid,
         "is_portal_user": _is_portal_user,
         "is_service_user": _is_service_user,
-        "is_distributor_user": _is_distributor_user,
-        "is_owner_user": False,
+        "is_owner_user": False
     }
     _row = AppUserData(**_values)
     _row.async_add(_redis)

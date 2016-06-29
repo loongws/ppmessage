@@ -25,7 +25,6 @@ function (yvSys, yvConstants) {
 
         show_badge: null,
         mute_notification: null,
-        is_distributor_user: null,
         silence_notification: null,
         mute_other_mobile_device: null,
 
@@ -72,7 +71,6 @@ function (yvSys, yvConstants) {
         }
         
         user.show_badge = !!data.user_show_badge;
-        user.is_distributor_user = !!data.is_distributor_user;
         user.mute_notification = !!data.user_mute_notification;
         user.silence_notification = !!data.user_silence_notification;
         user.mute_other_mobile_device = !!data.user_mute_other_mobile_device;
@@ -95,7 +93,6 @@ function (yvSys, yvConstants) {
         };
 
         user.show_badge = !!item.show_badge;
-        user.is_distributor_user = !!item.is_distributor_user;
         user.mute_notification = !!item.mute_notification;
         user.silence_notification = !!item.silence_notification;
 

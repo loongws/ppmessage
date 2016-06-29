@@ -26,20 +26,10 @@ class PPUpdateUserHandler(BaseHandler):
 
         _app_uuid = _request.get("app_uuid")
         _user_uuid = _request.get("user_uuid")
-        _is_distributor_user = _request.get("is_distributor_user")
         
         if _user_uuid == None or _app_uuid == None:
             self.setErrorCode(API_ERR.NO_PARA)
             return
-
-        if _is_distributor_user != None:
-            _key = AppUserData.__tablename__ + ".app_uuid." + _app_uuid + ".user_uuid." + _user_uuid + ".is_service_user.True"
-            _uuid = _redis.get(_key)
-            if _uuid != None:
-                _updated = generic_update(_redis, AppUserData, _uuid, {"is_distributor_user": _is_distributor_user})
-                if not _updated:
-                    self.setErrorCode(API_ERR.GENERIC_UPDATE)
-                    return
 
         _old_password = _request.get("old_password")
         _user_password = _request.get("user_password")
@@ -54,8 +44,7 @@ class PPUpdateUserHandler(BaseHandler):
         _data = copy.deepcopy(_request)
         del _data["app_uuid"]
         del _data["user_uuid"]
-        if _is_distributor_user != None:
-            del _data["is_distributor_user"]
+
         if _old_password != None:
             del _data["old_password"]
         

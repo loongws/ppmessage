@@ -134,8 +134,7 @@ class PPCreateAnonymousHandler(BaseHandler):
             "app_uuid": self.app_uuid,
             "is_portal_user": True,
             "is_service_user": False,
-            "is_owner_user": False,
-            "is_distributor_user": False,
+            "is_owner_user": False
         }
         _row = AppUserData(**_values)
         _row.async_add(self.application.redis)

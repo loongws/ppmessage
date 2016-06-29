@@ -53,7 +53,6 @@ angular.module("this_app")
             // Clear all cached data before
             $scope.new_group_desc = "";
             $scope.new_group_name = "";
-            $scope.new_group_is_distributor = false;
             $scope.create_group_error.name_error = '';
             $scope.create_group_error.desc_error = '';
             
@@ -272,7 +271,6 @@ angular.module("this_app")
             yvAppGroupingService.createGroup( {
                 new_group_name: $scope.new_group_name,
                 new_group_desc: $scope.new_group_desc,
-                new_group_is_distributor: $scope.new_group_is_distributor,
             }, function( r ) {
 
                 jQuery("#create_group").modal('hide');
@@ -427,7 +425,6 @@ angular.module("this_app")
                 group_uuid: $scope.selected_group.uuid,
                 group_name: $scope.selected_group.group_name,
                 group_desc: $scope.selected_group.group_desc,
-                is_distributor: $scope.selected_group.is_distributor,
             }, function( data ) {
                 jQuery( "#update_group" ).modal( 'hide' );
                 if ( data.error_code == 0 ) {

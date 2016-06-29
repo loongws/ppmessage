@@ -29,7 +29,7 @@ class PPCreateOrgGroupHandler(BaseHandler):
     an org group detail which just created.
     """
 
-    def _create(self, _app_uuid, _group_name, _group_desc, _is_distributor):
+    def _create(self, _app_uuid, _group_name, _group_desc):
         _redis = self.application.redis
         _uuid = str(uuid.uuid1())
         _row = OrgGroup(
@@ -37,8 +37,7 @@ class PPCreateOrgGroupHandler(BaseHandler):
             app_uuid=_app_uuid,
             group_name=_group_name,
             group_icon=create_user_icon(_uuid), 
-            group_desc=_group_desc,
-            is_distributor=_is_distributor,
+            group_desc=_group_desc
         )
         
         _row.async_add(_redis)
@@ -65,13 +64,9 @@ class PPCreateOrgGroupHandler(BaseHandler):
         _app_uuid = _body.get("app_uuid")
         _group_name = _body.get("group_name")
         _group_desc = _body.get("group_desc")
-        _is_distributor = _body.get("is_distributor")
 
-        if _is_distributor == None:
-            _is_distributor = False
-            
         if _app_uuid == None or _group_name == None or _group_desc == None:
             self.setErrorCode(API_ERR.NO_PARA)
             return        
-        self._create(_app_uuid, _group_name, _group_desc, _is_distributor)
+        self._create(_app_uuid, _group_name, _group_desc)
         return

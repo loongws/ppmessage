@@ -105,7 +105,6 @@ def create_app(_handler, _app_name, _user_uuid):
         "app_uuid": _app_uuid,
         "is_owner_user": True,
         "is_service_user": True,
-        "is_distributor_user": True,
         "is_portal_user": False
     }
     _row = AppUserData(**_data)
