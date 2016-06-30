@@ -108,7 +108,12 @@ class MainApplication(tornado.web.Application):
         if _get_config().get("config_status") != CONFIG_STATUS.RESTART:
             return
         _src = os.path.join(os.path.dirname(__file__), "../core/default_icon.png")
-        _dst = 
+        _dst = os.path.join(_get_config().get("server").get("identicon_store"), "default_icon.png")
+        if os.path.exists(_dst):
+            return
+        from shutil import copyfile
+        copyfile(_src, _dst)
+        return
 
 
 def _main():
