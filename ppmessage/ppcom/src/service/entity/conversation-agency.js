@@ -5,26 +5,23 @@
 //     - If can not get default conversation, generally meaning we should waiting ... waiting ... the server to
 //       give us a conversation when it become avaliable.
 //
-// - `create` request create a conversation by `group_uuid` or `member_list`
+// - `create` request create a conversation by `member_list`
 //     - If can not get conversation, meaning you should waiting ...
 //       
 // - `cancel` cancel request default conversation
 //
 Service.$conversationAgency = ( function() {
 
-    var STATE = { REQUESTING: 0, // in requesting
-                  DONE: 1, // we have fetched default conversation successfully
-                  CANCEL: 2 // we have cancel request the default conversation
-                },
+    var STATE = {
+        REQUESTING: 0, // in requesting
+        DONE: 1, // we have fetched default conversation successfully
+        CANCEL: 2 // we have cancel request the default conversation
+    },
 
         state = STATE.REQUESTING,
-
         defaultConversation,
-
-        waitingGroupUUID, // group_uuid , which waiting to get an avaliable conversation arrived from WebSocket
-
         inDebuging = false;
-
+    
     //////// API ///////////
     
     return {
@@ -36,8 +33,6 @@ Service.$conversationAgency = ( function() {
         cancel: cancelWaitingCreateConversation,
 
         isDefaultConversationAvaliable: isDefaultConversationAvaliable,
-        isRequestingGroupConversation: isRequestingGroupConversation
-        
     }
 
     ///// Implement //////////
@@ -92,21 +87,15 @@ Service.$conversationAgency = ( function() {
 
     // @param config {
     //     user_uuid: xxx, create a conversation with `member_list`
-    //     group_uuid: xxx : create a `group` conversation
     // }
-    // provided `user_uuid` OR `group_uuid`, don't provide both
+    // provided `user_uuid`
     function asyncCreateConversation( config, callback ) {
-        if ( config.user_uuid !== undefined && config.group_uuid !== undefined ) throw new Error();
-
         state = STATE.REQUESTING;
-        waitingGroupUUID = config.group_uuid; // Assign waiting group UUID
         
         Service.$api.createPPComConversation( {
-            device_uuid: Service.$user.quickDeviceUUID(),
             user_uuid: Service.$user.getUser().getInfo().user_uuid,
             app_uuid: Service.$ppSettings.getAppUuid(),
             conversation_type: Service.Constants.MESSAGE.TO_TYPE,
-            group_uuid: ( config.group_uuid !== undefined ) ? config.group_uuid : undefined,
             member_list: ( config.user_uuid !== undefined ) ? [ config.user_uuid ] : undefined
         }, function( r ) {
 
@@ -115,7 +104,6 @@ Service.$conversationAgency = ( function() {
             if ( !shouldWaiting( r ) ) {
                 result = r;
                 state = STATE.DONE;
-                waitingGroupUUID = undefined; // Clear waiting group UUID
             }
 
             $onResult( result, callback );
@@ -135,23 +123,16 @@ Service.$conversationAgency = ( function() {
         Service.$api.cancelWaitingCreateConversation( {
             app_uuid: Service.$app.appId(),
             user_uuid: Service.$user.quickId(),
-            device_uuid: Service.$user.quickDeviceUUID(),
-            group_uuid: waitingGroupUUID
         }, onCompleted, onCompleted );
 
         function onCompleted( someThing ) {
             state = STATE.CANCEL;
-            waitingGroupUUID = undefined;
         }
         
     }
 
     function isDefaultConversationAvaliable() {
         return defaultConversation !== undefined;
-    }
-
-    function isRequestingGroupConversation() {
-        return waitingGroupUUID !== undefined;
     }
 
     // === helpers ===

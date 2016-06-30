@@ -96,6 +96,7 @@ class PPComGetDefaultConversationHandler(BaseHandler):
             if len(_user) == 0:
                 continue
             _return_datas.append(_user)
+
         return _return_datas
 
     def _sort_users(self, _users):
@@ -192,6 +193,8 @@ class PPComGetDefaultConversationHandler(BaseHandler):
             self.setErrorCode(API_ERR.NO_CONVERSATION_MEMBER)
             logging.error("Existed conversation but no users: %s" % str(_conversation_uuid))
             return
+
+        _users.remove(_user_uuid)
         _users = self._get_users(_users)
         _users = self._sort_users(_users)
 
@@ -199,4 +202,5 @@ class PPComGetDefaultConversationHandler(BaseHandler):
         self._get_app_welcome(_r)
         _r.update(_conversation)
         _r["user_list"] = _users
+
         return

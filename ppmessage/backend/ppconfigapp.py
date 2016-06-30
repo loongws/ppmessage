@@ -313,6 +313,7 @@ class FirstHandler(tornado.web.RequestHandler):
         _row.create_redis_keys(self.application.redis)
         _insert_into(_row)
         self._user_uuid = _user_uuid
+        self._user_fullname = _user_fullname
         return True
 
     def _create_team(self, _request):
@@ -338,11 +339,13 @@ class FirstHandler(tornado.web.RequestHandler):
         from ppmessage.db.models import AppUserData
         _user_uuid = self._user_uuid
         _app_uuid = self._app_uuid
+        _user_fullname = self._user_fullname
         
         _row = AppUserData(
             uuid=str(uuid.uuid1()),
             app_uuid = _app_uuid,
             user_uuid=_user_uuid,
+            user_fullname = _user_fullname,
             is_service_user = True,
             is_owner_user = True,
             is_portal_user = False                                    

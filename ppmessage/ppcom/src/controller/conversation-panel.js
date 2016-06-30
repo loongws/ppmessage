@@ -108,7 +108,10 @@ Ctrl.$conversationPanel = ( function() {
     function startPollingWaitingQueueLength() {
         Service.$polling.run( { eventID: POLLING_QUEUE_LENGTH_EVENT_ID,
                                 apiFunc: Service.$api.getWaitingQueueLength,
-                                apiRequestParams: { app_uuid: Service.$app.appId() },
+                                apiRequestParams: {
+                                    app_uuid: Service.$app.appId(),
+                                    user_uuid: Service.$user.quickId()
+                                },
                                 onGet: onGet } );
     }
 
@@ -122,6 +125,10 @@ Ctrl.$conversationPanel = ( function() {
         if ( success ) {
             var text = Service.$tools.format( Service.Constants.i18n( 'WAITING_LENGTH_HINT' ), response.length );
             View.$loading.text( text );
+            //Service.$debug.h().d(response);
+            if (response.conversation_uuid) {
+                Service.$pubsub.publish(Service.$conversationManager.EVENT.CONVERSATION_UUID_AVALIABLE, response.conversation_uuid);
+            }
         }
     }
     

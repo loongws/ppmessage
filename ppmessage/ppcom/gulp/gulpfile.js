@@ -57,7 +57,7 @@ gulp.task('scripts', ['merge'], function(done) {
         .pipe(concat('pp-library-template.js'))
         .pipe(gulp.dest(buildConfig.distPath))
         .pipe(ngAnnotate())
-        .pipe(uglify())
+        //.pipe(uglify())
         .on('error', function(e) {
             console.log(e);
             done();        

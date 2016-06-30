@@ -53,7 +53,6 @@ from .ppgetnogroupuserlisthandler import PPGetNoGroupUserListHandler
 from .ppgetorggroupconversationhandler import PPGetOrgGroupConversationHandler
 from .ppupdateconversationmemberhandler import PPUpdateConversationMemberHandler
 
-from .ppgetdefaultconversationhandler import PPGetDefaultConversationHandler
 from .ppselectusersbygroupalgorithmhandler import PPSelectUsersByGroupAlgorithmHandler
 
 from .ppupdateappinfohandler import PPUpdateAppInfoHandler
@@ -184,7 +183,6 @@ def getWebServiceHandlers():
     handler_list.append((r"/PP_GET_ORG_GROUP_CONVERSATION", PPGetOrgGroupConversationHandler))
     handler_list.append((r"/PP_UPDATE_CONVERSATION_MEMBER", PPUpdateConversationMemberHandler))
 
-    handler_list.append((r"/PP_GET_DEFAULT_CONVERSATION", PPGetDefaultConversationHandler))
     handler_list.append((r"/PP_SELECT_USERS_BY_GROUP_ALGORITHM", PPSelectUsersByGroupAlgorithmHandler))
 
     handler_list.append((r"/PP_UPDATE_APP_INFO", PPUpdateAppInfoHandler))

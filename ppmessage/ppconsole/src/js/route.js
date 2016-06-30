@@ -72,6 +72,12 @@ angular.module("this_app.route", ["ui.router", "this_app.constants"])
                 controller: "GroupingCtrl"
             })
 
+            .state("app.settings.group", {
+                url: "/group",
+                templateUrl: yvConstants.TEMPLATE_PREFIX + "settings/group.html",
+                controller: "GroupCtrl"
+            })
+
             .state("app.glance", {
                 url: "/glance",
                 templateUrl: yvConstants.TEMPLATE_PREFIX + "settings/glance.html",

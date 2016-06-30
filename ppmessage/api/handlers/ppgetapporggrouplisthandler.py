@@ -43,10 +43,9 @@ class PPGetAppOrgGroupListHandler(BaseHandler):
             else:
                 _group["user_count"] = len(_users)
         
-        _pre = ConversationInfo.__tablename__ + \
-               ".app_uuid." + _app_uuid + \
-               ".group_uuid."
+        _pre = ConversationInfo.__tablename__ + ".app_uuid." + _app_uuid + ".group_uuid."
         _pi = _redis.pipeline()
+
         for _group_uuid in _group_uuid_list:
             _key = _pre + _group_uuid
             _pi.get(_key)

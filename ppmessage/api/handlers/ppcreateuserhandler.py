@@ -70,6 +70,7 @@ def create_user(_redis, _request):
         "uuid": _data_uuid,
         "user_uuid": _du_uuid,
         "app_uuid": _app_uuid,
+        "user_fullname": _user_values["user_fullname"],
         "is_portal_user": _is_portal_user,
         "is_service_user": _is_service_user,
         "is_owner_user": False

@@ -78,7 +78,6 @@ module.exports = {
         "../src/service/websocket/sys.js",
         "../src/service/websocket/typing.js",
         "../src/service/websocket/unknown.js",
-        "../src/service/websocket/conversation.js",
 
         "../src/view/pp-view2.js",
         "../src/view/element.js",

@@ -77,7 +77,7 @@ class PPConsoleSignupHandler(BaseHandler):
         _r["user"] = _user_values
 
         logging.info(_user_values)
-        _app_values = create_app(self, _app_name, _user_values["uuid"])
+        _app_values = create_app(self, _app_name, _user_values["uuid"], _user_values["user_fullname"])
         _r["app"] = _app_values
 
         self._send_email(_user_values, _app_values)
