@@ -58,9 +58,12 @@ class PPComCreateConversationHandler(BaseHandler):
         _data_uuid = _redis.get(_key)
         if _data_uuid != None:
             _key = ConversationUserData.__tablename__ + ".uuid." + _data_uuid
+            logging.info(_redis.hgetall(_key))
             _data = _redis.hmget(_key, ["conversation_name", "conversation_icon"])
+            logging.info("---------%s--------" % str(_data))
             _r["conversation_name"] = _data[0]
             _r["conversation_icon"] = _data[1]
+        logging.info(_r)
         return
 
     def _create(self, _member_uuid, _request):
@@ -69,11 +72,11 @@ class PPComCreateConversationHandler(BaseHandler):
         _redis = self.application.redis
 
         _key = DeviceUser.__tablename__ + ".uuid." + _user_uuid
-        _portal_user_name = _redis.hget(_key, "user_name")
+        _portal_user_name = _redis.hget(_key, "user_fullname")
         _portal_user_icon = _redis.hget(_key, "user_icon")
 
         _key = DeviceUser.__tablename__ + ".uuid." + _member_uuid
-        _member_user_name = _redis.hget(_key, "user_name")
+        _member_user_name = _redis.hget(_key, "user_fullname")
         _member_user_icon = _redis.hget(_key, "user_icon")
         
         _conversation_uuid = str(uuid.uuid1())
