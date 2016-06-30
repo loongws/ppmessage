@@ -50,7 +50,6 @@ Ctrl.$groupMembers = ( function() {
             
             conversation && Service.$conversationManager.activeConversation( conversation.token );
             Ctrl.$conversationContent.show( conversation );
-
             $onResult( undefined, callback );
             
         } );

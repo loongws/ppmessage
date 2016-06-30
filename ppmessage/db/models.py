@@ -480,12 +480,10 @@ class OrgGroup(CommonMixin, BaseModel):
         _key = self.__tablename__ + ".app_uuid." + self.app_uuid
         _redis.sadd(_key, self.uuid)
 
-        if self.parent_group_uuid == None:
-            _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".root_groups"
-            _redis.sadd(_key, self.uuid)
+        _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".sorted"
+        _redis.zadd(_key, self.group_name + ":" + self.uuid, 0)
 
-        self.add_redis_search_index(_redis, self.__tablename__, self.group_name, self.uuid)
-        
+        self.add_redis_search_index(_redis, self.__tablename__, self.group_name, self.uuid)        
         return
 
     def update_redis_keys(self, _redis):
@@ -495,33 +493,30 @@ class OrgGroup(CommonMixin, BaseModel):
             
             _key = self.__tablename__ + ".uuid." + self.uuid
             _old = _redis.hget(_key, "group_name")
+            _app_uuid = _redis.hget(_key, "app_uuid")
+
+            _key_n = self.__tablename__ + ".app_uuid." + _app_uuid + ".sorted"
+            _redis.zadd(_key_n, self.group_name + ":" + self.uuid)
             
             if _old != None and len(_old) != 0 and _old != self.group_name:
                 self.remove_redis_search_index(_redis, self.__tablename__, _old, self.uuid)
+                _redis.zrem(_key_n, self.group_name + ":" + self.uuid)
 
         CommonMixin.update_redis_keys(self, _redis)
-
-        _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".root_groups"
-        if self.parent_group_uuid == None:
-            _redis.sadd(_key, self.uuid)
-        else:
-            _redis.srem(_key, self.uuid)
-
         return
     
     def delete_redis_keys(self, _redis):
         _obj = redis_hash_to_dict(_redis, OrgGroup, self.uuid)
-        if _obj == None or _obj["app_uuid"] == None:
+        if _obj == None or _obj["app_uuid"] == None or _obj["group_name"] == None:
             return
+
         _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"]
         _redis.srem(_key, _obj["uuid"])
 
-        if _obj.get("parenet_group_uuid") == None:
-            _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".root_groups"
-            _redis.srem(_key, self.uuid)
-
-        if _obj.get("group_name") != None:
-            self.remove_redis_search_index(_redis, self.__tablename__, _obj["group_name"], _obj["uuid"])
+        _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + ".sorted"
+        _redis.zrem(_key, _obj["group_name"] + ":" + _obj["uuid"])
+        
+        self.remove_redis_search_index(_redis, self.__tablename__, _obj["group_name"], _obj["uuid"])
 
         CommonMixin.delete_redis_keys(self, _redis)
         return
@@ -612,7 +607,6 @@ class OrgGroupSubGroupData(CommonMixin, BaseModel):
         
         CommonMixin.delete_redis_keys(self, _redis)
         return
-
 
 class MaterialRefInfo(CommonMixin, BaseModel):
     """
@@ -889,6 +883,7 @@ class AppUserData(CommonMixin, BaseModel):
     
     app_uuid = Column("app_uuid", String(64))
     user_uuid = Column("user_uuid", String(64))
+    user_fullname = Column("user_fullname", String(64))
 
     is_portal_user = Column("is_portal_user", Boolean)
     is_service_user = Column("is_service_user", Boolean)
@@ -928,12 +923,35 @@ class AppUserData(CommonMixin, BaseModel):
                ".is_service_user." + str(self.is_service_user)
         _redis.sadd(_key, self.user_uuid)
 
+        _key = self.__tablename__ + \
+               ".app_uuid." + _obj["app_uuid"] + \
+               ".is_service_user." + str(_obj["is_service_user"]) + ".sorted"
+        _redis.zadd(_key, _obj["user_fullname"] + ":" + _obj["user_uuid"])
+
         return
+
+    def update_redis_keys(self, _redis, *args, **kwargs):
+        if self.user_fullname == None:
+            return
+
+        _obj = redis_hash_to_dict(_redis, AppUserData, self.uuid)
+        if self.user_fullname == _obj["user_fullname"]:
+            return
+
+        _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
+               ".is_service_user." + str(_obj["is_service_user"]) + ".sorted"
+        _redis.zrem(_key, _obj["user_fullname"] + ":" + _obj["user_uuid"])
+        _redis.zadd(_key, _obj["user_fullname"] + ":" + _obj["user_uuid"])
         
+        CommonMixin.update_redis_keys(self, _redis, *args, **kwargs)
+        
+        return
+            
     def delete_redis_keys(self, _redis):
         _obj = redis_hash_to_dict(_redis, AppUserData, self.uuid)
         if _obj == None:
             return
+
         _key = self.__tablename__ + \
                ".app_uuid." + _obj["app_uuid"] + \
                ".user_uuid." + _obj["user_uuid"] + \
@@ -954,7 +972,12 @@ class AppUserData(CommonMixin, BaseModel):
                ".app_uuid." + _obj["app_uuid"] + \
                ".is_service_user." + str(_obj["is_service_user"])
         _redis.srem(_key, _obj["user_uuid"])
-        
+
+        _key = self.__tablename__ + \
+               ".app_uuid." + _obj["app_uuid"] + \
+               ".is_service_user." + str(_obj["is_service_user"]) + ".sorted"
+        _redis.zrem(_key, _obj["user_fullname"] + ":" + _obj["user_uuid"])
+
         CommonMixin.delete_redis_keys(self, _redis)
         return
 

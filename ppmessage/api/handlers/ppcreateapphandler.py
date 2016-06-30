@@ -72,7 +72,7 @@ def _create_console_client_apiinfo(_handler, user_uuid, app_uuid):
     _create_apiinfo(_handler, user_uuid, app_uuid, API_LEVEL.THIRD_PARTY_CONSOLE)
     return
 
-def create_app(_handler, _app_name, _user_uuid):
+def create_app(_handler, _app_name, _user_uuid, _user_fullname):
     _redis = _handler.application.redis                               
 
     _app_key = str(uuid.uuid1())
@@ -103,6 +103,7 @@ def create_app(_handler, _app_name, _user_uuid):
         "uuid": _data_uuid,
         "user_uuid": _user_uuid,
         "app_uuid": _app_uuid,
+        "user_fullname": _user_fullname,
         "is_owner_user": True,
         "is_service_user": True,
         "is_portal_user": False
@@ -128,13 +129,14 @@ class PPCreateAppHandler(BaseHandler):
 
         _request = json.loads(self.request.body)
         _user_uuid = _request.get("user_uuid")
+        _user_fullname = _request.get("user_fullname")
         _app_name = _request.get("app_name")
                 
         if _user_uuid == None or _app_name == None:
             self.setErrorCode(API_ERR.NO_PARA)
             return
 
-        _app_values = create_app(self, _app_name, _user_uuid)
+        _app_values = create_app(self, _app_name, _user_uuid, _user_fullname)
         _r = self.getReturnData()
         _r.update(_app_values)
         return

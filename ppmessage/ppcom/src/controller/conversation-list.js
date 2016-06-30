@@ -3,8 +3,7 @@ Ctrl.$conversationList = ( function() {
     //////// API /////////
     return {
         show: show,
-        showItem: showItem,
-        
+        showItem: showItem,        
         hide: hide
     }
 
@@ -40,20 +39,9 @@ Ctrl.$conversationList = ( function() {
                     name,
                     summary;
 
-                switch( item.type ) {
-                case Service.$conversationManager.TYPE.CONVERSATION:
-
-                    var conversationData = item.conversation_data || item;
-                    icon = Service.$tools.icon.get( conversationData.conversation_icon );
-                    name = conversationData.conversation_name;
-                    
-                    break;
-
-                case Service.$conversationManager.TYPE.GROUP:
-                    name = item.group_name;
-                    icon = Service.$tools.icon.get( item.group_icon );
-                    break;
-                }
+                var conversationData = item.conversation_data || item;
+                icon = Service.$tools.icon.get( conversationData.conversation_icon );
+                name = conversationData.conversation_name;
 
                 viewData.push( {
                     uuid: uuid,
@@ -71,19 +59,15 @@ Ctrl.$conversationList = ( function() {
 
             conversationList && $.each( conversationList, function( index, item ) {
 
-                if ( item.type === Service.$conversationManager.TYPE.CONVERSATION ) {
-
-                    var token = item.token,
-                        m = Modal.$conversationContentGroup.get ( token ),
-                        $groupItemView = View.$groupContentItem;
-
-                    if ( m.unreadCount() > 0 ) {
-                        $groupItemView.showUnread( token , m.unreadCount() );
-                    } else {
-                        $groupItemView.hideUnread( token );
-                    }       
-                    
-                }
+                var token = item.token,
+                    m = Modal.$conversationContentGroup.get ( token ),
+                    $groupItemView = View.$groupContentItem;
+                
+                if ( m.unreadCount() > 0 ) {
+                    $groupItemView.showUnread( token , m.unreadCount() );
+                } else {
+                    $groupItemView.hideUnread( token );
+                }       
                 
             } );
             
@@ -98,32 +82,13 @@ Ctrl.$conversationList = ( function() {
             TYPE = $conversationManager.TYPE;
             
         if ( conversation !== undefined ) {
-
             before();
-
-            switch( conversation.type ) {
-            case TYPE.GROUP:
-                showItemGroup( conversation );
-                break;
-
-            case TYPE.CONVERSATION:
-                showItemConversation( conversation );
-                break;
-            }
-            
+            showItemConversation( conversation );
         }
 
         function before() {
             View.$loading.show(); // show loading view
             View.$groupContent.hide(); // Hide group-content-view
-        }
-
-        function showItemGroup( conversation ) {
-            Service.$conversationManager.asyncGetConversation( {
-                group_uuid: conversation.uuid
-            }, function( r ) {
-                show( r && r.token );
-            } );
         }
 
         function showItemConversation( conversation ) {
@@ -171,38 +136,30 @@ Ctrl.$conversationList = ( function() {
 
         function load( callback ) {
             conversationList && $.each( conversationList, function( index, item ) {
-                switch ( item.type ) {
-                case Service.$conversationManager.TYPE.CONVERSATION:
                     
-                    // 1. try to find latest_message from local
-                    var modal = Modal.$conversationContentGroup.get ( item.token );
-                    if ( modal && !modal.isEmpty() ) {
-                        var lastMsg = modal.getMessages()[ modal.getMessages().length - 1 ];
-                        if ( callback ) callback( item.token, Service.PPMessage.getMessageSummary( lastMsg ) );
-                        return;
-                    }
-                    
-                    // 2. try to find from item.latest_message
-                    if ( item.latest_message ) {
-                        new Service
-                            .ApiMessageAdapter( Service.$json.parse( item.latest_message.message_body ) )
-                            .asyncGetPPMessage( function( ppMessage, success ) {
-
-                                if ( success ) {
-                                    if ( callback ) callback( item.token, success ? ppMessage.getMessageSummary() : "" );
-                                }
-                                
-                            } );
-                    }
-                    break;
-
-                case Service.$conversationManager.TYPE.GROUP:
-                    if ( callback ) callback( item.token, item.group_desc );
-                    break;
+                // 1. try to find latest_message from local
+                var modal = Modal.$conversationContentGroup.get ( item.token );
+                if ( modal && !modal.isEmpty() ) {
+                    var lastMsg = modal.getMessages()[ modal.getMessages().length - 1 ];
+                    if ( callback ) callback( item.token, Service.PPMessage.getMessageSummary( lastMsg ) );
+                    return;
                 }
-            } );   
+                    
+                // 2. try to find from item.latest_message
+                if ( item.latest_message ) {
+                    new Service
+                        .ApiMessageAdapter( Service.$json.parse( item.latest_message.message_body ) )
+                        .asyncGetPPMessage( function( ppMessage, success ) {
+                            
+                            if ( success ) {
+                                if ( callback ) callback( item.token, success ? ppMessage.getMessageSummary() : "" );
+                            }
+                                
+                        } );
+                }
+                
+            } );
         }
-        
     }
     
 } )();

@@ -4,19 +4,13 @@
     yvAppPeopleService.$inject = [ 'yvAjax', 'yvUser', 'yvCallbackService', 'yvDebug' ];
     function yvAppPeopleService( yvAjax, yvUser, yvCallbackService, yvDebug ) {
 
-        var DEFAULT_PAGE_COUNT = 12,
-            DEFAULT_MAX_SERVICE_USERS_COUNT = 100,
-            UP_TO_MAX_SERVICE_USERS_ERROR_CODE = 10000,
-            jQuery = $;
-
+        var DEFAULT_PAGE_COUNT = 12, jQuery = $;
+        
         ////// Api //////////
 
         return {
-            UP_TO_MAX_SERVICE_USERS_ERROR_CODE: UP_TO_MAX_SERVICE_USERS_ERROR_CODE,
-            
             getAppServiceUsers: getAppServiceUsers,
             getAppServiceUsersWithPagination: getAppServiceUsersWithPagination,
-
             createServiceUser: createServiceUser
         }
 
@@ -87,22 +81,11 @@
         }
 
         function createServiceUser( settings, successCallback, errorCallback ) {
-
             getAppServiceUsers( function( users ) {
-                
-                if ( users.length >= DEFAULT_MAX_SERVICE_USERS_COUNT ) {
-
-                    // make a fake successCallback with `error_code: UP_TO_MAX_SERVICE_USERS_ERROR_CODE`
-                    yvCallbackService.success( { error_code: UP_TO_MAX_SERVICE_USERS_ERROR_CODE }, successCallback );
-                    
-                } else {
-                    yvAjax.create_user( settings ).success( successCallback ).error( errorCallback );
-                }
-                
+                yvAjax.create_user( settings ).success( successCallback ).error( errorCallback );
             }, function( e ) {
                 yvCallbackService.error( e, errorCallback );
             } );
-            
         }
 
         function filter( settings, users ) {
@@ -122,7 +105,6 @@
             } );
 
             return result;
-            
         }
 
         function pagination( settings, users ) {
@@ -138,7 +120,6 @@
             while ( ( user = users [ i++ ] ) !== undefined && i <= endIndex ) {
                 result.push( user );
             }
-
             return result;            
         }
 
@@ -149,7 +130,6 @@
                 return a.updatetime > b.updatetime ? -1 : 1;
             }
         }
-        
     }
 
     angular.module("this_app.services").factory("yvAppPeopleService", yvAppPeopleService);

@@ -2,13 +2,8 @@
 // @documentation
 //     every conversation has several filed named `type`, `token`, `ts`
 //
-//     `type`:
-//     - `TYPE.GROUP`
-//     - `TYPE.CONVERSATION`
 //
 //     `token`: as the conversation's unique identifier:
-//     - `TYPE.GROUP`: `token` === `group_uuid`
-//     - `TYPE.CONVERSATION`: `token` === `conversation_uuid`
 //
 //     `ts`: used for sort conversations
 //
@@ -53,17 +48,14 @@
 //
 Service.$conversationManager = ( function() {
 
-    var TYPE = { GROUP: 'GROUP', CONVERSATION: 'CONVERSATION' },
-        EVENT = { WAITING: 'CONVERSATION_MANAGER/WAITING',
+    var EVENT = { WAITING: 'CONVERSATION_MANAGER/WAITING',
                   AVALIABLE: 'CONVERSATION_MANAGER/AVALIABLE' },
-        WEIGHT_GROUP = 10000, // let `TYPE.GROUP` has more priority then `TYPE.CONVERSATION` when sort `conversationList`
         conversationList = [],
         activeToken,
-        hasLoadedAllGroupListAndConversationList = false;
+        hasLoadedAllConversationList = false;
 
     ////////// API ///////////
     return {
-        TYPE: TYPE,
         EVENT: EVENT,
 
         init: init,
@@ -159,46 +151,36 @@ Service.$conversationManager = ( function() {
     /////// asyncGetList //////////////
     function asyncGetList( callback ) {
 
-        if ( hasLoadedAllGroupListAndConversationList ) {
+        if ( hasLoadedAllConversationList ) {
             $onResult( sort( conversationList ), callback );
             return;
         }
         
-        // 1. asyncGetOrgGroups
-        Service.$orgGroups.asyncGetAppOrgGroupList( function( groupList ) {
+        // 2. asyncGetAllConversations
+        Service.$api.getConversationList( {
+            user_uuid: Service.$user.getUser().getInfo().user_uuid,
+            app_uuid: Service.$ppSettings.getAppUuid()
+        }, function ( response ) {
 
-            var list = ( groupList || [] ).slice();
-            list && $.each( list, function( index, item ) {
-                item.user_count > 0 && push( group( item ) ); // make sure `group.user_count` > 0
-            } );
+            if ( response && response.error_code === 0 ) {
+                var list = ( response.list || [] ).slice();
+                list && $.each( list, function( index, item ) {
+                    push( conversation( item ) );
+                } );
+            }
 
-            // 2. asyncGetAllConversations
-            Service.$api.getConversationList( {
-                user_uuid: Service.$user.getUser().getInfo().user_uuid,
-                app_uuid: Service.$ppSettings.getAppUuid()
-            }, function ( response ) {
-
-                if ( response && response.error_code === 0 ) {
-                    var list = ( response.list || [] ).slice();
-                    list && $.each( list, function( index, item ) {
-                        push( conversation( item ) );
-                    } );
-                }
-
-                // 3. success callback
-                hasLoadedAllGroupListAndConversationList = true;
-                $onResult( sort( conversationList ), callback );
-                return;
-                
-            }, function ( error ) {
-
-                // 3. error callback
-                hasLoadedAllGroupListAndConversationList = true;
-                $onResult( sort( conversationList ), callback );
-                return;
-                
-            } );
+            // 3. success callback
+            hasLoadedAllConversationList = true;
+            $onResult( sort( conversationList ), callback );
+            return;
             
+        }, function ( error ) {
+            
+            // 3. error callback
+            hasLoadedAllConversationList = true;
+            $onResult( sort( conversationList ), callback );
+            return;
+                
         } );
     }
 
@@ -206,14 +188,12 @@ Service.$conversationManager = ( function() {
     
     // @param config {
     //     user_uuid: xxx, create a conversation with `member_list`
-    //     group_uuid: xxx : create a `group` conversation
     // }
-    // provided `user_uuid` OR `group_uuid`, don't provide both
+    // provided `user_uuid`
     function asyncGetConversation( config, callback ) {
-        if ( config.user_uuid !== undefined && config.group_uuid !== undefined ) throw new Error();
+        if ( config.user_uuid !== undefined ) throw new Error();
 
-        var exist = ( config.user_uuid !== undefined ) ? find( config.user_uuid ) : // find by user_uuid
-            ( config.group_uuid != undefined ) ? findByGroupId( config.group_uuid ) : undefined; // find by group_uuid
+        var exist = ( config.user_uuid !== undefined ) ? find( config.user_uuid ) : undefined; 
 
         if ( !Service.$tools.isNull( exist ) ) {
             $onResult( exist, callback );
@@ -242,21 +222,6 @@ Service.$conversationManager = ( function() {
                 }
             } );
             return r;
-            
-        }
-
-        function findByGroupId( groupId ) {
-
-            // find conversation id by group id
-            var conversationId;
-            $.each( conversationList, function( index, item ) {
-                if ( item.type === TYPE.GROUP &&
-                     item.uuid === groupId ) {
-                    conversationId = item.conversation_uuid;
-                }
-            } );
-
-            return conversationId && findByToken( conversationId );
             
         }
 
@@ -326,17 +291,6 @@ Service.$conversationManager = ( function() {
         return item;
     }
 
-    ////// let `item` become an `TYPE.GROUP`
-    function group( item ) {
-
-        item [ 'type' ] = TYPE.GROUP;
-        item [ 'token' ] = item.uuid;
-        item [ 'ts' ] = Service.$tools.getTimestamp( item.updatetime );
-        
-        return item;
-        
-    }
-
     function findByToken( token ) {
 
         var find,
@@ -371,22 +325,13 @@ Service.$conversationManager = ( function() {
         return conversations.sort( compare );
 
         function compare( a, b ) {
-
-            var weightA = weight( a ),
-                weightB = weight( b );
-
-            if ( weightA > weightB ) return -1;
-            if ( weightA < weightB ) return 1;
             
             var timestampA = a.ts,
                 timestampB = b.ts;
 
             return timestampB - timestampA;
         }
-
-        function weight( a ) {
-            return ( a.type === TYPE.GROUP ) ? WEIGHT_GROUP : 0;
-        }
+        
     }
 
     function push( conversation ) {

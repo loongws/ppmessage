@@ -214,21 +214,6 @@
             this._post("/PP_GET_WELCOME_TEAM", $.extend( {}, data ), success, fail);
         };
 
-        // data: { app_uuid: xxx }
-        this.getAppOrgGroupList = function(data, success, fail) {
-            this._post('/PP_GET_APP_ORG_GROUP_LIST', $.extend({}, data), success, fail);
-        };
-
-        // data: { app_uuid: xxx, group_uuid: xxx }
-        this.getOrgGroupUserList = function ( data, success, fail ) {
-            this._post( '/PP_GET_ORG_GROUP_USER_LIST', $.extend( {}, data ), success, fail );
-        };
-
-        // data: { app_uuid: xxx, group_uuid: xxx }
-        this.getOrgGroupConversationId = function ( data, success, fail ) {
-            this._post( '/PP_GET_ORG_GROUP_CONVERSATION', $.extend( {}, data ), success, fail );
-        };
-
         // data: { app_uuid: xxx, user_uuid: xxx }
         this.getDefaultConversation = function ( data, success, fail ) {
             this._post( '/PP_GET_DEFAULT_CONVERSATION', $.extend( {}, data ), success, fail );
