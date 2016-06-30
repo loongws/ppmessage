@@ -48,8 +48,11 @@
 //
 Service.$conversationManager = ( function() {
 
-    var EVENT = { WAITING: 'CONVERSATION_MANAGER/WAITING',
-                  AVALIABLE: 'CONVERSATION_MANAGER/AVALIABLE' },
+    var EVENT = {
+        WAITING: 'CONVERSATION_MANAGER/WAITING',
+        AVALIABLE: 'CONVERSATION_MANAGER/AVALIABLE',
+        CONVERSATION_UUID_AVALIABLE: 'NOTIFY_CONVERSATION/AVALIABLE'
+    },
         conversationList = [],
         activeToken,
         hasLoadedAllConversationList = false;
@@ -75,7 +78,7 @@ Service.$conversationManager = ( function() {
     function init() {
         var $pubsub = Service.$pubsub;
         
-        $pubsub.subscribe( Service.$notifyConversation.EVENT.AVALIABLE, function( topics, conversationUUID ) {
+        $pubsub.subscribe( EVENT.CONVERSATION_UUID_AVALIABLE, function( topics, conversationUUID ) {
 
             Service.$conversationAgency.requestInfo( conversationUUID, function( conv ) {
                 
@@ -191,7 +194,6 @@ Service.$conversationManager = ( function() {
     // }
     // provided `user_uuid`
     function asyncGetConversation( config, callback ) {
-        if ( config.user_uuid !== undefined ) throw new Error();
 
         var exist = ( config.user_uuid !== undefined ) ? find( config.user_uuid ) : undefined; 
 

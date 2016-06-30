@@ -6,14 +6,12 @@ Service.$notifyFactory = ( function() {
         MSG:     'MSG', // message arrived
         ONLINE : 'ONLINE',
         SYS:     'SYS',
-        TYPING : 'TYPING',
-        CONVERSATION: 'CONVERSATION'
+        TYPING : 'TYPING'
     };
 
     var WHAT = {
         AUTH: "AUTH",
-        SEND: 'SEND',
-        CONVERSATION: 'CONVERSATION'
+        SEND: 'SEND'
     };
 
     //////// API ///////////
@@ -51,10 +49,6 @@ Service.$notifyFactory = ( function() {
             handler = Service.$notifySys;
             break;
 
-        case TYPE.CONVERSATION:
-            handler = Service.$notifyConversation;
-            break;
-
         default:
             handler = Service.$notifyUnknown;
             break;
@@ -85,12 +79,7 @@ Service.$notifyFactory = ( function() {
 
             case WHAT.SEND:
                 t = TYPE.MSG;
-                break;
-
-            case WHAT.CONVERSATION:
-                t = TYPE.CONVERSATION;
-                break;
-                
+                break;                
             }
             
         }

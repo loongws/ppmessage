@@ -90,12 +90,9 @@ Service.$conversationAgency = ( function() {
     // }
     // provided `user_uuid`
     function asyncCreateConversation( config, callback ) {
-        if ( config.user_uuid !== undefined ) throw new Error();
-
         state = STATE.REQUESTING;
         
         Service.$api.createPPComConversation( {
-            device_uuid: Service.$user.quickDeviceUUID(),
             user_uuid: Service.$user.getUser().getInfo().user_uuid,
             app_uuid: Service.$ppSettings.getAppUuid(),
             conversation_type: Service.Constants.MESSAGE.TO_TYPE,
@@ -126,7 +123,6 @@ Service.$conversationAgency = ( function() {
         Service.$api.cancelWaitingCreateConversation( {
             app_uuid: Service.$app.appId(),
             user_uuid: Service.$user.quickId(),
-            device_uuid: Service.$user.quickDeviceUUID()
         }, onCompleted, onCompleted );
 
         function onCompleted( someThing ) {
