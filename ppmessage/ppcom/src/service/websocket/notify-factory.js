@@ -1,19 +1,20 @@
 Service.$notifyFactory = ( function() {
 
-    var TYPE = { AUTH: 'AUTH',
-                 ACK: 'ACK', // ack
-                 MSG: 'MSG', // message arrived
-                 ONLINE : 'ONLINE',
-                 SYS: 'SYS',
-                 TYPING : 'TYPING',
-                 CONVERSATION: 'CONVERSATION'
-               },
+    var TYPE = {
+        AUTH:    'AUTH',
+        ACK:     'ACK', // ack
+        MSG:     'MSG', // message arrived
+        ONLINE : 'ONLINE',
+        SYS:     'SYS',
+        TYPING : 'TYPING',
+        CONVERSATION: 'CONVERSATION'
+    };
 
-        WHAT = {
-            AUTH: "AUTH",
-            SEND: 'SEND',
-            CONVERSATION: 'CONVERSATION'
-        };
+    var WHAT = {
+        AUTH: "AUTH",
+        SEND: 'SEND',
+        CONVERSATION: 'CONVERSATION'
+    };
 
     //////// API ///////////
     

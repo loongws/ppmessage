@@ -133,36 +133,6 @@ angular.module("this_app")
         };
 
         ///////// Initialize ///////////
-
         _init();
-
-        //////// Internal Implementation ////
-
-        function getInitialCreateUserModalData() {
-            return {
-                password: null,
-                user_password_is_visible: false,
-                password_input_type: 'password',
-            }
-        }
-
-        function getInitialEditUserModalData() {
-            var _return_member = null;
-            angular.forEach($scope.group, function(member) {
-                if(member.selected) {
-                    _return_member = member;
-                }
-            });
-
-            if (_return_member != null) {
-                _return_member.user_uuid = _return_member.uuid;
-                _return_member.email = _return_member.user_email;
-                _return_member.name = _return_member.user_fullname;
-                _return_member.password = "";                
-            }
-            return _return_member;
-        }
-
-        yvDebug.attach( 'yvAppPeopleController', { $scope: $scope } );
         
     }); // end ctrl

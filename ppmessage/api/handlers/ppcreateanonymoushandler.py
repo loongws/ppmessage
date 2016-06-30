@@ -38,9 +38,9 @@ class PPCreateAnonymousHandler(BaseHandler):
         return _locale_string.get("unknown") + "." + _locale_string.get("user")
 
     @coroutine
-    def _create_user_name(self, user_uuid=None, ip=None):
+    def _create_user_name(self, user_uuid=None, data_uuid=None, ip=None):
         logging.info("create anonymous user_uuid: %s, ip: %s" % (user_uuid, ip))
-        if user_uuid == None or ip == None:
+        if user_uuid == None or ip == None or data_uuid == None:
             return
         
         url = "http://123.57.154.168:8099/IP2GEO/"
@@ -91,6 +91,11 @@ class PPCreateAnonymousHandler(BaseHandler):
         _row = DeviceUser(uuid=user_uuid, user_name=_user_name, user_fullname=_user_name)
         _row.update_redis_keys(self.application.redis)
         _row.async_update(self.applicataion.redis)
+
+        _row = AppUserData(uuid=data_uuid, user_fullname=_user_name)
+        _row.update_redis_keys(self.application.redis)
+        _row.async_update(self.applicataion.redis)
+
         return
 
     def _create(self, _ppcom_trace_uuid):
@@ -131,6 +136,7 @@ class PPCreateAnonymousHandler(BaseHandler):
         _values = {
             "uuid": _data_uuid,
             "user_uuid": _du_uuid,
+            "user_fullname": _user_name,
             "app_uuid": self.app_uuid,
             "is_portal_user": True,
             "is_service_user": False,
@@ -149,7 +155,7 @@ class PPCreateAnonymousHandler(BaseHandler):
         _ip = self.request.headers.get("X-Real-Ip") or self.request.headers.get("remote_ip") or self.request.remote_ip
         logging.info(str(self.request.headers))
         logging.info("create anonymous ip: %s" % _ip)
-        IOLoop.instance().spawn_callback(self._create_user_name, user_uuid=_du_uuid, ip=_ip)
+        IOLoop.instance().spawn_callback(self._create_user_name, user_uuid=_du_uuid, data_uuid=_data_uuid, ip=_ip)
         return
     
     

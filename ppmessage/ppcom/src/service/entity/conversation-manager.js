@@ -7,7 +7,7 @@
 //
 //     `ts`: used for sort conversations
 //
-//     every conversation which `type` is `TYPE.CONVERSATION` has several filed named `active`, `vip`
+//     every conversation has several filed named `active`, `vip`
 //
 //     `active`: there is only ONE `active` conversation at the same time:
 //     - true ( means this conversation is the user begin to chat or chatting with now )
@@ -280,14 +280,10 @@ Service.$conversationManager = ( function() {
         
     }
 
-    ///// let `item` become an `TYPE.CONVERSATION`
-    function conversation( item, vip ) {
-        
-        item [ 'type' ] = TYPE.CONVERSATION;
+    function conversation( item, vip ) {        
         item [ 'token' ] = item.uuid;
         item [ 'ts' ] = Service.$tools.getTimestamp( item.updatetime );
         item [ 'vip' ] = ( typeof vip === 'boolean' ) ? vip : false;
-        
         return item;
     }
 
@@ -301,8 +297,7 @@ Service.$conversationManager = ( function() {
             if ( token === conversationList [ i ].token ) return conversationList [ i ];
         }
         
-        return undefined;
-        
+        return undefined;        
     }
 
     function findDefault() {

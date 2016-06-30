@@ -44,6 +44,7 @@ module.exports = {
         "../src/js/controllers/settings/welcome.js",
         "../src/js/controllers/settings/messageroute.js",
         "../src/js/controllers/settings/grouping.js",
+        "../src/js/controllers/settings/group.js",
         "../src/js/controllers/settings/push.js",
 
         "../src/js/controllers/statistics/overview.js",
