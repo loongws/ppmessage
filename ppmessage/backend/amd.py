@@ -84,7 +84,7 @@ class AmdDelegate():
 
         _assigned_uuid = None
         if len(_allocated_users) == 1:
-            _assigned_uuid = _allocated_users[0]
+            _assigned_uuid = list(_allocated_users)[0]
             
         _conversation_uuid = str(uuid.uuid1())
         _row = ConversationInfo(uuid=_conversation_uuid,

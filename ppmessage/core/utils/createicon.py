@@ -57,6 +57,13 @@ def create_group_icon(_redis, _users):
     
     if len(_users) == 0:
         return None
+
+    if len(_users) == 1:
+        _user_key = DeviceUser.__tablename__ + ".uuid." + list(_users)[0]
+        _user_icon = _redis.hget(_user_key, "user_icon")
+        if _user_icon == None:
+            return _icon_url("default_icon.png")
+        return _user_icon
     
     _icon_list = []
     for _uuid in _users:

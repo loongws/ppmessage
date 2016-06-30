@@ -104,11 +104,19 @@ class MainApplication(tornado.web.Application):
             from ppmessage.core.utils.db2cache import load
             load(self.redis)
         return
+    def copy_default_icon(self):
+        if _get_config().get("config_status") != CONFIG_STATUS.RESTART:
+            return
+        _src = os.path.join(os.path.dirname(__file__), "../core/default_icon.png")
+        _dst = 
+
 
 def _main():
     tornado.options.parse_command_line()
 
     _app = MainApplication()
+
+    _app.copy_default_icon()
 
     _app.load_db_to_cache()
     
