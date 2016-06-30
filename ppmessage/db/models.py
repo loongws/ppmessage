@@ -170,6 +170,7 @@ class DeviceUser(CommonMixin, BaseModel):
             
             _key = self.__tablename__ + ".uuid." + self.uuid
             _old = _redis.hget(_key, "user_fullname")
+            _old = _old.decode("utf-8")
             if _old != None and len(_old) != 0 and _old != self.user_fullname:
                 self.remove_redis_search_index(_redis, self.__tablename__, _old, self.uuid)
 
@@ -935,7 +936,8 @@ class AppUserData(CommonMixin, BaseModel):
             return
 
         _obj = redis_hash_to_dict(_redis, AppUserData, self.uuid)
-        if self.user_fullname == _obj["user_fullname"]:
+        _old = _obj.get("user_fullname").decode("utf-8")
+        if self.user_fullname == _old:
             return
 
         _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \

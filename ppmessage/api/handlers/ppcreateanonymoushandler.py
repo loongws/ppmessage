@@ -63,7 +63,7 @@ class PPCreateAnonymousHandler(BaseHandler):
         http_client = AsyncHTTPClient()
         response = yield http_client.fetch(http_request)
 
-        logging.info(response.body)
+        logging.info("geoservice return: %s" % response.body)
         _body = json.loads(response.body)
         
         if _body == None or _body.get("error_code") != 0:
@@ -90,11 +90,11 @@ class PPCreateAnonymousHandler(BaseHandler):
         _user_name = ".".join(_location_user)
         _row = DeviceUser(uuid=user_uuid, user_name=_user_name, user_fullname=_user_name)
         _row.update_redis_keys(self.application.redis)
-        _row.async_update(self.applicataion.redis)
+        _row.async_update(self.application.redis)
 
         _row = AppUserData(uuid=data_uuid, user_fullname=_user_name)
         _row.update_redis_keys(self.application.redis)
-        _row.async_update(self.applicataion.redis)
+        _row.async_update(self.application.redis)
 
         return
 
