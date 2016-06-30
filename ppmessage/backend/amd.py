@@ -81,13 +81,18 @@ class AmdDelegate():
         _portal_user_icon = self.redis.hget(_key, "user_icon")
         
         _group_icon = create_group_icon(self.redis, _allocated_users)
-        
+
+        _assigned_uuid = None
+        if len(_allocated_users) == 1:
+            _assigned_uuid = _allocated_users[0]
+            
         _conversation_uuid = str(uuid.uuid1())
         _row = ConversationInfo(uuid=_conversation_uuid,
-                               app_uuid=_app_uuid,
-                               user_uuid=_user_uuid,
-                               status=CONVERSATION_STATUS.NEW,
-                               conversation_type=CONVERSATION_TYPE.P2S)
+                                app_uuid=_app_uuid,
+                                user_uuid=_user_uuid,
+                                assigned_uuid=_assigned_uuid,
+                                status=CONVERSATION_STATUS.NEW,
+                                conversation_type=CONVERSATION_TYPE.P2S)
         _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
 
@@ -106,7 +111,7 @@ class AmdDelegate():
                                     conversation_status=CONVERSATION_STATUS.NEW)
         _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
-
+     
         for _user in _allocated_users:
             _row = ConversationUserData(uuid=str(uuid.uuid1()),
                                         app_uuid=_app_uuid,
