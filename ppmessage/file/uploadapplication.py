@@ -32,7 +32,7 @@ class UploadWebService(AbstractWebService):
 
     @classmethod
     def get_handlers(cls):
-        return [(r"/upload", UploadFileHandler)]
+        return [(r"/upload/?", UploadFileHandler)]
 
     @classmethod
     def get_delegate(cls, app):
