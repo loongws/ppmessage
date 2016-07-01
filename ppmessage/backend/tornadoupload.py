@@ -10,7 +10,7 @@
 #
 
 from ppmessage.core.constant import TORNADO_FILEUPLOAD_PORT
-from ppmessage.backend.tornadouploadapplication import TornadoUploadApplication
+from ppmessage.backend.tornadouploadapp import TornadoUploadApplication
 
 import tornado.ioloop
 import tornado.options
