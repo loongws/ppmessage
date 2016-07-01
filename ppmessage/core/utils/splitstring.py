@@ -12,7 +12,7 @@ import os
 _pinyin_table = {}
 
 def _load_pinyin_table():
-    _file = os.path.join(os.path.dirname(__file__), "../../resource/data/mandarin.dat")
+    _file = os.path.join(os.path.dirname(__file__), "../../resource/data/mandarin.pinyin")
     with open(_file, "r") as _f:
         _lines = _f.read().strip().split("\n")
         for _line in _lines:
