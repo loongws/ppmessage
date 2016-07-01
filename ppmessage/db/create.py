@@ -22,7 +22,7 @@ def create_sqlite_tables(_db_config):
 
 def create_mysql_db(_db_config):
     _db_config = _db_config.get("mysql")
-    _db_string = "mysql+mysqlconnector://%s:%s@%s:%s" % \
+    _db_string = "mysql+pymysql://%s:%s@%s:%s" % \
                  (_db_config.get("db_user"), _db_config.get("db_pass"),
                   _db_config.get("db_host"), _db_config.get("db_port"))
     logging.info(_db_string)
