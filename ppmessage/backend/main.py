@@ -125,16 +125,16 @@ def _main():
 
     _app.load_db_to_cache()
     
-    tornado.httpserver.HTTPServer(_app).listen(tornado.options.options.port)
+    tornado.httpserver.HTTPServer(_app).listen(tornado.options.options.main_port)
     _app.run_periodic()
 
     #mqtt_message_main()
     
     _str = "Access http://%s:%d/ to %s PPMessage."
     if _get_config() == None or _get_config().get("config_status") != CONFIG_STATUS.RESTART:
-        logging.info(_str % (get_ip_address(), tornado.options.options.port, "config"))
+        logging.info(_str % (get_ip_address(), tornado.options.options.main_port, "config"))
     else:
-        logging.info(_str % (get_ip_address(), tornado.options.options.port, "use"))
+        logging.info(_str % (get_ip_address(), tornado.options.options.main_port, "use"))
     tornado.ioloop.IOLoop.instance().start()
     return
 

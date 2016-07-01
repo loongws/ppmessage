@@ -446,7 +446,10 @@ class PCSocketDelegate():
 
     def run_periodic(self):
         tornado.options.parse_command_line()
-        self.register_service(str(options.port))
+        try:
+            self.register_service(str(options.port))
+        except:
+            self.register_service(str(options.main_port))
 
         # set the periodic check online every 1000 ms
         PeriodicCallback(self.online_loop, 1000).start()
