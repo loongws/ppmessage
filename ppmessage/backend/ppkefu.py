@@ -7,7 +7,7 @@
 # backend/ppkefu.py
 # 
 
-from ppmessage.ppkefu.ppkefuapp import PPKefuApp
+from ppmessage.backend.ppkefuapp import PPKefuApp
 from ppmessage.core.constant import PPKEFU_PORT
 
 import tornado.ioloop

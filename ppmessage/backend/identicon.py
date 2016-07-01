@@ -19,7 +19,7 @@ import tornado.ioloop
 import tornado.options
 import tornado.httpserver
 
-tornado.options.define("port", default=IENDTICON_PORT, help="", type=int)
+tornado.options.define("port", default=IDENTICON_PORT, help="", type=int)
 
 def _main():
     import sys

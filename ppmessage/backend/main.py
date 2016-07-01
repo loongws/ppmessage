@@ -51,7 +51,7 @@ import tornado.ioloop
 import tornado.options
 import tornado.httpserver
 
-tornado.options.define("port", default=MAIN_PORT, help="", type=int)  
+tornado.options.define("main_port", default=MAIN_PORT, help="", type=int)  
 
 class EntryHandler(tornado.web.RequestHandler):
     def get(self):

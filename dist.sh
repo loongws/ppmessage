@@ -109,6 +109,7 @@ function ppmessage_dist()
 
 function ppmessage_dev()
 {
+    echo $PY_SITE
     if [ ! -d $PY_SITE ];
     then
         ppmessage_err 'can not find site-packages!'
