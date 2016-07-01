@@ -7,7 +7,7 @@
 # All rights reserved
 #
 
-from ppmessage.file.downloadapplication import DownloadApplication
+from .downloadapplication import DownloadApplication
 from ppmessage.core.constant import FILEDOWNLOAD_PORT
 
 import tornado.httpserver
