@@ -7,16 +7,18 @@
 
 from .basehandler import BaseHandler
 
+from ppmessage.api.error import API_ERR
+
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import AppUserData
-from ppmessage.api.error import API_ERR
-from ppmessage.core.constant import API_LEVEL
 
+from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import USER_STATUS
+from ppmessage.core.utils.randomidenticon import random_identicon
 
 import json
-import logging
 import uuid
+import logging
 
 def create_user(_redis, _request):
     '''
@@ -48,6 +50,8 @@ def create_user(_redis, _request):
 
     if _user_status == None:
         _user_status = USER_STATUS.THIRDPARTY
+
+    _user_icon = random_identicon(_user_email)
                 
     _du_uuid = str(uuid.uuid1())
     _values = {
@@ -55,6 +59,7 @@ def create_user(_redis, _request):
         "user_status": _user_status,
         "user_name": _user_email,
         "user_email": _user_email,
+        "user_icon": _user_icon,
         "user_language": _user_language,
         "user_fullname": _user_fullname,
         "user_password": _user_password,

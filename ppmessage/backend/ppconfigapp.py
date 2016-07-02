@@ -21,6 +21,7 @@ from ppmessage.core.singleton import singleton
 from ppmessage.core.utils.config import _get_config
 from ppmessage.core.utils.config import _dump_config
 from ppmessage.core.utils.getipaddress import get_ip_address
+from ppmessage.core.utils.randomidenticon import random_identicon
 
 from ppmessage.db.create import create_pgsql_db
 from ppmessage.db.create import create_mysql_db
@@ -300,10 +301,12 @@ class FirstHandler(tornado.web.RequestHandler):
         _user_fullname = _request.get("user_fullname")
         _user_password = _request.get("user_password")
         _user_language = _get_config().get("server").get("language").get("locale")
-
+        _user_icon = random_identicon(_user_email)
+        
         _user_uuid = str(uuid.uuid1())
         _row = DeviceUser(uuid=_user_uuid,
                           user_email=_user_email,
+                          user_icon=_user_icon,
                           user_status=USER_STATUS.OWNER_2,
                           user_fullname=_user_fullname,
                           user_password=_user_password,

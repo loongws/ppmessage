@@ -17,7 +17,8 @@ from ppmessage.core.constant import USER_STATUS
 
 from ppmessage.core.redis import redis_hash_to_dict
 from ppmessage.core.utils.config import _get_config
-from ppmessage.core.utils.createicon import create_user_icon
+from ppmessage.core.utils.randomidenticon import random_identicon
+#from ppmessage.core.utils.createicon import create_user_icon
 
 import json
 import uuid
@@ -111,6 +112,7 @@ class PPCreateAnonymousHandler(BaseHandler):
                 _rdata["user_email"] = _user["user_email"]
                 _rdata["user_fullname"] = _user["user_fullname"]
                 _rdata["user_icon"] = _user["user_icon"]
+                _rdata["user_status"] = _user.get("user_status")
                 return
         
         _du_uuid = str(uuid.uuid1())
@@ -125,7 +127,8 @@ class PPCreateAnonymousHandler(BaseHandler):
             "user_name": _user_name,
             "user_email": _user_email,
             "user_fullname": _user_name,
-            "user_icon": create_user_icon(_du_uuid),
+            #"user_icon": create_user_icon(_du_uuid),
+            "user_icon": random_identicon(_du_uuid)
         }
         
         _row = DeviceUser(**_values)
