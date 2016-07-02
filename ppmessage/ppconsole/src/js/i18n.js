@@ -610,7 +610,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     SERVICE_GROUP_TAG: "客服分组",
                     APP_INTEGRAGE_TAG: "应用集成",
                     ACCOUT_CONFIG_TAG: "账户设置",
-                    ADVANCED_CONFIG_TAG: "高级设置"
+                    ADVANCED_CONFIG_TAG: "高级设置",
+                    PUSH_CONFIG_TAG: "推送设置",
                 },
                 
                 profile: {
