@@ -32,6 +32,10 @@
               </md-select>
             </md-input-container>
             
+            <md-switch ng-model="server.enable_ssl">
+              Enable SSL ({{sever.enable_ssl}})
+            </md-switch>
+
             <md-input-container class="md-block">
               <label>Server Name</label>
               <input ng-model="server.name" required>

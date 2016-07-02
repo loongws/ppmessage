@@ -19,20 +19,35 @@
             <label>Certificate Password</label>
             <input ng-model="push.apns_combination_pem_password" type="text" ng-disabled="!push.enable_apns_push" />
           </md-input-container>
-          
-          <md-switch ng-model="push.enable_gcm_push">
-            Google GCM ({{push.enable_gcm_push}})
+                    
+          <md-switch ng-model="push.enable_jpush">
+            JPush ({{push.enable_jpush}})
           </md-switch>
           
           <md-input-container class="md-block">
-            <label>GCM api key</label>
-            <input ng-model="push.gcm_api_key" type="text" ng-disabled="!push.enable_gcm_push" required />
+            <label>JPush apiKey</label>
+            <input ng-model="push.jpush_api_key" type="text" ng-disabled="!push.enable_jpush" required />
           </md-input-container>
 
-          <md-switch ng-model="push.enable_mqtt_push">
-            MQTT Push ({{push.enable_mqtt_push}})
-          </md-switch>
+          <md-input-container class="md-block">
+            <label>JPush Master Secret</label>
+            <input ng-model="push.jpush_master_secret" type="text" ng-disabled="!push.enable_jpush" required />
+          </md-input-container>
 
+          <!-- <md-switch ng-model="push.enable_gcm_push"> -->
+          <!--   Google GCM ({{push.enable_gcm_push}}) -->
+          <!-- </md-switch> -->
+          
+          <!-- <md-input-container class="md-block"> -->
+          <!--   <label>GCM api key</label> -->
+          <!--   <input ng-model="push.gcm_api_key" type="text" ng-disabled="!push.enable_gcm_push" required /> -->
+          <!-- </md-input-container> -->
+
+          <!-- <md-switch ng-model="push.enable_mqtt_push"> -->
+          <!--   MQTT Push ({{push.enable_mqtt_push}}) -->
+          <!-- </md-switch> -->
+
+          
           <md-button class="md-raised" type="submit">
             {{ "global.SUBMIT_TAG" | translate }}
           </md-button>

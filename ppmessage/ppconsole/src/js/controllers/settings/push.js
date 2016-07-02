@@ -5,10 +5,15 @@ angular.module("this_app")
             enable_apns_push: false,
             enable_gcm_push: false,
             enable_mqtt_push: false,
+            enable_jpush: false,
+            
             apns_combination_pem_file: null,
             apns_combination_pem_data: null,
             apns_combination_pem_password: null,
             gcm_api_key: null,
+
+            jpush_api_key: null,
+            jpush_master_secret: null,
         };
 
         $scope.submit_push = function() {
@@ -41,12 +46,19 @@ angular.module("this_app")
                 switch( errorCode ) {
                     
                 case yvLogin.ERROR_CODE.OK:
-                    $scope.push.enable_apns_push = yvUser.get_team().enable_apns_push;
-                    $scope.push.enable_gcm_push = yvUser.get_team().enable_gcm_push;
-                    $scope.push.enable_mqtt_push = yvUser.get_team().enable_mqtt_push;
+                    $scope.push.enable_apns_push = yvUser.get_team().enable_apns_push || false;
+                    $scope.push.enable_gcm_push = yvUser.get_team().enable_gcm_push || false;
+                    $scope.push.enable_mqtt_push = yvUser.get_team().enable_mqtt_push || false;
+                    $scope.push.enable_jpush = yvUser.get_team().enable_jpush || false;
+
                     $scope.push.apns_combination_pem_data = yvUser.get_team().apns_combination_pem_data;
                     $scope.push.apns_combination_pem_password = yvUser.get_team().apns_combination_pem_password;
+
                     $scope.push.gcm_api_key = yvUser.get_team().gcm_api_key;
+
+                    $scope.push.jpush_api_key = yvUser.get_team().jpush_api_key;
+                    $scope.push.jpush_master_secret = yvUser.get_team().jpush_master_secret;
+                    
                     break;
                     
                 case yvLogin.ERROR_CODE.STATUS_ILLEGAL:
