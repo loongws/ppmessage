@@ -143,8 +143,7 @@ class ServerHandler(tornado.web.RequestHandler):
         if not self._create_server_stores(_server):
             logging.error("config server not run for wrong request: %s." % _server)
             return _return(self, -1)
-         
-        _server["ssl"]= "off"
+        
         self._dump_server_config(_server)
         return _return(self, 0)
 
