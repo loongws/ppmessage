@@ -57,6 +57,7 @@ class PPGetUserUUIDHandler(BaseHandler):
             "uuid": _data_uuid,
             "user_uuid": _du_uuid,
             "app_uuid": _app_uuid,
+            "user_fullname": _user_fullname,
             "is_portal_user": True,
             "is_service_user": False,
             "is_owner_user": False
@@ -97,6 +98,7 @@ class PPGetUserUUIDHandler(BaseHandler):
     def _Task(self):
         super(PPGetUserUUIDHandler, self)._Task()
         _request = json.loads(self.request.body)
+        _app_uuid = _request.get("app_uuid")
         _user_email = _request.get("user_email")
         _user_icon = _request.get("user_icon")
         _user_fullname = _request.get("user_fullname")
