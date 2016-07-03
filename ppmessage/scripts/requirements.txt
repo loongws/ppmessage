@@ -9,3 +9,4 @@ SQLAlchemy==1.0.13
 StringGenerator==0.1.9
 tornado==4.3
 qiniu==7.0.6
+jpush==3.2.1
