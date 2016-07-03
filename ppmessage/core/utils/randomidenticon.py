@@ -26,6 +26,11 @@ def _load_list():
             _global_random_identicon_list = map(_prefix, json.loads(_file.read()))
     return _global_random_identicon_list
 
+def _local_path(_file):
+    _path = os.path.join(os.path.dirname(__file__), "../../resource/random_identicon")
+    _path = os.path.abspath(_path)
+    return _path + os.path.sep + _file
+
 def random_identicon(_string):
     _list = _load_list()
     if _list == None or len(_list) == 0:
@@ -38,6 +43,13 @@ def random_identicon(_string):
     _len = len(_list)
     _mod = _count % _len
     return _list[_mod]
+
+def random_identicon_parse_file(_string):
+    global _qiniu_random_identicon_prefix
+    if _string.startswith(_qiniu_random_identicon_prefix):
+        _ri_file = _string[_string.rfind("/")+1:]
+        return _local_random_idenicon(_ri_file)
+    return None
 
 if __name__ == "__main__":
     print(random_identicon("dingguijin@gmail.com"))
