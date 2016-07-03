@@ -22,6 +22,7 @@ from ppmessage.core.utils.config import _get_config
 from ppmessage.core.utils.config import _dump_config
 from ppmessage.core.utils.getipaddress import get_ip_address
 from ppmessage.core.utils.randomidenticon import random_identicon
+from ppmessage.core.utils.randomidenticon import download_random_identicon
 
 from ppmessage.db.create import create_pgsql_db
 from ppmessage.db.create import create_mysql_db
@@ -38,6 +39,7 @@ import logging
 import traceback
 
 import tornado.web
+from tornado.ioloop import IOLoop
 
 def _insert_into(_row):
     from ppmessage.db.dbinstance import getDBSessionClass
@@ -302,6 +304,8 @@ class FirstHandler(tornado.web.RequestHandler):
         _user_password = _request.get("user_password")
         _user_language = _get_config().get("server").get("language").get("locale")
         _user_icon = random_identicon(_user_email)
+
+        IOLoop.spawn_callback(download_random_identicon, _user_icon)
         
         _user_uuid = str(uuid.uuid1())
         _row = DeviceUser(uuid=_user_uuid,

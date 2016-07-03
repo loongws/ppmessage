@@ -27,7 +27,7 @@ def _load_list():
     return _global_random_identicon_list
 
 def _local_path(_file):
-    _path = os.path.join(os.path.dirname(__file__), "../../resource/random_identicon")
+    _path = os.path.join(os.path.dirname(__file__), "../../resource/identicon/random")
     _path = os.path.abspath(_path)
     return _path + os.path.sep + _file
 
@@ -50,6 +50,24 @@ def random_identicon_parse_file(_string):
         _ri_file = _string[_string.rfind("/")+1:]
         return _local_random_idenicon(_ri_file)
     return None
+
+def download_random_identicon(_url):
+    import urllib
+    _abs = _url[_url.rindex("/")+1:]
+    _abs = _local_path(_abs)
+    urllib.urlretrieve(_url, _abs)
+    return
+
+def upload_random_identicon(_abs):
+    _file_name = _abs[_abs.rfind("/") + 1:]
+    _key = "avatar/png/" + _filename
+    from qiniu import Auth, put_file
+    access_key = 'ouzYOXBAT2CqPyJldvR1HlGUbWH9SpWpKy1_fdRy'
+    secret_key = 'Sw4DYzRUNmfUSObActUJUCJ1RVxsSqEpeZR6x2fS'
+    q = Auth(access_key, secret_key)
+    token = q.upload_token('ppmessage', _key)
+    ret, info = put_file(token, _key, _abs)
+    return
 
 if __name__ == "__main__":
     print(random_identicon("dingguijin@gmail.com"))

@@ -15,10 +15,13 @@ from ppmessage.db.models import AppUserData
 from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import USER_STATUS
 from ppmessage.core.utils.randomidenticon import random_identicon
+from ppmessage.core.utils.randomidenticon import download_random_identicon
 
 import json
 import uuid
 import logging
+
+from tornado.ioloop import IOLoop
 
 def create_user(_redis, _request):
     '''
@@ -52,7 +55,9 @@ def create_user(_redis, _request):
         _user_status = USER_STATUS.THIRDPARTY
 
     _user_icon = random_identicon(_user_email)
-                
+
+    IOLoop.current().spawn_callback(download_random_identicon, _user_icon)
+    
     _du_uuid = str(uuid.uuid1())
     _values = {
         "uuid": _du_uuid,
@@ -65,6 +70,7 @@ def create_user(_redis, _request):
         "user_password": _user_password,
         "is_anonymous_user": False,
     }
+    
     _row = DeviceUser(**_values)
     _row.async_add(_redis)
     _row.create_redis_keys(_redis)
