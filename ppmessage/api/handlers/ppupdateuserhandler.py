@@ -12,6 +12,10 @@ from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import AppUserData
 from ppmessage.core.genericupdate import generic_update
 
+from ppmessage.core.utils.config import get_config_server_generic_store
+from ppmessage.core.utils.randomidenticon import upload_random_identicon
+from ppmessage.core.utils.randomidenticon import get_random_identicon_url
+
 from ppmessage.core.constant import API_LEVEL
 
 import json
@@ -26,6 +30,7 @@ class PPUpdateUserHandler(BaseHandler):
 
         _app_uuid = _request.get("app_uuid")
         _user_uuid = _request.get("user_uuid")
+        _user_icon = _request.get("user_icon")
         
         if _user_uuid == None or _app_uuid == None:
             self.setErrorCode(API_ERR.NO_PARA)
@@ -47,12 +52,23 @@ class PPUpdateUserHandler(BaseHandler):
 
         if _old_password != None:
             del _data["old_password"]
-        
+
+        if _user_icon != None:
+            if _user_icon.startswith("http"):
+                IOLoop.spawn_callback(download_random_identicon, _user_icon)
+            else:
+                _generic_store = get_config_server_generic_store()
+                _abs = _generic_store + os.path.sep + _user_icon
+                if os.path.exists(_abs):
+                    IOLoop.spawn_callback(upload_random_identicon, _abs)
+                    _data["user_icon"] = get_random_identicon_url(_user_icon)
+            
         if len(_data) > 0:
             _updated = generic_update(_redis, DeviceUser, _user_uuid, _data)
             if not _updated:
                 self.setErrorCode(API_ERR.GENERIC_UPDATE)
                 return
+
         return
 
     def initialize(self):

@@ -13,6 +13,9 @@ from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import USER_STATUS
 from ppmessage.core.redis import redis_hash_to_dict
 
+from ppmessage.core.utils.randomidenticon import random_identicon
+from ppmessage.core.utils.randomidenticon import download_random_identicon
+
 from ppmessage.api.error import API_ERR
 
 import json
@@ -45,8 +48,14 @@ class PPGetUserUUIDHandler(BaseHandler):
             "user_fullname": _user_fullname,
             "is_anonymous_user": False,
         }
+
         if _user_icon != None:
             _values["user_icon"] = _user_icon
+            IOLoop.spawn_callback(download_random_identicon, _user_icon)
+        else:
+            _user_icon = random_identicon(_user_email)
+            _values["user_icon"] = _user_icon
+            IOLoop.spawn_callback(download_random_identicon, _user_icon)
 
         _row = DeviceUser(**_values)
         _row.async_add(_redis)
@@ -99,6 +108,7 @@ class PPGetUserUUIDHandler(BaseHandler):
         super(PPGetUserUUIDHandler, self)._Task()
         _request = json.loads(self.request.body)
         _app_uuid = _request.get("app_uuid")
+
         _user_email = _request.get("user_email")
         _user_icon = _request.get("user_icon")
         _user_fullname = _request.get("user_fullname")
