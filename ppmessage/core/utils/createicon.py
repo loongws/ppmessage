@@ -15,7 +15,9 @@ from .config import get_config_server_identicon_store
 
 from ppmessage.db.models import FileInfo
 from ppmessage.db.models import DeviceUser
+
 from ppmessage.core.imageconverter import ImageConverter
+from ppmessage.core.utils.randomidenticon import random_identicon_parse_file
 
 import os
 import hashlib
@@ -69,13 +71,18 @@ def create_group_icon(_redis, _users):
     for _uuid in _users:
         _user_key = DeviceUser.__tablename__ + ".uuid." + _uuid
         _user_icon = _redis.hget(_user_key, "user_icon")
-        if _user_icon == None:
-            _icon_list.append(_user_icon)
-            continue
-        _file_key = FileInfo.__tablename__ + ".uuid." + _user_icon
-        _file_path = _redis.hget(_file_key, "file_path")
-        _icon_list.append(_file_path)
+        _random_path = random_identicon_parse_file(_user_icon)
 
+        if _random_path != None:
+            _icon_list.append(_random_path)
+        else:
+            _file_key = FileInfo.__tablename__ + ".uuid." + _user_icon
+            if _redis.exists(_file_key):
+                _file_path = _redis.hget(_file_key, "file_path")
+                _icon_list.append(_file_path)
+            else:
+                _icon_list.append(None)
+    
     _data = ImageConverter.conversation_icon(_icon_list)
     if _data == None:
         logging.error("conversation icon data is None, will not create icon file")
