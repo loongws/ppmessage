@@ -19,8 +19,10 @@ from ppmessage.core.utils.randomidenticon import download_random_identicon
 from ppmessage.api.error import API_ERR
 
 import json
-import logging
 import uuid
+import logging
+
+from tornado.ioloop import IOLoop
 
 class PPGetUserUUIDHandler(BaseHandler):
     """
@@ -51,11 +53,11 @@ class PPGetUserUUIDHandler(BaseHandler):
 
         if _user_icon != None:
             _values["user_icon"] = _user_icon
-            IOLoop.spawn_callback(download_random_identicon, _user_icon)
+            IOLoop.current().spawn_callback(download_random_identicon, _user_icon)
         else:
             _user_icon = random_identicon(_user_email)
             _values["user_icon"] = _user_icon
-            IOLoop.spawn_callback(download_random_identicon, _user_icon)
+            IOLoop.current().spawn_callback(download_random_identicon, _user_icon)
 
         _row = DeviceUser(**_values)
         _row.async_add(_redis)

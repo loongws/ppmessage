@@ -48,7 +48,7 @@ def random_identicon_parse_file(_string):
     global _qiniu_random_identicon_prefix
     if _string.startswith(_qiniu_random_identicon_prefix):
         _ri_file = _string[_string.rfind("/")+1:]
-        return _local_random_idenicon(_ri_file)
+        return _local_path(_ri_file)
     return None
 
 def download_random_identicon(_url):
@@ -63,7 +63,7 @@ def download_random_identicon(_url):
 
 def upload_random_identicon(_abs):
     _file_name = _abs[_abs.rfind("/") + 1:]
-    _key = "avatar/png/" + _filename
+    _key = "avatar/png/" + _file_name
     from qiniu import Auth, put_file
     access_key = 'ouzYOXBAT2CqPyJldvR1HlGUbWH9SpWpKy1_fdRy'
     secret_key = 'Sw4DYzRUNmfUSObActUJUCJ1RVxsSqEpeZR6x2fS'

@@ -305,7 +305,7 @@ class FirstHandler(tornado.web.RequestHandler):
         _user_language = _get_config().get("server").get("language").get("locale")
         _user_icon = random_identicon(_user_email)
 
-        IOLoop.spawn_callback(download_random_identicon, _user_icon)
+        IOLoop.current().spawn_callback(download_random_identicon, _user_icon)
         
         _user_uuid = str(uuid.uuid1())
         _row = DeviceUser(uuid=_user_uuid,

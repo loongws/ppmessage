@@ -158,7 +158,7 @@ class PPCreateAnonymousHandler(BaseHandler):
         _ip = self.request.headers.get("X-Real-Ip") or self.request.headers.get("remote_ip") or self.request.remote_ip
         logging.info(str(self.request.headers))
         logging.info("create anonymous ip: %s" % _ip)
-        IOLoop.instance().spawn_callback(self._create_user_name, user_uuid=_du_uuid, data_uuid=_data_uuid, ip=_ip)
+        IOLoop.current().spawn_callback(self._create_user_name, user_uuid=_du_uuid, data_uuid=_data_uuid, ip=_ip)
         return
     
     
