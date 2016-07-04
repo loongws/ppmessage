@@ -80,6 +80,18 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
                 UPDATE_PUSH_CONFIG_SUCCESS_TAG: "Success to update push config.",
                 UPDATE_PUSH_CONFIG_FAILED_TAG: "Failed to update push config.",
+
+                UPDATE_FAILED_TAG: "Failed to update.",
+                UPDATE_SUCCESSFULLY_TAG: "Update successfully.",
+
+                LACK_PARAMS_TAG: "Required parameter missed.",
+                TEAM_NOT_EXISTED_TAG: "Team not existed.",
+
+                REMOVE_SUCCESS_TAG: "Remove successfully.",
+                NOTHING_CHANGED_TAG: "Nothing changed.",
+
+                NOT_REGULAR_WORDS_TAG: "Unregular words contained.",
+                OUT_OF_LENGTH_TAG: "Length over limit.",
             },
             
             app: {
@@ -215,6 +227,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     APP_ALREADY_EXITED_TAG: "This name already exited. Please use another name",
                     APP_NAME_LENGTH_LIMIT_TAG: "App name is too long",
                     CONTAIN_UNREGULAR_WORDS_TAG: "Unregular words contained",
+                    
                 },
             },
 
@@ -508,6 +521,19 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 SEND_NEW_PASSWORD_FAILED_TAG: "邮寄新的密码失败",
 
                 SUBMIT_TAG: "提交",
+
+                UPDATE_FAILED_TAG: "更新失败",
+                UPDATE_SUCCESSFULLY_TAG: "更新成功",
+
+                LACK_PARAMS_TAG: "缺参数",
+                TEAM_NOT_EXISTED_TAG: "团队不存在",
+
+                REMOVE_SUCCESS_TAG: "删除成功",
+                NOTHING_CHANGED_TAG: "没有数据改变",
+                
+                NOT_REGULAR_WORDS_TAG: "有特殊字符",
+                OUT_OF_LENGTH_TAG: "超出长度限制",
+
             },
 
             app: {
