@@ -117,7 +117,9 @@ class DeviceUser(CommonMixin, BaseModel):
 
     # which is uuid of other/third party system
     ent_user_uuid = Column("ent_user_uuid", String(64))
-    
+    # json string for ent user
+    ent_user_data = Column("ent_user_data", String(2048))
+
     __table_args__ = (
     )
 
@@ -220,9 +222,11 @@ class DeviceInfo(CommonMixin, BaseModel):
     device_osversion = Column("device_osversion", String(32))
 
     device_android_apilevel = Column("device_android_apilevel", String(32))
-    device_android_gcmtoken = Column("device_android_gcmtoken", String(64))
-    device_android_gcmpush = Column("device_android_gcmpush", Boolean)
 
+    device_android_gcmtoken = Column("device_android_gcmtoken", String(64))
+
+    device_android_jpush_registrationid = Column("device_android_jpush_registrationid", String(64))
+    
     device_ios_model = Column("device_ios_model", String(32))
     device_ios_token = Column("device_ios_token", String(64))
 
@@ -895,6 +899,9 @@ class AppUserData(CommonMixin, BaseModel):
     is_service_user = Column("is_service_user", Boolean)
     is_owner_user = Column("is_owner_user", Boolean)
 
+    # PORTAL_A, PORTAL_B, SERVICE_A, SERVICE_B, UNLIMITED
+    app_user_type = Column("app_user_type", String(16))
+    
     __table_args__ = (
     )
 

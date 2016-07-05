@@ -70,35 +70,33 @@ class PPKefuLoginHandler(BaseHandler):
         return
     
     def _create_device(self):
-        _token = self.input_data.get("token")
+
         _osmodel = self.input_data.get("osmodel")
         _osversion = self.input_data.get("osversion")
         _device_fullname = self.input_data.get("device_fullname")
+        
         _is_development = bool(self.input_data.get("ios_app_development"))
 
-        _ios_token = None
-        _gcm_token = None
-        _gcm_push = False
-        if self._ostype == OS.IOS:
-            _ios_token = _token
-        if self._ostype == OS.AND:
-            _gcm_token = _token
-        if _gcm_token != None:
-            _gcm_push = True
-            
+        _device_ios_token = self.input_data.get("device_ios_token")
+        _device_android_gcmtoken = self.input_data.get("device_android_gcmtoken")
+        _device_android_jpush_registrationid = self.input_data.get("device_android_jpush_registrationid")
+        
         _device_uuid = str(uuid.uuid1())
         _values = {
             "uuid": _device_uuid,
             "terminal_uuid": self._terminal_uuid,
             "user_uuid": self.user.get("uuid"),
             "device_ostype": self._ostype,
-            "device_ios_token": _ios_token,
             "device_ios_model": _osmodel,
             "device_osversion": _osversion,
             "device_fullname": _device_fullname,
+
             "is_development": _is_development,
-            "device_android_gcmtoken": _gcm_token,
-            "device_android_gcmpush": _gcm_push
+            
+            "device_ios_token": _device_ios_token,
+            "device_android_gcmtoken": _device_android_gcmtoken,
+            "device_android_jpush_registrationid": _device_android_jpush_registrationid,
+
         }
 
         _row = DeviceInfo(**_values)
@@ -159,22 +157,15 @@ class PPKefuLoginHandler(BaseHandler):
         _row.async_update(self.application.redis)
         return
 
-    def _update_device_with_token(self, _device_uuid, _token):
-        _ios_token = None
-        _gcm_token = None
-        _gcm_push = False
-        if self._ostype == OS.IOS:
-            _ios_token = _token
-        if self._ostype == OS.AND:
-            _gcm_token = _token
-        if _gcm_token != None:
-            _gcm_push = True
-
+    def _update_device_with_token(self, _device_uuid):
+        _device_android_jpush_registrationid = self.input_data.get("device_android_jpush_registrationid")
+        _device_android_gcmtoken = self.input_data.get("device_android_gcmtoken")
+        _device_ios_token = self.input_data.get("device_ios_token")
         _values = {
             "uuid": _device_uuid,
             "device_ios_token": _ios_token,
-            "device_android_gcmtoken": _gcm_token,
-            "device_android_gcmpush": _gcm_push,
+            "device_android_gcmtoken": _device_android_gcmtoken,
+            "device_android_jpush_registrationid": _device_android_jpush_registrationid
         }
         _row = DeviceInfo(**_values)
         _row.update_redis_keys(self.application.redis)
@@ -313,11 +304,10 @@ class PPKefuLoginHandler(BaseHandler):
         _is_development = bool(self.input_data.get("ios_app_development"))
         if _is_development != None and _device.get("is_development") != _is_development:
             self._update_device_with_is_development(_device.get("uuid"), _is_development)
+            
+        if self.input_data.get("device_ios_token") != None or self.input_data.get("device_android_gcmtoken") != None or self.input_data.get("device_android_jpush_registrationid") != None:
+            self._update_device_with_token(_device.get("uuid"))
 
-        _token = self.input_data.get("token")
-        if _token != None:
-            self._update_device_with_token(_device.get("uuid"), _token)
-                    
         return _device
 
     def _return(self):

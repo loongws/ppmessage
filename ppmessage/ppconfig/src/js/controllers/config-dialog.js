@@ -16,11 +16,7 @@ function ConfigServerController($scope, $mdDialog, yvAjax) {
         languages: _languages,
         language: _languages[0],
 
-        enable_ssl: false,
-        
-        ssl: "off",
-        name: $scope._config_status.ip,
-        port: 8945,
+        url: "http://" + $scope._config_status.ip + ":8945",
 
         identicon_store: "/usr/local/opt/ppmessage/identicon",
         generic_store: "/usr/local/opt/ppmessage/generic",
@@ -42,11 +38,6 @@ function ConfigServerController($scope, $mdDialog, yvAjax) {
 
     $scope.confirm = function() {
         $scope.server.disable_submit = true;
-        if ($scope.server.enable_ssl) {
-            $scope.server.ssl = "on";
-        } else {
-            $scope.server.ssl = "off";
-        }
         yvAjax.server($scope.server).success(function(){
             $mdDialog.hide("success");
         }).error(function(){

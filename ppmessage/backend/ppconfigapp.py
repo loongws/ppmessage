@@ -109,6 +109,26 @@ class ServerHandler(tornado.web.RequestHandler):
         """
         server config is first
         """
+
+        _url = _server_config.get("url")
+
+        _server_config.update({"ssl":"off"})
+        if _url.startswith("https"):
+            _server_config.update({"ssl":"on"})
+
+        _host = _url[_url.index("//")+2:]
+        _host = _host.split(":")
+
+        if len(_host) == 1:
+            _server_config.update({"name": _host[0]})
+            if _servcer_config.get("ssl") == "on":
+                _server_config.update({"port": 443})
+            else:
+                _server_config.update({"port": 80})
+                
+        if len(_host) == 2:
+            _server_config.update({"name": _host[0], "port": int(_host[1])})
+        
         _config = {
             "config_status": CONFIG_STATUS.SERVER,
             "server": _server_config
@@ -120,6 +140,11 @@ class ServerHandler(tornado.web.RequestHandler):
         _generic_store = _request.get("generic_store")
         _identicon_store = _request.get("identicon_store")
 
+        if _generic_store == None:
+            _generic_store = "/usr/local/opt/ppmessage/generic"
+        if _identicon_store == None:
+            _identicon_store = "/usr/local/opt/ppmessage/identicon"
+            
         try:
             _mkdir_p(_generic_store)
             _mkdir_p(_identicon_store)
@@ -138,8 +163,7 @@ class ServerHandler(tornado.web.RequestHandler):
 
         # SERVER
         _server = _request
-        if _server == None or _server.get("name") == None or _server.get("port") == None or \
-           _server.get("language") == None or _server.get("identicon_store") == None or _server.get("generic_store") == None:
+        if _server == None or _server.get("url") == None or _server.get("language") == None:
             logging.error("config server wrong for request: %s." % _server)
             return _return(self, -1)
 

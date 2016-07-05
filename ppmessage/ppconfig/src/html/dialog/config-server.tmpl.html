@@ -32,30 +32,11 @@
               </md-select>
             </md-input-container>
             
-            <md-switch ng-model="server.enable_ssl">
-              Enable SSL ({{server.enable_ssl}})
-            </md-switch>
-
             <md-input-container class="md-block">
-              <label>Server Name</label>
-              <input ng-model="server.name" required>
+              <label>Server URL</label>
+              <input ng-model="server.url" required>
             </md-input-container>
             
-            <md-input-container class="md-block">
-              <label>Server Port</label>
-              <input ng-model="server.port" required>
-            </md-input-container>
-
-            <md-input-container class="md-block">
-              <label>Identicon Store Directory</label>
-              <input ng-model="server.identicon_store" required>
-            </md-input-container>
-
-            <md-input-container class="md-block">
-              <label>Generic Store Directory</label>
-              <input ng-model="server.generic_store" required>
-            </md-input-container>
-
           </md-content>
         </md-card>
         
