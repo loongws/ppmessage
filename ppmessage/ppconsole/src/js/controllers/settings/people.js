@@ -259,34 +259,6 @@ angular.module("this_app")
                 
             } );
 
-            // var _request = {};
-            // _request["app_uuid"] = yvUser.get_team().uuid;
-            
-            // _request["columns[0][name]"] = "user_fullname";
-            // _request["columns[1][name]"] = "user_email";
-            // _request["columns[2][name]"] = "user_uuid";
-            // _request["columns[3][name]"] = "user_icon";
-            // _request["columns[4][name]"] = "is_owner_user";
-            
-            // _request["order[0][column]"] = 0;
-            // _request["order[0][dir]"] = "ASC";
-            // _request["search[value]"] = $.trim(search_value);
-            // _request["start"] = _request["length"] * (page_number-1);
-
-            // console.log(_request);
-            
-            // var _p = yvAjax.page_app_user(_request);
-
-            // _p.success(function(data) {
-            //     $scope.group = data.data;
-            //     $scope.total_items = data.recordsFiltered;
-            // });
-
-            // _p.error(function(data) {
-            //     console.error(data);
-            //     return;
-            // });
-
         }
 
         var _team = function() {

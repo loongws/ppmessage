@@ -1,102 +1,186 @@
 angular.module("this_app")
-    .controller("GroupCtrl", function($scope, $cookies, $stateParams, $state, $timeout, $translate, yvAjax, yvUtil, yvUser, yvTransTags, yvConstants, yvDebug, yvAppPeopleService, yvLogin) {
+    .controller("GroupCtrl", function($scope, $cookies, $stateParams, $state, $timeout, $translate, $mdDialog, yvAjax, yvUtil, yvUser, yvTransTags, yvConstants, yvDebug, yvAppServiceGroupService, yvLogin) {
 
-        var list = [];
+        $scope.groups = {
+            groups: [
+                {
+                    user_count: 100,
+                    group_name: "1111",
+                    group_desc: "11111"
+                },
 
-        var app_uuid = null;
-        var user_uuid = null;
+                {
+                    user_count: 100,
+                    group_name: "1111",
+                    group_desc: "11111"
+                },
+
+                {
+                    user_count: 100,
+                    group_name: "1111",
+                    group_desc: "11111"
+                },
+
+                {
+                    user_count: 100,
+                    group_name: "1111",
+                    group_desc: "11111"
+                },
+                {
+                    user_count: 100,
+                    group_name: "1111",
+                    group_desc: "11111"
+                },
+                {
+                    user_count: 100,
+                    group_name: "1111",
+                    group_desc: "11111"
+                },
+                {
+                    user_count: 100,
+                    group_name: "1111",
+                    group_desc: "11111"
+                },
+                {
+                    user_count: 100,
+                    group_name: "1111",
+                    group_desc: "11111"
+                },
+                {
+                    user_count: 100,
+                    group_name: "1111",
+                    group_desc: "11111"
+                },
+                {
+                    user_count: 100,
+                    group_name: "1111",
+                    group_desc: "11111"
+                },
+                {
+                    user_count: 100,
+                    group_name: "1111",
+                    group_desc: "11111"
+                },
+                {
+                    user_count: 100,
+                    group_name: "1111",
+                    group_desc: "11111"
+                },
+                
+            ],
+            total_items: 100,
+            items_per_page: 12,
+            search_value: '',
+            page_number: 1,
+            selected_all: {
+                selected: false
+            },
+
+            remove: null,
+            
+            edit: null,
+
+            create: {
+                name: '',
+                desc: ''
+            }
+            
+        };
+
+        $scope.create_service_group_form_submit = function() {
+            
+        };
+
+        $scope.edit_service_group_form_submit = function() {
+        };
         
         $scope.show_edit_modal = function() {
-            jQuery("#batch_edit_user").modal( { show:true } );
-            $scope.edit_user_direct = getInitialEditUserModalData(); 
+            jQuery("#edit_service_group").modal( { show:true } );
         };
         
         $scope.show_create_modal = function() {
-            jQuery("#batch_create_user").modal( { show:true } );
-            $scope.create_user_direct = getInitialCreateUserModalData(); 
+            jQuery("#create_service_group").modal( { show:true } );
+            $scope.groups.create = _init_create_modal_data(); 
         };
         
         $scope.should_show_remove_button = function() {
             var list = [];
-            angular.forEach($scope.group, function (member) {
+            angular.forEach($scope.groups.groups, function (member) {
                 if(member.selected) {
                     this.push(member);
                 }
             }, list);
             if (list.length > 0) {
+                $scope.groups.remove = angular.copy(list);
+                return true;
+            }
+            return false;
+        };
+
+        $scope.should_show_edit_button = function() {
+            var list = [];
+            angular.forEach($scope.groups.groups, function (member) {
+                if(member.selected) {
+                    this.push(member);
+                }
+            }, list);
+            if (list.length == 1) {
+                $scope.groups.edit = angular.copy(list[0]); 
                 return true;
             }
             return false;
         };
 
         $scope.show_remove_modal = function() {
-            $scope.to_be_removed_users = [];
-            angular.forEach($scope.group, function (member) {
-                if(member.selected) {
-                    this.push(member);
-                }
-            }, $scope.to_be_removed_users);
+            if ($scope.groups.remove == null || $scope.groups.remove.length == 0) {
+                return
+            }
             
-            if(!$scope.to_be_removed_users.length){
-                return;
+            $scope.showConfirm = function(ev) {
+                // Appending dialog to document.body to cover sidenav in docs app
+                var confirm = $mdDialog.confirm()
+                    .title('Would you like to delete this group?')
+                    .textContent('All of the banks have agreed to forgive you your debts.')
+                    .ariaLabel('Confirm Delete Group')
+                    .targetEvent(ev)
+                    .ok('Yes delete group!')
+                    .cancel('No cancel delete');
+                $mdDialog.show(confirm).then(function() {
+                    //$scope.status = 'You decided to get rid of your debt.';
+                    //yvAjax.remove_org_group()
+                }, function() {
+                    //$scope.status = 'You decided to keep your debt.';
+                });
             };
-
-            jQuery("#remove_user").modal({show:true});
             return;
         };
 
         $scope.check_all_changed = function (v) {
-            angular.forEach($scope.group, function (member) {
-                if(!member.is_owner_user == 1) {
-                    member.selected = v;
-                }
+            angular.forEach($scope.groups.groups, function (member) {
+                member.selected = v;
             });
         };
 
-        $scope.$watch(function(scope){
-            var flag = true;
-            angular.forEach(scope.group, function(member) {
-                if(member.selected) {
-                    flag = false;
-                }            
-            });
-            return flag;
-        }, function(newVal, oldVal, scope){
-            var flag = true;
-            angular.forEach(scope.group, function(member) {
-                if(member.selected) {
-                    flag = false;
-                }
-            });
-            
-            if(flag) {
-                scope.selected_all.selected = false;
-            }
-        });
+        $scope.page_service_group = function(newPageNumber){
+            var search_value = $scope.groups.search_value || "";            
+            var page_number = $scope.groups.page_number = newPageNumber || 1;
 
-
-        $scope.page_app_user = function(newPageNumber){
-            var search_value = $scope.search_value || "";            
-            var page_number = $scope.page_number = newPageNumber || 1;
-
-            $scope.items_per_page = 12;
-
-            yvAppPeopleService.getAppServiceUsersWithPagination( {
+            yvAppServiceGroupService.getAppServiceGroupsWithPagination( {
 
                 sort: true,
                 filter_keyword: $.trim( search_value ),
                 start_page: ( page_number - 1 ),
-                length: $scope.items_per_page
+                length: $scope.groups.items_per_page
                 
             }, function( response ) {
                 
-                $scope.group = response.users;
-                $scope.total_items = response.total;
+                $scope.groups.groups = response.groups;
+                $scope.groups.total_items = response.total;
                 
             }, function( e ) {
                 
-                $scope.group = [];
-                $scope.total_items = 0;
+                $scope.groups.groups = [];
+                $scope.groups.total_items = 0;
                 
             } );
         }
@@ -107,7 +191,7 @@ angular.module("this_app")
                 console.error("no team info");
                 return;
             }
-            $scope.page_app_user();
+            //$scope.page_service_group();
         };
         
         var _logined = function() {
@@ -115,24 +199,21 @@ angular.module("this_app")
                 _team();
             }, { $scope: $scope, onRefresh: _team } );
         };
-        
-        var _translate = function() {
-            var _tag_list = [];
-            for (var i in yvTransTags.en.application.people) {
-                var _t = "application.people." + i;
-                _tag_list.push(_t);
-            }
-            $scope.translate = function() {};
-            yvUtil.translate($scope, 'lang', _tag_list, $scope.translate);
-        };
-        
+                
         var _init = function() {
             $scope.refresh_settings_menu();
-            _translate();
             _logined();
         };
 
         ///////// Initialize ///////////
         _init();
+
+        function _init_create_modal_data() {
+            return {
+                group_name: '',
+                group_desc: ''
+            }
+        }
+
         
     }); // end ctrl

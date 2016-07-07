@@ -11,7 +11,7 @@
         <li ng-if="!is_logined()"> <a ui-sref="app.signin">{{ "global.SIGNIN_TAG" | translate }} </a> </li>
 
         <li ng-if="is_logined()"> <a ui-sref="app.settings.profile"> {{ get_user_fullname() }} </a> </li>
-        <li><a ng-click="logout()"> {{ "app.EXIT_APP_TAG" | translate }} </a></li>
+        <li><a ng-click="logout()"> {{ "global.SIGN_OUT_TAG" | translate }} </a></li>
       </ul>
       
       <div class="menu" ng-style="menuStyle" >
@@ -21,7 +21,7 @@
     	</span>
 
         <span class="register-item" ng-show="is_logined()">
-          <a ng-click="start_ppmessage()">{{ "app.START_SERVICE_TAG" | translate }}</a>
+          <a ng-click="start_ppmessage()">{{ "global.START_SERVICE_TAG" | translate }}</a>
     	</span>
 
         <span class="dropdown nav-item" ng-show="is_logined()">
@@ -31,10 +31,10 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="account-dropdown">
-            <li class="first"><a ui-sref="app.settings.profile" ng-show="show_settings_menu()"> {{ "app.PRIVATE_CONFIG_TAG" | translate }} </a></li>
-            <li class="first"><a ui-sref="app.settings.teamprofile" ng-show="show_settings_menu()"> {{ "app.TEAM_CONFIG_TAG" | translate }} </a></li>
+            <li class="first"><a ui-sref="app.settings.profile" ng-show="show_settings_menu()"> {{ "global.PRIVATE_CONFIG_TAG" | translate }} </a></li>
+            <li class="first"><a ui-sref="app.settings.teamprofile" ng-show="show_settings_menu()"> {{ "global.TEAM_CONFIG_TAG" | translate }} </a></li>
             <li role="separator" class="divider"></li>
-            <li><a ng-click="logout()"> {{ "app.EXIT_APP_TAG" | translate }} </a></li>
+            <li><a ng-click="logout()"> {{ "global.SIGN_OUT_TAG" | translate }} </a></li>
           </ul>
         </span>
         
