@@ -3,7 +3,6 @@
 # Copyright (C) 2010-2016 PPMessage.
 # Guijin Ding, dingguijin@gmail.com
 #
-#
 
 from .basehandler import BaseHandler
 
@@ -11,14 +10,11 @@ from ppmessage.api.error import API_ERR
 from ppmessage.core.constant import API_LEVEL
 from ppmessage.db.dbinstance import BaseModel
 
-import os
+from ppmessage.core.redis import redis_hash_to_dict
+from ppemssage.core.redis import search_redis_index
+
 import json
-import copy
-import hashlib
 import logging
-
-from tornado.ioloop import IOLoop
-
 
 def _class(tablename):
     for c in BaseModel._decl_class_registry.values():

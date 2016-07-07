@@ -8,6 +8,7 @@
 #
 
 from ppmessage.core.constant import DATETIME_FORMAT
+from ppmessage.core.constant import REDIS_SEARCH_KEY
 
 from sqlalchemy import String
 from sqlalchemy import Boolean
@@ -75,3 +76,30 @@ def row_to_redis_hash(_redis, _row):
     _redis.hmset(_key, _d)
     return
 
+def search_redis_index(_redis, _table, _search):
+
+    _search_key = "%s.%s.%s" % (REDIS_SEARCH_KEY, _table, _search)
+
+    if _redis.exists(_search_key):
+        return _redis.smembers(_search_key)
+        
+    _words = split_chinese_string_to_words(_search)
+    if _words == None or len(_words) == 0:
+        return []
+
+    _keys = []
+    for _word in _words:
+        _key = "%s.%s.%s" % (REDIS_SEARCH_KEY, _table, _word)
+        _keys.append(_key)
+
+    if len(_keys) == 0:
+        return []
+
+    _n = _redis.sinterstore(_search_key, _keys)
+    if _n == 0:
+        _redis.delete(_search_key)
+    else:
+        _redis.expire(_search_key, 20)
+
+    return _redis.smembers(_search_key)
+    
