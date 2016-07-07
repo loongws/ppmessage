@@ -130,14 +130,14 @@ angular.module("this_app")
         };
         
         $scope.toast_error_string = function(str) {
-            var _local_str = $filter("translate")("global." + str);
+            var _local_str = $filter("translate")("error." + str);
             $timeout( function() {
                 toastr.error(_local_str);
             });
         };
 
         $scope.toast_success_string = function(str) {
-            var _local_str = $filter("translate")("global." + str);
+            var _local_str = $filter("translate")("success." + str);
             $timeout( function() {
                 toastr.success(_local_str);
             });

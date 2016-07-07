@@ -13,6 +13,7 @@ module.exports = {
 
         "../src/js/thisapp.js",
 
+        "../src/js/services/pagination.js",
         "../src/js/services/rest.js",
         "../src/js/services/ajax.js",
         "../src/js/services/user.js",
@@ -43,6 +44,9 @@ module.exports = {
         "../src/js/controllers/settings/people.js",
         "../src/js/controllers/settings/welcome.js",
         "../src/js/controllers/settings/group.js",
+        
+        "../src/js/controllers/settings/groupmembers.js",
+
         "../src/js/controllers/settings/push.js",
 
         "../src/js/controllers/statistics/overview.js",

@@ -10,12 +10,14 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
             COPYRIGHT_PPMESSAGE: "PPMESSAGE.",
 
             action: {
+                ADD_TAG: "Add",
+
                 CANCEL_TAG: "Cancel",
                 CONFIRM_TAG: "Confirm",
                 CREATE_TAG: "Create",
 
                 DELETE_TAG: "Delete",
-
+                                
                 PREVIEW_TAG: "Preview",
                 
                 SAVE_TAG: "Save",
@@ -56,15 +58,20 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 PASSWORD_NOT_MATCHED_TAG: "Password not matched",
                 
                 SIGNIN_FAILED_TAG: "Sign in failed.",
-                UPDATE_FAILED_TAG: "Failed to update.",               
+                UPDATE_FAILED_TAG: "Failed to update.",
+
+                DELETE_SUCCESSFULLY_TAG: "Failed to delete",
             },
 
             success: {
                 CHANGE_PASSWORD_SUCCESS_TAG: "Change password successfully.",
                 CHANGE_PASSWORD_FAIL_TAG: "Change password failed.",
 
+                DELETE_SUCCESSFULLY_TAG: "Delete successfully.",
                 REMOVE_SUCCESSFULLY_TAG: "Remove successfully.",
-                UPDATE_SUCCESSFULLY_TAG: "Update successfully.", 
+                UPDATE_SUCCESSFULLY_TAG: "Update successfully.",
+
+                CREATE_SUCCESSFULLY_TAG: "Create successfully.",
             },
 
             global: {
@@ -78,7 +85,11 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 CREATE_TEAM_TAG: "Create Team",
 
                 CREATE_SERVICE_GROUP_TAG: "Create Service Group",
-                                
+
+                DELETE_SERVICE_GROUP_TAG: "Delete Service Group",
+
+                DELETE_SERVICE_GROUP_INFO_TAG: "Confirm delete the following groups:",
+                
                 DEMO_DEPLOY_TO: "PPMessage has deploy to this website for preview",
 
                 EDIT_SERVICE_GROUP_TAG: "Edit Service Group",
@@ -217,6 +228,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
             COPYRIGHT_PPMESSAGE: "皮皮消息.",
 
             action: {
+                ADD_TAG: "添加",
+                
                 CANCEL_TAG: "取消",
                 CONFIRM_TAG: "确认",
                 CREATE_TAG: "创建",
@@ -263,6 +276,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 SIGNIN_FAILED_TAG: "登入失败",
                 
                 UPDATE_FAILED_TAG: "更新失败",
+
+                CREATE_FAILED_TAG: "创建失败",
             },
 
             success: {
@@ -270,7 +285,10 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 CHANGE_PASSWORD_FAIL_TAG: "改密码失败",
 
                 REMOVE_SUCCESSFULLY_TAG: "删除成功",
-                UPDATE_SUCCESSFULLY_TAG: "更新成功", 
+                UPDATE_SUCCESSFULLY_TAG: "更新成功",
+
+                CREATE_SUCCESSFULLY_TAG: "创建成功",
+
             },
 
             global: {
@@ -284,7 +302,11 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 CREATE_TEAM_TAG: "创建客服团队",
 
                 CREATE_SERVICE_GROUP_TAG: "创建客服分组",
-                                
+
+                DELETE_SERVICE_GROUP_TAG: "删除客服分组",
+
+                DELETE_SERVICE_GROUP_INFO_TAG: "确认删除以下客服分组：",
+                
                 DEMO_DEPLOY_TO: "在这个网页可以查看部署效果",
 
                 EDIT_SERVICE_GROUP_TAG: "编辑客服分组",
@@ -412,7 +434,6 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
         $translateProvider.determinePreferredLanguage(function() {
             return window.navigator.userLanguage || window.navigator.language;
-            //return "zh-CN"
         });
 
         $translateProvider.fallbackLanguage("en", "zh-CN");

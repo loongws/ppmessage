@@ -1,0 +1,65 @@
+<div class="container" style="width:100%;margin-top:15px;">
+  <div class="subnav org-toolbar">
+
+    <div class="batch-middle right">
+      <md-button class="md-raised" ng-click="show_add_modal()">
+        {{ "action.ADD_TAG" | translate }}
+      </md-button>
+    </div>
+
+    <div class="left">
+      <md-input-container class="md-block md-icon-float">
+        <md-icon md-font-set="material-icons"> search </md-icon>
+        <label>{{ "action.SEARCH_TAG" | translate }}...</label>
+        <input type="search" ng-model="members.search_value" ng-change="page_service_user(newPageNumber)" autocomplete="off">
+      </md-input-container>
+    </div>
+
+  </div>
+  
+  <div class="table-list-header">
+
+    <label class="table-list-header-select-all">
+      <md-checkbox ng-change="check_all_changed(members.selected_all.selected)" ng-model="members.selected_all.selected" aria-label="Select All">
+      </md-checkbox>
+    </label>
+    
+    <div class="member-toolbar-actions right">
+      <md-button class="md-icon-button" aria-label="delete" ng-click="show_remove_modal()">
+        <md-icon md-font-set="material-icons" ng-show="should_show_remove_button()"> delete </md-icon>
+      </md-button>
+    </div>
+    
+  </div>
+
+  <div id="org-members">
+    <ul class="member-listing table-list table-list-bordered adminable">
+      <li class="table-list-item member-list-item" dir-paginate="member in members.members | itemsPerPage: members.items_per_page" current-page="members.page_number" total-items="members.total_items">
+
+        <div class="table-list-cell table-list-cell-checkbox">
+          <md-checkbox ng-model="member.selected" aria-label="check"> </md-checkbox>
+        </div>
+
+        <div class="table-list-cell member-info">
+          <span class="member-link css-truncate">
+            <strong class="member-username css-truncate-target">{{member.user_fullname}}</strong>
+          </span>
+        </div>
+
+        <div class="table-list-cell member-info">
+          <span class="member-link css-truncate">
+            <strong class="member-username css-truncate-target">{{member.user_email}}</strong>
+          </span>
+        </div>
+
+      </li>
+    </ul>
+
+    <div class="paginate-container">
+      <dir-pagination-controls auto-hide="false" boundary-links="true" on-page-change="page_service_user(newPageNumber)">
+      </dir-pagination-controls>
+    </div>
+    
+  </div>
+</div>
+
