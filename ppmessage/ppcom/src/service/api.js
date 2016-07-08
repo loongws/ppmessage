@@ -157,6 +157,10 @@
             this._post("/GET_UNACKED_MESSAGES", $.extend( {}, data ), success, fail);
         };
 
+        this.pageUnackedMessages = function(data, success, fail) {
+            this._post("/PP_PAGE_UNACKED_MESSAGE", $.extend( {}, data ), success, fail);
+        };
+
         // { list: [ 'xxx', 'xxxx' ] }
         this.ackMessage = function(data, success, fail) {
             this._post("/ACK_MESSAGE", $.extend( {}, data ), success, fail);
@@ -196,10 +200,10 @@
         /**
          * Get message conversation historys
          */
-        this.getMessageHistory = function(data, success, fail) {
-            this._post("/PP_GET_HISTORY_MESSAGE", $.extend( {}, data ), success, fail);
+        this.pageMessageHistory = function(data, success, fail) {
+            this._post("/PP_PAGE_HISTORY_MESSAGE", $.extend( {}, data ), success, fail);
         };
-
+        
         /**
          * Get ImappInfo
          */

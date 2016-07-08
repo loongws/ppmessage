@@ -110,16 +110,16 @@
                 }
                 
                 // get message history by api
-                $api.getMessageHistory({
+                $api.pageMessageHistory({
                     conversation_uuid: conversationId,
                     page_offset: loadMessageHistorysPageOffset,
                     page_size: loadMessageHistorysPageSize,
-                    max_id: loadMessageHistorysMaxId
+                    max_uuid: loadMessageHistorysMaxId
                 }, function(response) { // On get message history success callback
 
                     // Update page offset and max id for next load
                     loadMessageHistorysPageOffset++;
-                    loadMessageHistorysMaxId = loadMessageHistorysMaxId ? loadMessageHistorysMaxId : (response.list.length > 0 ? response.list[0].uuid : null);
+                    loadMessageHistorysMaxId = response.list.length > 0 ? response.list[response.list.length-1].uuid : null;
 
                     // Convert response api message array to ppMessage array
                     var ppMessageArray = [];

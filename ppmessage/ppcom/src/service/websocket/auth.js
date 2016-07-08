@@ -58,30 +58,36 @@ Service.$notifyAuth = (function() {
             // auth success
             if ( authMsg.error_code === 0 || authMsg.code === 0 ) {
 
-                var wsSettings = $notifyService.getWsSettings();
-                
-                // get unacked messages
-                Service.$api.getUnackedMessages({
-                    app_uuid: Service.$ppSettings.getAppUuid(),
-                    from_uuid: wsSettings.user_uuid,
-                    device_uuid: wsSettings.device_uuid
-                }, function(response) {
-                    
-                    response.list && response.message && $.each(response.list, function(index, item) {
-                        var rawData = response.message[item],
-                            message = null;
+                var pageUnackedMessages = function(page_offset) {
 
-                        if (rawData) {
-                            message = Service.$json.parse(rawData);
-                            message.pid = item;
-
-                            // let message dispatch to `dispatch` this message
-                            Service.$notifyMsg.get( $notifyService, message ).dispatch();
+                    Service.$debug.h().d("page_offset: %d", page_offset);
+                    // get unacked messages
+                    Service.$api.pageUnackedMessages({
+                        //Service.$api.getUnackedMessages({
+                        app_uuid: Service.$ppSettings.getAppUuid(),
+                        user_uuid: $notifyService.getWsSettings().user_uuid,
+                        page_offset: page_offset
+                    }, function(response) {
+                        if (response.error_code != 0 || !response.return_count) {
+                            return;
+                        } else {
+                            $.each(response.list, function(index, item) {
+                                var rawData = response.message[item], message = null;
+                                
+                                if (rawData) {
+                                    message = Service.$json.parse(rawData);
+                                    message.pid = item;
+                                    
+                                    // let message dispatch to `dispatch` this message
+                                    Service.$notifyMsg.get( $notifyService, message ).dispatch();
+                                }
+                            });
+                            pageUnackedMessages(page_offset + 1);
                         }
-                        
-                    });
-                    
-                });
+                    });                        
+                };
+
+                pageUnackedMessages(0);
                 
             }
         }

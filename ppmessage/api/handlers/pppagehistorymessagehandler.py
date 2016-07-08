@@ -163,7 +163,7 @@ class PPPageHistoryMessageHandler(BaseHandler):
             return
         
         _key = MessagePushTask.__tablename__ + ".conversation_uuid." + _conversation_uuid
-        _tasks = _redis.zrevrangebyscore(_key, _max_createtime, 0, start=0, num=_page_size)
+        _tasks = _redis.zrevrangebyscore(_key, _max_createtime, 0, start=0, num=_page_size+1)
         if _tasks == None or len(_tasks) == 0:
             return
         
@@ -220,6 +220,8 @@ class PPPageHistoryMessageHandler(BaseHandler):
         _page_size = _request.get("page_size") #optional
         _max_uuid = _request.get("max_uuid")
         _min_uuid = _request.get("min_uuid")
+
+        logging.info(_request)
         
         if _conversation_uuid == None:
             self.setErrorCode(API_ERR.NO_PARA)
@@ -245,18 +247,19 @@ class PPPageHistoryMessageHandler(BaseHandler):
         if _page_size == None or _page_size < 0:
             _page_size = PPPageHistoryMessageHandler.DEFAULT_PAGE_SIZE
 
-        if _max_uuid == None and _min_uuid == None:
-            if _page_offset == None or _page_offset < 0:
-                _page_offset = 0
-            self._return_by_page(_conversation_uuid, _page_offset, _page_size, _total_count)
-            return
-
         if _max_uuid != None:
+            logging.info("return by max: %s" % _max_uuid)
             self._return_by_max(_conversation_uuid, _max_uuid, _page_size)
             return
 
         if _min_uuid != None:
             self._return_by_min(_conversation_uuid, _min_uuid, _page_size)
+            return
+        
+        if _max_uuid == None and _min_uuid == None:
+            if _page_offset == None or _page_offset < 0:
+                _page_offset = 0
+            self._return_by_page(_conversation_uuid, _page_offset, _page_size, _total_count)
             return
         
         _rdata["return_count"] = 0
