@@ -28,8 +28,7 @@ import datetime
 from operator import itemgetter
 
 def _online(_redis, _device_uuid):
-    _key = DeviceInfo.__tablename__ + \
-           ".uuid." + _device_uuid
+    _key = DeviceInfo.__tablename__ + ".uuid." + _device_uuid
     if not _redis.exists(_key):
         return False
     if _redis.hget(_key, "device_is_online") == "True":
@@ -117,9 +116,8 @@ class PPGetOrgGroupUserListHandler(BaseHandler):
 
         _sorted = sorted(_users, key=itemgetter("updatetime"), reverse=True)
 
-        _return_users = _sorted[:3]
         _shrinked_users = []
-        for _user in _return_users:
+        for _user in _sorted:
             _shrinked_users.append(single_user(_redis, _user))
 
         _r["list"] = _shrinked_users

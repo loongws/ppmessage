@@ -1,25 +1,25 @@
 <div style="padding-top:0">
   <!-- Change Password -->
   <div class="boxed-group">
-    <h3>{{ "statistics.advanced_settings.CHANGE_PASSWORD_TAG" | translate }}</h3>
+    <h3>{{ "global.CHANGE_PASSWORD_TAG" | translate }}</h3>
     <div class="boxed-group-inner clearfix">
       <md-content layout-padding>
         <form accept-charset="UTF-8" ng-submit="changepassword(user)">
         
           <md-input-container class="md-block">
-            <label>{{ "statistics.advanced_settings.CURRENT_PASSWORD_TAG" | translate }}</label>
+            <label>{{ "field.CURRENT_PASSWORD_TAG" | translate }}</label>
             <input type="password" ng-model="user.user_old_password" required>
           </md-input-container>
           
           <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
-            <label> {{ "statistics.advanced_settings.NEW_PASSWORD_TAG" | translate }} </label>
+            <label> {{ "field.NEW_PASSWORD_TAG" | translate }} </label>
             <input type="{{ user.password_input_type }}" ng-model="user.user_new_password" required>
             <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
             <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
           </md-input-container>
           
           <md-button class="md-raised" type="submit">
-            {{ "statistics.advanced_settings.SAVE_TAG" | translate }}
+            {{ "action.SAVE_TAG" | translate }}
           </md-button>
           
         </form>

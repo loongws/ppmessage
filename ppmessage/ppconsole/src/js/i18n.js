@@ -22,8 +22,10 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 PREVIEW_TAG: "Preview",
                 
                 SAVE_TAG: "Save",
+
                 SEARCH_TAG: "Search",
                 SELECT_ALL_TAG: "Select all",
+
                 SUBMIT_TAG: "Submit",
 
             },
@@ -60,9 +62,11 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 CREATE_FAILED_TAG: "Create failed.",
 
                 DELETE_FAILED_TAG: "Failed to delete",
+
+                ILLEGAL_CHARACTER_FOUND_TAG: "Illegal character found.",
                 
                 EMAIL_TAKEN_TAG: "This email already has been taken.",
-                ILLEGAL_CHARACTER_FOUND_TAG: "Illegal character found.",
+                
                 NEWPASSWORD_MISMATCH_TAG: "New password and repeat not equal.",
                 NOTHING_CHANGED_TAG: "Nothing changed.",
 
@@ -102,9 +106,10 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 CHANGE_PASSWORD_TAG: "Change Password",
                 
                 COLOR_PICKED_NOT_RIGHT_TAG: "color picked is unregualr value",           
+
                 COLOR_TAG: "Color",
 
-                COPY_CODE_TO_BODY: "Copy the code below, and paste it into html body.",
+                COPY_CODE_TO_BODY_TAG: "Copy the code below, and paste it into html body.",
                 
                 CREATE_TEAM_TAG: "Create Team",
 
@@ -116,7 +121,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
                 DELETE_SERVICE_GROUP_INFO_TAG: "Confirm delete the following groups:",
 
-                DEMO_DEPLOY_TO: "PPMessage has deploy to this website for preview",
+                DEMO_DEPLOY_TO_TAG: "PPMessage has been deployed to this link for preview and test.",
 
                 EDIT_SERVICE_GROUP_TAG: "Edit Service Group",
                 
@@ -136,6 +141,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
                 TEAM_CONFIG_TAG: "Team settings",
 
+                TEST_URL_TAG: "Test URL",
+                
                 USER_ACCOUNT_TAG: "User Account",
 
                 WELCOME_TAG: "Welcome",
@@ -182,7 +189,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     MESSAGE_DISPATCH_TAG: "Message dispatch",
                     SERVICE_USER_TAG: "Service users",
                     SERVICE_GROUP_TAG: "Service groups",
-                    APP_INTEGRAGE_TAG: "App integrate",
+                    APP_INTEGRATE_TAG: "App integrate",
                     ACCOUT_CONFIG_TAG: "Account settings",
                     ADVANCED_CONFIG_TAG: "Advanced settings",
                     PUSH_CONFIG_TAG: "Push settings",
@@ -388,7 +395,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     MESSAGE_DISPATCH_TAG: "消息分流",
                     SERVICE_USER_TAG: "客服人员",
                     SERVICE_GROUP_TAG: "客服分组",
-                    APP_INTEGRAGE_TAG: "应用集成",
+                    APP_INTEGRATE_TAG: "应用集成",
                     ACCOUT_CONFIG_TAG: "账户设置",
                     ADVANCED_CONFIG_TAG: "高级设置",
                     PUSH_CONFIG_TAG: "推送设置",

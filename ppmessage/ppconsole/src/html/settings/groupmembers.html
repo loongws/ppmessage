@@ -12,7 +12,7 @@
       <md-input-container class="md-block md-icon-float">
         <md-icon md-font-set="material-icons"> search </md-icon>
         <label>{{ "action.SEARCH_TAG" | translate }}...</label>
-        <input type="search" ng-model="members.search_value" ng-change="page_service_user(newPageNumber)" autocomplete="off">
+        <input type="search" ng-model="members.search_value" ng-change="page_group_user()" autocomplete="off">
       </md-input-container>
     </div>
 
@@ -21,12 +21,12 @@
   <div class="table-list-header">
 
     <label class="table-list-header-select-all">
-      <md-checkbox ng-change="check_all_changed(members, members.selected_all.selected)" ng-model="members.selected_all.selected" aria-label="Select All">
+      <md-checkbox ng-change="check_all_changed(members.members, members.selected_all.selected)" ng-model="members.selected_all.selected" aria-label="Select All">
       </md-checkbox>
     </label>
     
     <div class="member-toolbar-actions right">
-      <md-button class="md-icon-button" aria-label="delete" ng-click="show_remove_modal()">
+      <md-button class="md-icon-button" aria-label="delete" ng-click="remove_group_user()">
         <md-icon md-font-set="material-icons" ng-show="should_show_remove_button()"> delete </md-icon>
       </md-button>
     </div>
@@ -57,7 +57,7 @@
     </ul>
 
     <div class="paginate-container">
-      <dir-pagination-controls auto-hide="false" boundary-links="true" on-page-change="page_service_user(newPageNumber)">
+      <dir-pagination-controls auto-hide="false" boundary-links="true" on-page-change="page_group_user(newPageNumber)">
       </dir-pagination-controls>
     </div>
     
@@ -84,6 +84,12 @@
       <div class="modal-body">
 
         <div class="subnav org-toolbar">
+
+          <div class="batch-middle right">
+            <md-button class="md-raised" ng-disabled="!should_enable_add_button()" ng-click="add_group_user()">
+              {{ "action.ADD_TAG" | translate }}
+            </md-button>
+          </div>
 
           <div class="left">
             <md-input-container class="md-block md-icon-float">
@@ -133,13 +139,8 @@
           </div>
           
         </div>
-
       </div>
-      
-      <div class="modal-footer">
-        <md-button class="md-raised" ng-disabled="!should_enable_add_button()" ng-click="add_group_user()">{{ "action.ADD_TAG" | translate }}</md-button>
-      </div>
-      
+            
     </div>
   </div>
 </div>

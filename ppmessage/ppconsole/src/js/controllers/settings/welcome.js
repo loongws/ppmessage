@@ -11,22 +11,14 @@ angular.module("this_app")
                 .success(function(data) {
                     console.log(data);
                     if(data.error_code == 0) {
-                        $scope.action_toast($scope, 0, "application.welcome.UPDATE_APP_SUCCESSFULLY_TAG");
+                        $scope.toast_success_string("UPDATE_SUCCESSFULLY_TAG");
                         cb && cb();
-                    }else if(data.error_code == -1) {
-                        //app_uuid miss
-                        $scope.action_toast($scope, 1, "application.welcome.UPDATE_APP_LACK_PARAMS_TAG");
-                    }else if(data.error_code == 1) {
-                        //app not exist
-                        $scope.action_toast($scope, 1, "application.welcome.UPDATE_APP_NOT_EXIST_TAG");
-                    }else {
-                        //error encounter
-                        $scope.action_toast($scope, 1, "application.welcome.UPDATE_ENCOUNTER_AN_ERROR_TAG");
+                    } else {
+                        $scope.toast_error_string("UPDATE_FAILED_TAG");
                     };
                 })
                 .error(function(data) {
-                    console.log(data);
-                    $scope.action_toast($scope, 2, "application.welcome.UPDATE_ENCOUNTER_AN_ERROR_TAG");
+                    $scope.toast_error_string("UPDATE_FAILED_TAG");
                 });
         };
 
@@ -132,19 +124,8 @@ angular.module("this_app")
             }, { $scope: $scope, onRefresh: _team } );
         };
         
-        var _translate = function() {
-            var _tag_list = [];
-            for (var i in yvTransTags.en.application.welcome) {
-                var _t = "application.welcome." + i;
-                _tag_list.push(_t);
-            }
-            $scope.translate = function() {};
-            yvUtil.translate($scope, 'lang', _tag_list, $scope.translate);
-        };
-
         var _init = function() {
             $scope.refresh_settings_menu();
-            _translate();
             _logined();
         };
 

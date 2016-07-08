@@ -29,6 +29,26 @@ function $yvGroupMembersCtrl($scope, $stateParams, $timeout, yvAjax, yvUser, yvL
         remove: null,            
     };
 
+    $scope.remove_group_user = function() {
+        if (!$scope.members.remove || $scope.members.remove.length == 0) {
+            return;
+        }
+        yvAjax.remove_org_group_user({
+            app_uuid: yvUser.get_team().uuid,
+            group_uuid: $stateParams.group_uuid,
+            user_list: $scope.members.remove
+        }).success(function(response) {
+            if (response.error_code == 0) {
+                $scope.toast_success_string("REMOVE_SUCCESSFULLY_TAG");
+                $scope.page_group_user();
+            } else {
+                $scope.toast_error_string("REMOVE_FAILED_TAG");
+            }
+        }).error(function() {
+            $scope.toast_error_string("REMOVE_FAILED_TAG");
+        });
+    };
+    
     $scope.add_group_user = function() {
         if ($scope.members.add.add && $scope.members.add.add.length > 0) {
             yvAjax.add_org_group_user({
@@ -74,7 +94,7 @@ function $yvGroupMembersCtrl($scope, $stateParams, $timeout, yvAjax, yvUser, yvL
         var list = [];
         angular.forEach($scope.members.members, function (member) {
             if(member.selected) {
-                this.push(member);
+                this.push(member.uuid);
             }
         }, list);
         if (list.length > 0) {
@@ -129,6 +149,8 @@ function $yvGroupMembersCtrl($scope, $stateParams, $timeout, yvAjax, yvUser, yvL
             group_uuid: $stateParams.group_uuid
         }).success(function(response) {
             if (response.error_code == 0) {
+                console.log(response.list.length);
+                
                 var _result = yvPagination.pagination({
                     members: response.list,
                     filter_keys: ["user_fullname", "user_email"],

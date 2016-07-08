@@ -11,7 +11,7 @@
       <md-input-container class="md-block md-icon-float">
         <md-icon md-font-set="material-icons"> search </md-icon>
         <label>{{ "action.SEARCH_TAG" | translate }}...</label>
-        <input type="search" ng-model="search_value" ng-change="page_service_group(newPageNumber)" autocomplete="off">
+        <input type="search" ng-model="groups.search_value" ng-change="page_service_group()" autocomplete="off">
       </md-input-container>
     </div>
 
@@ -58,7 +58,7 @@
         <div class="table-list-cell member-info">
           <span class="member-link css-truncate">
             <a style="cursor: pointer;" ui-sref="app.settings.groupmembers({group_uuid: member.uuid})">
-              <strong class="member-username css-truncate-target">
+              <strong class="member-username css-truncate-target" style="color: blue;">
                 {{"field.MEMBERS_TAG" | translate}} ({{member.user_count}})
               </strong>
             </a>

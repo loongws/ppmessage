@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2010-2016 .
+# Copyright (C) 2010-2016 PPMessage.
 # Guijin Ding, dingguijin@gmail.com
 #
 #
@@ -43,19 +43,8 @@ class PPRemoveOrgGroupUserHandler(BaseHandler):
         _row.delete_redis_keys(_redis)
         return True
     
-    def _get(self, _app_uuid, _group_uuid, _user_list):
-        if not isinstance(_user_list, list):
-            self.setErrorCode(API_ERR.NOT_LIST)
-            return
-        
+    def _get(self, _app_uuid, _group_uuid, _user_list):        
         _redis = self.application.redis
-
-        # check the group belongs to app
-        _key = OrgGroup.__tablename__ + ".app_uuid." + _app_uuid
-        _is = _redis.sismember(_key, _group_uuid)
-        if _is != True:
-            self.setErrorCode(API_ERR.NO_ORG_GROUP)
-            return
         
         for _user_uuid in _user_list:
             _r = self._remove(_group_uuid, _user_uuid)
@@ -72,8 +61,17 @@ class PPRemoveOrgGroupUserHandler(BaseHandler):
     def _Task(self):
         super(PPRemoveOrgGroupUserHandler, self)._Task()
         _body = json.loads(self.request.body)
-        if "app_uuid" not in _body or "group_uuid" not in _body or "user_list" not in _body:
+        _app_uuid = _body.get("app_uuid")
+        _group_uuid = _body.get("group_uuid")
+        _user_list = _body.get("user_list")
+
+        if _app_uuid == None or _group_uuid == None or _user_list == None:
             self.setErrorCode(API_ERR.NO_PARA)
             return
-        self._get(_body.get("app_uuid"), _body.get("group_uuid"), _body.get("user_list"))
+
+        if not isinstance(_user_list, list):
+            self.setErrorCode(API_ERR.NOT_LIST)
+            return
+
+        self._get(_app_uuid, _group_uuid, _user_list)
         return

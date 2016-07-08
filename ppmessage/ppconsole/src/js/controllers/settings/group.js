@@ -10,17 +10,6 @@ angular.module("this_app")
             selected_all: {
                 selected: false
             },
-
-            group: {
-                items_per_page: 12,
-                total_items: 0,
-                page_number: 1,
-
-                search_value: '',
-                
-                group: null,
-                users: null
-            },
             
             remove: null,
             edit: null,

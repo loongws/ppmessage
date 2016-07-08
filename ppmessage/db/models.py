@@ -568,7 +568,7 @@ class OrgGroupUserData(CommonMixin, BaseModel):
         _pi.srem(_key, _obj["user_uuid"])
         
         _key = self.__tablename__ + ".user_uuid." + _obj["user_uuid"] 
-        _pi.srem(_key)
+        _pi.srem(_key, _obj["group_uuid"])
 
         _key = self.__tablename__ + ".group_uuid." + _obj["group_uuid"] + \
                ".user_uuid." + _obj["user_uuid"]

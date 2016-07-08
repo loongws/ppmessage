@@ -46,23 +46,7 @@ angular.module("this_app")
             }, { $scope: $scope, onRefresh: _on_team_ok } );
         };
 
-        var _translate = function() {
-            var _tag_list = [];
-            var i;
-            for (i in yvTransTags.en.application.profile) {
-                var _t = "application.profile." + i;
-                _tag_list.push(_t);
-            };
-
-            $scope.translate = function() {
-                // console.log($scope.lang);
-            };
-            
-            yvUtil.translate($scope, 'lang', _tag_list, $scope.translate);
-        };
-        
 		var _init = function() {
-            _translate();
             $scope.refresh_settings_menu();
             _logined();
         };
