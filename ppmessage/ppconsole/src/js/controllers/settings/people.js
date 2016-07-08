@@ -9,12 +9,7 @@ angular.module("this_app")
         $scope.selected_all = {seleted: false};
         $scope.create_user_direct = getInitialCreateUserModalData(); 
         $scope.edit_user_direct = getInitialCreateUserModalData();
-        
-        var _note = function(index, tag) {
-            $scope.set_flash_style(index);
-            $scope.set_update_string($scope.lang[tag]);
-        };
-        
+                
         $scope.email_handler = function(email) {
             if (email.length <= 22){
                 return email;
@@ -66,12 +61,12 @@ angular.module("this_app")
 
             yvAjax.update_user(user_info).success(function(data) {
                 if (data.error_code == 0) {
-                    _note(0, "application.people.EDIT_APP_USER_SUCCESS_TAG")
+                    $scope.toast_success_string("UPDATE_SUCCESSFULLY_TAG")
                 } else {
-                    _note(1, "application.people.EDIT_APP_USER_FAILED_TAG")
+                    $scope.toast_error_string("UPDATE_FAILED_TAG")
                 }
             }).error(function(data) {
-                _note(1, "application.people.EDIT_APP_USER_FAILED_TAG")
+                $scope.toast_error_string("UPDATE_FAILED_TAG");
             });
             
             jQuery( "#batch_edit_user" ).modal( 'hide' );
@@ -91,38 +86,27 @@ angular.module("this_app")
 
             yvAppPeopleService.createServiceUser( app_user_info, function( data ) {
 
-                var note = "application.people.CREATE_APP_USER_SUCCESSFULLY_TAG",
-                    noteIndex = 0;
-                
                 switch ( data.error_code ) {
-                    
                 case yvAjax.API_ERR.NO_ERR:
+                    $scope.toast_success_string("CREATE_SUCCESSFULLY_TAG");
                     break;
 
                 case yvAjax.API_ERR.EX_USER:
-                    note = "application.people.ALREADY_IS_APP_USER_TAG"
-                    noteIndex = 1;
-                    break;
-
-                case yvAppPeopleService.UP_TO_MAX_SERVICE_USERS_ERROR_CODE:
-                    note = "application.people.QUOTA_REACH_TO_UPPER_LIMIT_TAG"
-                    noteIndex = 1;                    
+                    $scope.toast_error_string("ALREADY_IS_SERVICE_USER_TAG");
                     break;
 
                 default:
-                    note = "application.people.CREATE_APP_USER_FAILED_TAG";
-                    noteIndex = 1;
+                    $scope.toast_error_string("CREATE_FAILED_TAG");
                     break;
                 }
 
-                jQuery( "#batch_create_user" ).modal( 'hide' );
+                jQuery("#batch_create_user").modal( 'hide' );
                 $scope.page_app_user();
-                _note( noteIndex, note );
                 
             }, function( data ) {
                 jQuery("#batch_create_user").modal('hide');
                 $scope.page_app_user();
-                _note(2, "application.people.CREATE_APP_USER_FAILED_TAG");
+                $scope.toast_error_string("CREATE_FAILED_TAG");
             } );
 
         };
@@ -214,13 +198,12 @@ angular.module("this_app")
                     jQuery("#remove_user").modal('hide');
                     $scope.selected_all.selected = false;
                     $scope.page_app_user();
-                    _note(0, "application.people.REMOVE_APP_USER_SUCCESSFULLY_TAG");
+                    $scope.toast_success_string("REMOVE_SUCCESSFULLY_TAG");
                 } else {
                     jQuery("#remove_user").modal('hide');
                     $scope.selected_all.selected = false;
                     $scope.page_app_user();
-                    _note(1, "application.people.REMOVE_APP_USER_FAILED_TAG");
-                    console.error(data);
+                    $scope.toast_error_string("REMOVE_FAILED_TAG");
                     return;
                 }
             });
@@ -228,8 +211,7 @@ angular.module("this_app")
                 jQuery("#remove_user").modal('hide');
                 $scope.selected_all.selected = false;
                 $scope.page_app_user();
-                _note(2, "application.people.REMOVE_APP_USER_FAILED_TAG");
-                console.error(data);
+                $scope.toast_error_string("REMOVE_FAILED_TAG");
                 return;
             });
         };
@@ -259,34 +241,6 @@ angular.module("this_app")
                 
             } );
 
-            // var _request = {};
-            // _request["app_uuid"] = yvUser.get_team().uuid;
-            
-            // _request["columns[0][name]"] = "user_fullname";
-            // _request["columns[1][name]"] = "user_email";
-            // _request["columns[2][name]"] = "user_uuid";
-            // _request["columns[3][name]"] = "user_icon";
-            // _request["columns[4][name]"] = "is_owner_user";
-            
-            // _request["order[0][column]"] = 0;
-            // _request["order[0][dir]"] = "ASC";
-            // _request["search[value]"] = $.trim(search_value);
-            // _request["start"] = _request["length"] * (page_number-1);
-
-            // console.log(_request);
-            
-            // var _p = yvAjax.page_app_user(_request);
-
-            // _p.success(function(data) {
-            //     $scope.group = data.data;
-            //     $scope.total_items = data.recordsFiltered;
-            // });
-
-            // _p.error(function(data) {
-            //     console.error(data);
-            //     return;
-            // });
-
         }
 
         var _team = function() {
@@ -303,20 +257,9 @@ angular.module("this_app")
                 _team();
             }, { $scope: $scope, onRefresh: _team } );
         };
-        
-        var _translate = function() {
-            var _tag_list = [];
-            for (var i in yvTransTags.en.application.people) {
-                var _t = "application.people." + i;
-                _tag_list.push(_t);
-            }
-            $scope.translate = function() {};
-            yvUtil.translate($scope, 'lang', _tag_list, $scope.translate);
-        };
-        
+                
         var _init = function() {
             $scope.refresh_settings_menu();
-            _translate();
             _logined();
         };
 

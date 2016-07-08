@@ -190,7 +190,7 @@
         }
 
         function updateGroup( settings, successCallback, errorCallback ) {
-            yvAjax.update_group( settings )
+            yvAjax.update_org_group( settings )
                 .success( function( data ) {
                     yvCallbackService.response( data, successCallback, errorCallback );
                 } )
@@ -289,7 +289,7 @@
 
             function getGroupedServiceUserList() {
                 
-                yvAjax.get_group_user_list( { app_uuid: yvUser.get_team().uuid, group_uuid: groupId } )
+                yvAjax.get_org_group_user_list( { app_uuid: yvUser.get_team().uuid, group_uuid: groupId } )
                     .success( function( r ) {
                         noError( r ) ?
                             successCallback && successCallback( fixUsers( r.list ) ) :

@@ -11,6 +11,7 @@ from ppmessage.core.constant import SQL
 from ppmessage.core.utils.config import get_config_db
 
 from sqlalchemy.ext.declarative import declarative_base
+
 BaseModel = declarative_base()
 
 import logging

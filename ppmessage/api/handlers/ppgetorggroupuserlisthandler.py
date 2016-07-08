@@ -38,12 +38,17 @@ def _online(_redis, _device_uuid):
 
 def _group(_redis, _user_uuid):
     _key = OrgGroupUserData.__tablename__ + ".user_uuid." + _user_uuid
-    _group_uuid = _redis.get(_key)
-    if _group_uuid == None:
+    _group_uuids = _redis.smembers(_key)
+    if _group_uuids == None:
         return None
-    _key = OrgGroup.__tablename__ + ".uuid." + _group_uuid
-    _group_name = _redis.hget(_key, "group_name")
-    return {"uuid": _group_uuid, "group_name": _group_name}
+
+    _gs = []
+    for _group_uuid in _group_uuids:
+        _key = OrgGroup.__tablename__ + ".uuid." + _group_uuid
+        _group_name = _redis.hget(_key, "group_name")
+        _gs.append({"uuid": _group_uuid, "group_name": _group_name})
+        
+    return _gs
 
 def _single(_redis, _user):
     _is_mobile_online = False

@@ -66,18 +66,18 @@ angular.module("this_app.route", ["ui.router", "this_app.constants"])
                 controller: "ApplicationWelcomeCtrl"
             })
 
-            .state("app.settings.teamgrouping", {
-                url: "/teamgrouping",
-                templateUrl: yvConstants.TEMPLATE_PREFIX + "settings/grouping.html",
-                controller: "GroupingCtrl"
-            })
-
             .state("app.settings.group", {
                 url: "/group",
                 templateUrl: yvConstants.TEMPLATE_PREFIX + "settings/group.html",
                 controller: "GroupCtrl"
             })
 
+            .state("app.settings.groupmembers", {
+                url: "/groupmembers/:group_uuid",
+                templateUrl: yvConstants.TEMPLATE_PREFIX + "settings/groupmembers.html",
+                controller: "GroupMembersCtrl"
+            })
+        
             .state("app.glance", {
                 url: "/glance",
                 templateUrl: yvConstants.TEMPLATE_PREFIX + "settings/glance.html",

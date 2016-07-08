@@ -13,6 +13,7 @@ module.exports = {
 
         "../src/js/thisapp.js",
 
+        "../src/js/services/pagination.js",
         "../src/js/services/rest.js",
         "../src/js/services/ajax.js",
         "../src/js/services/user.js",
@@ -24,7 +25,7 @@ module.exports = {
         "../src/js/services/debug.js",
         "../src/js/services/login.js",
 
-        "../src/js/services/application/grouping.js",
+        "../src/js/services/application/group.js",
         "../src/js/services/application/people.js",
         "../src/js/services/application/callback.js",
 
@@ -42,22 +43,18 @@ module.exports = {
         "../src/js/controllers/settings/profile.js",
         "../src/js/controllers/settings/people.js",
         "../src/js/controllers/settings/welcome.js",
-        "../src/js/controllers/settings/messageroute.js",
-        "../src/js/controllers/settings/grouping.js",
         "../src/js/controllers/settings/group.js",
+        
+        "../src/js/controllers/settings/groupmembers.js",
+
         "../src/js/controllers/settings/push.js",
 
         "../src/js/controllers/statistics/overview.js",
         "../src/js/controllers/statistics/historymessage.js",
 
-        "../src/js/directives/focusme.js",
-        "../src/js/directives/uniform.js",
-        "../src/js/directives/slimscroll.js",
-        "../src/js/directives/datatable.js",
         "../src/js/directives/daterange.js",
         "../src/js/directives/href.js",
-
-        "../src/js/directives/clipboard.js",
+        
         "../src/js/directives/colorpicker.js",
 
         "../src/js/directives/historymessage/message.js",

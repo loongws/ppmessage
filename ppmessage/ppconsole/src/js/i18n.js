@@ -9,110 +9,139 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
             COPYRIGHT_PPMESSAGE: "PPMESSAGE.",
 
-            global: {
+            action: {
+                ADD_TAG: "Add",
+
+                CANCEL_TAG: "Cancel",
+                CONFIRM_TAG: "Confirm",
+
+                CREATE_TAG: "Create",
+
+                DELETE_TAG: "Delete",
+                                
+                PREVIEW_TAG: "Preview",
+                
+                SAVE_TAG: "Save",
+                SEARCH_TAG: "Search",
+                SELECT_ALL_TAG: "Select all",
                 SUBMIT_TAG: "Submit",
 
-                DELETE_TEAM_TAG: "Delete Team",
-                DELETE_TEAM_NOTE_TAG: "Delete team will remove all your team data from this site. Any question please use the chat launcher button to contact the service agent.",
-                DELETE_TEAM_CONFIRM_TAG: "Confirm Delete",
-                DELETE_TEAM_CANCEL_TAG: "Cancel Delete",
-                DELETE_TEAM_NOTE_DATA_TAG: "Delete, mean remove all data related the team.",
-                DELETE_TEAM_NOTE_MEAN_TAG: "Make sure understand?",
+            },
 
-                PARAMS_MISS_TAG: "Params miss",
-                FULLNAME_ERROR_TAG: "Fullname empty or out of length",
-                NO_FIRSTNAME_TAG: "Please input your first name.",
-                NO_LASTNAME_TAG: "Please input your last name.",
-                NO_FULLNAME_TAG: "fullname required",
-                NO_EMAIL_TAG: "email required",
-                NO_PASSWORD_TAG: "password required",
-                NO_RPASSWORD_TAG: "repeat password required",
-                NO_AGREE_TAG: "agreement agree required",
-                PASSWORD_NOT_MATCHED_TAG: "password not matched",
-                EMAIL_USED_TAG: "This email already has been taken.",
-                SIGNUP_ERROR_TAG: "signup meet error",
-                SIGNUP_SUCCESS_TAG: "signup successfully",
+            field: {
+                CURRENT_PASSWORD_TAG: "Current password",
 
-                SERVICE_ERROR_TAG: "Signup service error.",
-                FULLNAME_UNREGULAR_TAG: "Illegal fullname",
-                PASSWORD_UNREGULAR_TAG: "Illegal password",
-                FIRST_NAME_TOO_LONG_TAG: "First name is too long",
-                LAST_NAME_TOO_LONG_TAG: "Last name is too long",
-                EMAIL_TOO_LONG_TAG: "Email is too long",
-                COMPANY_NAME_TOO_LONG_TAG: "Company name is too long",
-                EMAIL_UNREACHABLE_TAG: "Email is unreachable",
-                EMAIL_LOGIN_ERROR_TAG: "System busy,cann't send email，please try again or contact us",
-                EMAIL_SENDING_ERROR_TAG: "Sending email encounter an error.please contact us or jusr try again",
-                LENGTH_OUT_OF_RANGE_TAG: "Length out of range",
+                MEMBERS_TAG: "members",
+                
+                NEW_PASSWORD_TAG: "New password",
 
-                ERR_PASSWORD_CONTAINS_WHITESPACE_AT_HEAD_OR_TAIL: 'Password contains whitespace at head or tail',
+                OWNER_TAG: "Owner",
+                
+                REPEAT_NEW_PASSWORD_TAG: "Repeat new password",
 
-                SIGNUP_TAG: "Sign Up",
-                SIGNIN_TAG: "Sign In",
-                RESET_PASSWORD_TAG: "Reset Password",
+                SERVICE_GROUP_NAME_TAG: "Group name",
+                SERVICE_GROUP_DESC_TAG: "Group description",
+
+                SERVICE_USER_TAG: "Service user",
+                
+                TEAM_NAME_TAG: "Team name",
+                
+                USER_FULLNAME_TAG: "User fullname",
+                USER_EMAIL_TAG: "User email",
+                USER_PASSWORD_TAG: "User password",
+
+            },
+            
+            error: {
+                ADD_FAILED_TAG: "Add failed.",
+
+                ALREADY_IS_SERVICE_USER_TAG: "Already is a service user",
+
+                CREATE_FAILED_TAG: "Create failed.",
+
+                DELETE_FAILED_TAG: "Failed to delete",
+                
+                EMAIL_TAKEN_TAG: "This email already has been taken.",
+                ILLEGAL_CHARACTER_FOUND_TAG: "Illegal character found.",
+                NEWPASSWORD_MISMATCH_TAG: "New password and repeat not equal.",
+                NOTHING_CHANGED_TAG: "Nothing changed.",
+
+                OLDPASSWORD_MISMATCH_TAG: "Old password mismatch.",
+                OUT_OF_LENGTH_TAG: "Out of length.",
+
+                PARAMS_MISS_TAG: "Parameters missed.",
+                PASSWORD_NOT_MATCHED_TAG: "Password not matched",
+
+                REMOVE_FAILED_TAG: "Remove failed.",
+                
+                SIGNIN_FAILED_TAG: "Sign in failed.",
+                UPDATE_FAILED_TAG: "Failed to update.",
+
+            },
+
+            success: {
+                ADD_SUCCESSFULLY_TAG: "Add successfully.",
+
+                CHANGE_PASSWORD_SUCCESS_TAG: "Change password successfully.",
+
+                CHANGE_PASSWORD_FAIL_TAG: "Change password failed.",
+
+                CREATE_SUCCESSFULLY_TAG: "Create successfully.",
+
+                DELETE_SUCCESSFULLY_TAG: "Delete successfully.",
+
+                REMOVE_SUCCESSFULLY_TAG: "Remove successfully.",
+
+                UPDATE_SUCCESSFULLY_TAG: "Update successfully.",
+         
+            },
+
+            global: {
+                ADD_GROUP_USER_TAG: "Add user to this group",
+                
+                CHANGE_PASSWORD_TAG: "Change Password",
+                
+                COLOR_PICKED_NOT_RIGHT_TAG: "color picked is unregualr value",           
+                COLOR_TAG: "Color",
+
+                COPY_CODE_TO_BODY: "Copy the code below, and paste it into html body.",
                 
                 CREATE_TEAM_TAG: "Create Team",
-                START_TAG: "Start",
-                FULLNAME_TAG: "Full Name",
-                LOGIN_NAME_TAG: "Login Email",
-                LOGIN_PASSWORD_TAG: "Password",
-                LOGIN_PASSWORD_REPEAT_TAG: "Password Repeat",
+
+                CREATE_SERVICE_GROUP_TAG: "Create Service Group",
+                
+                CREATE_SERVICE_USER_TAG: "Create Service User",
+                
+                DELETE_SERVICE_GROUP_TAG: "Delete Service Group",
+
+                DELETE_SERVICE_GROUP_INFO_TAG: "Confirm delete the following groups:",
+
+                DEMO_DEPLOY_TO: "PPMessage has deploy to this website for preview",
+
+                EDIT_SERVICE_GROUP_TAG: "Edit Service Group",
+                
+                PRIVATE_SETTINGS_TAG: "Private settings",
+                
+                RESET_PASSWORD_TAG: "Reset Password",
+
                 SERVICE_TEAM_TAG: "Service Team",
-                AGREE_SERVICE_TEAM_TAG: "Agree with ",
-                MAKE_NAME_FOR_YOURTEAM: "Make an amazing name for your team !",
-                TEAM_NAME: "Team name",
-                CONGRATULATIONS: "Congratulations! customer service team create success",
-                YOU_WILL_EXPERIENCE: "You will experience",
-                ANY_TRAFFIC: "Any traffic",
-                ANY_MESSAGE: "Any number of messages",
-                YOU_CAN: "Start use, you can: ",
-                DEPLOY_CODE: "Deploy you code",
-                ADD_SERVICE_USER: "Add service user",
-                MODIFY_SETTINGS: "Modify information",
+                
+                SIGNUP_TAG: "Sign up",
+                SIGNIN_TAG: "Sign in",
+                SIGNOUT_TAG: "Sign out",
+
+                SLOGAN_TAG: "Open Source Plug & Play Enterprise Message Communication Platform",
+                
+                START_SERVICE_TAG: "Start service",
+
+                TEAM_CONFIG_TAG: "Team settings",
 
                 USER_ACCOUNT_TAG: "User Account",
 
-                SIGNIN_FAILED_TAG: "sign in failed.",
-                SEND_NEW_PASSWORD_TAG: "Send new password email",
-
-                SEND_NEW_PASSWORD_SUCCESS_TAG: "Success to send new password to your email.",
-                SEND_NEW_PASSWORD_FAILED_TAG: "Fail to send new password to your email.",
-
-                UPDATE_PUSH_CONFIG_SUCCESS_TAG: "Success to update push config.",
-                UPDATE_PUSH_CONFIG_FAILED_TAG: "Failed to update push config.",
-
-                UPDATE_FAILED_TAG: "Failed to update.",
-                UPDATE_SUCCESSFULLY_TAG: "Update successfully.",
-
-                LACK_PARAMS_TAG: "Required parameter missed.",
-                TEAM_NOT_EXISTED_TAG: "Team not existed.",
-
-                REMOVE_SUCCESS_TAG: "Remove successfully.",
-                NOTHING_CHANGED_TAG: "Nothing changed.",
-
-                NOT_REGULAR_WORDS_TAG: "Unregular words contained.",
-                OUT_OF_LENGTH_TAG: "Length over limit.",
-            },
-            
-            app: {
-                MY_PROFILE_TAG: "My Profile",
-                LOGOUT_TAG: "Logout",
-                LOGIN_TAG: "Login",
-                DOWNLOAD: "Download",
-                CONTACT_US:"Contact us",
-
-                START_SERVICE_TAG: "Start service",
-                PRIVATE_CONFIG_TAG: "Private settings",
-                TEAM_CONFIG_TAG: "Team settings",
-                EXIT_APP_TAG: "Log Out",
-                SIGNUP_TAG: "Sign Up",
-                LOGIN_TAG: "Sign In",
-                SLOGAN: "Open Source Plug & Play Enterprise Message Communication Platform",
-
-                APPS: "Apps",
+                WELCOME_TAG: "Welcome",
                 
             },
-
+            
             calendar:{
                 TODAY_TAG: "Today",
                 YESTERDAY_TAG: "Yesterday",
@@ -120,7 +149,6 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 LAST_30_DAYS_TAG:"Last 30 Days",
                 THIS_MONTH_TAG:"This Month",
                 LAST_MONTH_TAG:"Last Month",
-                /*按钮文本定义开始*/
                 APPLY_LABEL_TAG:"Apply",
                 CANCEL_LABEL_TAG:"Cancel",
                 FROM_LABEL_TAG:"From",
@@ -140,48 +168,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     NOVEMBER_TAG:"November",
                     DECEMBER_TAG:"December",
                 },
-                /*按钮文本定义结束*/
             },//calendar end
 
-            main: {
-                LEARN_MORE_TAG: "LEARN MORE",
-                PLUG_AND_PLAY_TAG: "PLUG AND PLAY",
-                MULTIPLE_PLATFORMS_TAG: "MULTIPLE PLATFORMS",
-                THE_MESSAGING_SYSTEM_IN_APPLICATIONS: "THE MESSAGING SYSTEM IN APPLICATIONS",
-
-            },
-
-            signup: {
-                                
-            },
-
-            createaccount: {
-                ACCOUNT_ALREADY_CREATED: "Account already created.",
-                NO_PASSWORD_TAG: "Password required.",
-            },
-
-            login: {
-                INVALID_EMAIL_TAG: "Invalid email address.",
-                NO_EMAIL_TAG: "email required",
-                NO_PASSWORD_TAG: "password required",
-                NO_SUCH_USER_TAG: "No such user.",
-                PASSWORD_MISMATCH_TAG: "Incorrect password.",
-                NO_AUTHORITY_LOGIN_TAG: "no authority to log in.",
-
-                LOGIN_TAG: "Log In",
-                LOGIN_EMAIL_PLACEHOLDER_TAG: "Email",
-                LOGIN_PASSWORD_TAG: "Password",
-                LOGIN_FORGET_PASSWORD_TAG: "Forget password?",
-                LOGIN_REGISTER_TAG: "Register"
-                
-            },
-
-            changepassword: {
-                NO_PASSWORD_TAG: "Please enter your password.",
-                PASSWORD_NOT_MATCH_TAG: "The two entered passwords are different.",
-                CHANGE_PASSWORD_SUCCESS_TAG: "Change password successfully.",
-                CHANGE_PASSWORD_FAIL_TAG: "Change password failed.",
-            },
 
             settings: {
                 menu: {
@@ -193,207 +181,14 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     USER_INTERFACE_TAG: "User interface",
                     MESSAGE_DISPATCH_TAG: "Message dispatch",
                     SERVICE_USER_TAG: "Service users",
-                    SERVICE_GROUP_TAG: "Service users group",
+                    SERVICE_GROUP_TAG: "Service groups",
                     APP_INTEGRAGE_TAG: "App integrate",
                     ACCOUT_CONFIG_TAG: "Account settings",
                     ADVANCED_CONFIG_TAG: "Advanced settings",
                     PUSH_CONFIG_TAG: "Push settings",
-                },
-                
-                profile: {
-                    UPDATE_SUCCESSFULLY_TAG: "Profile updated successfully.",
-                    UPDATE_FAILED_TAG: "Profile updated failed.",
-                },
-
-                account: {
-                    OLDPASSWORD_MISMATCH_TAG: "Old password mismatch.",
-                    NEWPASSWORD_MISMATCH_TAG: "New password and confirm new password not equal.",
-                    REMOVE_USER_PROMOTE_TAG: "Very important.",
-                    REMOVE_USER_FAILED_TAG: "Remove user failed.",
-                    NO_EMAIL_OR_PASSWORD_TAG: "No email or password provided.",
-                },
-
-                resetpassword: {
-                    NO_EMAIL_TAG: "Please enter your email.",
-                    EMAIL_NOT_MATCH_TAG: "Invalid email. Please enter the correct email.",
-                    SERVICE_ERROR_TAG: "Some error occurred. Please retry in a minute",
-                    ERR_NO_USER: "Can not find user with this email",
-                },
-
-                createapplication: {
-                    NO_APPNAME_TAG: "Please enter the name of app.",
-                    CREATEAPP_SUCCESSFULLY_TAG: "Create app successfully.",
-                    CREATEAPP_FAILED_TAG: "Create app failed",
-                    APP_ALREADY_EXITED_TAG: "This name already exited. Please use another name",
-                    APP_NAME_LENGTH_LIMIT_TAG: "App name is too long",
-                    CONTAIN_UNREGULAR_WORDS_TAG: "Unregular words contained",
-                    
-                },
-            },
-
-            payment: {
-                pay: {
-                    CHOOSE_AGENT_SMALLER_THAN_EXIST_AGENT_TAG: "The agents number is smaller than current exist agent numbers,please reduce your team member or expand the agent numbers. Thanks",
-                },
-
-                payment: {
-                    
-                },
-
-                pwechat: {
-                    
-                },
+                },                
             },
             
-            application: {
-                profile: {
-                    UPDATE_SUCCESSFULLY_TAG: "Profile updated successfully.",
-                    UPDATE_FAILED_TAG: "Profile updated failed.",
-                    UPDATE_APP_LACK_PARAMS_TAG: "Update team info needs more params",
-                    UPDATE_APP_NOT_EXIST_TAG: "Update team not exist",
-                    UPDATE_APP_NAME_OUT_OF_LENGTH_TAG: "Update name out of length",
-                    REMOVE_APP_SUCCESS_TAG: "Remove team success",
-                    PERMISSSION_DENIED_TAG: "Permission denied, you are not team owner",
-                    NO_CHANGE_TAG: "No changes since last change",
-                    NOT_REGULAR_WORDS_TAG: "Not allow unregular words",
-                    WORDS_OUT_OF_LENGHT_TAG: "The name is too long",
-                    COPY_SUCCESSFUL_TAG: "Copy to clipboard success!",
-                    COPY_FAIL_TAG: "Copy to clipboard failed!",
-                },
-
-                account: {
-                    OLDPASSWORD_MISMATCH_TAG: "Old password mismatch.",
-                    NEWPASSWORD_MISMATCH_TAG: "New password and confirm new password not equal.",
-                },
-
-                resetpassword: {
-                    NO_EMAIL_TAG: "Please enter your email.",
-                    EMAIL_NOT_MATCH_TAG: "Invalid email. Please enter the correct email.",
-                    SERVICE_ERROR_TAG: "Some error occurred. Please retry in a minute",
-
-                    FIND_PASSWORD_TAG: "Find password",
-                    LOGIN_EMAIL_TAG: "Email",
-                    FIND_TAG: "Send email",
-                    
-                },
-
-                welcome: {
-                    UPDATE_APP_SUCCESSFULLY_TAG: "update team info successfully",
-                    UPDATE_APP_LACK_PARAMS_TAG: "need more params",
-                    UPDATE_APP_NOT_EXIST_TAG: "app not exist",
-                    WELCOME_WORDS_OUT_OF_LENGTH_TAG: "welcome words or offline notice out of length",
-                    COLOR_PICKED_NOT_RIGHT_TAG: "color picked is unregualr value",
-                    UPDATE_ENCOUNTER_AN_ERROR_TAG: "encounter an error,please try again",
-                    NO_CHANGED_TAG: "No change",
-
-                    WELCOME_INFO_TAG: "Welcome",
-                    SAVE_TAG: "Save",
-                    AUTO_POPUP: "Auto Popup",
-                    POPUP_ONLY_ONCE: "Only once",
-                    POPUP_NEVER: "Never",
-                    POPUP_ALWAYS: "Always",
-                    COLOR: "Color",
-                    TOOLTIP_WELCOME_TAG: "Welcome string when mouse hover on chat launcher icon.",
-                    TOOLTIP_COLOR_TAG: "Chat launcher icon colour.",
-                },
-
-                grouping: {
-                    WORDS_OUT_OF_LENGTH_TAG: "length out of range",
-                    UNREGULAR_WORDS_TAG: "unregular words",
-                    NO_ORG_GROUP_TAG: "no group exists",
-                    LACK_PARAMS_TAG: "lack params",
-                    NOT_LIST_TAG: "not list params",
-                    ADD_GROUP_USER_SUCCESS_TAG: "add group user successful",
-                    ENCOUNTER_AN_ERROR_TAG: "operation error",
-                    REMOVE_GROUP_SUCCESS_TAG: "remove group successful",
-                    UPDATE_GROUP_SUCCESS_TAG: "update group successful",
-                    CREATE_GROUP_SUCCESS_TAG: "create group successful",
-                    MODIFY_INFO_IS_NOT_SUITABLE_TAG: "what you write is not suitable",
-                    NO_GROUP_USER_SELECTED_TAG: "no group user selected",
-                    GROUP_NAME_EXISTED_TAG: "group name already existed",
-                    NO_GROUP_NAME: "group name can't be empty",
-                    NO_GROUP_DESC: "group description can't be empty",
-
-                    SERVICE_GROUP_MANAGER_TAG: "Service group manager",
-                    MOVE_TO: "Move to ",
-                    SELECT_GROUP: "Select group",
-                    ALL_SERVICE_USER: "all service users",
-                    NEW_GROUP: "Create",
-                    SELECT_ALL: "Select all",
-                    LOGIN_EMAIL: "Email",
-                    ROLE: "Role",
-                    GROUP_IN: "Group",
-                    GROUP_MODE_CONFIG: "Group config",
-                    IS_SHOW_GROUP: "Show",
-                    GROUP_NAME: "Group name",
-                    DISPATCH_WAY: "Dispatch mode",
-                    CREATE_GROUP: "Create Group",
-                    GROUP_DESC: "Group Infos",
-                    MODIFY_GROUP: "Modify Group",
-                    SAVE: "Save",
-
-                    ADMIN_USER_TAG: "Team admin",
-                    SERVICE_USER_TAG: "Service user",
-
-                    UNAMED_GROUP_NAME_TAG: "Not grouped",
-                    DISTRIBUTOR_TAG: "Primary Group",
-                    
-                },
-
-                people: {
-                    SEND_INVITATION_EMAIL_SUCCESSFULLY_TAG: "Send the invitation email successfully.",
-                    SEND_INVITATION_EMAIL_FAILED_TAG: "Send the invitation email failed.",
-                    CREATE_APP_USER_SUCCESSFULLY_TAG:"Add user successfully.",
-                    CREATE_APP_USER_FAILED_TAG:"Add user failed.",
-                    USER_EXIST_AND_INVITE_TAG:"user existed,please invite directly",
-                    REMOVE_APP_USER_SUCCESSFULLY_TAG:"Remove successfully.",
-                    REMOVE_APP_USER_FAILED_TAG:"Remove failed.",
-                    ALREADY_IS_APP_USER_TAG:"This user has already been app user.",
-                    QUOTA_REACH_TO_UPPER_LIMIT_TAG:"Agent quote reach to upper limit.",
-                    PARAMS_MISS_TAG: "Params miss",
-                    PERMISSION_DENY_TAG: "You are not allow to create team member",
-
-                    CREATE_SERVICE_USER_TAG: "Create service user",
-                    SEARCH_TAG: "Search",
-                    SELECT_ALL_TAG: "Select all",
-                    EDIT_SERVICE_USER_TAG: "Edit",
-                    REMOVE_SERVICE_USER_TAG: "Remove",
-                    REMOVE_SERVICE_USER_PROMOTE_TAG: "Are you sure to remove the service user: ",
-                    OWNER_TAG: "Owner",
-                    SERVICE_USER_TAG: "Service user",
-                    CANCEL_TAG: "Cancel",
-                    OK_TAG: "Ok",
-                    SERVICE_USER_NAME_TAG: "Service user full name",
-                    SERVICE_USER_EMAIL_TAG: "Email",
-                    PASSWORD_TAG: "Password",
-                    CONFIRM_PASSWORD_TAG: "Confirm password",
-                    CREATE_TAG: "Create",
-                    SAVE_TAG: "Save",
-
-                    EDIT_APP_USER_SUCCESSFULLAY_TAG: "Edit user successfully.",
-                    EDIT_APP_USER_FAILED_TAG: "Edit user failed.",
-                },
-
-                manualinstall: {
-                    COPY_SUCCESSFUL_TAG: "Copy to clipboard success!",
-                },
-
-                integrate: {
-                    COPY_TO_CLIPBOARD: "Copy to clipboard",
-                    PREVIEW: "Preview",
-                    URL_LINK: "Url",
-                    DEMO_DEPLOY_TO: "PPMessage has deploy to this website for preview",
-                    COPY_CODE_TO_BODY: "Copy the code below, and paste it into html body."
-                },
-
-                teamprofile: {
-                    TEAM_INFO: "Team info",
-                    TEAM_NAME: "Team name",
-                    SAVE: "Save"
-                }
-                
-            },
-
             statistics: {
 
                 overview: {
@@ -426,28 +221,6 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     MESSAGES_PREVIEW: "Messages preview",
                     
                 },
-
-                messageroute:  {
-                    ALL: "ALL",
-                    SMART: "SMART",
-                    GROUP: "GROUP",
-                    ROBOT: "ROBOT"
-                },
-
-                userprofile: {
-                    EMAIL_TAG: "Email",
-                    USER_NAME_TAG: "Username",
-                    SAVE_TAG: "Save",
-                },
-
-                advanced_settings: {
-                    CHANGE_PASSWORD_TAG: "Change Password",
-                    CURRENT_PASSWORD_TAG: "Current password",
-                    NEW_PASSWORD_TAG: "New password",
-                    REPEAT_NEW_PASSWORD_TAG: "New password repeat",
-                    SAVE_TAG: "Save",
-                    FORGET_PASSWORD_TAG: "Forget password"
-                },
                 
             }
 
@@ -456,101 +229,122 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
         cn: {
             COPYRIGHT_PPMESSAGE: "皮皮消息.",
 
-            global: {
-                DELETE_TEAM_TAG: "删除团队",
-                DELETE_TEAM_NOTE_TAG: "删除团队是不可逆操作，该操作意味着将永久从本网站删除与该团队有关的所有数据.如有疑问请点击右下角图标咨询客服.",
-                DELETE_TEAM_CONFIRM_TAG: "确认删除",
-                DELETE_TEAM_CANCEL_TAG: "取消删除",
-                DELETE_TEAM_NOTE_DATA_TAG: "删除，意味着您将失去所有与该团队有关的数据.",
-                DELETE_TEAM_NOTE_MEAN_TAG: "请确保您充分了解该操作的意义?",
+            action: {
+                ADD_TAG: "添加",
                 
-                PARAMS_MISS_TAG: "参数缺失",
-                FULLNAME_ERROR_TAG: "姓名缺失或长度超过限制",
-                NO_FIRSTNAME_TAG: "请输入您的名字",
-                NO_LASTNAME_TAG: "请输入您的姓",
-                NO_FULLNAME_TAG: "姓名缺失",
-                NO_EMAIL_TAG: "邮箱缺失或者格式不正确",
-                NO_PASSWORD_TAG: "密码缺失或者格式不正确",
-                NO_RPASSWORD_TAG: "请再次输入密码",
-                NO_AGREE_TAG: "请同意我们的协议",
-                PASSWORD_NOT_MATCHED_TAG: "两次密码不匹配",
-                EMAIL_USED_TAG: "该邮箱已被占用",
-                SIGNUP_ERROR_TAG: "注册遇到错误",
-                SIGNUP_SUCCESS_TAG: "注册成功",
-                SERVICE_ERROR_TAG: "注册服务错误",
-                FULLNAME_UNREGULAR_TAG: "用户全名不要使用非常规字符",
-                PASSWORD_UNREGULAR_TAG: "用户密码不要使用非常规字符",
-                FIRST_NAME_TOO_LONG_TAG: "名--长度超过限制",
-                LAST_NAME_TOO_LONG_TAG: "姓--长度超过限制",
-                EMAIL_TOO_LONG_TAG: "邮件--长度超过限制",
-                COMPANY_NAME_TOO_LONG_TAG: "公司名字--长度超过限制",
-                EMAIL_UNREACHABLE_TAG: "无法发送邮件，邮箱不可达",
-                EMAIL_LOGIN_ERROR_TAG: "系统繁忙，无法登录邮箱发送邮件，请重新发送或者联系我们",
-                EMAIL_SENDING_ERROR_TAG: "邮件发送失败，请重新发送或者联系我们",
-                LENGTH_OUT_OF_RANGE_TAG: "长度超过限制",
-                ERR_PASSWORD_CONTAINS_WHITESPACE_AT_HEAD_OR_TAIL: '密码开头或结尾不允许包含空格',
+                CANCEL_TAG: "取消",
+                CONFIRM_TAG: "确认",
+                CREATE_TAG: "创建",
 
-                SIGNUP_TAG: "创建新用户",
-                SIGNIN_TAG: "用户登录",
-                RESET_PASSWORD_TAG: "重设用户密码",
+                DELETE_TAG: "删除",
+
+                PREVIEW_TAG: "预览",
                 
-                CREATE_TEAM_TAG: "创建客服团队",
-                START_TAG: "开始使用",
-                FULLNAME_TAG: "真实姓名",
-                LOGIN_NAME_TAG: "登录邮箱",
-                LOGIN_PASSWORD_TAG: "密码",
-                LOGIN_PASSWORD_REPEAT_TAG: "确认密码",
-                SERVICE_TEAM_TAG: "服务条款",
-                AGREE_SERVICE_TEAM_TAG: "注册并登录意味着同意本网站",
-                MAKE_NAME_FOR_YOURTEAM: "为您的团队起一个响亮的名字吧!",
-                TEAM_NAME: "客服团队名称",
-                CONGRATULATIONS: "恭喜您，客服团队创建成功!",
-                YOU_WILL_EXPERIENCE: "您将体验",
-                ANY_TRAFFIC: "不限流量",
-                ANY_MESSAGE: "不限消息",
-                YOU_CAN: "开始使用，您可以：",
-                DEPLOY_CODE: "代码部署",
-                ADD_SERVICE_USER: "添加客服",
-                MODIFY_SETTINGS: "修改信息",
+                SAVE_TAG: "保存",
+                SEARCH_TAG: "搜索",
+                SELECT_ALL_TAG: "全选",
 
-                USER_ACCOUNT_TAG: "用户账户",
-                SIGNIN_FAILED_TAG: "登录失败",
-                SEND_NEW_PASSWORD_TAG: "邮寄新的密码",
+                SUBMIT_TAG: "提交"
+            },
 
-                SEND_NEW_PASSWORD_SUCCESS_TAG: "成功邮寄新的密码",
-                SEND_NEW_PASSWORD_FAILED_TAG: "邮寄新的密码失败",
+            field: {
+                CURRENT_PASSWORD_TAG: "当前密码",
+                NEW_PASSWORD_TAG: "新密码",
 
-                SUBMIT_TAG: "提交",
+                OWNER_TAG: "拥有者",
 
+                SERVICE_GROUP_NAME_TAG: "组名字",
+                SERVICE_GROUP_DESC_TAG: "组描述",
+
+                SERVICE_USER_TAG: "客服人员",
+                
+                TEAM_NAME_TAG: "团队名称",
+                
+                USER_FULLNAME_TAG: "用户姓名",
+                USER_EMAIL_TAG: "用户邮箱",
+                USER_PASSWORD_TAG: "用户密码",
+
+                MEMBERS_TAG: "成员"
+            },
+            
+            error: {
+                ADD_FAILED_TAG: "添加成功",
+
+                EMAIL_TAKEN_TAG: "这个 Email 地址已经被别人使用了",
+
+                ILLEGAL_CHARACTER_FOUND_TAG: "发现了非法字符",
+                NEWPASSWORD_MISMATCH_TAG: "新密码和重复新密码不一致",
+                NOTHING_CHANGED_TAG: "什么都没有改变",
+
+                OLDPASSWORD_MISMATCH_TAG: "旧密码错误",
+                OUT_OF_LENGTH_TAG: "超出长度限制",
+
+                PARAMS_MISS_TAG: "缺参数",
+                PASSWORD_NOT_MATCHED_TAG: "密码不匹配",
+                
+                SIGNIN_FAILED_TAG: "登入失败",
+                
                 UPDATE_FAILED_TAG: "更新失败",
+
+                CREATE_FAILED_TAG: "创建失败",
+            },
+
+            success: {
+
+                ADD_SUCCESSFULLY_TAG: "添加成功",
+                
+                CHANGE_PASSWORD_SUCCESS_TAG: "改密码成功",
+                CHANGE_PASSWORD_FAIL_TAG: "改密码失败",
+
+                REMOVE_SUCCESSFULLY_TAG: "删除成功",
                 UPDATE_SUCCESSFULLY_TAG: "更新成功",
 
-                LACK_PARAMS_TAG: "缺参数",
-                TEAM_NOT_EXISTED_TAG: "团队不存在",
-
-                REMOVE_SUCCESS_TAG: "删除成功",
-                NOTHING_CHANGED_TAG: "没有数据改变",
-                
-                NOT_REGULAR_WORDS_TAG: "有特殊字符",
-                OUT_OF_LENGTH_TAG: "超出长度限制",
+                CREATE_SUCCESSFULLY_TAG: "创建成功",
 
             },
 
-            app: {
-                MY_PROFILE_TAG: "我的信息",
-                LOGOUT_TAG: "登出",
-                LOGIN_TAG: "登入",
-                DOWNLOAD: "下载",
-                CONTACT_US:"联系我们",
+            global: {
+                ADD_GROUP_USER_TAG: "添加用户到此组",
 
-                START_SERVICE_TAG: "开始服务",
-                PRIVATE_CONFIG_TAG: "个人设置",
-                TEAM_CONFIG_TAG: "团队设置",
-                EXIT_APP_TAG: "退出",
+                CHANGE_PASSWORD_TAG: "更改密码",
+                
+                COLOR_PICKED_NOT_RIGHT_TAG: "选取颜色异常",           
+                COLOR_TAG: "颜色",
+
+                COPY_CODE_TO_BODY: "复制下面的代码并置于您自己网站的 HTML 文件之中，确保在 <body> ... </body> 元素之间",
+                
+                CREATE_TEAM_TAG: "创建客服团队",
+
+                CREATE_SERVICE_GROUP_TAG: "创建客服分组",
+
+                DELETE_SERVICE_GROUP_TAG: "删除客服分组",
+
+                DELETE_SERVICE_GROUP_INFO_TAG: "确认删除以下客服分组：",
+                
+                DEMO_DEPLOY_TO: "在这个网页可以查看部署效果",
+
+                EDIT_SERVICE_GROUP_TAG: "编辑客服分组",
+                
+                PRIVATE_SETTINGS_TAG: "个人设置",
+                
+                RESET_PASSWORD_TAG: "重设密码",
+
+                SERVICE_TEAM_TAG: "客服团队",
+                
                 SIGNUP_TAG: "注册",
-                LOGIN_TAG: "登录",
-                SLOGAN: "开源企业消息通讯平台",
-                APPS: "所有团队",
+                SIGNIN_TAG: "登入",
+                SIGNOUT_TAG: "登出",
+
+                SLOGAN_TAG: "Open Source Plug & Play Enterprise Message Communication Platform",
+                
+                START_SERVICE_TAG: "开始服务",
+
+                TEAM_CONFIG_TAG: "团队设置",
+
+                USER_ACCOUNT_TAG: "用户账户",
+
+                WELCOME_INFO_TAG: "欢迎信息",
+                
             },
 
             calendar:{
@@ -583,46 +377,6 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 /*按钮文本定义结束*/
             },//calendar   
 
-            main: {
-                LEARN_MORE_TAG: "了解更多",
-                PLUG_AND_PLAY_TAG: "即插即用",
-                MULTIPLE_PLATFORMS_TAG: "多平台",
-                THE_MESSAGING_SYSTEM_IN_APPLICATIONS: "应用内消息系统",
-
-            },
-
-            signup: {
-                
-            },
-
-            createaccount: {
-                ACCOUNT_ALREADY_CREATED: "账户已经被创建了。",
-                NO_PASSWORD_TAG: "需要填写密码。",
-            },
-
-            login: {
-                INVALID_EMAIL_TAG: "无效的EMAIL地址",
-                NO_EMAIL_TAG: "需要填写EMAIL地址。",
-                NO_PASSWORD_TAG: "需要填写密码。",
-
-                NO_SUCH_USER_TAG: "无此用户。",
-                PASSWORD_MISMATCH_TAG: "密码错误。",
-
-                LOGIN_TAG: "登录",
-                LOGIN_EMAIL_PLACEHOLDER_TAG: "登录邮箱",
-                LOGIN_PASSWORD_TAG: "密码",
-                LOGIN_FORGET_PASSWORD_TAG: "忘记密码?",
-                LOGIN_REGISTER_TAG: "注册"
-                
-            },
-
-            changepassword: {
-                NO_PASSWORD_TAG: "请输入你的密码。",
-                PASSWORD_NOT_MATCH_TAG: "两次输入的密码不同。",
-                CHANGE_PASSWORD_SUCCESS_TAG: "修改密码成功。",
-                CHANGE_PASSWORD_FAIL_TAG: "修改密码失败。",
-            },
-
             settings: {
                 menu: {
                     DATA_ANALYSIS_TAG: "数据分析",
@@ -638,198 +392,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     ACCOUT_CONFIG_TAG: "账户设置",
                     ADVANCED_CONFIG_TAG: "高级设置",
                     PUSH_CONFIG_TAG: "推送设置",
-                },
-                
-                profile: {
-                    UPDATE_SUCCESSFULLY_TAG: "更新成功。",
-                    UPDATE_FAILED_TAG: "更新失败。",
-                },
-                
-                account: {
-                    OLDPASSWORD_MISMATCH_TAG: "原密码输入错误",
-                    NEWPASSWORD_MISMATCH_TAG: "新密码两次输入不同",
-                    REMOVE_USER_PROMOTE_TAG: "重要的说明看三遍",
-                    REMOVE_USER_FAILED_TAG: "注销用户失败",
-                    NO_EMAIL_OR_PASSWORD_TAG: "没提供邮件或者密码",
-                },
-
-                resetpassword: {
-                    NO_EMAIL_TAG: "请输入您的邮箱",
-                    EMAIL_NOT_MATCH_TAG: "邮箱和此账号不匹配，请输入正确的邮箱",
-                    SERVICE_ERROR_TAG: "发生了一些错误，请稍后重试",
-                    ERR_NO_USER: "此用户不存在",
-                },
-
-                createapplication: {
-                    NO_APPNAME_TAG: "请输入团队的名称。",
-                    CREATEAPP_SUCCESSFULLY_TAG: "创建团队成功。",
-                    CREATEAPP_FAILED_TAG: "创建团队失败。",
-                    APP_ALREADY_EXITED_TAG: "这个名字已经使用，请换一个名字。",
-                    APP_NAME_LENGTH_LIMIT_TAG: "团队名字超过长度",
-                    CONTAIN_UNREGULAR_WORDS_TAG: "团队名称包含非常规字符",
-                },
-            },
-
-            payment: {
-                pay: {
-                    CHOOSE_AGENT_SMALLER_THAN_EXIST_AGENT_TAG: "您当前所选坐席数小于团队实际坐席数，请扩大坐席数或删除一些坐席再来选购，谢谢",
-                },
-
-                payment: {
-                    
-                },
-
-                pwechat: {
-                    
-                },
-            },
-            
-            application: {
-                profile: {
-                    UPDATE_SUCCESSFULLY_TAG: "更新成功。",
-                    UPDATE_FAILED_TAG: "更新失败。",
-                    UPDATE_APP_LACK_PARAMS_TAG: "修改缺乏参数",
-                    UPDATE_APP_NOT_EXIST_TAG: "修改的团队不存在",
-                    UPDATE_APP_NAME_OUT_OF_LENGTH_TAG: "修改的团队名超出长度",
-                    REMOVE_APP_SUCCESS_TAG: "删除团队成功",
-                    PERMISSSION_DENIED_TAG: "操作没有权限",
-                    NO_CHANGE_TAG: "没有做出任何修改",
-                    NOT_REGULAR_WORDS_TAG: "请不要使用非常规字符",
-                    WORDS_OUT_OF_LENGHT_TAG: "团队名称超过限制",
-                    COPY_SUCCESSFUL_TAG: "成功复制到剪贴板",
-                    COPY_FAIL_TAG: "复制失败，请手动复制!",
-                },
-                account: {
-                    OLDPASSWORD_MISMATCH_TAG: "原密码输入错误",
-                    NEWPASSWORD_MISMATCH_TAG: "新密码两次输入不同",
-                },
-
-                resetpassword: {
-                    NO_EMAIL_TAG: "请输入您的邮箱",
-                    EMAIL_NOT_MATCH_TAG: "邮箱和此账号不匹配，请输入正确的邮箱",
-                    SERVICE_ERROR_TAG: "发生了一些错误，请稍后重试",
-
-                    FIND_PASSWORD_TAG: "找回密码",
-                    LOGIN_EMAIL_TAG: "登录邮箱",
-                    FIND_TAG: "发送找回密码邮件",
-                },
-
-                welcome: {
-                    UPDATE_APP_SUCCESSFULLY_TAG: "更新成功",
-                    UPDATE_APP_LACK_PARAMS_TAG: "参数缺失",
-                    UPDATE_APP_NOT_EXIST_TAG: "应用不存在",
-                    WELCOME_WORDS_OUT_OF_LENGTH_TAG: "问候语长度超过限制",
-                    COLOR_PICKED_NOT_RIGHT_TAG: "颜色取值有问题",
-                    UPDATE_ENCOUNTER_AN_ERROR_TAG: "更新遇到一个错误，请重试或者联系客服，谢谢",
-                    NO_CHANGED_TAG: "没有任何改变",
-
-                    WELCOME_INFO_TAG: "欢迎信息",
-                    SAVE_TAG: "保存",
-                    AUTO_POPUP: "自动弹出",
-                    POPUP_ONLY_ONCE: "仅首次",
-                    POPUP_NEVER: "从不弹出",
-                    POPUP_ALWAYS: "总是弹出",
-                    COLOR: "图标颜色",
-
-                    TOOLTIP_WELCOME_TAG: "鼠标悬停在聊天图标上的时候，显示的欢迎信息",
-                    TOOLTIP_COLOR_TAG: "聊天图标的背景颜色",
-                },
-
-                grouping: {
-                    WORDS_OUT_OF_LENGTH_TAG: "超过最大长度限制",
-                    UNREGULAR_WORDS_TAG: "请不要使用非常规字符",
-                    NO_ORG_GROUP_TAG: "没有找到组的信息",
-                    LACK_PARAMS_TAG: "缺少必要的信息",
-                    NOT_LIST_TAG: "参数格式不对",
-                    ADD_GROUP_USER_SUCCESS_TAG: "添加组用户成功",
-                    ENCOUNTER_AN_ERROR_TAG: "操作遇到错误，请查看控制台",
-                    REMOVE_GROUP_SUCCESS_TAG: "成功移除小组",
-                    UPDATE_GROUP_SUCCESS_TAG: "成功更新小组信息",
-                    CREATE_GROUP_SUCCESS_TAG: "成功创建小组",
-                    MODIFY_INFO_IS_NOT_SUITABLE_TAG: "所填参数不合适",
-                    NO_GROUP_USER_SELECTED_TAG: "没有选择任何客服人员",
-                    GROUP_NAME_EXISTED_TAG: "组名已经存在",
-                    NO_GROUP_NAME: "请填写组名",
-                    NO_GROUP_DESC: "请填写组的描述信息",
-
-                    SERVICE_GROUP_MANAGER_TAG: "客服分组管理",
-                    MOVE_TO: "移动到",
-                    SELECT_GROUP: "选择小组",
-                    ALL_SERVICE_USER: "全部客服",
-                    NEW_GROUP: "新建分组",
-                    SELECT_ALL: "全选",
-                    LOGIN_EMAIL: "登录邮箱",
-                    ROLE: "角色",
-                    GROUP_IN: "分组",
-                    GROUP_MODE_CONFIG: "分组模式配置",
-                    IS_SHOW_GROUP: "是否显示",
-                    GROUP_NAME: "组名",
-                    DISPATCH_WAY: "分流方式",
-                    CREATE_GROUP: "创建分组",
-                    GROUP_DESC: "描述",
-                    MODIFY_GROUP: "修改分组",
-                    SAVE: "确认修改",
-                    
-                    ADMIN_USER_TAG: "团队管理员",
-                    SERVICE_USER_TAG: "客服人员",
-
-                    UNAMED_GROUP_NAME_TAG: "未分组",
-                    DISTRIBUTOR_TAG: "首选组",
-                },
-                
-               people: {
-                   SEND_INVITATION_EMAIL_SUCCESSFULLY_TAG: "发送邀请邮件成功。",
-                   SEND_INVITATION_EMAIL_FAILED_TAG: "发送邀请邮件失败。",
-                   CREATE_APP_USER_SUCCESSFULLY_TAG:"添加成功。",
-                   CREATE_APP_USER_FAILED_TAG:"添加失败。",
-                   USER_EXIST_AND_INVITE_TAG:"用户已经存在，请点击‘邀请客服人员’按钮添加",
-                   REMOVE_APP_USER_SUCCESSFULLY_TAG:"删除成功。",
-                   REMOVE_APP_USER_FAILED_TAG:"删除失败。",
-                   ALREADY_IS_APP_USER_TAG:"这个用户已经添加，不需要重复添加。",
-                   QUOTA_REACH_TO_UPPER_LIMIT_TAG:"坐席配额达到上限,请先扩容",
-                   PARAMS_MISS_TAG: "参数不足",
-                   PERMISSION_DENY_TAG: "只有团队owner才能创建成员",
-
-                   CREATE_SERVICE_USER_TAG: "创建客服人员",
-                   SEARCH_TAG: "搜索",
-                   SELECT_ALL_TAG: "选择全部",
-                   REMOVE_SERVICE_USER_TAG: "编辑客服",
-                   REMOVE_SERVICE_USER_TAG: "移除客服",
-                   REMOVE_SERVICE_USER_PROMOTE_TAG: "该操作会移除您选定的客服人员：",
-                   OWNER_TAG: "创建者",
-                   SERVICE_USER_TAG: "客服",
-                   CANCEL_TAG: "取消",
-                   OK_TAG: "确定",
-                   SERVICE_USER_NAME_TAG: "客服全名",
-                   SERVICE_USER_EMAIL_TAG: "客服邮箱",
-                   PASSWORD_TAG: "设置密码",
-                   CONFIRM_PASSWORD_TAG: "确认密码",
-                   CREATE_TAG: "创建",
-                   SAVE_TAG: "保存",
-
-                   EDIT_APP_USER_SUCCESSFULLAY_TAG: "更新用户信息成功",
-                   EDIT_APP_USER_FAILED_TAG: "更新用户信息失败",
-
-               },
-
-                manualinstall: {
-                    COPY_SUCCESSFUL_TAG: "成功复制到剪贴板.",
-                },
-
-                integrate: {
-                    COPY_TO_CLIPBOARD: "复制到剪贴板",
-                    PREVIEW: "马上看看",
-                    URL_LINK: "生成链接",
-                    DEMO_DEPLOY_TO: "PPMessage已经部署在下面的网页链接上",
-                    COPY_CODE_TO_BODY: "复制下面的代码并置于 HTML 文件的 <body> </body> 元素之间"
-                },
-
-                teamprofile: {
-                    TEAM_INFO: "团队信息",
-                    TEAM_NAME: "团队名称",
-                    SAVE: "确认修改"
-                }
-                
+                },                                
             },
 
             statistics: {
@@ -857,34 +420,11 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     MESSAGE_TXT_TYPE_TAG: '文本消息',
                     MESSAGE_GET_ERROR_TAG: "获取历史信息错误",
 
-                    SEARCH_TAG: "搜索",
                     MESSAGE_LIST_TAG: "消息列表",
                     EMPTY_LIST_TAG: "没有任何匹配的会话",
                     MESSAGES: "条消息",
                     MESSAGES_PREVIEW: "消息预览",
                     
-                },
-
-                messageroute: {
-                    ALL: "群发模式",
-                    SMART: "智能匹配",
-                    GROUP: "分组模式",
-                    ROBOT: "人工智能"
-                },
-
-                userprofile: {
-                    EMAIL_TAG: "邮箱",
-                    USER_NAME_TAG: "姓名",
-                    SAVE_TAG: "确认修改",
-                },
-
-                advanced_settings: {
-                    CHANGE_PASSWORD_TAG: "修改密码",
-                    CURRENT_PASSWORD_TAG: "现有密码",
-                    NEW_PASSWORD_TAG: "新密码",
-                    REPEAT_NEW_PASSWORD_TAG: "确认新密码",
-                    SAVE_TAG: "确认修改",
-                    FORGET_PASSWORD_TAG: "忘记密码"
                 },
                 
             }
@@ -907,7 +447,6 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
         $translateProvider.determinePreferredLanguage(function() {
             return window.navigator.userLanguage || window.navigator.language;
-            //return "zh-CN"
         });
 
         $translateProvider.fallbackLanguage("en", "zh-CN");
