@@ -27,14 +27,20 @@
         span.user-status-indicator {
             cursor: pointer;
             position: absolute;
-            left: 33px;
+            top: 55px;
+            left: 55px;
             bottom: 8px;
-            width: 15px;
-            height: 15px;
+            width: 12px;
+            height: 12px;
             border-width: 1px;
             border-radius: 50%;
             border-style: solid;
             border-color: white;
+        }
+
+        select#user-status {
+            margin-left: 5px;
+            visibility: hidden;
         }
 
         .button.log-out {

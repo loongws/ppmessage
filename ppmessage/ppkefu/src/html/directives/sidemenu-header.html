@@ -6,7 +6,7 @@
     <p>{{ getCurrentAppName() }}</p>
     <span class="user-status-indicator" ng-click="selectStatus()" ng-class="status.selected.class"></span>
     <!--fixme: set visibility: hidden in sass cause select element to flash-->
-    <select id="user-status" style="visibility: hidden" ng-model="status.selected" ng-change="onStatusChange()"
+    <select id="user-status" ng-model="status.selected" ng-change="onStatusChange()"
             ng-options="option.content for option in status.options">
     </select>
     <div class="button button-icon icon ion-power log-out" title="{{ 'app.settings.LOG_OUT_TAG' | translate }}" ng-click="logout()"></div>
