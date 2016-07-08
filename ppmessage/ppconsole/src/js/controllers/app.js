@@ -149,6 +149,6 @@ angular.module("this_app")
         // Event: login successful
         $rootScope.$on(yvConstants.BROADCAST_EVENT_KEY.LOGIN_FINISHED, function( event, args ) {
             isLogin = true;
-        });    
+        });
         
     });

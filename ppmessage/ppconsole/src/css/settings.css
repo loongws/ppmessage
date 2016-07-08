@@ -746,21 +746,6 @@ input.input-contrast, .input-contrast {
     float: right;
 }
 
-.auto-search-group>.glyphicon {
-    top: 10px;
-    font-size: 14px;
-    color: #bbb;
-    text-align: center;
-}
-
-.auto-search-group .spinner, .auto-search-group>.glyphicon {
-    position: absolute;
-    left: 10px;
-    width: 16px;
-    height: 16px;
-    z-index: 5;
-}
-
 .auto-search-group .spinner {
     top: 9px;
     background-color: #fff;
