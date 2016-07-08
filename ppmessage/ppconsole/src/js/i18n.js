@@ -14,6 +14,7 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
                 CANCEL_TAG: "Cancel",
                 CONFIRM_TAG: "Confirm",
+
                 CREATE_TAG: "Create",
 
                 DELETE_TAG: "Delete",
@@ -29,12 +30,19 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
             field: {
                 CURRENT_PASSWORD_TAG: "Current password",
+
+                MEMBERS_TAG: "members",
+                
                 NEW_PASSWORD_TAG: "New password",
 
+                OWNER_TAG: "Owner",
+                
                 REPEAT_NEW_PASSWORD_TAG: "Repeat new password",
 
                 SERVICE_GROUP_NAME_TAG: "Group name",
                 SERVICE_GROUP_DESC_TAG: "Group description",
+
+                SERVICE_USER_TAG: "Service user",
                 
                 TEAM_NAME_TAG: "Team name",
                 
@@ -42,11 +50,16 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 USER_EMAIL_TAG: "User email",
                 USER_PASSWORD_TAG: "User password",
 
-                MEMBERS_TAG: "members"
             },
             
             error: {
                 ADD_FAILED_TAG: "Add failed.",
+
+                ALREADY_IS_SERVICE_USER_TAG: "Already is a service user",
+
+                CREATE_FAILED_TAG: "Create failed.",
+
+                DELETE_FAILED_TAG: "Failed to delete",
                 
                 EMAIL_TAKEN_TAG: "This email already has been taken.",
                 ILLEGAL_CHARACTER_FOUND_TAG: "Illegal character found.",
@@ -58,24 +71,29 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
 
                 PARAMS_MISS_TAG: "Parameters missed.",
                 PASSWORD_NOT_MATCHED_TAG: "Password not matched",
+
+                REMOVE_FAILED_TAG: "Remove failed.",
                 
                 SIGNIN_FAILED_TAG: "Sign in failed.",
                 UPDATE_FAILED_TAG: "Failed to update.",
 
-                DELETE_SUCCESSFULLY_TAG: "Failed to delete",
             },
 
             success: {
                 ADD_SUCCESSFULLY_TAG: "Add successfully.",
 
                 CHANGE_PASSWORD_SUCCESS_TAG: "Change password successfully.",
+
                 CHANGE_PASSWORD_FAIL_TAG: "Change password failed.",
 
-                DELETE_SUCCESSFULLY_TAG: "Delete successfully.",
-                REMOVE_SUCCESSFULLY_TAG: "Remove successfully.",
-                UPDATE_SUCCESSFULLY_TAG: "Update successfully.",
-
                 CREATE_SUCCESSFULLY_TAG: "Create successfully.",
+
+                DELETE_SUCCESSFULLY_TAG: "Delete successfully.",
+
+                REMOVE_SUCCESSFULLY_TAG: "Remove successfully.",
+
+                UPDATE_SUCCESSFULLY_TAG: "Update successfully.",
+         
             },
 
             global: {
@@ -91,11 +109,13 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 CREATE_TEAM_TAG: "Create Team",
 
                 CREATE_SERVICE_GROUP_TAG: "Create Service Group",
-
+                
+                CREATE_SERVICE_USER_TAG: "Create Service User",
+                
                 DELETE_SERVICE_GROUP_TAG: "Delete Service Group",
 
                 DELETE_SERVICE_GROUP_INFO_TAG: "Confirm delete the following groups:",
-                
+
                 DEMO_DEPLOY_TO: "PPMessage has deploy to this website for preview",
 
                 EDIT_SERVICE_GROUP_TAG: "Edit Service Group",
@@ -169,30 +189,6 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 },                
             },
             
-            application: {
-                
-                people: {
-                    CREATE_APP_USER_SUCCESSFULLY_TAG:"Add user successfully.",
-                    CREATE_APP_USER_FAILED_TAG:"Add user failed.",
-                    USER_EXIST_AND_INVITE_TAG:"user existed,please invite directly",
-                    REMOVE_APP_USER_SUCCESSFULLY_TAG:"Remove successfully.",
-                    REMOVE_APP_USER_FAILED_TAG:"Remove failed.",
-                    ALREADY_IS_APP_USER_TAG:"This user has already been app user.",
-                    QUOTA_REACH_TO_UPPER_LIMIT_TAG:"Agent quote reach to upper limit.",
-
-                    CREATE_SERVICE_USER_TAG: "Create service user",
-                    EDIT_SERVICE_USER_TAG: "Edit",
-                    REMOVE_SERVICE_USER_TAG: "Remove",
-                    REMOVE_SERVICE_USER_PROMOTE_TAG: "Are you sure to remove the service user: ",
-                    OWNER_TAG: "Owner",
-                    SERVICE_USER_TAG: "Service user",
-                    SERVICE_USER_NAME_TAG: "Service user full name",
-                    SERVICE_USER_EMAIL_TAG: "Email",
-                    CONFIRM_PASSWORD_TAG: "Confirm password",
-                },
-                
-            },
-
             statistics: {
 
                 overview: {
@@ -255,8 +251,12 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                 CURRENT_PASSWORD_TAG: "当前密码",
                 NEW_PASSWORD_TAG: "新密码",
 
+                OWNER_TAG: "拥有者",
+
                 SERVICE_GROUP_NAME_TAG: "组名字",
                 SERVICE_GROUP_DESC_TAG: "组描述",
+
+                SERVICE_USER_TAG: "客服人员",
                 
                 TEAM_NAME_TAG: "团队名称",
                 
@@ -420,7 +420,6 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
                     MESSAGE_TXT_TYPE_TAG: '文本消息',
                     MESSAGE_GET_ERROR_TAG: "获取历史信息错误",
 
-                    SEARCH_TAG: "搜索",
                     MESSAGE_LIST_TAG: "消息列表",
                     EMPTY_LIST_TAG: "没有任何匹配的会话",
                     MESSAGES: "条消息",

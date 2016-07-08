@@ -3,15 +3,15 @@
 
     <div class="batch-middle right">
       <md-button class="md-raised" ng-click="show_create_modal()">
-        {{ "application.people.CREATE_SERVICE_USER_TAG" | translate }}
+        {{ "global.CREATE_SERVICE_USER_TAG" | translate }}
       </md-button>
     </div>
 
     <div class="left non-admin-search">
       <md-input-container class="md-block md-icon-float">
         <md-icon md-font-set="material-icons"> search </md-icon>
-        <label>{{ 'application.people.SEARCH_TAG' | translate }}...</label>
-        <input type="search" ng-model="search_value" ng-change="page_app_user(newPageNumber)" autocomplete="off">
+        <label>{{ "action.SEARCH_TAG" | translate }}...</label>
+        <input type="search" ng-model="search_value" ng-change="page_app_user()" autocomplete="off">
       </md-input-container>
     </div>
 
@@ -48,10 +48,10 @@
         </div>
 
         <div class="member-meta table-list-cell" style="font-size:15px;" ng-show="{{member.is_owner_user==1}}">
-          {{ "application.people.OWNER_TAG" | translate }}
+          {{ "field.OWNER_TAG" | translate }}
         </div>
         <div class="member-meta table-list-cell" style="font-size:15px;" ng-show="{{!member.is_owner_user==1}}">
-          {{ "application.people.SERVICE_USER_TAG" | translate }}
+          {{ "field.SERVICE_USER_TAG" | translate }}
         </div>
 
         <div class="member-meta table-list-cell" style="font-size:15px;padding-left:0">
@@ -72,16 +72,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><strong>{{ "application.people.REMOVE_SERVICE_USER_TAG" | translate }}</strong></h4>
+        <h4 class="modal-title"><strong>{{ "global.REMOVE_SERVICE_USER_TAG" | translate }}</strong></h4>
       </div>
       <div class="modal-body" style="color: #D03F3F;">
-        <p>{{ "application.people.REMOVE_SERVICE_USER_PROMOTE_TAG" | translate }} </p>
+        <p>{{ "global.REMOVE_SERVICE_USER_INFO_TAG" | translate }} </p>
         <p ng-repeat="user in to_be_removed_users" style="color: #000000;"> {{ user.user_fullname }} </p> 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">{{ "application.people.CANCEL_TAG" | translate }}</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">{{ "action.CANCEL_TAG" | translate }}</button>
         <button type="button" class="btn btn-danger" style="background-image: linear-gradient(#C16552, #E24215);"
-                ng-click="remove_users(to_be_removed_users)">{{ "application.people.OK_TAG" | translate }}</button>
+                ng-click="remove_users(to_be_removed_users)">{{ "action.REMOVE_TAG" | translate }}</button>
       </div>
     </div>
   </div>
@@ -96,23 +96,23 @@
             <span aria-hidden="true">&times;</span>
           </button>
           <h4 class="modal-title">
-            <strong>{{ "application.people.CREATE_SERVICE_USER_TAG" | translate }}</strong>
+            <strong>{{ "action.CREATE_TAG" | translate }}</strong>
           </h4>
         </div>
         
         <div class="modal-body">
           <md-input-container class="md-block">
-            <label>{{ "application.people.SERVICE_USER_NAME_TAG" | translate }}</label>
+            <label>{{ "field.USER_FULLNAME_TAG" | translate }}</label>
             <input ng-model="create_user_direct.name" md-maxlength="64" required>
           </md-input-container>
 
           <md-input-container class="md-block">
-            <label>{{ "application.people.SERVICE_USER_EMAIL_TAG" | translate }}</label>
+            <label>{{ "field.USER_EMAIL_TAG" | translate }}</label>
             <input ng-model="create_user_direct.email" md-maxlength="128" required>
           </md-input-container>
 
           <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
-            <label>{{ "application.people.PASSWORD_TAG" | translate }}</label>
+            <label>{{ "field.USER_PASSWORD_TAG" | translate }}</label>
             <input type="{{ create_user_direct.password_input_type }}" ng-model="create_user_direct.password" required>
             <md-icon md-font-set="material-icons" ng-if="!create_user_direct.user_password_is_visible" ng-click="show_user_password(true)"> visibility </md-icon>
             <md-icon md-font-set="material-icons" ng-if="create_user_direct.user_password_is_visible" ng-click="show_user_password(false)"> visibility_off </md-icon>
@@ -120,7 +120,7 @@
         </div>
         
         <div class="modal-footer">
-          <md-button type="submit" class="md-raised">{{ "application.people.CREATE_TAG" | translate }}</md-button>
+          <md-button type="submit" class="md-raised">{{ "action.CREATE_TAG" | translate }}</md-button>
         </div>
         
       </form>
@@ -137,23 +137,23 @@
             <span aria-hidden="true">&times;</span>
           </button>
           <h4 class="modal-title">
-            <strong>{{ "application.people.EDIT_SERVICE_USER_TAG" | translate }}</strong>
+            <strong>{{ "action.EDIT_TAG" | translate }}</strong>
           </h4>
         </div>
         
         <div class="modal-body">
           <md-input-container class="md-block">
-            <label>{{ "application.people.SERVICE_USER_NAME_TAG" | translate }}</label>
+            <label>{{ "field.USER_FULLNAME_TAG" | translate }}</label>
             <input ng-model="edit_user_direct.name" md-maxlength="64" required>
           </md-input-container>
 
           <md-input-container class="md-block">
-            <label>{{ "application.people.SERVICE_USER_EMAIL_TAG" | translate }}</label>
+            <label>{{ "field.USER_EAMIL_TAG" | translate }}</label>
             <input ng-model="edit_user_direct.email" md-maxlength="128" required>
           </md-input-container>
 
           <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
-            <label>{{ "application.people.PASSWORD_TAG" | translate }}</label>
+            <label>{{ "field.USER_PASSWORD_TAG" | translate }}</label>
             <input type="{{ edit_user_direct.password_input_type }}" ng-model="edit_user_direct.password">
             <md-icon md-font-set="material-icons" ng-if="!edit_user_direct.user_password_is_visible" ng-click="show_edit_user_password(true)"> visibility </md-icon>
             <md-icon md-font-set="material-icons" ng-if="edit_user_direct.user_password_is_visible" ng-click="show_edit_user_password(false)"> visibility_off </md-icon>
@@ -161,7 +161,7 @@
         </div>
         
         <div class="modal-footer">
-          <md-button type="submit" class="md-raised">{{ "application.people.SAVE_TAG" | translate }}</md-button>
+          <md-button type="submit" class="md-raised">{{ "action.SAVE_TAG" | translate }}</md-button>
         </div>
         
       </form>
