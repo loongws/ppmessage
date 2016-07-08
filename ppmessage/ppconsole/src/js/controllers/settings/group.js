@@ -87,27 +87,7 @@ angular.module("this_app")
                 $scope.toast_error_string("DELETE_FAILED_TAG");
             });
         };        
-        
-        $scope.show_members_modal = function(group) {
-            $scope.groups.group.group = angular.copy(group);
-            yvAjax.get_org_group_user_list({
-                app_uuid: yvUser.get_team().uuid,
-                group_uuid: group.uuid
-            }).success(function(data) {
-                if (data.error_code != 0) {
-                    console.log("can not get org group user list");
-                } else {
-                    $timeout(function() {
-                        $scope.groups.group.users = data.list;
-                    });
-                }
-            }).error(function(data) {
-                console.log("can not get org group user list");
-            });
-            
-            jQuery("#group_members_modal").modal({show: true});
-        };
-        
+                
         $scope.show_edit_modal = function() {
             jQuery("#edit_service_group").modal( { show:true } );
         };
@@ -216,6 +196,5 @@ angular.module("this_app")
                 group_desc: ''
             }
         }
-
         
     }); // end ctrl

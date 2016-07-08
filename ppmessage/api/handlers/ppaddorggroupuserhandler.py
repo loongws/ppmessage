@@ -42,17 +42,6 @@ class PPAddOrgGroupUserHandler(BaseHandler):
             logging.info("user: %s already in group:%s" % (_user_uuid, _group_uuid))
             return
 
-        # if the user has been in another group
-        _key = OrgGroupUserData.__tablename__ + ".user_uuid." + _user_uuid
-        _old_uuid = _redis.get(_key)
-        if _old_uuid != None:
-            _key = OrgGroupUserData.__tablename__ + ".group_uuid." + _old_uuid + ".user_uuid." + _user_uuid
-            _data_uuid = _redis.get(_key)
-            if _data_uuid != None:
-                _row = OrgGroupUserData(uuid=_data_uuid)
-                _row.delete_redis_keys(_redis)
-                _row.async_delete(_redis)
-
         _row = OrgGroupUserData(uuid=str(uuid.uuid1()), group_uuid=_group_uuid, user_uuid=_user_uuid)
         _row.async_add(_redis)
         _row.create_redis_keys(_redis)
@@ -60,17 +49,8 @@ class PPAddOrgGroupUserHandler(BaseHandler):
     
     def _get(self, _app_uuid, _group_uuid, _user_list):        
         _redis = self.application.redis
-
-        # check the group belongs to app
-        _key = OrgGroup.__tablename__ + ".app_uuid." + _app_uuid
-        _is = _redis.sismember(_key, _group_uuid)
-        if _is != True:
-            self.setErrorCode(API_ERR.NO_ORG_GROUP)
-            return
-
         for _user_uuid in _user_list:
             self._add(_group_uuid, _user_uuid)
-
         update_group_icon(_redis, _group_uuid)
         return
 

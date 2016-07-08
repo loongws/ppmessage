@@ -46,6 +46,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
             },
             
             error: {
+                ADD_FAILED_TAG: "Add failed.",
+                
                 EMAIL_TAKEN_TAG: "This email already has been taken.",
                 ILLEGAL_CHARACTER_FOUND_TAG: "Illegal character found.",
                 NEWPASSWORD_MISMATCH_TAG: "New password and repeat not equal.",
@@ -64,6 +66,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
             },
 
             success: {
+                ADD_SUCCESSFULLY_TAG: "Add successfully.",
+
                 CHANGE_PASSWORD_SUCCESS_TAG: "Change password successfully.",
                 CHANGE_PASSWORD_FAIL_TAG: "Change password failed.",
 
@@ -75,6 +79,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
             },
 
             global: {
+                ADD_GROUP_USER_TAG: "Add user to this group",
+                
                 CHANGE_PASSWORD_TAG: "Change Password",
                 
                 COLOR_PICKED_NOT_RIGHT_TAG: "color picked is unregualr value",           
@@ -262,7 +268,10 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
             },
             
             error: {
+                ADD_FAILED_TAG: "添加成功",
+
                 EMAIL_TAKEN_TAG: "这个 Email 地址已经被别人使用了",
+
                 ILLEGAL_CHARACTER_FOUND_TAG: "发现了非法字符",
                 NEWPASSWORD_MISMATCH_TAG: "新密码和重复新密码不一致",
                 NOTHING_CHANGED_TAG: "什么都没有改变",
@@ -281,6 +290,9 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
             },
 
             success: {
+
+                ADD_SUCCESSFULLY_TAG: "添加成功",
+                
                 CHANGE_PASSWORD_SUCCESS_TAG: "改密码成功",
                 CHANGE_PASSWORD_FAIL_TAG: "改密码失败",
 
@@ -292,6 +304,8 @@ angular.module("this_app.i18n", ["pascalprecht.translate"])
             },
 
             global: {
+                ADD_GROUP_USER_TAG: "添加用户到此组",
+
                 CHANGE_PASSWORD_TAG: "更改密码",
                 
                 COLOR_PICKED_NOT_RIGHT_TAG: "选取颜色异常",           
