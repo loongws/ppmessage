@@ -25,7 +25,6 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
         $timeout(function () {
             yvPush.retry();
             __open_socket();
-            $rootScope.$broadcast("event:get_unack_all");
         });
     }
 

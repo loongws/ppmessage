@@ -11,10 +11,6 @@ from .ackmessagehandler import AckMessageHandler
 from .forwardmessagehandler import ForwardMessageHandler
 from .setdeviceinfohandler import SetDeviceInfoHandler
 
-from .getunackedmessageshandler import GetUnackedMessagesHandler
-from .getunackedmessagehandler import GetUnackedMessageHandler
-from .getmessagehistoryhandler import GetMessageHistoryHandler
-
 from .ppcreateanonymoushandler import PPCreateAnonymousHandler
 from .ppcreateuserhandler import PPCreateUserHandler
 from .ppremoveuserhandler import PPRemoveUserHandler
@@ -38,7 +34,6 @@ from .ppgetappserviceuserlisthandler import PPGetAppServiceUserListHandler
 
 from .ppsendmessagehandler import PPSendMessageHandler
 from .ppgetuseruuidhandler import PPGetUserUUIDHandler
-from .ppgethistorymessagehandler import PPGetHistoryMessageHandler
 from .ppgetuserinfohandler import PPGetUserInfoHandler
 
 from .ppgetapporggrouplisthandler import PPGetAppOrgGroupListHandler
@@ -134,15 +129,6 @@ def getWebServiceHandlers():
 
     # set deviceinfo
     handler_list.append((r"/SET_DEVICE_INFO", SetDeviceInfoHandler))
-
-    # get unacked messages
-    handler_list.append((r"/GET_UNACKED_MESSAGES", GetUnackedMessagesHandler))
-
-    # get unacked messages
-    handler_list.append((r"/GET_UNACKED_MESSAGE", GetUnackedMessageHandler))
-
-    # get app version to check the lastest version for the app
-    handler_list.append((r"/GET_MESSAGE_HISTORY", GetMessageHistoryHandler))
 
     # PPMESSAGE
     handler_list.append((r"/PP_CREATE_ANONYMOUS", PPCreateAnonymousHandler))

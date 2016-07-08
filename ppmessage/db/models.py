@@ -418,32 +418,26 @@ class MessagePush(CommonMixin, BaseModel):
     def create_redis_keys(self, _redis, *args, **kwargs):
         # ACKED PUSH NOT CACHED ANY LONGER
         if self.status == MESSAGE_STATUS.ACKED:
-            #self.delete_redis_keys(_redis)
             return
         
-        if self.task_uuid == None or self.app_uuid == None or \
-           self.user_uuid == None or self.device_uuid == None:
+        if self.task_uuid == None or self.app_uuid == None or self.user_uuid == None
             return
 
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
         # badge number and unacked messages
-        _key = self.__tablename__ + ".app_uuid." + self.app_uuid + \
-               ".user_uuid." + self.user_uuid + ".device_uuid." + self.device_uuid
-        if self.updatetime != None:
-            _updatetime = time.mktime(self.updatetime.timetuple())*1000*1000 + self.updatetime.microsecond
-            _v = json.dumps([self.task_uuid, self.uuid])
-            _redis.zadd(_key, _v, _updatetime)
+        _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".user_uuid." + self.user_uuid
+        _updatetime = time.mktime(self.updatetime.timetuple())*1000*1000 + self.updatetime.microsecond
+        _v = json.dumps([self.task_uuid, self.uuid])
+        _redis.zadd(_key, _v, _updatetime)
 
         return
 
     def delete_redis_keys(self, _redis):
         _obj = redis_hash_to_dict(_redis, MessagePush, self.uuid)
-        if _obj == None or _obj["task_uuid"] == None or _obj["app_uuid"] == None or \
-           _obj["user_uuid"] == None or _obj["device_uuid"] == None:
+        if _obj == None or _obj["task_uuid"] == None or _obj["app_uuid"] == None or _obj["user_uuid"] == None:
             return
-
-        _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + \
-               ".user_uuid." + _obj["user_uuid"] + ".device_uuid." + _obj["device_uuid"]
+        
+        _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + ".user_uuid." + _obj["user_uuid"]
         _v = json.dumps([_obj["task_uuid"], self.uuid])
         _redis.zrem(_key, _v)
         
@@ -801,6 +795,7 @@ class AppInfo(CommonMixin, BaseModel):
     app_billing_uuid = Column("app_billing_uuid", String(64))
 
     return_offline_message = Column("return_offline_message", Boolean)
+
     offline_message = Column("offline_message", String(512))
     welcome_message = Column("welcome_message", String(512))
 

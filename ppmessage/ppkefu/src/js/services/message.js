@@ -122,8 +122,6 @@ function ($timeout, yvSys, yvUser, yvFile, yvType, yvLocal, yvConstants) {
         message.title = _get_raw_title(raw_message.bo, raw_message.ms);
         message.status = _get_real_status(raw_message.fi, raw_message.ti);
         message.direction = _get_real_direction(raw_message.fi, raw_message.ti);
-
-        message.from_unack = raw_message.from_unack ? true : false;
         
         return message;
     }
