@@ -367,7 +367,7 @@ class AbstractPolicy(Policy):
         if self._task["_app"].get("enable_jpush"):
             _config["device_android_jpush_registrationid"] = _device.get("device_android_jpush_registrationid")
             self._redis.rpush(REDIS_JPUSH_KEY, json.dumps(_push))
-        else if self._task["_app"].get("enable_gcm_push"):
+        elif self._task["_app"].get("enable_gcm_push"):
             _config["device_android_gcmtoken"] = _device.get("device_android_gcmtoken")
             self._redis.rpush(REDIS_GCMPUSH_KEY, json.dumps(_push))
         else:

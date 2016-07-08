@@ -420,7 +420,7 @@ class MessagePush(CommonMixin, BaseModel):
         if self.status == MESSAGE_STATUS.ACKED:
             return
         
-        if self.task_uuid == None or self.app_uuid == None or self.user_uuid == None
+        if self.task_uuid == None or self.app_uuid == None or self.user_uuid == None:
             return
 
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)

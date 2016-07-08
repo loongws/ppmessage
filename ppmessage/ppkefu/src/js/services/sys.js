@@ -29,6 +29,37 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
         _page_size = Math.floor(screen.height / 72);
     }
 
+    function _is_document_visible() {
+        var hidden, state, visibilityChange; 
+        if (typeof document.hidden !== "undefined") {
+	        hidden = "hidden";
+	        visibilityChange = "visibilitychange";
+	        state = "visibilityState";
+        } else if (typeof document.mozHidden !== "undefined") {
+	        hidden = "mozHidden";
+	        visibilityChange = "mozvisibilitychange";
+	        state = "mozVisibilityState";
+        } else if (typeof document.msHidden !== "undefined") {
+	        hidden = "msHidden";
+	        visibilityChange = "msvisibilitychange";
+	        state = "msVisibilityState";
+        } else if (typeof document.webkitHidden !== "undefined") {
+	        hidden = "webkitHidden";
+	        visibilityChange = "webkitvisibilitychange";
+	        state = "webkitVisibilityState";
+        }
+
+        if (!state ) {
+            return false;
+        }
+
+        if (document[state] === "visible") {
+            return true;
+        }
+        
+        return false;
+    }
+    
     function _request_desktop_notification() {
         if (window.Notification === undefined) {
             console.error("No Notification support.");
@@ -59,10 +90,11 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
             if (_icon) {
                 _option.icon = _icon;
             }
-            console.log(_option);
-            if (document.hidden === false) {
+
+            if (_is_document_visible()) {
                 return;
             }
+            
             _noti = new Notification(_title, _option);
             setTimeout(_noti.close.bind(_noti), 3000);
         }

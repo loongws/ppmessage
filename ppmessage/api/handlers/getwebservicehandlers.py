@@ -154,7 +154,6 @@ def getWebServiceHandlers():
 
     handler_list.append((r"/PP_SEND_MESSAGE", PPSendMessageHandler))
     handler_list.append((r"/PP_GET_USER_UUID", PPGetUserUUIDHandler))
-    handler_list.append((r"/PP_GET_HISTORY_MESSAGE", PPGetHistoryMessageHandler))
     handler_list.append((r"/PP_GET_USER_INFO", PPGetUserInfoHandler))
 
     handler_list.append((r"/PP_GET_APP_ORG_GROUP_LIST", PPGetAppOrgGroupListHandler))
