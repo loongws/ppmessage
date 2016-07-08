@@ -52,7 +52,7 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
         if (!state ) {
             return false;
         }
-
+        
         if (document[state] === "visible") {
             return true;
         }
