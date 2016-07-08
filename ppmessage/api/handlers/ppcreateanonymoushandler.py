@@ -118,6 +118,7 @@ class PPCreateAnonymousHandler(BaseHandler):
         _du_uuid = str(uuid.uuid1())
         _user_email = _du_uuid[:6] + "@" + self.app_uuid[:6]
         _user_name = self._unknown_user_name()
+        _user_icon = random_identicon(_du_uuid)
         
         _values = {
             "uuid": _du_uuid,
@@ -128,7 +129,7 @@ class PPCreateAnonymousHandler(BaseHandler):
             "user_email": _user_email,
             "user_fullname": _user_name,
             #"user_icon": create_user_icon(_du_uuid),
-            "user_icon": random_identicon(_du_uuid)
+            "user_icon": _user_icon
         }
         
         _row = DeviceUser(**_values)
@@ -154,6 +155,7 @@ class PPCreateAnonymousHandler(BaseHandler):
         _rdata["user_fullname"] = _user_name
         _rdata["user_email"] = _user_email
         _rdata["user_name"] = _user_name
+        _rdata["user_icon"] = _user_icon
 
         _ip = self.request.headers.get("X-Real-Ip") or self.request.headers.get("remote_ip") or self.request.remote_ip
         IOLoop.current().spawn_callback(self._create_user_name, user_uuid=_du_uuid, data_uuid=_data_uuid, ip=_ip)
