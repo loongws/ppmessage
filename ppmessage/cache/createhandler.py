@@ -1,22 +1,24 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
+# Guijin Ding, dingguijin@gmail.com.
+# All rights are reserved.
 #
+# cache/createhandler.py
 #
 
 from ppmessage.db.dbinstance import getDBSessionClass
+from ppmessage.db.dbinstance import BaseModel
 from ppmessage.db.models import DeviceUser
-from ppmessage.db.sqlmysql import BaseModel
 
-from sqlalchemy import Boolean
 from sqlalchemy import String
+from sqlalchemy import Boolean
 from sqlalchemy import DateTime
 
 from time import strptime
 
-import datetime
 import logging
+import datetime
 import traceback
 
 def _class(tablename):
@@ -26,8 +28,6 @@ def _class(tablename):
     return None
   
 class CreateHandler():
-    def __init__(self, _app):
-        self.app = _app
 
     def task(self, _data):
         if "table" not in _data or "values" not in _data:
@@ -38,7 +38,9 @@ class CreateHandler():
         if _cls == None:
             logging.error("Error for not db class for %s.", _data["table"])
             return
-            
+
+        logging.info("create with %s." % str(_data))
+        
         _rowdata = _data["values"]
 
         if "createtime" in _rowdata:

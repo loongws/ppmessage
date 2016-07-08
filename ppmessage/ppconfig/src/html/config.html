@@ -1,0 +1,62 @@
+<md-content>
+  <div layout="column" flex="noshrink" layout-align="center center">
+
+    <md-toolbar class="md-whiteframe-glow-z1 site-content-toolbar">
+      <div class="md-toolbar-tools docs-toolbar-tools" tabIndex="-1">
+        <div layout="row" flex class="fill-height">
+          <h2 class="md-toolbar-item md-breadcrumb md-headline">
+            <span>
+              <span>Config PPMessage</span>
+            </span>
+          </h2>
+          <span flex></span> <!-- use up the empty space -->        
+        </div>
+      </div>
+    </md-toolbar>
+
+    <div style="width:100%;">
+      <md-card class="md-whiteframe-z2" flex="66">
+
+        <div class="md-padding" layout="column" style="width:100%;" ng-cloak>
+
+          <md-content class="md-no-momentum config-buttons">
+
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+              <md-button class="md-raised" ng-disabled="should_disable_config_server()" ng-click="config_server(event)">
+                Config Server
+              </md-button>
+              <span flex></span>
+              <div class="label" style="padding-left: 15px;">{{ get_server_status() }}</div>
+            </section>
+
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+              <md-button class="md-raised" ng-disabled="should_disable_config_database()" ng-click="config_database(event)">
+                Config Database
+              </md-button>
+              <span flex></span>
+              <div class="label" style="padding-left: 15px;">{{ get_database_status() }}</div>
+            </section>
+
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+              <md-button class="md-raised" ng-disabled="should_disable_create_first()" ng-click="create_first(event)">
+                Create First User And Team
+              </md-button>
+              <span flex></span>
+              <div class="label" style="padding-left: 15px;">{{ get_first_status() }}</div>
+            </section>
+
+            <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+              <md-button class="md-raised" ng-disabled="should_disable_restart()" ng-click="restart_ppmessage(event)">
+                Restart PPMessage with configed data
+              </md-button>
+            </section>
+
+          </md-content>
+        </div>
+      </md-card>
+
+    </div>
+  </div>
+  
+</md-content>
+

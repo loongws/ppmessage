@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2010-2016 .
-# Guijin Ding, dingguijin@gmail.com
-# All rights reserved
+# Copyright (C) 2010-2016 PPMessage.
+# Guijin Ding, dingguijin@gmail.com.
+# All rights reserved.
 #
 # backend/gcmpush.py 
 # The entry form gcmpush service
 #
 
-from ppmessage.iospush.pushtitle import push_title
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import REDIS_GCMPUSH_KEY
-from ppmessage.bootstrap.config import BOOTSTRAP_CONFIG
+from ppmessage.core.constant import PP_WEB_SERVICE
+
+from ppmessage.core.singleton import singleton
+from ppmessage.core.main import AbstractWebService
+from ppmessage.core.utils.config import get_config_gcm
+from ppmessage.core.utils.pushtitle import push_title
 
 from gcm import GCM
 
@@ -26,7 +30,7 @@ import redis
 import logging
 import datetime
 
-class PushHandler():
+class GcmPushHandler():
     def __init__(self, _app):
         self.application = _app
         return
@@ -63,13 +67,19 @@ class PushHandler():
         self._push(_app_uuid, _body, _config)
         return
 
-class GcmPushApp():
-    def __init__(self, *args, **kwargs):
-        _config = BOOTSTRAP_CONFIG.get("gcm")
+@singleton
+class GcmPushDelegate():
+    def __init__(self, app):
+        _config = get_config_gcm()
+        if _config == None:
+            logging.error("GCM is not configed.")
+            self.gcm = None
+            return
+        
         _api_key = _config.get("api_key")
         self.gcm = GCM(_api_key)
-        self.push_handler = PushHandler(self)
-        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+        self.redis = app.redis
+        self.push_handler = GcmPushHandler(self)
         return
         
     def outdate(self):
@@ -89,19 +99,52 @@ class GcmPushApp():
             self.push_handler.task(_request)
         return
 
-if __name__ == "__main__":
+    def run_periodic(self):
+        if self.gcm == None:
+            return
+        tornado.ioloop.PeriodicCallback(self.outdate, 1000*30).start()
+        tornado.ioloop.PeriodicCallback(self.push, 1000).start()
+        return
+
+class GcmPushWebService(AbstractWebService):
+
+    @classmethod
+    def name(cls):
+        return PP_WEB_SERVICE.GCMPUSH
+
+    @classmethod
+    def get_handlers(cls):
+        return []
+
+    @classmethod
+    def get_delegate(cls, app):
+        return GcmPushDelegate(app)
+
+class GcmPushApp():
+    def __init__(self, *args, **kwargs):
+        self.redis = redis.Redis(REDIS_HOST, REDIS_PORT, db=1)
+        return
+
+    def get_delegate(self, name):
+        return GcmPushDelegate(self)
+        
+def _main():
     tornado.options.parse_command_line()
 
     _config = BOOTSTRAP_CONFIG.get("gcm")
     _api_key = _config.get("api_key")
     if _api_key == None or len(_api_key) == 0:
-        logging.info("No gcm api_key config, gcmpush can not start.")
+        logging.info("No gcm api_key config, gcmpush should not start.")
         sys.exit()
     
     _app = GcmPushApp()
+    _app.get_delegate("").run_periodic()
     logging.info("Starting gcmpush service......")
     # set the periodic check outdated connection
-    tornado.ioloop.PeriodicCallback(_app.outdate, 1000*30).start()
-    tornado.ioloop.PeriodicCallback(_app.push, 1000).start()
     tornado.ioloop.IOLoop.instance().start()
+
+    return
+
+if __name__ == "__main__":
+    _main()
     

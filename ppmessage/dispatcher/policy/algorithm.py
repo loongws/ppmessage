@@ -7,7 +7,7 @@
 
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import DeviceInfo
-from ppmessage.db.models import OrgUserGroupData
+from ppmessage.db.models import OrgGroupUserData
 from ppmessage.db.models import MessagePushTask
 
 from ppmessage.core.constant import GROUP_ALGORITHM
@@ -96,7 +96,7 @@ class BroadcastAlgorithm(AbstractAlgorithm):
     
     @classmethod
     def best(cls, _app_uuid, _group_uuid, _redis):
-        _key = OrgUserGroupData.__tablename__ + \
+        _key = OrgGroupUserData.__tablename__ + \
                    ".group_uuid." + _group_uuid
         _users = _redis.smembers(_key)
         return _users
@@ -108,7 +108,7 @@ class SmartAlgorithm(AbstractAlgorithm):
     
     @classmethod
     def best(cls, _app_uuid, _group_uuid, _redis):
-        _key = OrgUserGroupData.__tablename__ + \
+        _key = OrgGroupUserData.__tablename__ + \
                ".group_uuid." + _group_uuid
         _users = _redis.smembers(_key)
         _l = []
@@ -141,7 +141,7 @@ class LoadAlgorithm(AbstractAlgorithm):
 
     @classmethod
     def best(cls, _app_uuid, _group_uuid, _redis):
-        _key = OrgUserGroupData.__tablename__ + \
+        _key = OrgGroupUserData.__tablename__ + \
                ".group_uuid." + _group_uuid
         _users = _redis.smembers(_key)
         _l = []

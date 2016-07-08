@@ -1,0 +1,188 @@
+<div class="container" style="width:100%;margin-top:15px;">
+  <div class="subnav org-toolbar">
+
+    <div class="batch-middle right">
+      <md-button class="md-raised" ng-click="show_create_modal()">
+        {{ "action.CREATE_TAG" | translate }}
+      </md-button>
+    </div>
+
+    <div class="left">
+      <md-input-container class="md-block md-icon-float">
+        <md-icon md-font-set="material-icons"> search </md-icon>
+        <label>{{ "action.SEARCH_TAG" | translate }}...</label>
+        <input type="search" ng-model="search_value" ng-change="page_service_group(newPageNumber)" autocomplete="off">
+      </md-input-container>
+    </div>
+
+  </div>
+  
+  <div class="table-list-header">
+
+    <label class="table-list-header-select-all">
+      <md-checkbox ng-change="check_all_changed(groups.selected_all.selected)" ng-model="groups.selected_all.selected" aria-label="Select All">
+      </md-checkbox>
+    </label>
+    
+    <div class="member-toolbar-actions right">
+      <md-button class="md-icon-button" aria-label="edit" ng-click="show_edit_modal()">
+        <md-icon md-font-set="material-icons" ng-show="should_show_edit_button()"> edit </md-icon>
+      </md-button>
+      <md-button class="md-icon-button" aria-label="delete" ng-click="show_remove_modal()">
+        <md-icon md-font-set="material-icons" ng-show="should_show_remove_button()"> delete </md-icon>
+      </md-button>
+    </div>
+    
+  </div>
+
+  <div id="org-members">
+    <ul class="member-listing table-list table-list-bordered adminable">
+      <li class="table-list-item member-list-item" dir-paginate="member in groups.groups | itemsPerPage: groups.items_per_page" current-page="groups.page_number" total-items="groups.total_items">
+
+        <div class="table-list-cell table-list-cell-checkbox">
+          <md-checkbox ng-model="member.selected" aria-label="check"> </md-checkbox>
+        </div>
+
+        <div class="table-list-cell member-info">
+          <span class="member-link css-truncate">
+            <strong class="member-username css-truncate-target">{{member.group_name}}</strong>
+          </span>
+        </div>
+
+        <div class="table-list-cell member-info">
+          <span class="member-link css-truncate">
+            <strong class="member-username css-truncate-target">{{member.group_desc}}</strong>
+          </span>
+        </div>
+
+        <div class="table-list-cell member-info">
+          <span class="member-link css-truncate">
+            <a style="cursor: pointer;" ui-sref="app.settings.groupmembers({group_uuid: member.uuid})">
+              <strong class="member-username css-truncate-target">
+                {{"field.MEMBERS_TAG" | translate}} ({{member.user_count}})
+              </strong>
+            </a>
+          </span>
+        </div>
+
+      </li>
+    </ul>
+
+    <div class="paginate-container">
+      <dir-pagination-controls auto-hide="false" boundary-links="true" on-page-change="page_service_group(newPageNumber)">
+      </dir-pagination-controls>
+    </div>
+    
+  </div>
+</div>
+
+
+<div class="modal fade" id="delete_service_group" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document" style="top: 150px;" >
+    <div class="modal-content" >
+
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        
+        <h4 class="modal-title">
+          <strong>{{ "global.DELETE_SERVICE_GROUP_TAG" | translate }}</strong>
+        </h4>
+
+      </div>
+        
+      <div class="modal-body">
+        <md-subheader class="md-no-sticky">
+          {{"global.DELETE_SERVICE_GROUP_INFO_TAG" | translate}}
+        </md-subheader>
+        
+        <md-list>
+          <md-list-item ng-repeat="group in groups.remove">
+            <p> {{ group.group_name }} </p>
+          </md-list-item>
+        </md-list>
+        
+      </div>
+        
+      <div class="modal-footer">
+        <md-button class="md-raised" ng-click="delete_groups()">{{ "action.DELETE_TAG" | translate }}</md-button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="create_service_group" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document" style="top: 150px;" >
+    <div class="modal-content" >
+      <form name="create-service-group-form" ng-submit="create_service_group_form_submit()">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">
+            <strong>{{ "global.CREATE_SERVICE_GROUP_TAG" | translate }}</strong>
+          </h4>
+        </div>
+        
+        <div class="modal-body">
+          <md-input-container class="md-block">
+            <label>{{ "field.SERVICE_GROUP_NAME_TAG" | translate }}</label>
+            <input ng-model="groups.create.group_name" md-maxlength="64" required>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>{{ "field.SERVICE_GROUP_DESC_TAG" | translate }}</label>
+            <input ng-model="groups.create.group_desc" md-maxlength="128" required>
+          </md-input-container>
+
+        </div>
+        
+        <div class="modal-footer">
+          <md-button type="submit" class="md-raised">{{ "action.CREATE_TAG" | translate }}</md-button>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="edit_service_group" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document" style="top: 150px;" >
+    <div class="modal-content" >
+      <form name="edit-service-group-form" ng-submit="edit_service_group_form_submit()">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">
+            <strong>{{ "global.EDIT_SERVICE_GROUP_TAG" | translate }}</strong>
+          </h4>
+        </div>
+        
+        <div class="modal-body">
+          <md-input-container class="md-block">
+            <label>{{ "filed.SERVICE_GROUP_NAME_TAG" | translate }}</label>
+            <input ng-model="groups.edit.group_name" md-maxlength="64" required>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>{{ "filed.SERVICE_GROUP_DESC_TAG" | translate }}</label>
+            <input ng-model="groups.edit.group_desc" md-maxlength="128" required>
+          </md-input-container>
+
+        </div>
+        
+        <div class="modal-footer">
+          <md-button type="submit" class="md-raised">{{ "action.SAVE_TAG" | translate }}</md-button>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</div>
+
+

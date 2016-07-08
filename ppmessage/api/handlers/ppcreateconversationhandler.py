@@ -76,7 +76,7 @@ class Conversation():
             "conversation_status": CONVERSATION_STATUS.NEW,
         }
         _row = ConversationUserData(**_values)
-        _row.async_add()
+        _row.async_add(self._redis)
         _row.create_redis_keys(self._redis)
         return
         
@@ -184,7 +184,7 @@ class Conversation():
         }
         # create it
         _row = ConversationInfo(**_values)
-        _row.async_add()
+        _row.async_add(self._redis)
         _row.create_redis_keys(self._redis)
 
         self._userdata(_values, copy.deepcopy(_list))

@@ -75,12 +75,12 @@ class SetDeviceInfoHandler(BaseHandler):
         if "device_android_gcmtoken" in _request:
             _values["device_android_gcmtoken"] = _request["device_android_gcmtoken"]
 
-        if "device_android_gcmpush" in _request:
-            _values["device_android_gcmpush"] = _request["device_android_gcmpush"]
-
+        if "device_android_jpush_registrationid" in _request:
+            _values["device_android_jpush_registrationid"] = _request["device_android_jpush_registrationid"]
+           
         _row = DeviceInfo(**_values)
         _row.update_redis_keys(_redis)
-        _row.async_update()        
+        _row.async_update(_redis)        
         return
 
     def initialize(self):

@@ -1,19 +1,11 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
-# All rights reserved
+# Guijin Ding, dingguijin@gmail.com.
+# All rights are reserved.
 #
 # core/constant.py
 #
-#
-
-DEV_MODE = True
-
-PPMESSAGE_APP = {}
-
-TIMEOUT_WEBSOCKET_OFFLINE = 60*1
-TIMEOUT_WEB_SESSION = 2*3600
 
 def enum(*sequential, **named):
     enums = dict(zip(sequential, range(len(sequential))), **named)
@@ -30,6 +22,50 @@ class Enum(set):
 
 Animals = Enum(["DOG", "CAT", "HORSE"])
 # Animals.DOG == "DOG"
+
+CONFIG_STATUS = Enum([
+    "NONE",
+    "SERVER",
+    "DATABASE",
+    "FIRST",
+    "RESTART"
+])
+
+SQL = Enum([
+    "NONE",
+    "MYSQL",
+    "PGSQL",
+    "SQLITE",
+])
+
+PP_WEB_SERVICE = Enum([
+    "META",
+    "ABSTRACT",
+    "UPLOAD",
+    "DOWNLOAD",
+    "API",
+    "PCSOCKET",
+    "PPCOM",
+    "PPKEFU",
+    "PPCONSOLE",
+    "PPAUTH",
+    "AMD",
+    "CACHE",
+    "DISPATCHER",
+    "GCMPUSH",
+    "IOSPUSH",
+    "MQTTPUSH",
+    "PPEMAIL",
+    "SEND",
+    "PPCONFIG",
+    "IDENTICON"
+])
+
+CACHE_TYPE = Enum([
+    "CREATE",
+    "UPDATE",
+    "DELETE"
+])
 
 API_LEVEL = Enum([
     "PPCOM",
@@ -83,12 +119,6 @@ WEBSOCKET_STATUS = Enum([
     "CLOSE"
 ])
 
-CACHE_RUN_STATUS = Enum([
-    "NULL",
-    "RUNNING",
-    "DONE"
-])
-
 # OWNER and SERVICE are both PPMESSAGE user
 # OWNER_0 is user after signing up
 # OWNER_1 is user after creating first app
@@ -140,10 +170,6 @@ CACHE_SRV = Enum([
     "DELETE",
     "DELETE_NO_DB",
     "PING",
-])
-
-FUNC_SRV = Enum([
-    "FUNCTION",
 ])
 
 SEND_SRV = Enum([
@@ -213,16 +239,6 @@ MESSAGE_SUBTYPE = Enum([
     "LOGOUT",
 ])
 
-GROUP_EVENT = Enum([
-    "OPEN",
-    "LOCATION",
-    "FOLLOW",
-    "UNFOLLOW"
-])
-
-FUNCTION = Enum([
-    "WELCOME",
-])
 
 YVOBJECT = Enum([
     "DU",
@@ -251,23 +267,6 @@ CONVERSATION_MEMBER_ACTION = Enum([
     "REMOVE"
 ])
 
-APPGROUP_TYPE = Enum([
-    "PUBLIC",
-    "PRIVATE",
-])
-
-
-"""
-FUNC generate async message
-MSG return a sync message
-WEB open WEB from client APP
-"""
-
-APPMENU_TYPE = Enum([
-    "FUNC",
-    "MSG",
-    "WEB",
-])
 
 APNS_TITLE = {
     "ZH_CN" : {
@@ -299,13 +298,6 @@ APNS_TITLE = {
     },
 }
 
-WEB_SESSION_ID = {
-    "portal": "PPMESSAGE_PORTAL_SESSION_ID",
-    "user": "PPMESSAGE_USER_SESSION_ID",
-    "admin": "PPMESSAGE_ADMIN_SESSION_ID",
-    "channel": "PPMESSAGE_CHANNEL_SESSION_ID",
-}
-
 THUMBNAIL_WIDTH = 120
 THUMBNAIL_HEIGHT = 160
 
@@ -316,6 +308,7 @@ EMBEDDED_APP = "EMBEDDED_APP"
 KEYTOOL_PATH = r"keytool -printcert -file"
 
 MESSAGE_MAX_TEXT_LEN = 128
+UPLOAD_MAX_BYTE = 20971520 #20M
 
 MQTT_HOST = "127.0.0.1"
 MQTT_PORT = 1883
@@ -348,22 +341,13 @@ OAUTH_PORT = 8930
 
 MESSAGE_PORT = 8003
 
-# PPCOM USE
-PCSOCKET_HOST = "ppmessage.cn"
-if DEV_MODE:
-    PCSOCKET_HOST = "127.0.0.1"
+PCSOCKET_HOST = "127.0.0.1"
 PCSOCKET_PORT = 8931
 
 IOSPUSH_HOST = "127.0.0.1"
 IOSPUSH_PORT = 8932
-
-PORTAL_PORT = 80
-if DEV_MODE:
-    PORTAL_PORT = 8080
     
 PPCOM_PORT = 8934
-
-STA_PORT = 8935
 
 PPAUTOINSTALL_PORT = 8936
 PPAUTOINSTALL_HOST = "127.0.0.1"
@@ -377,10 +361,18 @@ MQTTPUSH_PORT = 8939
 GCMPUSH_HOST = "127.0.0.1"
 GCMPUSH_PORT = 8940
 
-PPHOME_PORT = 8941
-
 PPAUTH_PORT = 8943
+
 PPCONSOLE_PORT = 8944
+
+# all in one backend service port
+MAIN_PORT = 8945
+
+PPCONFIG_PORT = 8946
+
+IDENTICON_PORT = 8947
+
+TORNADO_FILEUPLOAD_PORT = 8948
 
 IOS_FAKE_TOKEN = "YOU-GOT-A-FAKE-IOS-TOKEN-IN-EMULATOR"
 INVALID_IOS_TOKEN = "INVALID_IOS_TOKEN"
@@ -434,11 +426,6 @@ SERVICE_USER_STATUS = Enum([
     "REST",
 ])
 
-WEB_TITLE = {
-    "user": "PPMessage | Open Source Plug and Play Customer Communication Message Platform - ppmessage.com",
-    "admin": "PPMessage | Open Source Plug and Play Customer Communication Message Platform - ppmessage.com",
-}
-
 USER_NAME = {
     "en": {
         "local": "Local Area",
@@ -482,6 +469,9 @@ REDIS_AMD_KEY = "redis_amd_key"
 
 REDIS_PPKEFU_ONLINE_KEY = "redis_ppkefu_online_key"
 REDIS_PPCOM_ONLINE_KEY = "redis_ppcom_online_key"
+
+REDIS_CACHE_KEY = "redis_cache_key"
+REDIS_SEARCH_KEY = "redis_search_key"
 
 DATETIME_FORMAT = {
     "extra": '%Y-%m-%d %H:%M:%S %f',

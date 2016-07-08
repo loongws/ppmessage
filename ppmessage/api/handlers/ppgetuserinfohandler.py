@@ -31,8 +31,7 @@ class PPGetUserInfoHandler(BaseHandler):
     device user detail:
     app user data detail: {
     "is_owner_user": True/False,
-    "is_service_user": True/False,
-    "is_distributor_user": True/False
+    "is_service_user": True/False
     }
     """
     def _get(self, _app_uuid, _user_uuid):

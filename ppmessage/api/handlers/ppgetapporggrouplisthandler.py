@@ -8,13 +8,10 @@
 from .basehandler import BaseHandler
 
 from ppmessage.api.error import API_ERR
-from ppmessage.db.models import OrgGroup
-from ppmessage.db.models import OrgUserGroupData
-
-from ppmessage.db.models import ConversationInfo
-from ppmessage.core.redis import redis_hash_to_dict
-
 from ppmessage.core.constant import API_LEVEL
+
+from ppmessage.db.models import OrgGroup
+from ppmessage.db.models import OrgGroupUserData
 
 import json
 import logging
@@ -34,29 +31,11 @@ class PPGetAppOrgGroupListHandler(BaseHandler):
             _pi.hgetall(_key)
         _groups = _pi.execute()
 
-        _key_pre = OrgUserGroupData.__tablename__ + ".group_uuid."
+        _key_pre = OrgGroupUserData.__tablename__ + ".group_uuid."
         for _group in _groups:
             _key = _key_pre + _group.get("uuid")
-            _users = _redis.smembers(_key)
-            if _users == None:
-                _group["user_count"] = 0
-            else:
-                _group["user_count"] = len(_users)
+            _group["user_count"] = _redis.scard(_key)
         
-        _pre = ConversationInfo.__tablename__ + \
-               ".app_uuid." + _app_uuid + \
-               ".group_uuid."
-        _pi = _redis.pipeline()
-        for _group_uuid in _group_uuid_list:
-            _key = _pre + _group_uuid
-            _pi.get(_key)
-        _conversation_uuid_list = _pi.execute()
-        _conversation_dict = dict(zip(_group_uuid_list, _conversation_uuid_list))
-
-        for _group in _groups:
-            _group["conversation_uuid"] = _conversation_dict.get(_group["uuid"])
-            _group["is_distributor"] = eval(str(_group.get("is_distributor")))
-
         _r = self.getReturnData()
         _r["list"] = _groups
         return

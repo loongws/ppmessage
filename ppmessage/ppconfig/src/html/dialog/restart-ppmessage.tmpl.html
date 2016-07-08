@@ -1,0 +1,51 @@
+<md-dialog aria-label="Restart PPMessage with Configuration "  ng-cloak flex="50">
+  <form ng-submit="confirm()">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Restart PPMessage With Configuration</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="static/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+
+      <div class="md-dialog-content">
+        <h2>Restart PPMessage With Configuration</h2>
+
+        <p style="padding-bottom: 20px;">
+          Now you have configed PPMessage completely. After you restart PPMessage, refresh current page will redirect to PPConsole which is PPMessage management UI.
+        </p>
+
+        <md-card class="md-whiteframe-z2" flex="66">
+          <md-content layout-padding>
+            <md-input-container class="md-block md-icon-float md-icon-right" style="padding-left:0px !important;">
+              <label>User Password</label>
+              <input type="{{ user.password_input_type }}" ng-model="user.user_password" required>
+              <md-icon md-font-set="material-icons" ng-if="!user.user_password_is_visible" ng-click="show_user_password(true)" style="cursor:pointer;"> visibility </md-icon>
+              <md-icon md-font-set="material-icons" ng-if="user.user_password_is_visible" ng-click="show_user_password(false)" style="cursor:pointer;"> visibility_off </md-icon>
+            </md-input-container>
+          </md-content>
+        </md-card>
+      </div>
+      
+    </md-dialog-content>
+    
+    <md-dialog-actions layout="row">
+      <span flex></span>
+
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+      
+      <md-button type="submit" ng-disabled="user.disabled_submit">
+        Restart
+      </md-button>
+      
+    </md-dialog-actions>
+    
+  </form>
+</md-dialog>

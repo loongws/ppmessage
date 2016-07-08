@@ -12,12 +12,19 @@ from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import AppUserData
 from ppmessage.core.genericupdate import generic_update
 
+from ppmessage.core.utils.config import get_config_server_generic_store
+from ppmessage.core.utils.randomidenticon import upload_random_identicon
+from ppmessage.core.utils.randomidenticon import get_random_identicon_url
+
 from ppmessage.core.constant import API_LEVEL
 
+import os
 import json
 import copy
 import hashlib
 import logging
+
+from tornado.ioloop import IOLoop
 
 class PPUpdateUserHandler(BaseHandler):
     def _update(self):
@@ -26,20 +33,11 @@ class PPUpdateUserHandler(BaseHandler):
 
         _app_uuid = _request.get("app_uuid")
         _user_uuid = _request.get("user_uuid")
-        _is_distributor_user = _request.get("is_distributor_user")
+        _user_icon = _request.get("user_icon")
         
         if _user_uuid == None or _app_uuid == None:
             self.setErrorCode(API_ERR.NO_PARA)
             return
-
-        if _is_distributor_user != None:
-            _key = AppUserData.__tablename__ + ".app_uuid." + _app_uuid + ".user_uuid." + _user_uuid + ".is_service_user.True"
-            _uuid = _redis.get(_key)
-            if _uuid != None:
-                _updated = generic_update(_redis, AppUserData, _uuid, {"is_distributor_user": _is_distributor_user})
-                if not _updated:
-                    self.setErrorCode(API_ERR.GENERIC_UPDATE)
-                    return
 
         _old_password = _request.get("old_password")
         _user_password = _request.get("user_password")
@@ -54,16 +52,26 @@ class PPUpdateUserHandler(BaseHandler):
         _data = copy.deepcopy(_request)
         del _data["app_uuid"]
         del _data["user_uuid"]
-        if _is_distributor_user != None:
-            del _data["is_distributor_user"]
+
         if _old_password != None:
             del _data["old_password"]
-        
+
+        if _user_icon != None:
+            if _user_icon.startswith("http"):
+                IOLoop.current().spawn_callback(download_random_identicon, _user_icon)
+            else:
+                _generic_store = get_config_server_generic_store()
+                _abs = _generic_store + os.path.sep + _user_icon
+                if os.path.exists(_abs):
+                    IOLoop.current().spawn_callback(upload_random_identicon, _abs)
+                    _data["user_icon"] = get_random_identicon_url(_user_icon)
+            
         if len(_data) > 0:
             _updated = generic_update(_redis, DeviceUser, _user_uuid, _data)
             if not _updated:
                 self.setErrorCode(API_ERR.GENERIC_UPDATE)
                 return
+
         return
 
     def initialize(self):

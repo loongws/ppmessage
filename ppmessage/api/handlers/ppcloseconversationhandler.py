@@ -37,7 +37,7 @@ class PPCloseConversationHandler(BaseHandler):
             self.setErrorCode(API_ERR.NO_CONVERSATION)
             return
         _row = ConversationUserData(uuid=_uuid, conversation_status=CONVERSATION_STATUS.CLOSE)
-        _row.async_update()
+        _row.async_update(_redis)
         _row.update_redis_keys(_redis)
         return
 

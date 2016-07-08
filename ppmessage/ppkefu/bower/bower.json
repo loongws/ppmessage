@@ -1,0 +1,19 @@
+{
+  "name": "ppkefu-bower",
+  "private": "true",
+  "devDependencies": {
+    "jquery": "~2.2.4",
+    "Jcrop": "^2.0.4",
+    "angular-file-upload": "^2.3.4"
+  },
+  "resolutions": {
+    "angular": "^1.5.7"
+  },
+  "dependencies": {
+    "ionic": "^1.3.1",
+    "angular-translate": "^2.11.0",
+    "angular-block-ui": "^0.2.2",
+    "angular-base64": "^2.0.5",
+    "angular-cookies": "^1.5.7"
+  }
+}

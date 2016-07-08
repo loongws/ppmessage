@@ -6,34 +6,32 @@
 #
 from .basehandler import BaseHandler
 
-from ppmessage.core.imageconverter import ImageConverter
-from ppmessage.core.audioconverter import AudioConverter
+from ppmessage.core.constant import YVOBJECT
+from ppmessage.core.constant import TASK_STATUS
+
+from ppmessage.core.constant import MESSAGE_TYPE
+from ppmessage.core.constant import THUMBNAIL_WIDTH
+from ppmessage.core.constant import THUMBNAIL_HEIGHT
+from ppmessage.core.constant import MESSAGE_SUBTYPE
+from ppmessage.core.constant import MESSAGE_MAX_TEXT_LEN
 
 from ppmessage.core.constant import REDIS_DISPATCHER_NOTIFICATION_KEY
-from ppmessage.core.constant import MESSAGE_MAX_TEXT_LEN
-from ppmessage.core.constant import MESSAGE_SUBTYPE
-from ppmessage.core.constant import MESSAGE_TYPE
-from ppmessage.core.constant import THUMBNAIL_HEIGHT
-from ppmessage.core.constant import THUMBNAIL_WIDTH
 
 from ppmessage.api.error import API_ERR
 
-from ppmessage.core.constant import TASK_STATUS
-from ppmessage.core.constant import YVOBJECT
-
+from ppmessage.db.models import FileInfo
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import MessagePushTask
-from ppmessage.db.models import VideoMaterialInfo
-from ppmessage.db.models import FileInfo
 from ppmessage.db.models import ConversationInfo
+from ppmessage.db.models import VideoMaterialInfo
 
 from ppmessage.core.redis import redis_hash_to_dict
 
 import json
 import uuid
+import time
 import logging
 import datetime
-import time
 
 class ForwardMessageHandler(BaseHandler):
 
@@ -95,11 +93,11 @@ class ForwardMessageHandler(BaseHandler):
         }
 
         _row = MessagePushTask(**_task)
-        _row.async_add()
+        _row.async_add(self.application.redis)
         _row.create_redis_keys(self.application.redis)
 
         _row = ConversationInfo(uuid=_conversation_uuid, lastest_task=_uuid)
-        _row.async_update()
+        _row.async_update(self.application.redis)
         _row.update_redis_keys(self.application.redis)
         
         _m = {"task_uuid": _uuid}

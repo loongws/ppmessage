@@ -8,7 +8,7 @@
 
 from .algorithm import AbstractAlgorithm
 
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
+#from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 
 from ppmessage.core.constant import IOS_FAKE_TOKEN
 from ppmessage.core.constant import CONVERSATION_TYPE
@@ -31,7 +31,7 @@ from ppmessage.core.constant import OS
 from ppmessage.db.models import OrgGroup
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import DeviceInfo
-from ppmessage.db.models import OrgUserGroupData
+from ppmessage.db.models import OrgGroupUserData
 from ppmessage.db.models import AppUserData
 from ppmessage.db.models import MessagePush
 from ppmessage.db.models import MessagePushTask
@@ -42,8 +42,6 @@ from ppmessage.db.models import ConversationUserData
 from ppmessage.core.redis import redis_hash_to_dict
 from ppmessage.core.utils.datetimestring import datetime_to_timestamp
 from ppmessage.core.utils.datetimestring import datetime_to_microsecond_timestamp
-
-from apnsclient import Message
 
 from operator import itemgetter
 
@@ -147,15 +145,13 @@ class AbstractPolicy(Policy):
             return []
         _key = AppUserData.__tablename__ + \
                ".app_uuid." + _app_uuid + \
-               ".is_service_user.True" + \
-               ".is_distributor_user.True"
+               ".is_service_user.True"
         _users = _redis.smembers(_key)
         return list(_users)
 
     @classmethod
     def group_users(cls, _group_uuid, _redis):
-        _pattern = OrgUserGroupData.__tablename__ + \
-                   ".group_uuid." + _group_uuid
+        _pattern = OrgGroupUserData.__tablename__ + ".group_uuid." + _group_uuid
         _keys = _redis.smembers(_pattern)
         return list(_keys)
 
@@ -211,7 +207,7 @@ class AbstractPolicy(Policy):
             "message_body": _message_body,
         }
         _row = MessagePushTask(**_values)
-        _row.async_update()
+        _row.async_update(self._redis)
         _row.update_redis_keys(self._redis)
         return
 
@@ -284,23 +280,24 @@ class AbstractPolicy(Policy):
         }
                     
         _row = MessagePush(**_values)
-        _row.async_add()
+        _row.async_add(self._redis)
         _row.create_redis_keys(self._redis)
         return _row.uuid
 
     def _push_to_ios(self, _user_uuid, _device_uuid):
         logging.info("push ios %s:%s" % (_user_uuid, _device_uuid))
 
-        _apns_config = BOOTSTRAP_DATA.get("apns")
-        _apns_name = _apns_config.get("name")
-        _apns_dev = _apns_config.get("dev")
-        _apns_pro = _apns_config.get("pro")
+        # FIXME: route to apns name
+        # _apns_config = BOOTSTRAP_DATA.get("apns")
+        # _apns_name = _apns_config.get("name")
+        # _apns_dev = _apns_config.get("dev")
+        # _apns_pro = _apns_config.get("pro")
 
-        if _apns_name == None or len(_apns_name) == 0 or \
-           _apns_dev == None or len(_apns_dev) == 0 or \
-           _apns_pro == None or len(_apns_pro) == 0:
-            logging.info("iospush not start for no apns config")
-            return
+        # if _apns_name == None or len(_apns_name) == 0 or \
+        #    _apns_dev == None or len(_apns_dev) == 0 or \
+        #    _apns_pro == None or len(_apns_pro) == 0:
+        #     logging.info("iospush not start for no apns config")
+        #     return
 
         _app_uuid = self._task["app_uuid"]
         _user = self._users_hash.get(_user_uuid)
@@ -334,6 +331,7 @@ class AbstractPolicy(Policy):
             _count = self._redis.zcard(_key)
 
         _is_dev = bool(_device.get("is_development"))
+
         _config = {
             "is_development": _is_dev,
             "user_language": _user.get("user_language"),
@@ -345,8 +343,9 @@ class AbstractPolicy(Policy):
         _push = {
             "config": _config,
             "body": self._task.get("message_body"),
-            "app": _app_uuid
+            "app_uuid": _app_uuid
         }
+        
         logging.info("push ios: %s" % str(_push))
         self._redis.rpush(REDIS_IOSPUSH_KEY, json.dumps(_push))
         return
@@ -553,7 +552,7 @@ class AbstractPolicy(Policy):
             "task_status": TASK_STATUS.PENDING,
         }
         _row = MessagePushTask(**_task)
-        _row.async_add()
+        _row.async_add(self._redis)
         _row.create_redis_keys(self._redis)
         _m = {"task_uuid": _row.uuid}
         self._redis.rpush(REDIS_DISPATCHER_NOTIFICATION_KEY, json.dumps(_m))

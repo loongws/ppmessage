@@ -42,7 +42,7 @@ class PPRemoveUserHandler(BaseHandler):
         # FIXME: other org group data
         # conversation data / app user data etc.
         _row = DeviceUser(uuid=_user_uuid)
-        _row.async_delete()
+        _row.async_delete(_redis)
         _row.delete_redis_keys(_redis)
         return
 

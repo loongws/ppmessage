@@ -51,10 +51,11 @@ class PPGetConversationInfoHandler(BaseHandler):
             return
         
         _rdata = self.getReturnData()
-        for _i in _conv:
-            _rdata[_i] = _conv.get(_i)
-
+        _rdata.update(_conv)
+        
         _rdata["conversation_data"] = _data
+        _rdata["conversation_icon"] = _data.get("conversation_icon")
+        _rdata["conversation_name"] = _data.get("conversation_name")
         return
 
     def initialize(self):

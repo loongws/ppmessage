@@ -64,8 +64,6 @@ evernote \
 filemagic \
 geoip2 \
 green \
-git+https://github.com/senko/python-video-converter.git \
-hg+https://dingguijin@bitbucket.org/dingguijin/apns-client \
 identicon \
 ipython \
 jieba \

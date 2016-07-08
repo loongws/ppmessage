@@ -7,17 +7,21 @@
 
 from .basehandler import BaseHandler
 
+from ppmessage.api.error import API_ERR
+
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import AppUserData
-from ppmessage.api.error import API_ERR
-from ppmessage.core.constant import API_LEVEL
 
-from ppmessage.core.constant import PPMESSAGE_APP
+from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import USER_STATUS
+from ppmessage.core.utils.randomidenticon import random_identicon
+from ppmessage.core.utils.randomidenticon import download_random_identicon
 
 import json
-import logging
 import uuid
+import logging
+
+from tornado.ioloop import IOLoop
 
 def create_user(_redis, _request):
     '''
@@ -43,28 +47,32 @@ def create_user(_redis, _request):
         
     if _is_service_user != None:
         _is_portal_user = not _is_service_user
-        _is_distributor_user = _is_service_user
     else:
         _is_service_user = False
         _is_portal_user = not _is_service_user
-        _is_distributor_user = _is_service_user
 
     if _user_status == None:
         _user_status = USER_STATUS.THIRDPARTY
-                
+
+    _user_icon = random_identicon(_user_email)
+
+    IOLoop.current().spawn_callback(download_random_identicon, _user_icon)
+    
     _du_uuid = str(uuid.uuid1())
     _values = {
         "uuid": _du_uuid,
         "user_status": _user_status,
         "user_name": _user_email,
         "user_email": _user_email,
+        "user_icon": _user_icon,
         "user_language": _user_language,
         "user_fullname": _user_fullname,
         "user_password": _user_password,
         "is_anonymous_user": False,
     }
+    
     _row = DeviceUser(**_values)
-    _row.async_add()
+    _row.async_add(_redis)
     _row.create_redis_keys(_redis)
     _user_values = _values
     
@@ -73,13 +81,13 @@ def create_user(_redis, _request):
         "uuid": _data_uuid,
         "user_uuid": _du_uuid,
         "app_uuid": _app_uuid,
+        "user_fullname": _user_values["user_fullname"],
         "is_portal_user": _is_portal_user,
         "is_service_user": _is_service_user,
-        "is_distributor_user": _is_distributor_user,
-        "is_owner_user": False,
+        "is_owner_user": False
     }
     _row = AppUserData(**_values)
-    _row.async_add()
+    _row.async_add(_redis)
     _row.create_redis_keys(_redis)
     
     return _user_values

@@ -1,34 +1,38 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
-# All rights reserved
+# Guijin Ding, dingguijin@gmail.com.
+# All rights reserved.
 #
+# backend/ppconsole.py
 #
 
 from ppmessage.core.constant import PPCONSOLE_PORT
-from ppmessage.ppconsole.app import App
+from ppmessage.backend.ppconsoleapp import PPConsoleApp
 
-import tornado.httpserver
+import os
+import logging
+
 import tornado.ioloop
 import tornado.options
-
-import logging
+import tornado.httpserver
 
 tornado.options.define("port", default=PPCONSOLE_PORT, help="", type=int)
 
-if __name__ == "__main__":
+def _main():
     import sys
     reload(sys)
     sys.setdefaultencoding('utf-8')
     tornado.options.parse_command_line()
 
-    _app = App("user")
+    _app = PPConsoleApp()
     http_server = tornado.httpserver.HTTPServer(_app)
 
-    logging.info("Starting ppconsole of user... with port: %d" % tornado.options.options.port)
+    logging.info("Starting ppconsole ... with port: %d" % tornado.options.options.port)
 
     http_server.listen(tornado.options.options.port)
-    loop = tornado.ioloop.IOLoop.instance()
-    loop.start()
+    tornado.ioloop.IOLoop.instance().start()
+    return
 
+if __name__ == "__main__":
+    _main()

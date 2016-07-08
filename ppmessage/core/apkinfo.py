@@ -11,7 +11,6 @@ from ppmessage.core.constant import PORTAL_PORT
 from ppmessage.core.utils.atool import zipfile
 from ppmessage.core.utils.atool.apk.axml import ResourceParser
 from ppmessage.core.utils.atool.apk.axml import ResObject
-from ppmessage.core.utils.getipaddress import getIPAddress
 
 from axmlparserpy import apk
 

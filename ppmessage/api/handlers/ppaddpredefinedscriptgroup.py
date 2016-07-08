@@ -30,7 +30,7 @@ class PPAddPredefinedScriptGroup(BaseHandler):
         
         _uuid = str(uuid.uuid1())
         _row = PredefinedScriptGroup(uuid=_uuid, app_uuid=_app_uuid, group_name=_group_name)
-        _row.async_add()
+        _row.async_add(self.application.redis)
         _row.create_redis_keys(self.application.redis)
         _ret = self.getReturnData()
         _ret = copy.deepcopy(_request)

@@ -6,7 +6,7 @@
 #
 # core/ipainfo.py
 #
-from ppmessage.core.utils.getipaddress import getIPAddress
+from ppmessage.core.utils.getipaddress import get_ip_address
 from ppmessage.core.utils.scptransfer import ScpTransfer
 from ppmessage.core.utils.ipin import getNormalizedPNGByData
 
@@ -52,7 +52,7 @@ class IpaInfo:
         return ""
 
     def _get_pname(self):
-        _pname = getIPAddress()
+        _pname = get_ip_address()
         _pname = _pname.replace(".", "_")
         _pname = _pname + ".plist"
         return _pname

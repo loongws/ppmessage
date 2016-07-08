@@ -9,26 +9,16 @@ from .basehandler import BaseHandler
 
 from ppmessage.api.error import API_ERR
 from ppmessage.db.models import AppInfo
-from ppmessage.core.genericupdate import generic_update
-from ppmessage.core.redis import redis_hash_to_dict
 
 from ppmessage.core.constant import API_LEVEL
+from ppmessage.core.redis import redis_hash_to_dict
+from ppmessage.core.genericupdate import generic_update
 
 import json
 import copy
 import logging
 
 class PPUpdateAppInfoHandler(BaseHandler):
-    """
-    requst:
-    app_uuid
-    user_xxx would be update
-    user_xxx field must be same with db field of DeviceUser
-    
-    response:
-    error_code
-
-    """
     def _update(self, _request):
         _redis = self.application.redis
         _request = json.loads(self.request.body)

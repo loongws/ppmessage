@@ -1,0 +1,50 @@
+{
+  "name": "ppconsole",
+  "authors": [
+    "Guijin Ding <dingguijin@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "Apache-2.0",
+  "homepage": "https://ppmessage.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "static/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.2.4",
+    "angular-utils-pagination": "~0.10.0",
+    "bootstrap": "~3.3.6",
+    "angular": "~1.5.6",
+    "angular-cookies": "~1.5.6",
+    "angular-file-upload": "^2.2.0",
+    "angular-block-ui": "^0.2.2",
+    "angular-translate": "^2.11.0",
+    "angular-ui-router": "^0.2.18",
+    "js-sha1": "^0.3.0",
+    "moment": "^2.11.2",
+    "moment-range": "^2.1.0",
+    "bootstrap-colorpickersliders": "^3.0.1",
+    "bootstrap-daterangepicker": "^2.1.18",
+    "tinycolor": "^1.3.0",
+    "angular-base64": "^2.0.5",
+    "Chart.js": "^1.0.2",
+    "angular-tooltips": "^1.0.7",
+    "angular-material": "^1.0.7",
+    "angular-messages": "^1.5.5",
+    "font-awesome": "Font-Awesome#^4.6.2",
+    "material-design-icons": "^2.2.3",
+    "angular-toastr": "^1.7.0",
+    "lf-ng-md-file-input": "^1.4.7",
+    "ng-file-upload": "^12.0.4"
+  },
+  "resolutions": {
+    "angular": "1.5.7",
+    "jquery": "~2.2.4"
+  }
+}

@@ -7,12 +7,11 @@
 
 from .basehandler import BaseHandler
 
-from ppmessage.db.models import AdminUser
 from ppmessage.db.models import DeviceUser
 
 from ppmessage.api.error import API_ERR
-from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import YVOBJECT
+from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.redis import redis_hash_to_dict
 
 import pypinyin
@@ -46,6 +45,8 @@ class PPGetUserDetailHandler(BaseHandler):
 
         _o = redis_hash_to_dict(self.application.redis, DeviceUser, _request["user_uuid"])
 
+        logging.info(_o)
+        
         if _o == None:
             self.setErrorCode(API_ERR.NO_OBJECT)
             logging.error("Error for no user uuid: %s." % (_request["user_uuid"]))
@@ -59,7 +60,7 @@ class PPGetUserDetailHandler(BaseHandler):
             del _o["user_password"]
         
         _fn = _o.get("user_fullname")
-        if not isinstance(_fn, unicode):
+        if _fn != None and not isinstance(_fn, unicode):
             _fn = _fn.decode("utf-8")
 
         _rdata.update(_o)

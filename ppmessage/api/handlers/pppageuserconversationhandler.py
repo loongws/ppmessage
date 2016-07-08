@@ -191,7 +191,7 @@ class PPPageUserConversationHandler(BaseHandler):
             self.setErrorCode(API_ERR.NO_PARA)
             return
         
-        self._total_count = self._redis.zcount(self._set_key, "-inf", "+inf")
+        self._total_count = self._redis.zcard(self._set_key)
         if self._total_count == 0:
             logging.info("no conversation for user: %s" % self._user_uuid)
             self._return_empty()

@@ -9,7 +9,7 @@ from ppmessage.core.constant import APNS_TITLE
 from ppmessage.core.constant import MESSAGE_TYPE
 from ppmessage.core.constant import MESSAGE_SUBTYPE
 
-from ppmessage.iospush.pushtitle import push_title
+from ppmessage.core.utils.pushtitle import push_title
 
 from .mqttclient import MQTTClient
 
@@ -23,11 +23,11 @@ class PushHandler():
         return
     
     def _one(self, _token, _msg):
-        if self.application._mqtt_client == None:
-            self.application._mqtt_client = MQTTClient()
-        self.application._mqtt_client.connect()
-        self.application._mqtt_client.publish_one(_token, _msg)
-        self.application._mqtt_client.start_send()
+        if self.application.mqtt_client == None:
+            self.application.mqtt_client = MQTTClient()
+        self.application.mqtt_client.connect()
+        self.application.mqtt_client.publish_one(_token, _msg)
+        self.application.mqtt_client.start_send()
         return
     
     def _push(self, _app_uuid, _body, _config):

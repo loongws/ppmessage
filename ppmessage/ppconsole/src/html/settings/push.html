@@ -1,0 +1,60 @@
+<div class="boxed-group">
+  <h3>{{ "settings.menu.PUSH_CONFIG_TAG" | translate }}</h3>
+  <div class="boxed-group-inner clearfix">
+    
+      <md-content layout-padding>
+        
+        <form ng-submit="submit_push()">
+
+          <md-switch ng-model="push.enable_apns_push">
+            Apple Push Server ({{push.enable_apns_push}})
+          </md-switch>
+          
+          <md-input-container class="md-block">
+            <label>Universal Certificate P12</label>
+            <input ngf-select="read_pem($file)" ng-disabled="!push.enable_apns_push" ng-value="push.apns_combination_pem_file.name" ng-model="push.apns_combination_pem_file" accept="application/x-pkcs12" ngf-max-size="5MB" required />
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Certificate Password</label>
+            <input ng-model="push.apns_combination_pem_password" type="text" ng-disabled="!push.enable_apns_push" />
+          </md-input-container>
+                    
+          <md-switch ng-model="push.enable_jpush">
+            JPush ({{push.enable_jpush}})
+          </md-switch>
+          
+          <md-input-container class="md-block">
+            <label>JPush apiKey</label>
+            <input ng-model="push.jpush_api_key" type="text" ng-disabled="!push.enable_jpush" required />
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>JPush Master Secret</label>
+            <input ng-model="push.jpush_master_secret" type="text" ng-disabled="!push.enable_jpush" required />
+          </md-input-container>
+
+          <!-- <md-switch ng-model="push.enable_gcm_push"> -->
+          <!--   Google GCM ({{push.enable_gcm_push}}) -->
+          <!-- </md-switch> -->
+          
+          <!-- <md-input-container class="md-block"> -->
+          <!--   <label>GCM api key</label> -->
+          <!--   <input ng-model="push.gcm_api_key" type="text" ng-disabled="!push.enable_gcm_push" required /> -->
+          <!-- </md-input-container> -->
+
+          <!-- <md-switch ng-model="push.enable_mqtt_push"> -->
+          <!--   MQTT Push ({{push.enable_mqtt_push}}) -->
+          <!-- </md-switch> -->
+
+          
+          <md-button class="md-raised" type="submit">
+            {{ "global.SUBMIT_TAG" | translate }}
+          </md-button>
+          
+        </form>
+      </md-content>
+        
+  </div>
+</div>
+

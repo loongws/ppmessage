@@ -48,13 +48,6 @@ Commands:
   npm                         Install node components.
   cnpm                        Install node components, using cnpm.
   gulp                        Run all gulp tasks.
-  bootstrap                   Bootstrap PPMessage with config.py.
-  app-win32                   Create window desktop app.
-  app-win64                   Create window desktop app.
-  app-mac                     Create mac os x desktop app.
-  app-android                 Create mac os x desktop app.
-  app-ios                     Create mac os x desktop app.
-  app-auto-update             Update app version in server
 
 Options:
   -v                          Give more output.
@@ -115,6 +108,7 @@ function ppmessage_dist()
 
 function ppmessage_dev()
 {
+    echo $PY_SITE
     if [ ! -d $PY_SITE ];
     then
         ppmessage_err 'can not find site-packages!'
@@ -223,87 +217,59 @@ function ppmessage_log()
     tail -F /usr/local/var/log/*.log
 }
 
-function ppmessage_app_win32()
-{
-    cd ppmessage/ppkefu/ppkefu; npm run pack:win32; cd -;
-}
-
-function ppmessage_app_win64()
-{
-    cd ppmessage/ppkefu/ppkefu; npm run pack:win64; cd -;
-}
-
-function ppmessage_app_mac()
-{
-    cd ppmessage/ppkefu/ppkefu; npm run pack:osx; cd -;
-}
-
-function ppmessage_app_android()
-{
-    echo "Android";
-    # cordova platform rm android; cordova platform add android; 
-    cd ppmessage/ppkefu/ppkefu; cordova build android --release -- --gradleArg=-PcdvBuildMultipleApks=false; cd -;
-    
-}
-
-function ppmessage_app_ios()
-{
-    echo "create iOS ipa";
-    echo "cordova platform add ios first"
-    # cordova platform rm ios; cordova platform add ios;
-    cd ppmessage/ppkefu/ppkefu; cordova build ios --release --device --codeSignIdentity="{code_sign_identity}" --provisioningProfile="{provisioning_profile}"; cd -;
-    
-}
-
 function ppmessage_gulp()
 {
     echo "generate PPCom/PPKefu/PPConsole js";
-    cd ppmessage/ppkefu/ppkefu; gulp; cd -;
-    cd ppmessage/ppcom/web/gulp; gulp; cd -;
+    cd ppmessage/ppkefu/gulp; gulp; cd -;
+    cd ppmessage/ppcom/gulp; gulp; cd -;
     cd ppmessage/ppconsole/gulp; gulp; cd -;
-    cd ppmessage/pphome; gulp; cd -;
+    cd ppmessage/ppconfig/gulp; gulp; cd -;
 }
 
 function ppmessage_bower()
 {
     echo "install PPCom/PPKefu/PPConsole js bower depends";
-    cd ppmessage/ppcom/web; bower install --allow-root; cd -;
-    cd ppmessage/ppkefu/ppkefu; bower install --allow-root; cd -;
-    cd ppmessage/ppconsole; bower install --allow-root; cd -;
-    cd ppmessage/pphome; bower install --allow-root; cd -;
+    cd ppmessage/ppcom/bower; bower install --allow-root; cd -;
+    cd ppmessage/ppkefu/bower; bower install --allow-root; cd -;
+    cd ppmessage/ppconsole/bower; bower install --allow-root; cd -;
+    cd ppmessage/ppconfig/bower; bower install --allow-root; cd -;
 }
 
 function ppmessage_npm()
 {
     echo "install PPCom/PPKefu/PPConsole js node depends";
-    cd ppmessage/ppcom/web/gulp; npm install; cd -;
-    cd ppmessage/ppkefu/ppkefu; npm install; cd -;
+    cd ppmessage/ppcom/gulp; npm install; cd -;
+    cd ppmessage/ppkefu/gulp; npm install; cd -;
     cd ppmessage/ppconsole/gulp; npm install; cd -;
-    cd ppmessage/pphome; npm install; cd -;
+    cd ppmessage/ppconfig/gulp; npm install; cd -;
 }
 
 function ppmessage_cnpm()
 {
     echo "install PPCom/PPKefu/PPConsole js node depends";
-    cd ppmessage/ppcom/web/gulp; cnpm install; cd -;
-    cd ppmessage/ppkefu/ppkefu; cnpm install; cd -;
+    cd ppmessage/ppcom/gulp; cnpm install; cd -;
+    cd ppmessage/ppkefu/gulp; cnpm install; cd -;
     cd ppmessage/ppconsole/gulp; cnpm install; cd -;
-    cd ppmessage/pphome; cnpm install; cd -;
 }
 
-function ppmessage_bootstrap()
+function ppmessage_build()
 {
-    if [ ! -f ./ppmessage/bootstrap/config.py ];
-    then
-        ppmessage_err "create ppmessage/bootstrap/config.py first!"
-    fi
-
-    echo "bootstrap will create db tables, config PPMessage, cache db to redis based on config.py.";
-    python ppmessage/scripts/table.py;
-    python ppmessage/scripts/bootstrap.py;
-    python ppmessage/scripts/db2cache.py;
+    echo "building $1"
+    cd ppmessage/$1/gulp; gulp; cd -;
 }
 
+function ppmessage_apply_config()
+{
+    echo "Apply config for ppconsole"
+    python ppmessage/ppconsole/config/config.py
+
+    echo "Apply config for ppkefu"
+    python ppmessage/ppkefu/config/config.py
+
+    echo "Apply config for ppcom"
+    python ppmessage/ppcom/config/config.py
+
+}
 
 ### MAIN ###
 
@@ -314,10 +280,26 @@ ppmessage_check_path
 
 case "$1" in
 
-    bootstrap)
-        ppmessage_bootstrap
+    build-ppconfig)
+        ppmessage_build "ppconfig"
         ;;
 
+    build-ppconsole)
+        ppmessage_build "ppconsole"
+        ;;
+
+    build-ppkefu)
+        ppmessage_build "ppkefu"
+        ;;
+
+    build-ppcom)
+        ppmessage_build "ppcom"
+        ;;
+
+    apply-config)
+        ppmessage_apply_config
+        ;;
+    
     dev)
         ppmessage_need_root
         ppmessage_dev

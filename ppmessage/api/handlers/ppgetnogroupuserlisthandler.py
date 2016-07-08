@@ -7,7 +7,7 @@
 
 from .basehandler import BaseHandler
 
-from ppmessage.db.models import OrgUserGroupData
+from ppmessage.db.models import OrgGroupUserData
 from ppmessage.db.models import AppUserData
 from ppmessage.db.models import DeviceUser
 
@@ -18,28 +18,15 @@ import json
 import logging
 
 class PPGetNoGroupUserListHandler(BaseHandler):
-    """
-    requst:
-    header
-    app_uuid, ppmessage app uuid
-    
-    response:
-    json with error_code
-    a list with nogroup service users matched app
 
-    """
-    def _get(self, _app_uuid):
-        if _app_uuid == None:
-            self.setErrorCode(API_ERR.NO_PARA)
-            return
-        
+    def _get_no_group(self, _app_uuid):
         _redis = self.application.redis
         _key = AppUserData.__tablename__ + \
                ".app_uuid." + _app_uuid + \
                ".is_service_user.True"
         _users = list(_redis.smembers(_key))
         _pipe = _redis.pipeline()
-        _pre = OrgUserGroupData.__tablename__ + ".user_uuid."
+        _pre = OrgGroupUserData.__tablename__ + ".user_uuid."
         for _user_uuid in _users:
             _key = _pre + _user_uuid
             _pipe.exists(_key)
@@ -63,6 +50,27 @@ class PPGetNoGroupUserListHandler(BaseHandler):
         _r["list"] = _details
         return
 
+    def _get_not_in_group(self, _app_uuid, _group_uuid):
+        _redis = self.application.redis
+        _all_users_key = AppUserData.__tablename__ + \
+               ".app_uuid." + _app_uuid + \
+               ".is_service_user.True"
+        _group_users_key = OrgGroupUserData.__tablename__ + \
+               ".group_uuid." + _group_uuid
+
+        _users = _redis.sdiff(_all_users_key, _group_users_key)
+        
+        _pipe = _redis.pipeline()
+        _pre = DeviceUser.__tablename__ + ".uuid."
+        for _user_uuid in _users:
+            _key = _pre + _user_uuid
+            _pipe.hgetall(_key)
+        _details = _pipe.execute()
+        
+        _r = self.getReturnData()
+        _r["list"] = _details
+        return
+
     def initialize(self):
         self.addPermission(app_uuid=True)
         self.addPermission(api_level=API_LEVEL.PPCOM)
@@ -74,10 +82,16 @@ class PPGetNoGroupUserListHandler(BaseHandler):
 
     def _Task(self):
         super(PPGetNoGroupUserListHandler, self)._Task()
-        _body = json.loads(self.request.body)
-        if "app_uuid" not in _body:
+        _body = json.loads(self.request.body.decode("utf-8"))
+        _app_uuid = _body.get("app_uuid")
+        
+        if _app_uuid == None:
             self.setErrorCode(API_ERR.NO_PARA)
             return
-        self._get(_body.get("app_uuid"))
-        return
+        
+        _group_uuid = _body.get("group_uuid")
+        if _group_uuid == None:
+            return self._get_no_group(_app_uuid)
+        return self._get_not_in_group(_app_uuid, _group_uuid)
+
 

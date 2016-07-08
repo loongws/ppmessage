@@ -1,0 +1,60 @@
+<md-dialog aria-label="Config PPMessage Server"  ng-cloak>
+  <form ng-submit="confirm()">
+
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Config PPMessage Server</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon md-svg-src="static/img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <h2>Config Server</h2>
+
+        <p style="padding-bottom: 20px;">
+          Config PPMessage server. If not sure what you should do here, choose default and confirm.
+        </p>
+
+        <md-card class="md-whiteframe-z2" flex="66">
+
+          <md-content layout-padding>
+
+            <md-input-container class="md-block" >
+              <label>Server Language</label>
+              <md-select ng-model="server.language">
+                <md-option ng-repeat="language in server.languages" ng-value="language">
+                  {{language.name}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+            
+            <md-input-container class="md-block">
+              <label>Server URL</label>
+              <input ng-model="server.url" required>
+            </md-input-container>
+            
+          </md-content>
+        </md-card>
+        
+      </div>
+    </md-dialog-content>
+    
+    <md-dialog-actions layout="row">
+      <span flex></span>
+
+      <md-button ng-click="cancel()">
+        Cancel
+      </md-button>
+      
+      <md-button type="submit" ng-disabled="server.disable_submit">
+        Confirm
+      </md-button>
+      
+    </md-dialog-actions>
+    
+  </form>
+</md-dialog>

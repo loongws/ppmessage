@@ -1,0 +1,15 @@
+
+.header .nav {
+    width:100%;
+	background:#332;
+    margin:0;
+}
+
+.header .logo {
+    cursor: pointer;
+    width: 168px;
+    height: 62px;
+    float: left;
+    vertical-align: middle;
+	background:url("../img/logo-nav-168.png") no-repeat;
+}

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2010-2016 PPMessage.
-# Guijin Ding, dingguijin@gmail.com
-# All rights reserved
+# Guijin Ding, dingguijin@gmail.com.
+# All rights reserved.
 #
 
-from .deviceuserloginhandler import DeviceUserLoginHandler
-from .deviceuserlogouthandler import DeviceUserLogoutHandler
 from .getyvobjectdetailhandler import GetYVObjectDetailHandler
 
 from .ackmessagehandler import AckMessageHandler
@@ -15,8 +13,6 @@ from .setdeviceinfohandler import SetDeviceInfoHandler
 
 from .getunackedmessageshandler import GetUnackedMessagesHandler
 from .getunackedmessagehandler import GetUnackedMessageHandler
-from .getappversionhandler import GetAppVersionHandler
-
 from .getmessagehistoryhandler import GetMessageHistoryHandler
 
 from .ppcreateanonymoushandler import PPCreateAnonymousHandler
@@ -57,7 +53,6 @@ from .ppgetnogroupuserlisthandler import PPGetNoGroupUserListHandler
 from .ppgetorggroupconversationhandler import PPGetOrgGroupConversationHandler
 from .ppupdateconversationmemberhandler import PPUpdateConversationMemberHandler
 
-from .ppgetdefaultconversationhandler import PPGetDefaultConversationHandler
 from .ppselectusersbygroupalgorithmhandler import PPSelectUsersByGroupAlgorithmHandler
 
 from .ppupdateappinfohandler import PPUpdateAppInfoHandler
@@ -77,11 +72,13 @@ from .pppagehistorymessagehandler import PPPageHistoryMessageHandler
 from .pppageonlineportaluserhandler import PPPageOnlinePortalUserHandler
 from .pppagedevicenavigationhandler import PPPageDeviceNavigationHandler
 
+from .pppageorggrouphandler import PPPageOrgGroupHandler
+from .pppageorggroupuserhandler import PPPageOrgGroupUserHandler
+
 from .ppkefuloginhandler import PPKefuLoginHandler
 from .ppkefulogouthandler import PPKefuLogoutHandler
 
 from .ppgetuserdetailhandler import PPGetUserDetailHandler
-from .ppgetadmindetailhandler import PPGetAdminDetailHandler
 
 from .ppconsolelogouthandler import PPConsoleLogoutHandler
 from .ppconsolesignuphandler import PPConsoleSignupHandler
@@ -126,12 +123,6 @@ from .ppgetamdqueuelength import PPGetAmdQueueLength
 def getWebServiceHandlers():
     handler_list = []
 
-    # device user login
-    handler_list.append((r"/DEVICE_USER_LOGIN", DeviceUserLoginHandler))
-
-    # device user logout
-    handler_list.append((r"/DEVICE_USER_LOGOUT", DeviceUserLogoutHandler))
-
     # get yvobject detail yvobject is the caller and callee
     handler_list.append((r"/GET_YVOBJECT_DETAIL", GetYVObjectDetailHandler))
 
@@ -149,9 +140,6 @@ def getWebServiceHandlers():
 
     # get unacked messages
     handler_list.append((r"/GET_UNACKED_MESSAGE", GetUnackedMessageHandler))
-
-    # get app version to check the lastest version for the app
-    handler_list.append((r"/GET_APP_VERSION", GetAppVersionHandler))
 
     # get app version to check the lastest version for the app
     handler_list.append((r"/GET_MESSAGE_HISTORY", GetMessageHistoryHandler))
@@ -195,7 +183,6 @@ def getWebServiceHandlers():
     handler_list.append((r"/PP_GET_ORG_GROUP_CONVERSATION", PPGetOrgGroupConversationHandler))
     handler_list.append((r"/PP_UPDATE_CONVERSATION_MEMBER", PPUpdateConversationMemberHandler))
 
-    handler_list.append((r"/PP_GET_DEFAULT_CONVERSATION", PPGetDefaultConversationHandler))
     handler_list.append((r"/PP_SELECT_USERS_BY_GROUP_ALGORITHM", PPSelectUsersByGroupAlgorithmHandler))
 
     handler_list.append((r"/PP_UPDATE_APP_INFO", PPUpdateAppInfoHandler))
@@ -215,11 +202,13 @@ def getWebServiceHandlers():
     handler_list.append((r"/PP_PAGE_ONLINE_PORTAL_USER", PPPageOnlinePortalUserHandler))
     handler_list.append((r"/PP_PAGE_DEVICE_NAVIGATION", PPPageDeviceNavigationHandler))
 
+    handler_list.append((r"/PP_PAGE_ORG_GROUP", PPPageOrgGroupHandler))
+    handler_list.append((r"/PP_PAGE_ORG_GROUP_USER", PPPageOrgGroupUserHandler))
+    
     handler_list.append((r"/PPKEFU_LOGIN", PPKefuLoginHandler))
     handler_list.append((r"/PPKEFU_LOGOUT", PPKefuLogoutHandler))
 
     handler_list.append((r"/PP_GET_USER_DETAIL", PPGetUserDetailHandler))
-    handler_list.append((r"/PP_GET_ADMIN_DETAIL", PPGetAdminDetailHandler))
 
     handler_list.append((r"/PPCONSOLE_LOGOUT", PPConsoleLogoutHandler))
     handler_list.append((r"/PPCONSOLE_SIGNUP", PPConsoleSignupHandler))
@@ -241,13 +230,7 @@ def getWebServiceHandlers():
     handler_list.append((r"/PPKEFU_SET_READY", PPKefuSetReady))
     handler_list.append((r"/PPKEFU_SET_REST", PPKefuSetRest))
     handler_list.append((r"/PPKEFU_SET_SERVICE_USER_STATUS", PPKefuSetServiceUserStatus))
-    
-    # handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT", PPGetAllPredefinedScript))
-    # handler_list.append(("/PP_GET_ALL_PREDEFINED_SCRIPT_GROUP", PPGetAllPredefinedScriptGroup))
-    # handler_list.append(("/PP_GET_PREDEFINED_SCRIPT_WITH_GROUP", PPGetPredefinedScriptWithGroup))
-
-    # handler_list.append(("/PP_CANCEL_WAITING_CREATE_CONVERSATION", PPCancelWaitingCreateConversation))
-    
+        
     handler_list.append(("/PPCONSOLE_SEND_NEW_PASSWORD", PPConsoleSendNewPassword))
 
     handler_list.append((r"/PP_ADD_PREDEFINED_SCRIPT", PPAddPredefinedScript))
