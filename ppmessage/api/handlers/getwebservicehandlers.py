@@ -48,8 +48,6 @@ from .ppgetnogroupuserlisthandler import PPGetNoGroupUserListHandler
 from .ppgetorggroupconversationhandler import PPGetOrgGroupConversationHandler
 from .ppupdateconversationmemberhandler import PPUpdateConversationMemberHandler
 
-from .ppselectusersbygroupalgorithmhandler import PPSelectUsersByGroupAlgorithmHandler
-
 from .ppupdateappinfohandler import PPUpdateAppInfoHandler
 from .ppgetappownedbyuserhandler import PPGetAppOwnedByUserHandler
 from .ppisemailvalidhandler import PPIsEmailValidHandler
@@ -118,15 +116,38 @@ from .ppgetamdqueuelength import PPGetAmdQueueLength
 def getWebServiceHandlers():
     handler_list = []
 
-    # get yvobject detail yvobject is the caller and callee
-    handler_list.append((r"/GET_YVOBJECT_DETAIL", GetYVObjectDetailHandler))
-
     # ack the received message
     handler_list.append((r"/ACK_MESSAGE", AckMessageHandler))
 
     # forward message
     handler_list.append((r"/FORWARD_MESSAGE", ForwardMessageHandler))
 
+    # get yvobject detail yvobject is the caller and callee
+    handler_list.append((r"/GET_YVOBJECT_DETAIL", GetYVObjectDetailHandler))
+
+    handler_list.append((r"/PPCOM_GET_DEFAULT_CONVERSATION", PPComGetDefaultConversationHandler))
+    handler_list.append((r"/PPCOM_CREATE_CONVERSATION", PPComCreateConversationHandler))
+
+    handler_list.append((r"/PPCONSOLE_GET_OVERVIEW_NUMBER", PPConsoleGetOverviewNumber))
+    handler_list.append((r"/PPCONSOLE_GET_REAL_TIME_CUSTOMER_NUMBER", PPConsoleGetRealTimeCustomerNumber))
+    handler_list.append((r"/PPCONSOLE_GET_REAL_TIME_SERVICE_NUMBER", PPConsoleGetRealTimeServiceNumber))
+    handler_list.append((r"/PPCONSOLE_GET_REAL_TIME_MESSAGE_NUMBER", PPConsoleGetRealTimeMessageNumber))
+    handler_list.append((r"/PPCONSOLE_GET_SERVICE_NUMBER_BY_RANGE", PPConsoleGetServiceNumberByRange))
+    handler_list.append((r"/PPCONSOLE_GET_CUSTOMER_NUMBER_BY_RANGE", PPConsoleGetCustomerNumberByRange))
+    handler_list.append((r"/PPCONSOLE_GET_MESSAGE_NUMBER_BY_RANGE", PPConsoleGetMessageNumberByRange))
+
+    handler_list.append((r"/PPCONSOLE_LOGOUT", PPConsoleLogoutHandler))
+    handler_list.append((r"/PPCONSOLE_SIGNUP", PPConsoleSignupHandler))
+
+    handler_list.append((r"/PPCONSOLE_SEND_NEW_PASSWORD", PPConsoleSendNewPassword))
+    
+    handler_list.append((r"/PPKEFU_LOGIN", PPKefuLoginHandler))
+    handler_list.append((r"/PPKEFU_LOGOUT", PPKefuLogoutHandler))
+    handler_list.append((r"/PPKEFU_SET_BUSY", PPKefuSetBusy))
+    handler_list.append((r"/PPKEFU_SET_READY", PPKefuSetReady))
+    handler_list.append((r"/PPKEFU_SET_REST", PPKefuSetRest))
+    handler_list.append((r"/PPKEFU_SET_SERVICE_USER_STATUS", PPKefuSetServiceUserStatus))
+    
     # set deviceinfo
     handler_list.append((r"/SET_DEVICE_INFO", SetDeviceInfoHandler))
 
@@ -168,8 +189,6 @@ def getWebServiceHandlers():
     handler_list.append((r"/PP_GET_ORG_GROUP_CONVERSATION", PPGetOrgGroupConversationHandler))
     handler_list.append((r"/PP_UPDATE_CONVERSATION_MEMBER", PPUpdateConversationMemberHandler))
 
-    handler_list.append((r"/PP_SELECT_USERS_BY_GROUP_ALGORITHM", PPSelectUsersByGroupAlgorithmHandler))
-
     handler_list.append((r"/PP_UPDATE_APP_INFO", PPUpdateAppInfoHandler))
     handler_list.append((r"/PP_GET_APP_OWNED_BY_USER", PPGetAppOwnedByUserHandler))
     handler_list.append((r"/PP_IS_EMAIL_VALID", PPIsEmailValidHandler))
@@ -190,33 +209,12 @@ def getWebServiceHandlers():
     handler_list.append((r"/PP_PAGE_ORG_GROUP", PPPageOrgGroupHandler))
     handler_list.append((r"/PP_PAGE_ORG_GROUP_USER", PPPageOrgGroupUserHandler))
     
-    handler_list.append((r"/PPKEFU_LOGIN", PPKefuLoginHandler))
-    handler_list.append((r"/PPKEFU_LOGOUT", PPKefuLogoutHandler))
-
     handler_list.append((r"/PP_GET_USER_DETAIL", PPGetUserDetailHandler))
-
-    handler_list.append((r"/PPCONSOLE_LOGOUT", PPConsoleLogoutHandler))
-    handler_list.append((r"/PPCONSOLE_SIGNUP", PPConsoleSignupHandler))
-
-    handler_list.append((r"/PPCONSOLE_GET_OVERVIEW_NUMBER", PPConsoleGetOverviewNumber))
-    handler_list.append((r"/PPCONSOLE_GET_REAL_TIME_CUSTOMER_NUMBER", PPConsoleGetRealTimeCustomerNumber))
-    handler_list.append((r"/PPCONSOLE_GET_REAL_TIME_SERVICE_NUMBER", PPConsoleGetRealTimeServiceNumber))
-    handler_list.append((r"/PPCONSOLE_GET_REAL_TIME_MESSAGE_NUMBER", PPConsoleGetRealTimeMessageNumber))
-    handler_list.append((r"/PPCONSOLE_GET_SERVICE_NUMBER_BY_RANGE", PPConsoleGetServiceNumberByRange))
-    handler_list.append((r"/PPCONSOLE_GET_CUSTOMER_NUMBER_BY_RANGE", PPConsoleGetCustomerNumberByRange))
-    handler_list.append((r"/PPCONSOLE_GET_MESSAGE_NUMBER_BY_RANGE", PPConsoleGetMessageNumberByRange))
 
     handler_list.append((r"/PP_GET_API_INFO", PPGetApiInfoHandler))
 
     handler_list.append((r"/PP_GET_ALL_APP_LIST", PPGetAllAppListHandler))
     handler_list.append((r"/PP_VALIDATE_ONLINE_DEVICE", PPValidateOnlineDeviceHandler))
-
-    handler_list.append((r"/PPKEFU_SET_BUSY", PPKefuSetBusy))
-    handler_list.append((r"/PPKEFU_SET_READY", PPKefuSetReady))
-    handler_list.append((r"/PPKEFU_SET_REST", PPKefuSetRest))
-    handler_list.append((r"/PPKEFU_SET_SERVICE_USER_STATUS", PPKefuSetServiceUserStatus))
-        
-    handler_list.append(("/PPCONSOLE_SEND_NEW_PASSWORD", PPConsoleSendNewPassword))
 
     handler_list.append((r"/PP_ADD_PREDEFINED_SCRIPT", PPAddPredefinedScript))
     handler_list.append((r"/PP_REMOVE_PREDEFINED_SCRIPT", PPRemovePredefinedScript))
@@ -229,8 +227,6 @@ def getWebServiceHandlers():
     handler_list.append((r"/PP_GET_PREDEFINED_SCRIPT_WITH_GROUP", PPGetPredefinedScriptWithGroup))
 
     handler_list.append((r"/PP_CANCEL_WAITING_CREATE_CONVERSATION", PPCancelWaitingCreateConversation))
-    handler_list.append((r"/PPCOM_GET_DEFAULT_CONVERSATION", PPComGetDefaultConversationHandler))
-    handler_list.append((r"/PPCOM_CREATE_CONVERSATION", PPComCreateConversationHandler))
     handler_list.append((r"/PP_GET_AMD_QUEUE_LENGTH", PPGetAmdQueueLength))
 
     return handler_list

@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2010-2016 .
+# Copyright (C) 2010-2016 PPMessage.
 # Guijin Ding, dingguijin@gmail.com
 #
-#
-
-
-from .algorithm import AbstractAlgorithm
-
-#from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 
 from ppmessage.core.constant import IOS_FAKE_TOKEN
 from ppmessage.core.constant import CONVERSATION_TYPE
@@ -50,7 +44,6 @@ import uuid
 import time
 import json
 import logging
-
 
 _registry = {}
 

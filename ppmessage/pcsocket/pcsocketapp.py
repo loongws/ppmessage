@@ -41,7 +41,7 @@ from ppmessage.db.models import PCSocketDeviceData
 from ppmessage.db.models import ConversationUserData
 from ppmessage.db.models import DeviceNavigationData
 
-from ppmessage.dispatcher.policy.policy import AbstractPolicy
+from ppmessage.dispatcher.policy import BroadcastPolicy
 
 from .error import DIS_ERR
 
@@ -202,16 +202,10 @@ class PCSocketDelegate():
         return
 
     def _get_service_care_users(self, _app_uuid, _user_uuid):
-        _key = AppInfo.__tablename__ + ".uuid." + _app_uuid
-        _name = self.redis.hget(_key, "app_policy_name")
-        _cls = AbstractPolicy.get_policy_cls_by_name(_name)
-        return _cls.get_service_care_users(_app_uuid, _user_uuid, self.redis)
+        return BroadcastPolicy.get_service_care_users(_app_uuid, _user_uuid, self.redis)
 
     def _get_portal_care_users(self, _app_uuid, _user_uuid):
-        _key = AppInfo.__tablename__ + ".uuid." + _app_uuid
-        _name = self.redis.hget(_key, "app_policy_name")
-        _cls = AbstractPolicy.get_policy_cls_by_name(_name)
-        return _cls.get_portal_care_users(_app_uuid, _user_uuid, self.redis)
+        return BroadcastPolicy.get_portal_care_users(_app_uuid, _user_uuid, self.redis)
     
     def start_watching_online(self, _ws):
         _user_uuid = _ws.user_uuid
