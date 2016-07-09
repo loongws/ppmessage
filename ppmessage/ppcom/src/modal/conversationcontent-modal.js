@@ -97,9 +97,6 @@
                 return isMessageIdExist(msg.messageId);
             },
 
-            DEFAULT_PAGE_SIZE = 20, // Default page size 
-            loadMessageHistorysPageOffset = 0, // message history page offset
-            loadMessageHistorysPageSize = DEFAULT_PAGE_SIZE, // current page size
             loadMessageHistorysMaxId = null, // max id
             loadMessageHistorys = function(conversationId, callback) { // get message historys by conversationId
 
@@ -112,13 +109,10 @@
                 // get message history by api
                 $api.pageMessageHistory({
                     conversation_uuid: conversationId,
-                    page_offset: loadMessageHistorysPageOffset,
-                    page_size: loadMessageHistorysPageSize,
                     max_uuid: loadMessageHistorysMaxId
                 }, function(response) { // On get message history success callback
 
                     // Update page offset and max id for next load
-                    loadMessageHistorysPageOffset++;
                     loadMessageHistorysMaxId = response.list.length > 0 ? response.list[response.list.length-1].uuid : null;
 
                     // Convert response api message array to ppMessage array
@@ -277,10 +271,7 @@
         this.clear = function() {
             chatMessages = [];
             chatMessagesIds = [];
-
-            loadMessageHistorysPageOffset = 0;
             loadMessageHistorysMaxId = null;
-
             lastMessageTimestamp = null;
         };
 
