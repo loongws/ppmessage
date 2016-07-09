@@ -12,7 +12,6 @@ from .basehandler import BaseHandler
 
 from ppmessage.core.constant import PPCOM_WELCOME
 from ppmessage.core.constant import PPCOM_OFFLINE
-from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import SHOW_PPCOM_HOVER
 from ppmessage.core.constant import PPCOM_LAUNCHER_STYLE
 
@@ -87,8 +86,7 @@ def create_app(_handler, _app_name, _user_uuid, _user_fullname):
         "app_name": _app_name,
         "app_key": _app_key,
         "app_secret": _app_secret,
-        "app_billing_email": _user_email,
-        "app_route_policy": APP_POLICY.BROADCAST,
+        "app_billing_email": _user_email
     }
     
     if _company_name != None and len(_company_name) > 0:

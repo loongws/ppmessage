@@ -12,7 +12,6 @@ from ppmessage.pcsocket.error import DIS_ERR
 
 from ppmessage.core.constant import DIS_WHAT
 
-from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 

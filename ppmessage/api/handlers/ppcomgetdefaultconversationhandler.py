@@ -20,7 +20,6 @@ from ppmessage.db.models import ConversationUserData
 from ppmessage.core.redis import redis_hash_to_dict
 
 from ppmessage.core.constant import API_LEVEL
-from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import PPCOM_WELCOME
 from ppmessage.core.constant import DATETIME_FORMAT
 from ppmessage.core.constant import CONVERSATION_TYPE
@@ -53,7 +52,6 @@ class PPComGetDefaultConversationHandler(BaseHandler):
     a service user list
     a welcome string, app welcome string or user signature
     app name/group name/user fullname
-    a policy name
     """
 
     def initialize(self):

@@ -18,7 +18,6 @@ from ppmessage.core.constant import REDIS_GCMPUSH_KEY
 from ppmessage.core.constant import REDIS_IOSPUSH_KEY
 from ppmessage.core.constant import REDIS_JPUSH_KEY
 from ppmessage.core.constant import PPCOM_OFFLINE
-from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import YVOBJECT
 from ppmessage.core.constant import DIS_SRV
 from ppmessage.core.constant import OS
@@ -45,20 +44,12 @@ import time
 import json
 import logging
 
-_registry = {}
-
 class Meta(type):
-    def __init__(cls, name, bases, dict_):
-        _registry[name] = cls
-        type.__init__(cls, name, bases, dict_)
-        return
-
-    @classmethod
-    def name(cls):
-        return APP_POLICY.META
+   def __init__(cls, name, bases, dict_):
+       type.__init__(cls, name, bases, dict_)
+       return
 
 Policy = Meta("Policy", (object,), {})
-
 class AbstractPolicy(Policy):
 
     def __init__(self, dis):
@@ -81,25 +72,7 @@ class AbstractPolicy(Policy):
         self._conversation_user_datas_hash = {}
         
         self._users = set()
-
-        self._name = APP_POLICY.ABASTRACT
         return
-
-    @classmethod
-    def name(cls):
-        return APP_POLICY.ABASTRACT
-
-    @classmethod
-    def get_policy_cls_by_name(cls, name):
-        _p = BroadcastPolicy
-        if name == None:
-            return _p
-        
-        for i in _registry:
-            if _registry[i].name() == name:
-                _p = _registry[i]
-                break
-        return _p
 
     @classmethod
     def conversation_users(cls, _app_uuid, _conversation_uuid, _redis):
@@ -178,9 +151,6 @@ class AbstractPolicy(Policy):
         if _message["ct"] == CONVERSATION_TYPE.S2P:
             _message["ti"] = self._task["app_uuid"]
             _message["tt"] = YVOBJECT.AP
-            if self._name == APP_POLICY.GROUP:
-                #_message["ti"] == self._task["to_uuid"]
-                _message["tt"] == YVOBJECT.OG
                 
         if isinstance(self._task.get("title"), unicode):
             _message["tl"] = self._task.get("title").encode("utf-8")
@@ -614,12 +584,7 @@ class AbstractPolicy(Policy):
 class BroadcastPolicy(AbstractPolicy):
     def __init__(self, dis):
         super(BroadcastPolicy, self).__init__(dis)
-        self._name = APP_POLICY.BROADCAST
         return
-
-    @classmethod
-    def name(cls):
-        return APP_POLICY.BROADCAST
 
     def users(self):
         super(BroadcastPolicy, self).users()

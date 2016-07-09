@@ -143,6 +143,7 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
             _body =  "...: " + _message_title;
             _icon = yvLink.default_user_icon();
         }
+        // pass conversation uuid here
         yvSys.desktop_notification(_noti_title, _body, _icon);
     }
     

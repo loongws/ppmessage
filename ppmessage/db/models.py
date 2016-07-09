@@ -997,8 +997,6 @@ class ConversationInfo(CommonMixin, BaseModel):
     app_uuid = Column("app_uuid", String(64))
     
     # which group this conversation created for
-    # for app route policy == group
-    # the group is targe group
     group_uuid = Column("group_uuid", String(64))
     
     # who create this conversation

@@ -96,6 +96,11 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
             }
             
             _noti = new Notification(_title, _option);
+            _noti.onclick = function() {
+                window.focus();
+                //get the coversation_uuid?
+                //$rootScope.$broadcast();
+            };
             setTimeout(_noti.close.bind(_noti), 3000);
         }
         return;

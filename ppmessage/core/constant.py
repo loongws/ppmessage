@@ -401,15 +401,6 @@ SHOW_PPCOM_HOVER = Enum([
     "ONCE",
 ])
 
-APP_POLICY = Enum([
-    "META",
-    "ABASTRACT",
-    "BROADCAST",
-    "SMART",
-    "GROUP",
-    "ROBOT"
-])
-
 GROUP_ALGORITHM = Enum([
     "META",
     "ABASTRACT",
