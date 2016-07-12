@@ -1,11 +1,9 @@
-ppmessageModule.factory('yvSys', [
-    "$state",
-    "$timeout",
-    "$cookies",
-    "$window",
-    "yvLog",
-    "yvConstants",
-function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
+ppmessageModule.factory("yvSys", $yvSysService);
+
+$yvSysService.$inject = ["$rootScope", "$state", "$timeout", "$cookies", "$window", "yvLog", "yvConstants"];
+
+function $yvSysService($rootScope, $state, $timeout, $cookies, $window, yvLog, yvConstants) {
+    
     var _page_size = 15;
     var _keyboard_height = 216;
     var _device_online = true;
@@ -75,7 +73,7 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
         }
     }
 
-    function _desktop_notification(_title, _body, _icon) {
+    function _desktop_notification(_message) {
         var _option = null, _noti = null;
 
         _request_desktop_notification();
@@ -86,11 +84,11 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
         }
 
         if (window.Notification && Notification.permission === "granted") {
-            _option = {body: _body};
-            if (_icon) {
-                _option.icon = _icon;
-            }
-
+            _option = {
+                body: _message.body,
+                icon: _message.icon
+            };
+            
             if (_is_document_visible()) {
                 return;
             }
@@ -98,8 +96,14 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
             _noti = new Notification(_title, _option);
             _noti.onclick = function() {
                 window.focus();
-                //get the coversation_uuid?
-                //$rootScope.$broadcast();
+                var _conversation = yvBase.get("conversation", _message.conversation_uuid);
+                if (conversation != null) {
+                    $rootScope.$broadcast("event:open-conversation", {
+                        conv_uuid: _conversation.uuid,
+                        conv_type: _conversation.type,
+                        user_uuid: _conversation.user_uuid
+                    });
+                }
             };
             setTimeout(_noti.close.bind(_noti), 3000);
         }
@@ -504,4 +508,4 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
         }
         
     };
-}]);
+}
