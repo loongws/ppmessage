@@ -93,18 +93,15 @@ function $yvSysService($rootScope, $state, $timeout, $cookies, $window, yvLog, y
                 return;
             }
             
-            _noti = new Notification(_title, _option);
+            _noti = new Notification(_message.title, _option);
             _noti.onclick = function() {
                 window.focus();
-                var _conversation = yvBase.get("conversation", _message.conversation_uuid);
-                if (conversation != null) {
-                    $rootScope.$broadcast("event:open-conversation", {
-                        conv_uuid: _conversation.uuid,
-                        conv_type: _conversation.type,
-                        user_uuid: _conversation.user_uuid
-                    });
-                }
+                $rootScope.$broadcast("event:open-conversation", {
+                    conv_uuid: _message.conversation_uuid,
+                    conv_type: _message.conversation_type
+                });
             };
+            
             setTimeout(_noti.close.bind(_noti), 3000);
         }
         return;

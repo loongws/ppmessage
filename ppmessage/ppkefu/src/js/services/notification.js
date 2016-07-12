@@ -135,7 +135,7 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
         var _from_object = yvBase.get("object", _incoming.fi);
         var _noti_title = yvLocal.translate("app.GLOBAL.TITLE_DESKTOP");
         var _message_title = yvMessage.get_localized_title(_incoming.bo, _incoming.ms);
-        var _conversation_uuid = _incoming.ci;
+        var _conversation_uuid = _incoming.ci, _conversation_type = _incoming.ct;
 
         _noti_body =  "...: " + _message_title;
         _noti_icon = yvLink.default_user_icon();
@@ -147,13 +147,13 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
 
         // pass conversation uuid here
         yvSys.desktop_notification({
-            title:_noti_title,
-            body:_noti_body,
-            icon:_noti_icon,
-            conversation_uuid:_conversation_uuid
+            body: _noti_body,
+            icon: _noti_icon,
+            title: _noti_title,
+            conversation_type: _conversation_type,
+            conversation_uuid: _conversation_uuid
         });
         
-        //yvSys.desktop_notification(_noti_title, _body, _icon);
     }
     
     function _fn_pc_open() {
