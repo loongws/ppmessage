@@ -66,10 +66,14 @@ Service.$notifyMsg = (function() {
         }
 
         function dispatchWsMessage( apiMessage ) {
-            //ack message
-            $api.ackMessage({
-                list: [ apiMessage.pid ]
-            });
+
+            //ack message if pid exist
+            //for history message no pid
+            if (apiMessage.pid) {
+                $api.ackMessage({
+                    list: [ apiMessage.pid ]
+                });
+            }
 
             //convert api message to ppMessage
             new Service.ApiMessageAdapter(apiMessage)

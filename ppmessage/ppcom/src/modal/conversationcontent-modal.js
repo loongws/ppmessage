@@ -5,6 +5,8 @@
         var $api = Service.$api, // $api Service
             $json = Service.$json, // $json Service
             $tools = Service.$tools,
+            $notification = Service.$notification,
+            $notifyMsg = Service.$notifyMsg,
 
             id = groupId, // group identifier
 
@@ -98,6 +100,7 @@
             },
 
             loadMessageHistorysMaxId = null, // max id
+
             loadMessageHistorys = function(conversationId, callback) { // get message historys by conversationId
 
                 // conversation id is empty
@@ -244,7 +247,7 @@
             },
             
             buildTimestampMessage = function(messageTimestamp) {
-
+                
                 var time = messageTimestamp * 1000,
                     timeStr = Service.Constants.I18N[Service.$language.getLanguage()].timeFormat(time);
                 
@@ -257,8 +260,39 @@
                     .messageState( 'FINISH' )
                     .build()
                     .getBody();
+            },
+            
+            tryLoadLostMessages = function(maxId) {
+
+                if (chatMessagesIds.length == 0) {
+                    // no messages no lost
+                    return;
+                }
                 
-            };
+                maxId = maxId ? maxId : chatMessagesIds[chatMessagesIds.length-1];
+            
+                $api.pageMessageHistory({
+                    conversation_uuid: id,
+                    min_uuid: maxId
+                }, function(response) {
+                    if (response.error_code == 0) {
+                        if (response.list.length > 0) {
+
+                            $.each(response.list, function(index, item) {
+                                var rawData = item, message = null;
+                                if (rawData) {
+                                    message = $json.parse(rawData);
+                                    $notifyMsg.get($notification, message).dispatch();
+                                }
+                            });
+
+                            tryLoadLostMessages(response.list[response.list.length-1].uuid);
+                        }
+                    }
+                });
+            }
+        
+        ;
 
         // add a new messageId
         this.updateMessageIdsArray = function(messageId) {
@@ -366,6 +400,10 @@
 
         this.token = function() {
             return id;
+        };
+
+        this.tryLoadLostMessages = function() {
+            tryLoadLostMessages();
         };
     }
 
