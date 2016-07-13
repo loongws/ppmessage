@@ -74,6 +74,9 @@ def random_identicon(_string):
     return _qiniu_random_identicon(_string)
 
 def download_random_identicon(_url):
+    if IDENTICON_PPMESSAGE_STORE:
+        return
+ 
     if not _url.startswith("http"):
         return
 

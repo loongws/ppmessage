@@ -510,7 +510,7 @@ class FirstHandler(tornado.web.RequestHandler):
         logging.info("firstrequest: %s" % _request)
         if not self._check_request(_request):
             return _return(self, -1)
-        
+
         if not self._create_user(_request):
             return _return(self, -1)
 
@@ -522,13 +522,14 @@ class FirstHandler(tornado.web.RequestHandler):
 
         if not self._create_api(_request):
             return _return(self, -1)
-        
+
         if not self._dist(_request):
             return _return(self, -1)
 
         self._dump_config(_request)
 
         self._welcome_email(_request)
+
         return _return(self, 0)
 
 class RestartHandler(tornado.web.RequestHandler):    
