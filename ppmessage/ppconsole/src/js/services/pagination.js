@@ -21,8 +21,10 @@
 //     total: totalNumber // total user's count after filtered
 // }
 
+angular.module("this_app.services").factory("yvPagination", $yvPaginationService);
 
 $yvPaginationService.$inject = [];
+
 function $yvPaginationService() {
     
     var _page = function(settings, members) {
@@ -90,5 +92,3 @@ function $yvPaginationService() {
         }
     };
 }
-
-angular.module("this_app.services").factory("yvPagination", $yvPaginationService);

@@ -1,11 +1,9 @@
-ppmessageModule.factory('yvSys', [
-    "$state",
-    "$timeout",
-    "$cookies",
-    "$window",
-    "yvLog",
-    "yvConstants",
-function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
+ppmessageModule.factory("yvSys", $yvSysService);
+
+$yvSysService.$inject = ["$rootScope", "$state", "$timeout", "$cookies", "$window", "yvLog", "yvConstants"];
+
+function $yvSysService($rootScope, $state, $timeout, $cookies, $window, yvLog, yvConstants) {
+    
     var _page_size = 15;
     var _keyboard_height = 216;
     var _device_online = true;
@@ -29,6 +27,37 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
         _page_size = Math.floor(screen.height / 72);
     }
 
+    function _is_document_visible() {
+        var hidden, state, visibilityChange; 
+        if (typeof document.hidden !== "undefined") {
+	        hidden = "hidden";
+	        visibilityChange = "visibilitychange";
+	        state = "visibilityState";
+        } else if (typeof document.mozHidden !== "undefined") {
+	        hidden = "mozHidden";
+	        visibilityChange = "mozvisibilitychange";
+	        state = "mozVisibilityState";
+        } else if (typeof document.msHidden !== "undefined") {
+	        hidden = "msHidden";
+	        visibilityChange = "msvisibilitychange";
+	        state = "msVisibilityState";
+        } else if (typeof document.webkitHidden !== "undefined") {
+	        hidden = "webkitHidden";
+	        visibilityChange = "webkitvisibilitychange";
+	        state = "webkitVisibilityState";
+        }
+
+        if (!state ) {
+            return false;
+        }
+        
+        if (document[state] === "visible") {
+            return true;
+        }
+        
+        return false;
+    }
+    
     function _request_desktop_notification() {
         if (window.Notification === undefined) {
             console.error("No Notification support.");
@@ -44,7 +73,7 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
         }
     }
 
-    function _desktop_notification(_title, _body, _icon) {
+    function _desktop_notification(_message) {
         var _option = null, _noti = null;
 
         _request_desktop_notification();
@@ -55,15 +84,24 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
         }
 
         if (window.Notification && Notification.permission === "granted") {
-            _option = {body: _body};
-            if (_icon) {
-                _option.icon = _icon;
-            }
-            console.log(_option);
-            if (document.hidden === false) {
+            _option = {
+                body: _message.body,
+                icon: _message.icon
+            };
+            
+            if (_is_document_visible()) {
                 return;
             }
-            _noti = new Notification(_title, _option);
+            
+            _noti = new Notification(_message.title, _option);
+            _noti.onclick = function() {
+                window.focus();
+                $rootScope.$broadcast("event:open-conversation", {
+                    conv_uuid: _message.conversation_uuid,
+                    conv_type: _message.conversation_type
+                });
+            };
+            
             setTimeout(_noti.close.bind(_noti), 3000);
         }
         return;
@@ -467,4 +505,4 @@ function ($state, $timeout, $cookies, $window, yvLog, yvConstants) {
         }
         
     };
-}]);
+}

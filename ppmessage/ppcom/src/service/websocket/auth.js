@@ -57,32 +57,7 @@ Service.$notifyAuth = (function() {
 
             // auth success
             if ( authMsg.error_code === 0 || authMsg.code === 0 ) {
-
-                var wsSettings = $notifyService.getWsSettings();
-                
-                // get unacked messages
-                Service.$api.getUnackedMessages({
-                    app_uuid: Service.$ppSettings.getAppUuid(),
-                    from_uuid: wsSettings.user_uuid,
-                    device_uuid: wsSettings.device_uuid
-                }, function(response) {
-                    
-                    response.list && response.message && $.each(response.list, function(index, item) {
-                        var rawData = response.message[item],
-                            message = null;
-
-                        if (rawData) {
-                            message = Service.$json.parse(rawData);
-                            message.pid = item;
-
-                            // let message dispatch to `dispatch` this message
-                            Service.$notifyMsg.get( $notifyService, message ).dispatch();
-                        }
-                        
-                    });
-                    
-                });
-                
+                Modal.$conversationContentGroup.tryLoadLostMessages();                
             }
         }
         

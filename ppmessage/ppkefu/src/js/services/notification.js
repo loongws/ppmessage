@@ -25,7 +25,6 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
         $timeout(function () {
             yvPush.retry();
             __open_socket();
-            $rootScope.$broadcast("event:get_unack_all");
         });
     }
 
@@ -132,19 +131,29 @@ function ($timeout, $rootScope, yvAPI, yvSys, yvSSL, yvUser, yvLink, yvType, yvA
             return;
         }
         
-        var _icon = null, _body = null;
+        var _noti_icon = null, _noti_body = null;
         var _from_object = yvBase.get("object", _incoming.fi);
         var _noti_title = yvLocal.translate("app.GLOBAL.TITLE_DESKTOP");
         var _message_title = yvMessage.get_localized_title(_incoming.bo, _incoming.ms);
-        
+        var _conversation_uuid = _incoming.ci, _conversation_type = _incoming.ct;
+
+        _noti_body =  "...: " + _message_title;
+        _noti_icon = yvLink.default_user_icon();
+       
         if (_from_object) {
-            _body = _from_object.fullname + ": " + _message_title;
-            _icon = yvLink.get_user_icon(_from_object.icon);
-        } else {
-            _body =  "...: " + _message_title;
-            _icon = yvLink.default_user_icon();
-        }
-        yvSys.desktop_notification(_noti_title, _body, _icon);
+            _noti_body = _from_object.fullname + ": " + _message_title;
+            _noti_icon = yvLink.get_user_icon(_from_object.icon);
+        } 
+
+        // pass conversation uuid here
+        yvSys.desktop_notification({
+            body: _noti_body,
+            icon: _noti_icon,
+            title: _noti_title,
+            conversation_type: _conversation_type,
+            conversation_uuid: _conversation_uuid
+        });
+        
     }
     
     function _fn_pc_open() {

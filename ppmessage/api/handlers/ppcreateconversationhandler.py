@@ -3,7 +3,6 @@
 # Copyright (C) 2010-2016 PPMessage.
 # Guijin Ding, dingguijin@gmail.com
 #
-#
 
 from .basehandler import BaseHandler
 
@@ -21,8 +20,7 @@ from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import CONVERSATION_TYPE
 from ppmessage.core.constant import CONVERSATION_STATUS
 
-from ppmessage.dispatcher.policy.policy import AbstractPolicy
-from ppmessage.dispatcher.policy.policy import BroadcastPolicy
+from ppmessage.dispatcher.policy import BroadcastPolicy
 
 from ppmessage.core.utils.createicon import create_group_icon
 from ppmessage.core.utils.datetimestring import datetime_to_microsecond_timestamp
@@ -57,10 +55,7 @@ class Conversation():
         return _rdata
 
     def _get_conversation_user_list(self):
-        _key = AppInfo.__tablename__ + ".uuid." + self._app_uuid
-        _policy_name = self._redis.hget(_key, "app_route_policy")
-        _cls = AbstractPolicy.get_policy_cls_by_name(_policy_name)
-        _list = _cls.create_conversation_users(self._app_uuid, self._group_uuid, self._redis)
+        _list = BroadcastPolicy.create_conversation_users(self._app_uuid, self._group_uuid, self._redis)
         return _list
 
     def _datarow(self, _user_uuid, _user_name, _conversation_type, _conversation_uuid, _conversation_name, _conversation_icon):

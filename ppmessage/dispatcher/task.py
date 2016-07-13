@@ -5,6 +5,8 @@
 #
 #
 
+from .policy import BroadcastPolicy
+
 from ppmessage.db.models import AppInfo
 from ppmessage.db.models import DeviceUser
 from ppmessage.db.models import OrgGroup
@@ -13,8 +15,6 @@ from ppmessage.db.models import MessagePushTask
 
 from ppmessage.core.constant import YVOBJECT
 from ppmessage.core.redis import redis_hash_to_dict
-
-from .policy.policy import AbstractPolicy
 
 import logging
 import json
@@ -25,9 +25,8 @@ class TaskHandler():
         self.application = _app
 
     def _dispatch(self):
-        _name = self._task["_app"]["app_route_policy"]
-        logging.info("DISPATCH POLICY:%s type:%s, subtype:%s, body:%s, ft:%s, tt:%s" % (_name, self._task["message_type"], self._task["message_subtype"], self._task["body"], self._task["from_type"], self._task["to_type"]))
-        _cls = AbstractPolicy.get_policy_cls_by_name(_name)
+        logging.info("DISPATCH: type:%s, subtype:%s, body:%s, ft:%s, tt:%s" % (self._task["message_type"], self._task["message_subtype"], self._task["body"], self._task["from_type"], self._task["to_type"]))
+        _cls = BroadcastPolicy
         _obj = _cls(self)
         _obj.dispatch()
         return

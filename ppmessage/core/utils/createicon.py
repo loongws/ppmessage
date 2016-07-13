@@ -17,7 +17,6 @@ from ppmessage.db.models import FileInfo
 from ppmessage.db.models import DeviceUser
 
 from ppmessage.core.imageconverter import ImageConverter
-from ppmessage.core.utils.randomidenticon import random_identicon_parse_file
 
 import os
 import hashlib
@@ -39,15 +38,23 @@ def _icon_url(_file_name):
     _url = _protocol + "://" + _server_name + ":" + _port + _post
     return _url
 
+def _url2local(_url):
+    _file = _url[_url.rfind("/")+1:]
+    _path = get_config_server_identicon_store()
+    return _path + os.path.sep + _file
+
 def create_user_icon(_uuid):
-    _image = Identicon(_uuid, 64)
-    _image = _image.draw_image()
     _file_name = _uuid + ".png"
     _identicon_store = get_config_server_identicon_store()
     if _identicon_store == None:
         logging.error("no identicon_store configed")
         return None
     _path = _identicon_store + os.path.sep + _file_name
+    if os.path.exists(_path):
+        return _icon_url(_file_name)
+    
+    _image = Identicon(_uuid, 64)
+    _image = _image.draw_image()
     _image.save(_path)
     return _icon_url(_file_name)
 
@@ -71,17 +78,12 @@ def create_group_icon(_redis, _users):
     for _uuid in _users:
         _user_key = DeviceUser.__tablename__ + ".uuid." + _uuid
         _user_icon = _redis.hget(_user_key, "user_icon")
-        _random_path = random_identicon_parse_file(_user_icon)
-
-        if _random_path != None:
-            _icon_list.append(_random_path)
+        if _user_icon != None:
+            _icon_list.append(_user_icon)
         else:
-            _file_key = FileInfo.__tablename__ + ".uuid." + _user_icon
-            if _redis.exists(_file_key):
-                _file_path = _redis.hget(_file_key, "file_path")
-                _icon_list.append(_file_path)
-            else:
-                _icon_list.append(None)
+            _icon_list.append(_icon_url("default_icon.png"))
+
+    _icon_list = map(_url2local, _icon_list)
     
     _data = ImageConverter.conversation_icon(_icon_list)
     if _data == None:

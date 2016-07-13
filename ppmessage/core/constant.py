@@ -401,15 +401,6 @@ SHOW_PPCOM_HOVER = Enum([
     "ONCE",
 ])
 
-APP_POLICY = Enum([
-    "META",
-    "ABASTRACT",
-    "BROADCAST",
-    "SMART",
-    "GROUP",
-    "ROBOT"
-])
-
 GROUP_ALGORITHM = Enum([
     "META",
     "ABASTRACT",
@@ -450,6 +441,7 @@ USER_NAME = {
 REDIS_EMAIL_KEY = "redis_email_key"
 
 # iospush key is a list which queue all ios push request
+REDIS_JPUSH_KEY = "redis_jpush_key"
 REDIS_IOSPUSH_KEY = "redis_iospush_key"
 REDIS_GCMPUSH_KEY = "redis_gcmpush_key"
 REDIS_MQTTPUSH_KEY = "redis_mqttpush_key"

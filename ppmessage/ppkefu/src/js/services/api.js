@@ -379,21 +379,6 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
             _api_post(_url, _data, null, _success, _error, _api_error);
         },
 
-        get_unacked_messages: function (_success, _error, _api_error) {
-            var _url = "/GET_UNACKED_MESSAGES";
-            _data = {
-                "from_uuid": yvUser.get("uuid"),
-                "device_uuid": yvUser.get("device_uuid")
-            };
-            _api_post(_url, _data, null, _success, _error, _api_error);
-        },
-
-        get_unacked_message: function (_id, _success, _error, _api_error) {
-            var _url = "/GET_UNACKED_MESSAGE";
-            var _data = {uuid: _id};
-            _api_post(_url, _data, null, _success, _error, _api_error);
-        },
-
         get_latest_app: function (_success, _error, _api_error) {
             var _url = "/GET_LATEST_APP";
             _api_post(_url, null, null, _success, _error, _api_error);
@@ -404,12 +389,7 @@ function ($rootScope, $timeout, $http, yvLog, yvSys, yvUser, yvFile, yvConstants
             var _args = {latitude: _latitude, longitude: _longitude};
             _api_post(_url, _args, null, _success, _error, _api_error);
         },
-
-        get_history_message: function (_args, _success, _error, _api_error) {
-            var _url = "/PP_GET_HISTORY_MESSAGE";
-            _api_post(_url, _args, null, _success, _error, _api_error);
-        },
-
+        
         get_page_history_message: function (_args, _success, _error, _api_error) {
             var _url = "/PP_PAGE_HISTORY_MESSAGE";
             _api_post(_url, _args, null, _success, _error, _api_error);

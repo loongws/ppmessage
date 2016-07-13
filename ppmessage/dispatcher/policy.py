@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2010-2016 .
+# Copyright (C) 2010-2016 PPMessage.
 # Guijin Ding, dingguijin@gmail.com
 #
-#
-
-
-from .algorithm import AbstractAlgorithm
-
-#from ppmessage.bootstrap.data import BOOTSTRAP_DATA
 
 from ppmessage.core.constant import IOS_FAKE_TOKEN
 from ppmessage.core.constant import CONVERSATION_TYPE
@@ -22,8 +16,8 @@ from ppmessage.core.constant import REDIS_PUSH_NOTIFICATION_KEY
 from ppmessage.core.constant import REDIS_MQTTPUSH_KEY
 from ppmessage.core.constant import REDIS_GCMPUSH_KEY
 from ppmessage.core.constant import REDIS_IOSPUSH_KEY
+from ppmessage.core.constant import REDIS_JPUSH_KEY
 from ppmessage.core.constant import PPCOM_OFFLINE
-from ppmessage.core.constant import APP_POLICY
 from ppmessage.core.constant import YVOBJECT
 from ppmessage.core.constant import DIS_SRV
 from ppmessage.core.constant import OS
@@ -50,21 +44,12 @@ import time
 import json
 import logging
 
-
-_registry = {}
-
 class Meta(type):
-    def __init__(cls, name, bases, dict_):
-        _registry[name] = cls
-        type.__init__(cls, name, bases, dict_)
-        return
-
-    @classmethod
-    def name(cls):
-        return APP_POLICY.META
+   def __init__(cls, name, bases, dict_):
+       type.__init__(cls, name, bases, dict_)
+       return
 
 Policy = Meta("Policy", (object,), {})
-
 class AbstractPolicy(Policy):
 
     def __init__(self, dis):
@@ -87,25 +72,7 @@ class AbstractPolicy(Policy):
         self._conversation_user_datas_hash = {}
         
         self._users = set()
-
-        self._name = APP_POLICY.ABASTRACT
         return
-
-    @classmethod
-    def name(cls):
-        return APP_POLICY.ABASTRACT
-
-    @classmethod
-    def get_policy_cls_by_name(cls, name):
-        _p = BroadcastPolicy
-        if name == None:
-            return _p
-        
-        for i in _registry:
-            if _registry[i].name() == name:
-                _p = _registry[i]
-                break
-        return _p
 
     @classmethod
     def conversation_users(cls, _app_uuid, _conversation_uuid, _redis):
@@ -184,9 +151,6 @@ class AbstractPolicy(Policy):
         if _message["ct"] == CONVERSATION_TYPE.S2P:
             _message["ti"] = self._task["app_uuid"]
             _message["tt"] = YVOBJECT.AP
-            if self._name == APP_POLICY.GROUP:
-                #_message["ti"] == self._task["to_uuid"]
-                _message["tt"] == YVOBJECT.OG
                 
         if isinstance(self._task.get("title"), unicode):
             _message["tl"] = self._task.get("title").encode("utf-8")
@@ -269,13 +233,12 @@ class AbstractPolicy(Policy):
         _d = {"host": _info["host"], "port": _info["port"], "device_uuid": _device_uuid}
         return _d
     
-    def _push_to_db(self, _user_uuid, _device_uuid, _status=MESSAGE_STATUS.PUSHED):
+    def _push_to_db(self, _user_uuid, _status=MESSAGE_STATUS.PUSHED):
         _values = {
             "uuid": str(uuid.uuid1()),
             "app_uuid": self._task["app_uuid"],
             "task_uuid": self._task["uuid"],
             "user_uuid": _user_uuid,
-            "device_uuid": _device_uuid,
             "status": _status
         }
                     
@@ -286,18 +249,6 @@ class AbstractPolicy(Policy):
 
     def _push_to_ios(self, _user_uuid, _device_uuid):
         logging.info("push ios %s:%s" % (_user_uuid, _device_uuid))
-
-        # FIXME: route to apns name
-        # _apns_config = BOOTSTRAP_DATA.get("apns")
-        # _apns_name = _apns_config.get("name")
-        # _apns_dev = _apns_config.get("dev")
-        # _apns_pro = _apns_config.get("pro")
-
-        # if _apns_name == None or len(_apns_name) == 0 or \
-        #    _apns_dev == None or len(_apns_dev) == 0 or \
-        #    _apns_pro == None or len(_apns_pro) == 0:
-        #     logging.info("iospush not start for no apns config")
-        #     return
 
         _app_uuid = self._task["app_uuid"]
         _user = self._users_hash.get(_user_uuid)
@@ -310,13 +261,16 @@ class AbstractPolicy(Policy):
         if _device == None:
             logging.error("push ios failed for no device")
             return
+
         _token = _device.get("device_ios_token")
         if _token == None or len(_token) == 0:
             logging.error("push ios failed for no ios token")
             return
+
         if _device["device_ios_token"] == IOS_FAKE_TOKEN:
             logging.error("push ios failed for fake token")
             return
+        
         if _conversation_data != None and _conversation_data["user_mute_notification"] == True:
             # user only do not want recv push for this conversation
             logging.error("push ios failed for silence required")
@@ -324,10 +278,7 @@ class AbstractPolicy(Policy):
 
         _count = 0
         if _user.get("user_show_badge") == True:
-            _key = MessagePush.__tablename__ + \
-                   ".app_uuid." + _app_uuid + \
-                   ".user_uuid." + _user_uuid + \
-                   ".device_uuid." + _device_uuid        
+            _key = MessagePush.__tablename__ + ".app_uuid." + _app_uuid + ".user_uuid." + _user_uuid 
             _count = self._redis.zcard(_key)
 
         _is_dev = bool(_device.get("is_development"))
@@ -359,10 +310,7 @@ class AbstractPolicy(Policy):
 
         _count = 0
         if _user.get("user_show_badge") == True:
-            _key = MessagePush.__tablename__ + \
-                   ".app_uuid." + _app_uuid + \
-                   ".user_uuid." + _user_uuid + \
-                   ".device_uuid." + _device_uuid        
+            _key = MessagePush.__tablename__ + ".app_uuid." + _app_uuid + ".user_uuid." + _user_uuid
             _count = self._redis.zcard(_key)
 
         _config = {
@@ -370,25 +318,27 @@ class AbstractPolicy(Policy):
             "unacked_notification_count": _count,
             "user_silence_notification": _user.get("user_silence_notification")
         }
-        _mqtt_token = self._android_token(_user_uuid, _device_uuid)
-        _gcm_token = _device.get("device_android_gcmtoken")
-        if _device.get("device_android_gcmpush") == True and _gcm_token != None:
-            _config["android_gcm_token"] = _gcm_token
-        else:
-            _config["android_mqtt_token"] = _mqtt_token,
+
         _push = {
             "config": _config,
             "body": self._task.get("message_body"),
             "app_uuid": _app_uuid
         }
-        logging.info("push android: %s" % str(_push))
-        if _config.get("android_gcm_token") != None:
+
+        logging.error("try push for android: %s" % str(_push))
+        
+        if self._task["_app"].get("enable_jpush"):
+            _config["device_android_jpush_registrationid"] = _device.get("device_android_jpush_registrationid")
+            self._redis.rpush(REDIS_JPUSH_KEY, json.dumps(_push))
+        elif self._task["_app"].get("enable_gcm_push"):
+            _config["device_android_gcmtoken"] = _device.get("device_android_gcmtoken")
             self._redis.rpush(REDIS_GCMPUSH_KEY, json.dumps(_push))
-        else :
-            self._redis.rpush(REDIS_MQTTPUSH_KEY, json.dumps(_push))
+        else:
+            logging.error("no push enable for android: %s" % str(_push))
+
         return
     
-    def _push_to_pc(self, _user_uuid, _device_uuid):
+    def _push_to_socket(self, _user_uuid, _device_uuid):
         _pcsocket = self._pcsocket_data(_device_uuid)
         if _pcsocket == None:
             logging.error("no pcsocket data for: %s" % _device_uuid)
@@ -434,17 +384,6 @@ class AbstractPolicy(Policy):
         return
     
     def _push_to_mobile(self, _user_uuid, _device_uuid):
-        if self._task["from_type"] == YVOBJECT.DU:
-            _is_service_user = self._is_service_user.get(self._task["from_uuid"])
-            if _is_service_user != False:
-                logging.info("not from customer, not push")
-                return
-
-        _is_service_user = self._is_service_user.get(_user_uuid)
-        if _is_service_user != True:
-            logging.info("not service user, not push");
-            return
-
         _device = self._devices_hash[_device_uuid]
         if _device["device_ostype"] == OS.IOS:
             self._push_to_ios(_user_uuid, _device_uuid)
@@ -452,24 +391,26 @@ class AbstractPolicy(Policy):
 
         if _device["device_ostype"] == OS.AND:
             self._push_to_android(_user_uuid, _device_uuid)
-            return
-        
+            return        
         return
     
     def _push(self):
         if len(self._online_users) == 0:
             self.no_online_user()
+            return
                 
-        for _i in self._online_users:
-            _user = self._users_hash[_i]
+        for _user_uuid in self._online_users:
+            _user = self._users_hash[_user_uuid]
             _online_devices = _user.get("_online_devices")
             _real_push = not _user.get("user_mute_notification")
-            for _j in _online_devices:
-                _pid = self._push_to_db(_i, _j)
-                self._devices_hash[_j]["push_uuid"] = _pid
-                self._push_to_pc(_j, _j)
+
+            _pid = self._push_to_db(_user_uuid)
+            
+            for _device_uuid in _online_devices:
+                self._devices_hash[_device_uuid]["push_uuid"] = _pid
+                self._push_to_socket(_user_uuid, _device_uuid)
                 if _real_push == True:
-                    self._push_to_mobile(_i, _j)
+                    self._push_to_mobile(_user_uuid, _device_uuid)
         return
 
     def _other_device(self):
@@ -514,9 +455,9 @@ class AbstractPolicy(Policy):
         if _user_uuid not in self._users_hash:
             self._users_hash[_user_uuid] = self._task["_user"]
 
-        _pid = self._push_to_db(_user_uuid, _device_uuid)
+        _pid = self._push_to_db(_user_uuid)
         self._devices_hash[_device_uuid]["push_uuid"] = _pid
-        self._push_to_pc(_user_uuid, _device_uuid)
+        self._push_to_socket(_user_uuid, _device_uuid)
         return
 
     def _explicit(self):
@@ -533,7 +474,7 @@ class AbstractPolicy(Policy):
         self._users_hash[_user_uuid] = self._task["_user"]
         self._devices_hash[_device_uuid] = _device
         # not save db for explicit message
-        self._push_to_pc(_user_uuid, _device_uuid)
+        self._push_to_socket(_user_uuid, _device_uuid)
         return
     
     def _send_apologize(self, _text):
@@ -581,6 +522,7 @@ class AbstractPolicy(Policy):
         _text = self._get_app_apologize()
         if _text == None:
             return
+        
         self._send_apologize(_text)
         return
     
@@ -642,12 +584,7 @@ class AbstractPolicy(Policy):
 class BroadcastPolicy(AbstractPolicy):
     def __init__(self, dis):
         super(BroadcastPolicy, self).__init__(dis)
-        self._name = APP_POLICY.BROADCAST
         return
-
-    @classmethod
-    def name(cls):
-        return APP_POLICY.BROADCAST
 
     def users(self):
         super(BroadcastPolicy, self).users()

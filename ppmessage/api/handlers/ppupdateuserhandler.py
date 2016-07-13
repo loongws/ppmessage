@@ -15,6 +15,7 @@ from ppmessage.core.genericupdate import generic_update
 from ppmessage.core.utils.config import get_config_server_generic_store
 from ppmessage.core.utils.randomidenticon import upload_random_identicon
 from ppmessage.core.utils.randomidenticon import get_random_identicon_url
+from ppmessage.core.utils.randomidenticon import download_random_identicon
 
 from ppmessage.core.constant import API_LEVEL
 

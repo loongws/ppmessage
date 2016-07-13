@@ -23,10 +23,6 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
 
     var scope = $rootScope.$new();
 
-    scope.$on("event:get_unack_all", function(event) {
-        _get_unack_all();
-    });
-
     scope.$on("event:add_message", function(event, message) {
         _add_message(message, true, null);
     });
@@ -325,7 +321,7 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
         if (!active || (active.uuid != conversation.uuid && message.direction === yvConstants.MESSAGE_DIR.DIR_IN)) {
             conversation.unread += 1;
         }
-        if (!message.from_unack && conversation.latest_message && conversation.latest_message.timestamp > message.timestamp) {
+        if (conversation.latest_message && conversation.latest_message.timestamp > message.timestamp) {
             message.timestamp = conversation.latest_message.timestamp + 1;
         }
         conversation.add_message(message);
@@ -516,25 +512,6 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
         _handle_message(message);
         with_ack && _ack_message(message);
         message.from_user ? _add_object(message.from_user) : _check_object(message.from_uuid);
-    }
-
-
-    function _get_unack_all() {
-        yvAPI.get_unacked_messages(function (data) {
-            console.log("get unack all:", data.list.length, data.list, data.message);
-            if (!data.list.length) {
-                return;
-            }
-
-            angular.forEach(data.message, function (message, push_uuid) {
-                message = angular.fromJson(message);
-                if (!message) { return; }
-                message.pid = push_uuid;
-                message.from_unack = true;
-                _add_message(message, false);
-            });
-            _ack_message_list(data.list);
-        });
     }
 
 
@@ -818,7 +795,6 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
 
     function _reload(callback) {
         _update_all_from_server(function () {
-            _get_unack_all();
             callback && callback();
         }, function () {
             _offline_reload(callback);
@@ -901,10 +877,6 @@ function ($q, $timeout, $rootScope, yvDB, yvLog, yvSys, yvAPI, yvNav, yvNoti, yv
         
         send_message: function (conversation, raw_message, callback) {
             _send_message(conversation, raw_message, callback);
-        },
-
-        get_unack_all: function () {
-            _get_unack_all();
         },
 
         load_conversation_messages: function (conversation, callback) {

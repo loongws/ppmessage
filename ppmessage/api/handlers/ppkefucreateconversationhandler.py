@@ -21,9 +21,6 @@ from ppmessage.core.constant import API_LEVEL
 from ppmessage.core.constant import CONVERSATION_TYPE
 from ppmessage.core.constant import CONVERSATION_STATUS
 
-from ppmessage.dispatcher.policy.policy import AbstractPolicy
-from ppmessage.dispatcher.policy.policy import BroadcastPolicy
-
 from ppmessage.core.utils.createicon import create_group_icon
 from ppmessage.core.utils.datetimestring import datetime_to_microsecond_timestamp
 

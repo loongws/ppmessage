@@ -52,9 +52,8 @@ class PPPageUnackedMessageHandler(BaseHandler):
         _request = json.loads(self.request.body)
         _app_uuid = _request.get("app_uuid")
         _user_uuid = _request.get("user_uuid")
-        _device_uuid = _request.get("device_uuid")
 
-        if _user_uuid == None or _device_uuid == None:
+        if _user_uuid == None or _app_uuid == None:
             logging.error("not enough parameters.")
             self.setErrorCode(API_ERR.NO_PARA)
             return
@@ -68,14 +67,21 @@ class PPPageUnackedMessageHandler(BaseHandler):
             _page_size = 30
             
         _redis = self.application.redis
-        _key = MessagePush.__tablename__ + ".app_uuid." + _app_uuid + \
-               ".user_uuid." + _user_uuid + ".device_uuid." + _device_uuid
+        _key = MessagePush.__tablename__ + ".app_uuid." + _app_uuid + ".user_uuid." + _user_uuid
         _total_count = _redis.zcount(_key, "-inf", "+inf")
+
+        _r = self.getReturnData()
+        _r["total_count"] = _total_count
+        _r["return_count"] = 0
+        _r["page_size"] = _page_size
+        _r["page_offset"] = _page_offset
+        _r["list"] = []
+        _r["message"] = {}
 
         if _total_count == 0:
             logging.info("no unacked messages of user: %s" % _user_uuid)
             return
-
+        
         _offset = _page_offset * _page_size
         if _offset >= _total_count:
             logging.error("page offset: %d > total: %d" % (_offset, _total_count))
@@ -86,14 +92,6 @@ class PPPageUnackedMessageHandler(BaseHandler):
             _return_count = _total_count - _offset
 
         _task_list = _redis.zrevrange(_key, _offset, _offset+_return_count-1)
-                
-        _r = self.getReturnData()
-        _r["total_count"] = _total_count
-        _r["return_count"] = 0
-        _r["page_size"] = _page_size
-        _r["page_offset"] = _page_offset
-        _r["list"] = []
-        _r["message"] = {}
 
         if _task_list == None or len(_task_list) == 0:
             return
