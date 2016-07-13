@@ -61,6 +61,19 @@ def get_config_language():
         return None
     return _config.get("server").get("language").get("locale")
 
+def get_config_server_url():
+    _config = _get_config()
+    if _config == None:
+        return None
+    _http = "http://"
+    if _config.get("server").get("ssl") == "on":
+        _http = "https://"
+    _http = _http + _config.get("server").get("name")
+    _port = _config.get("server").get("port")
+    if _port != None:
+        _http = _http + ":" + str(_port)
+    return 
+
 def get_config_server_ssl():
     _config = _get_config()
     if _config == None:
