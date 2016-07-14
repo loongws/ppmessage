@@ -5,7 +5,10 @@
 #
 #
 
+from ppmessage.core.constant import MESSAGE_SUBTYPE
+
 from ppmessage.pcsocket.error import DIS_ERR
+
 from .proc import Proc
 import logging
 
@@ -19,8 +22,8 @@ class SendHandler():
         logging.info("ppmessage recv %s" % _body)
         _proc = Proc(self._app)
 
-        # COMMENTS THIS LINE
-        _proc.register_subtypes(self, [
+        # AUDIO SUPPORT?
+        _proc.register_subtypes([
             MESSAGE_SUBTYPE.TEXT,
             MESSAGE_SUBTYPE.TXT,
             MESSAGE_SUBTYPE.IMAGE,

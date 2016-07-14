@@ -47,18 +47,12 @@ class Proc():
     def __init__(self, _app):
         self._redis = _app.redis
         self._subtype_parsers = {}
-        self.register_subtypes(self, [
-            MESSAGE_SUBTYPE.TEXT,
-            MESSAGE_SUBTYPE.TXT,
-            MESSAGE_SUBTYPE.IMAGE,
-            MESSAGE_SUBTYPE.FILE
-        ])
         return
 
     def register_subtypes(self, _subtypes):
         self._subtype_parsers = {}
         for _i in _subtypes:
-            self._subtype_parsers[_i] = getattr(self, "_parse_" + _subtypes.upper(), None)
+            self._subtype_parsers[_i] = getattr(self, "_parse_" + _i.upper(), None)
         return
     
     def check(self, _body):
