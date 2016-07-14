@@ -16,8 +16,18 @@ class SendHandler():
         return
     
     def task(self, _body):
-        logging.info("recv %s" % _body)
+        logging.info("ppmessage recv %s" % _body)
         _proc = Proc(self._app)
+
+        # COMMENTS THIS LINE
+        _proc.register_subtypes(self, [
+            MESSAGE_SUBTYPE.TEXT,
+            MESSAGE_SUBTYPE.TXT,
+            MESSAGE_SUBTYPE.IMAGE,
+            MESSAGE_SUBTYPE.AUDIO,
+            MESSAGE_SUBTYPE.FILE
+        ])
+        
         if not _proc.check(_body):
             _proc.ack(DIS_ERR.PARAM)
             return

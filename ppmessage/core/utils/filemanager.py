@@ -22,13 +22,18 @@ def read_file(_redis, _uuid):
     if _redis is None:
         return None
 
-    _f = redis_hash_to_dict(_redis, FileInfo, _uuid)
-    if _f is None:
+    _key = FileInfo.__tablename__ + ".uuid." + _uuid
+    if not _redis.exists(_key):
         return None
 
+    _file_path = _redis.hget(_key, "file_path")
+    if not _file_path:
+        return None
+    
     _r = None
     with open(_f.get("file_path")) as _file:
         _r = _file.read()
+
     return _r
 
 def create_file_with_data(_redis, _data, _mime, _user_uuid, _file_name=None, _material_type=None):

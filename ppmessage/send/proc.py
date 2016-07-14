@@ -46,8 +46,21 @@ class Proc():
     
     def __init__(self, _app):
         self._redis = _app.redis
+        self._subtype_parsers = {}
+        self.register_subtypes(self, [
+            MESSAGE_SUBTYPE.TEXT,
+            MESSAGE_SUBTYPE.TXT,
+            MESSAGE_SUBTYPE.IMAGE,
+            MESSAGE_SUBTYPE.FILE
+        ])
         return
 
+    def register_subtypes(self, _subtypes):
+        self._subtype_parsers = {}
+        for _i in _subtypes:
+            self._subtype_parsers[_i] = getattr(self, "_parse_" + _subtypes.upper(), None)
+        return
+    
     def check(self, _body):
         self._body = _body
         if not isinstance(_body, dict):
@@ -87,45 +100,11 @@ class Proc():
         if isinstance(self._message_body, unicode):
             self._message_body = self._message_body.encode("utf-8")
 
-        if self._message_subtype == MESSAGE_SUBTYPE.TEXT:
-            if len(self._message_body) > MESSAGE_MAX_TEXT_LEN:
-                _fid = create_file_with_data(self._redis, self._message_body, "text/plain", self._from_uuid)
-                self._message_body = json.dumps({"fid": _fid})
-            return True
-        
-        elif self._message_subtype == MESSAGE_SUBTYPE.TXT:
-            _fid = self._parseTxt(self._message_body)
-            if _fid == None:
-                return False
-            self._message_body = json.dumps({"fid": _fid})
-            return True
-                    
-        elif self._message_subtype == MESSAGE_SUBTYPE.IMAGE:
-            _image = self._parseImage(self._message_body)
-            if _image == None:
-                return False
-            self._message_body = json.dumps(_image)
-            return True
-            
-        elif self._message_subtype == MESSAGE_SUBTYPE.DOCUMENT:
-            _document = self._parseDocument(self._message_body)
-            if _document == None:
-                return False
-            self._message_body = json.dumps(_document)
-            return True
-        
-        elif self._message_subtype == MESSAGE_SUBTYPE.FILE:
-            _generic = self._parseFile(self._message_body)
-            if _generic == None:
-                return False
-            self._message_body = json.dumps(_generic)
-            return True
-        
-        else:
+        _parser = self._subtype_parsers.get(self._message_subtype)
+        if _parser == None:
             logging.error("unsupport message: %s" % self._body)
             return False
-
-        return True
+        return _parser()
 
     def save(self):
         _task = {
@@ -171,9 +150,48 @@ class Proc():
         _row.async_update(self._redis)
         return
 
-    def _parseTxt(self, _body):
-        _txt = json.loads(_body)
-        return _txt.get("fid")
+    def _parse_TEXT(self):
+        if len(self._message_body) > MESSAGE_MAX_TEXT_LEN:
+            _fid = create_file_with_data(self._redis, self._message_body, "text/plain", self._from_uuid)
+            self._message_subtype = MESSAGE_SUBTYPE.TXT
+            self._message_body = json.dumps({"fid": _fid})
+        return True
+
+    def _parse_TXT(self):
+        _fid = json.loads(self._message_body).get("fid")
+        if _fid == None:
+            logging.error("error load txt message: %s" % self._message_body)
+            return False
+        self._message_body = json.dumps({"fid": _fid})
+        return True
+
+    def _parse_IMAGE(self):
+        _image = self._parseImage(self._message_body)
+        if _image == None:
+            return False
+        self._message_body = json.dumps(_image)
+        return True
+
+    def _parse_DOCUMENT(self):
+        _document = self._parseDocument(self._message_body)
+        if _document == None:
+            return False
+        self._message_body = json.dumps(_document)
+        return True
+
+    def _parse_FILE(self):
+        _generic = self._parseFile(self._message_body)
+        if _generic == None:
+            return False
+        self._message_body = json.dumps(_generic)
+        return True
+
+    def _parse_AUDIO(self):
+        _audio = self._parseAudio(self._message_body)
+        if _audio == None:
+            return False
+        self._message_body = json.dumps(_audio)
+        return True
 
     def _parseImage(self, _body):
         _image = json.loads(_body)
@@ -277,7 +295,79 @@ class Proc():
             "name": _generic.get("name") or _info.get("file_name"),
         }
         return _r
-    
+
+    def _parseAudio(self, _body):
+        from ppmessage.core.audioconverter import AudioConverter
+
+        _redis = self.application.redis
+        
+        _audio = json.loads(_body)
+        if "dura" not in _audio or "fid" not in _audio or "mime" not in _audio:
+            logging.error("Error parse audio message body failed.")
+            return None
+
+        _duration = _audio["dura"]
+        _mime = _audio["mime"]
+        _fid = _audio["fid"]
+
+        # m4a is from/for iOS
+        # amr is from/for android
+        # mp3 is for PC
+        _data = read_file(_redis, _fid)
+        if _data == None:
+            logging.error("Error no audio data %s." % (_fid))
+            return None
+
+        _mp3 = None
+        _m4a = None
+        _amr = None
+
+        _fid_mp3 = None
+        _fid_m4a = None
+        _fid_amr = None
+
+        if _mime == "audio/m4a" or "audio/m4a" in _mime:
+            _m4a = AudioConverter.m4a2m4a(_data)
+            _amr = AudioConverter.m4a2amr(_data)
+            _mp3 = AudioConverter.m4a2mp3(_data)
+
+            _fid_m4a = create_file_with_data(_redis, _m4a, "audio/m4a", self.from_uuid)
+            _fid_amr = create_file_with_data(_redis, _amr, "audio/amr", self.from_uuid)
+            _fid_mp3 = create_file_with_data(_redis, _mp3, "audio/mp3", self.from_uuid)
+
+        if _mime == "audio/amr":
+            _amr = _data
+            _m4a = AudioConverter.amr2m4a(_data)
+            _mp3 = AudioConverter.amr2mp3(_data)
+
+            _fid_amr = _fid
+            _fid_m4a = create_file_with_data(_redis, _m4a, "audio/m4a", self.from_uuid)
+            _fid_mp3 = create_file_with_data(_redis, _mp3, "audio/mp3", self.from_uuid)
+
+
+        if _mp3 == None:
+            logging.error("Error no audio converter for mime=%s." % (_mime))
+            return None
+
+        if _fid_m4a == None:
+            logging.error("Error to create m4a file with data, len=%d." % len(_m4a))
+            return None
+
+        if _fid_amr == None:
+            logging.error("Error to create amr file with data, len=%d." % len(_amr))
+            return None
+
+        if _fid_mp3 == None:
+            logging.error("Error to create mp3 file with data, len=%d." % len(_mp3))
+            return None
+
+        return {
+            "m4a": {"dura": _duration, "fid": _fid_m4a},
+            "amr": {"dura": _duration, "fid": _fid_amr},
+            "mp3": {"dura": _duration, "fid": _fid_mp3}
+        }
+
+
     def ack(self, _code):
         if self._pcsocket == None:
             return
