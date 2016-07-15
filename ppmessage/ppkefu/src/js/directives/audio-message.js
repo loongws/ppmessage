@@ -38,10 +38,12 @@ function ($interval, yvType, yvFile, yvSys, yvAPI, yvMain, yvConstants, yvDB) {
                 $scope.playInterval = null;
             }
 
-            $scope.play_flag_0 = false;
-            $scope.play_flag_1 = false;
-            $scope.play_flag_2 = false;
-            $scope.play_flag_3 = true;
+            $scope.$apply(function() {
+                $scope.play_flag_0 = false;
+                $scope.play_flag_1 = false;
+                $scope.play_flag_2 = false;
+                $scope.play_flag_3 = true;
+            });
         }
 
 
@@ -181,7 +183,7 @@ function ($interval, yvType, yvFile, yvSys, yvAPI, yvMain, yvConstants, yvDB) {
                 return false;
             }
             return true;
-        }
+        };
 
         $scope.getAudioDuration = function (message) {
             return message.duration + "''";
