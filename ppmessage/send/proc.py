@@ -293,7 +293,7 @@ class Proc():
     def _parseAudio(self, _body):
         from ppmessage.core.audioconverter import AudioConverter
 
-        _redis = self.application.redis
+        _redis = self._redis
         
         _audio = json.loads(_body)
         if "dura" not in _audio or "fid" not in _audio or "mime" not in _audio:
@@ -325,9 +325,9 @@ class Proc():
             _amr = AudioConverter.m4a2amr(_data)
             _mp3 = AudioConverter.m4a2mp3(_data)
 
-            _fid_m4a = create_file_with_data(_redis, _m4a, "audio/m4a", self.from_uuid)
-            _fid_amr = create_file_with_data(_redis, _amr, "audio/amr", self.from_uuid)
-            _fid_mp3 = create_file_with_data(_redis, _mp3, "audio/mp3", self.from_uuid)
+            _fid_m4a = create_file_with_data(_redis, _m4a, "audio/m4a", self._from_uuid)
+            _fid_amr = create_file_with_data(_redis, _amr, "audio/amr", self._from_uuid)
+            _fid_mp3 = create_file_with_data(_redis, _mp3, "audio/mp3", self._from_uuid)
 
         if _mime == "audio/amr":
             _amr = _data
@@ -335,8 +335,8 @@ class Proc():
             _mp3 = AudioConverter.amr2mp3(_data)
 
             _fid_amr = _fid
-            _fid_m4a = create_file_with_data(_redis, _m4a, "audio/m4a", self.from_uuid)
-            _fid_mp3 = create_file_with_data(_redis, _mp3, "audio/mp3", self.from_uuid)
+            _fid_m4a = create_file_with_data(_redis, _m4a, "audio/m4a", self._from_uuid)
+            _fid_mp3 = create_file_with_data(_redis, _mp3, "audio/mp3", self._from_uuid)
 
 
         if _mp3 == None:

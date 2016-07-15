@@ -31,7 +31,7 @@ def read_file(_redis, _uuid):
         return None
     
     _r = None
-    with open(_f.get("file_path")) as _file:
+    with open(_file_path) as _file:
         _r = _file.read()
 
     return _r
