@@ -15,11 +15,16 @@ import tornado.ioloop
 import tornado.options
 
 def _main():
+    import sys
+    reload(sys)
+    sys.setdefaultencoding('utf8')
+
     tornado.options.parse_command_line()
     _app = CacheApp()
     _app.get_delegate("").run_periodic()
     logging.info("Starting cache service......")
     tornado.ioloop.IOLoop.instance().start()
+
     return
     
 if __name__ == "__main__":
