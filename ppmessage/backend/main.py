@@ -117,6 +117,10 @@ class MainApplication(tornado.web.Application):
 
 
 def _main():
+    import sys
+    reload(sys)
+    sys.setdefaultencoding('utf8')
+
     tornado.options.parse_command_line()
 
     _app = MainApplication()

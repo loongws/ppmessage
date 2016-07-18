@@ -11,6 +11,9 @@
 from ppmessage.core.constant import REDIS_HOST
 from ppmessage.core.constant import REDIS_PORT
 from ppmessage.core.constant import PP_WEB_SERVICE
+
+from ppmessage.core.constant import CHECK_SEND_INTERVAL
+
 from ppmessage.core.constant import REDIS_SEND_NOTIFICATION_KEY
 
 from ppmessage.core.singleton import singleton
@@ -33,9 +36,6 @@ class SendDelegate():
         return
     
     def send_loop(self):
-        """
-        every 50ms check send notification
-        """
         key = REDIS_SEND_NOTIFICATION_KEY
         while True:
             noti = self.redis.lpop(key)
@@ -47,8 +47,7 @@ class SendDelegate():
         return
 
     def run_periodic(self):
-        # set the periodic check send every 50 ms
-        tornado.ioloop.PeriodicCallback(self.send_loop, 50).start()
+        tornado.ioloop.PeriodicCallback(self.send_loop, CHECK_SEND_INTERVAL).start()
         return
     
 class SendWebService(AbstractWebService):

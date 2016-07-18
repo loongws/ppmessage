@@ -23,6 +23,8 @@ from ppmessage.core.constant import CONVERSATION_TYPE
 from ppmessage.core.constant import CONVERSATION_STATUS
 from ppmessage.core.constant import SERVICE_USER_STATUS
 
+from ppmessage.core.constant import CHECK_AMD_INTERVAL
+
 from ppmessage.core.singleton import singleton
 from ppmessage.core.main import AbstractWebService
 
@@ -59,16 +61,13 @@ class AmdDelegate():
         return
 
     def run_periodic(self):
-        # every 2000ms check dispatcher task
-        tornado.ioloop.PeriodicCallback(self.task_loop, 2000).start()
+        tornado.ioloop.PeriodicCallback(self.task_loop, CHECK_AMD_INTERVAL).start()
         return
-
-    def _apps(self):
-        _key = AppInfo.__tablename__
-        _uuids = self.redis.smembers(_key)
-        return _uuids
     
-    def _all(self, _app_uuid, _user_uuid):
+    def _all(self, _request):
+        _app_uuid = _request.get("app_uuid")
+        _user_uuid = _request.get("user_uuid")
+        
         _key = AppUserData.__tablename__ + ".app_uuid." + _app_uuid + ".is_service_user.True"
         _allocated_users = self.redis.smembers(_key)
         if _allocated_users == None or len(_allocated_users) == 0:
@@ -124,14 +123,11 @@ class AmdDelegate():
 
         return
     
-    def _task(self, _app_uuid, _user_uuid):        
-        self._all(_app_uuid, _user_uuid)
+    def _task(self, _request):        
+        self._all(_request)
         return True
         
     def task_loop(self):
-        """
-        every 2000ms check all app queue
-        """
         _hashs = set()
 
         _len = self.redis.llen(REDIS_AMD_KEY) 
@@ -153,12 +149,9 @@ class AmdDelegate():
             if _value == None or len(_value) == 0:
                 continue
             
-            _request = json.loads(_value)
-            _app_uuid = _request.get("app_uuid")
-            _user_uuid = _request.get("user_uuid")
-            _continue = self._task(_app_uuid, _user_uuid)
-            # _continue True means got allocated or meets error
-            # _continue False means need continue waiting
+            _continue = self._task(json.loads(_value))
+            # _continue True, allocated or meets error
+            # _continue False, continue waiting
             
             if not _continue:
                 self.redis.rpush(REDIS_AMD_KEY, _hash)
