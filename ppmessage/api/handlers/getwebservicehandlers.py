@@ -63,7 +63,7 @@ from .pppageunackedmessagehandler import PPPageUnackedMessageHandler
 from .pppagehistorymessagehandler import PPPageHistoryMessageHandler
 
 from .pppageonlineportaluserhandler import PPPageOnlinePortalUserHandler
-from .pppagedevicenavigationhandler import PPPageDeviceNavigationHandler
+from .pppageusernavigationhandler import PPPageUserNavigationHandler
 
 from .pppageorggrouphandler import PPPageOrgGroupHandler
 from .pppageorggroupuserhandler import PPPageOrgGroupUserHandler
@@ -112,6 +112,8 @@ from .ppcomgetdefaultconversationhandler import PPComGetDefaultConversationHandl
 from .ppcomcreateconversationhandler import PPComCreateConversationHandler
 from .ppgetamdqueuelength import PPGetAmdQueueLength
 
+from .ppgetusermatchedmethod import PPGetUserMatchedMethod
+from .ppgettargetservicemethod import PPGetTargetServiceMethod
 
 def getWebServiceHandlers():
     handler_list = []
@@ -204,7 +206,7 @@ def getWebServiceHandlers():
     handler_list.append((r"/PP_PAGE_HISTORY_MESSAGE", PPPageHistoryMessageHandler))
 
     handler_list.append((r"/PP_PAGE_ONLINE_PORTAL_USER", PPPageOnlinePortalUserHandler))
-    handler_list.append((r"/PP_PAGE_DEVICE_NAVIGATION", PPPageDeviceNavigationHandler))
+    handler_list.append((r"/PP_PAGE_USER_NAVIGATION", PPPageUserNavigationHandler))
 
     handler_list.append((r"/PP_PAGE_ORG_GROUP", PPPageOrgGroupHandler))
     handler_list.append((r"/PP_PAGE_ORG_GROUP_USER", PPPageOrgGroupUserHandler))
@@ -229,5 +231,8 @@ def getWebServiceHandlers():
     handler_list.append((r"/PP_CANCEL_WAITING_CREATE_CONVERSATION", PPCancelWaitingCreateConversation))
     handler_list.append((r"/PP_GET_AMD_QUEUE_LENGTH", PPGetAmdQueueLength))
 
+    handler_list.append((r"/PP_GET_TARGET_SERVICE_METHOD", PPGetTargetServiceMethod))
+    handler_list.append((r"/PP_GET_USER_MATCHED_METHOD", PPGetUserMatchedMethod))
+    
     return handler_list
 

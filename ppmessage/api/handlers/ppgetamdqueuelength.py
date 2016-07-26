@@ -36,6 +36,7 @@ class PPGetAmdQueueLength(BaseHandler):
         _conversation_uuid = None
         _key = ConversationUserData.__tablename__ + ".app_uuid." + _app_uuid + ".user_uuid." + _user_uuid
         _conversations = _redis.smembers(_key)
+
         if len(_conversations) > 0:
             _pi = _redis.pipeline()
             for _conversation_uuid in _conversations:
@@ -49,8 +50,21 @@ class PPGetAmdQueueLength(BaseHandler):
 
         _key = REDIS_AMD_KEY + ".app_uuid." + _app_uuid
         _len = self.application.redis.scard(_key)
+
+        _key = REDIS_AMD_KEY + ".user_uuid." + _user_uuid
+        _status = self.application.redis.get(_key)
+
+        if _status != None:
+            _status = json.loads(_status)
+        else:
+            _status = {}
+            
         _r = self.getReturnData()
-        _r.update({"length": _len, "conversation_uuid": _conversation_uuid, "user_uuid": _user_uuid})
+        _r.update({"length": _len,
+                   "position": _status.get("position"),
+                   "result": _status.get("result"),
+                   "conversation_uuid": _conversation_uuid,
+                   "user_uuid": _user_uuid})
         return
 
     def initialize(self):

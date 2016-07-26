@@ -39,7 +39,7 @@ from ppmessage.db.models import DeviceInfo
 from ppmessage.db.models import PCSocketInfo
 from ppmessage.db.models import PCSocketDeviceData
 from ppmessage.db.models import ConversationUserData
-from ppmessage.db.models import DeviceNavigationData
+from ppmessage.db.models import UserNavigationData
 
 from ppmessage.dispatcher.policy import BroadcastPolicy
 
@@ -309,12 +309,17 @@ class PCSocketDelegate():
         self.redis.rpush(_key, json.dumps(_body))
         return
     
-    def save_extra(self, _app_uuid, _device_uuid, _extra_data):
+    def save_extra(self, _app_uuid, _user_uuid, _extra_data):
+        if _extra_data == None:
+            return
+
+        _visit_page_url = None
         if isinstance(_extra_data, dict):
+            _visit_page_url = _extra_data.get("href")
             _extra_data = json.dumps(_extra_data)
             
-        _row = DeviceNavigationData(uuid=str(uuid.uuid1()), app_uuid=_app_uuid,
-                                    device_uuid=_device_uuid, navigation_data=_extra_data)
+        _row = UserNavigationData(uuid=str(uuid.uuid1()), app_uuid=_app_uuid, user_uuid=_user_uuid,
+                                  visit_page_url=_visit_page_url, navigation_data=_extra_data)
         _row.async_add(self.redis)
         _row.create_redis_keys(self.redis)
         return

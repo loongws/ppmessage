@@ -8,15 +8,16 @@
 from .basehandler import BaseHandler
 
 from ppmessage.api.error import API_ERR
-from ppmessage.db.models import DeviceNavigationData
 from ppmessage.core.constant import API_LEVEL
+
+from ppmessage.db.models import UserNavigationData
 
 import traceback
 import logging
 import json
 import copy
 
-class PPPageDeviceNavigationHandler(BaseHandler):
+class PPPageUserNavigationHandler(BaseHandler):
 
     def _detail(self, _list):
         return _list
@@ -31,13 +32,13 @@ class PPPageDeviceNavigationHandler(BaseHandler):
         return
 
     def _Task(self):
-        super(PPPageDeviceNavigationHandler, self)._Task()
+        super(PPPageUserNavigationHandler, self)._Task()
 
         _request = json.loads(self.request.body)
         _app_uuid = _request.get("app_uuid")
-        _device_uuid = _request.get("device_uuid")
+        _user_uuid = _request.get("user_uuid")
 
-        if _app_uuid == None or _device_uuid == None:
+        if _app_uuid == None or _user_uuid == None:
             logging.error("not enough parameters.")
             self.setErrorCode(API_ERR.NO_PARA)
             return
@@ -51,7 +52,7 @@ class PPPageDeviceNavigationHandler(BaseHandler):
             _page_size = 30
             
         _redis = self.application.redis
-        _key = DeviceNavigationData.__tablename__ + ".app_uuid." + _app_uuid + ".device_uuid." + _device_uuid
+        _key = UserNavigationData.__tablename__ + ".app_uuid." + _app_uuid + ".user_uuid." + _user_uuid
         _total_count = _redis.zcount(_key, "-inf", "+inf")
 
         _r = self.getReturnData()
@@ -62,7 +63,7 @@ class PPPageDeviceNavigationHandler(BaseHandler):
         _r["list"] = []
 
         if _total_count == 0:
-            logging.info("no navigation data for device: %s" % _device_uuid)
+            logging.info("no navigation data for device: %s" % _user_uuid)
             return
 
         _offset = _page_offset * _page_size

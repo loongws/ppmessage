@@ -1011,6 +1011,9 @@ class ConversationInfo(CommonMixin, BaseModel):
     
     # OPEN/CLOSE create as OPEN, explicit to CLOSE
     status = Column("status", String(32))
+
+    # if conversation created not by rule match, it is None
+    rule_uuid = Column("rule_uuid", String(64))
     
     conversation_name = Column("conversation_name", String(64))
     conversation_icon = Column("conversation_icon", String(512))
@@ -1285,42 +1288,46 @@ class PCSocketDeviceData(CommonMixin, BaseModel):
         CommonMixin.delete_redis_keys(self, _redis)
         return
 
-class DeviceNavigationData(CommonMixin, BaseModel):
-    __tablename__ = "device_navigation_datas"
+class UserNavigationData(CommonMixin, BaseModel):
+    __tablename__ = "user_navigation_datas"
 
     app_uuid = Column("app_uuid", String(64))
-    device_uuid = Column("device_uuid", String(64))
+    user_uuid = Column("user_uuid", String(64))
+    visit_page_url = Column("visit_page_url", String(1024))
     navigation_data = Column("navigation_data", String(2048))
     
     __table_args__ = (
     )
 
     def __init__(self, *args, **kwargs):
-        super(DeviceNavigationData, self).__init__(*args, **kwargs)
+        super(UserNavigationData, self).__init__(*args, **kwargs)
         return
     
     def create_redis_keys(self, _redis, *args, **kwargs):
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
 
-        _key = self.__tablename__  + ".app_uuid." + self.app_uuid + ".device_uuid." + self.device_uuid
+        _key = self.__tablename__  + ".app_uuid." + self.app_uuid + ".user_uuid." + self.user_uuid
         _createtime = time.mktime(self.createtime.timetuple())*1000*1000 + self.createtime.microsecond
         _v = json.dumps([_createtime, self.navigation_data])
         _redis.zadd(_key, _v, _createtime)
+
+        if self.visit_page_url != None:
+            _key = self.__tablename__  + ".app_uuid." + self.app_uuid + ".user_uuid." + self.user_uuid + ".visit_page_url"
+            _redis.set(_key, visit_page_url)
         return
 
     def delete_redis_keys(self, _redis):
-        _obj = redis_hash_to_dict(_redis, DeviceNavigationData, self.uuid)
+        _obj = redis_hash_to_dict(_redis, UserNavigationData, self.uuid)
         if _obj == None:
             return
 
-        _key = self.__tablename__  + ".app_uuid." + _obj["app_uuid"] + ".device_uuid." + _obj["device_uuid"]
+        _key = self.__tablename__  + ".app_uuid." + _obj["app_uuid"] + ".user_uuid." + _obj["user_uuid"]
         _createtime = time.mktime(_obj["createtime"].timetuple())*1000*1000 + _obj["createtime"].microsecond
         _v = json.dumps([_createtime, _obj["navigation_data"]])
         _redis.zrem(_key, _v)
         
         CommonMixin.delete_redis_keys(self, _redis)
         return
-
 
 class ApiInfo(CommonMixin, BaseModel):
     __tablename__ = "api_infos"
@@ -1484,11 +1491,49 @@ class PredefinedScriptGroup(CommonMixin, BaseModel):
     
     def delete_redis_keys(self, _redis):
         _obj = redis_hash_to_dict(_redis, PredefinedScriptGroup, self.uuid)
-        if _obj == None:
+        if _obj == None or _obj["app_uuid"] == None:
             return
         _key = PredefinedScriptGroup.__tablename__ + ".app_uuid." + _obj["app_uuid"]
         _redis.srem(_key, self.uuid)
         CommonMixin.delete_redis_keys(self, _redis)
         return
     
+class ConversationAssignRule(CommonMixin, BaseModel):
+    __tablename__ = "conversation_assign_rules"
 
+    app_uuid = Column("app_uuid", String(64))
+
+    # 0 is first
+    rule_priority = Column("rule_priority", Integer)
+    
+    # LIVE/PAUSED
+    rule_status = Column("rule_status", String(16))
+
+    # matched name
+    user_matched_method = Column("user_matched_method", String(64))
+    user_matched_parameter = Column("user_matched_parameter", String(256))
+
+    # target service name
+    target_service_method = Column("target_service_method", String(64))
+    target_service_parameter = Column("target_service_parameter", String(256))
+    
+    def __init__(self, *args, **kwargs):
+        super(ConversationAssignRule, self).__init__(*args, **kwargs)
+        return
+    
+    def create_redis_keys(self, _redis, *args, **kwargs):
+        CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
+        _key = ConversationAssignRule.__tablename__ + ".app_uuid." + self.app_uuid
+        _redis.zadd(_key, self.rule_priority, self.uuid)
+        return
+    
+    def delete_redis_keys(self, _redis):
+        _obj = redis_hash_to_dict(_redis, ConversationAssginRule, self.uuid)
+        if _obj == None or _obj["app_uuid"] == None:
+            return
+        _key = ConversationAssignRule.__tablename__ + ".app_uuid." + _obj["app_uuid"]
+        _redis.zrem(_key, self.uuid)
+        CommonMixin.delete_redis_keys(self, _redis)
+        return
+
+    

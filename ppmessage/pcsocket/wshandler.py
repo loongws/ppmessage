@@ -167,7 +167,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                 
                 self._please_logout(_ws, self.device_uuid)
 
-        self.delegate.save_extra(self.app_uuid, self.device_uuid, self.extra_data)
+        self.delegate.save_extra(self.app_uuid, self.user_uuid, self.extra_data)
         self.delegate.map_device(self.device_uuid)
         self.sockets[self.device_uuid] = self
         self.delegate.start_watching_online(self)

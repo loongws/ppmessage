@@ -23,6 +23,19 @@ class Enum(set):
 Animals = Enum(["DOG", "CAT", "HORSE"])
 # Animals.DOG == "DOG"
 
+RULE_STATUS = Enum([
+    "LIVE",
+    "PAUSE"
+])
+
+DISTRIBUTE_RESULT = Enum([
+    "WAITING",
+    "SUCCESS",
+    "ERROR",
+    "USER_NOT_MATCHED",
+    "NO_TARGET_SERVICE"
+])
+
 CONFIG_STATUS = Enum([
     "NONE",
     "SERVER",
