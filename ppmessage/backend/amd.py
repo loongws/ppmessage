@@ -42,6 +42,7 @@ from ppmessage.db.models import PCSocketDeviceData
 from ppmessage.db.models import OrgGroupUserData
 from ppmessage.db.models import ConversationInfo
 from ppmessage.db.models import ConversationUserData
+from ppmessage.db.models import ConversationAssignRule
 from ppmessage.db.models import UserNavigationData
 
 from ppmessage.core.utils.createicon import create_group_icon
@@ -267,8 +268,11 @@ class AmdDelegate():
             return None
         return _method.method(_request, _rule)
 
-    def _create_conversation(self, _request, _rule _target_services):
-        _rule_uuid = _rule.get("uuid")
+    def _create_conversation(self, _request, _rule, _target_services):
+        _rule_uuid = None
+        if _rule != None:
+            _rule_uuid = _rule.get("uuid")
+        
         _app_uuid = _request.get("app_uuid")
         _user_uuid = _request.get("user_uuid")
         
@@ -350,17 +354,16 @@ class AmdDelegate():
         _user_uuid = _request.get("user_uuid")
         
         _key = ConversationAssignRule.__tablename__ + ".app_uuid." + _app_uuid
-        _rules = self.application.redis.zrange(_key, 0, -1)
-
+        _rules = self.redis.zrange(_key, 0, -1)
         _rules = self._rules_dict(_rules)
         
         if len(_rules) == 0:
-            self._all(_request)
+            self._create_conversation(_request, None, self._all(_request))
             return DISTRIBUTE_RESULT.SUCCESS
         
         for _rule in _rules:
-            _result = self._run_rule(_request, _rule):
-               
+            _result = self._run_rule(_request, _rule)
+
             if _result == DISTRIBUTE_RESULT.USER_NOT_MATCHED:
                 continue
 
@@ -392,18 +395,16 @@ class AmdDelegate():
         return
         
     def task_loop(self):
-        _hashs = set()
+        _hashs = []
 
         if 0 == self.redis.llen(REDIS_AMD_KEY):
             return
-        
-        logging.info("amd queue size: %d" % _len)
         
         while True:
             _hash = self.redis.lpop(REDIS_AMD_KEY)
             if _hash == None or len(_hash) == 0:
                 break
-            _hashs.add(_hash)
+            _hashs.append(_hash)
 
         _waitings = []
         _len = len(_hashs)
@@ -418,6 +419,10 @@ class AmdDelegate():
 
             _request = json.loads(_value)
             _user_uuid = _request.get("user_uuid")
+            _app_uuid = _request.get("app_uuid")
+            if _user_uuid == None or _app_uuid == None:
+                continue
+            
             self._result(_user_uuid)
             
             _distribute_result = self._task(_request)
