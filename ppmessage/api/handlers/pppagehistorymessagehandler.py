@@ -195,7 +195,7 @@ class PPPageHistoryMessageHandler(BaseHandler):
             return
 
         _key = MessagePushTask.__tablename__ + ".conversation_uuid." + _conversation_uuid
-        _tasks = _redis.zrangebyscore(_key, _min_createtime, -1, start=0, num=_page_size)
+        _tasks = _redis.zrangebyscore(_key, _min_createtime, _createtime, start=0, num=_page_size)
         if _tasks == None or len(_tasks) == 0:
             return
         
