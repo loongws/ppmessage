@@ -41,7 +41,7 @@ Service.$messageReceiverModule = (function() {
                 browserTabNotify.notify( ppMessage );
             }
 
-            if ( isGroupOnChatting ( groupId ) ) { // we are chating with `groupId`
+            if ( isGroupOnChatting ( groupId ) ) { // we are chating with `converstionId`
 
                 $pubsub.publish('msgArrived/chat', ppMessage);
                 
@@ -57,7 +57,7 @@ Service.$messageReceiverModule = (function() {
                     
                     $pubsub.publish('msgArrived/launcher', ppMessage);
                     
-                } else if (View.$groupContent.visible()) { // group list is showing ( only working in `group` policy )
+                } else if (View.$groupContent.visible()) { // conversation list is showing
                     
                     $pubsub.publish('msgArrived/group', ppMessage);
                     

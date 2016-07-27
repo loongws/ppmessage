@@ -133,7 +133,7 @@
             messageId: Service.$tools.getUUID(),
             messageTimestamp: Date.now() / 1000,
             messageType: messageType,
-            messageToType: Service.$messageToolsModule.toType(), // detect toType by different policy
+            messageToType: Service.$messageToolsModule.toType(), // detect toType
             messageState: 'SENDING',
             messageConversationId: '',
             messageIsConversationValid: true,
