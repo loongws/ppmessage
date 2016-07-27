@@ -12,6 +12,7 @@ var del = require('del');
 var path = require('path');
 var args = require('get-gulp-args')();
 var buildConfig = require("./build.config.js");
+var childProcess = require("child_process");
 
 var mode = "scripts";
 
@@ -91,6 +92,10 @@ gulp.task('refresh-config', function(done) {
 
 gulp.task('watch', ['default'], function() {
     gulp.watch(watchingPaths.css, ['default']);
-    gulp.watch(watchingPaths.scripts, ['default']);
     gulp.watch(watchingPaths.config, ['refresh-config', 'default']);
+    gulp.watch(watchingPaths.scripts, ["exec-config-py"]);
+});
+
+gulp.task("exec-config-py", ['default'], function () {
+    childProcess.exec("python ../config/config.py");
 });
