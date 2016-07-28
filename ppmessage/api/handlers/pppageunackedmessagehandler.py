@@ -20,23 +20,28 @@ import copy
 
 class PPPageUnackedMessageHandler(BaseHandler):
 
-    def _detail(self, _task_list):
+    def _detail(self, _pushs):
         _redis = self.application.redis
-        _pre = MessagePushTask.__tablename__ + ".uuid."
-        _pi = _redis.pipeline()
-        _push_list = []
-        for _task in _task_list:
-            _task = json.loads(_task)
-            _key = _pre + _task[0]
-            _pi.hget(_key, "message_body")
-            _push_list.append(_task[1])
-        _d = _pi.execute()
 
-        # FIXME: from user detail
-        _m = dict(zip(_push_list, _d))
+        if _pushs == None or len(_pushs) == 0:
+            return
+        
+        _pi = _redis.pipeline()
+        for _push in _pushs:
+            _key = MessagePush.__tablename__ + ".uuid." + _push
+            _pi.hget(_key, "task_uuid")
+        _tasks = _pi.execute()
+        
+        _pi = _redis.pipeline()
+        for _task in _tasks:
+            _key = MessagePushTask.__tablename__ + ".uuid." + _task
+            _pi.hget(_key, "message_body")
+        _messages = _pi.execute()
+
+        _messages = dict(zip(_pushs, _messages))
         _return = self.getReturnData()
-        _return["list"] = copy.deepcopy(_push_list)
-        _return["message"] = _m
+        _return["list"] = copy.deepcopy(_pushs)
+        _return["message"] = copy.deepcopy(_messages)
         return
     
     def initialize(self):
@@ -45,31 +50,10 @@ class PPPageUnackedMessageHandler(BaseHandler):
         self.addPermission(api_level=API_LEVEL.PPKEFU)
         self.addPermission(api_level=API_LEVEL.THIRD_PARTY_KEFU)
         return
-    
-    def _Task(self):
-        super(PPPageUnackedMessageHandler, self)._Task()
 
-        _request = json.loads(self.request.body)
-        _app_uuid = _request.get("app_uuid")
-        _user_uuid = _request.get("user_uuid")
-
-        if _user_uuid == None or _app_uuid == None:
-            logging.error("not enough parameters.")
-            self.setErrorCode(API_ERR.NO_PARA)
-            return
-
-        _page_offset = _request.get("page_offset")
-        if _page_offset == None or _page_offset < 0:
-            _page_offset = 0
-            
-        _page_size = _request.get("page_size")
-        if _page_size == None or _page_size < 0:
-            _page_size = 30
-            
+    def _return_by_page(self, _key, _page_offset, _page_size, _total_count):
         _redis = self.application.redis
-        _key = MessagePush.__tablename__ + ".app_uuid." + _app_uuid + ".user_uuid." + _user_uuid
-        _total_count = _redis.zcount(_key, "-inf", "+inf")
-
+        
         _r = self.getReturnData()
         _r["total_count"] = _total_count
         _r["return_count"] = 0
@@ -97,4 +81,96 @@ class PPPageUnackedMessageHandler(BaseHandler):
             return
         
         self._detail(_task_list)
+        return
+
+    def _return_by_max(self, _key, _max_uuid, _page_size):
+        _redis = self.application.redis
+        
+        _r = self.getReturnData()
+        _r["return_count"] = 0
+        _r["max_uuid"] = _max_uuid
+        _r["list"] = []
+        _r["message"] = {}
+
+        _max_score = _redis.zscore(_key, _max_uuid)
+        if _max_score == None:
+            logging.error("no max_core for the uuid: %s" % _max_uuid)
+            return
+
+        _pushs = _redis.zrevrangebyscore(_key, _max_score, "-inf", start=0, num=_page_size)
+        if len(_pushs) == 0:
+            logging.info("no pushs lower than %s" % _max_score)
+            return
+
+        if _max_uuid in _pushs:
+            _pushs.remove(_max_uuid)
+        
+        self._detail(_pushs)
+        return
+
+    def _return_by_min(self, _key, _min_uuid, _page_size):
+        _redis = self.application.redis
+        
+        _r = self.getReturnData()
+        _r["return_count"] = 0
+        _r["min_uuid"] = _min_uuid
+        _r["list"] = []
+        _r["message"] = {}
+
+        _min_score = _redis.zscore(_key, _min_uuid)
+        if _min_score == None:
+            logging.error("no min_core for the uuid: %s" % _min_uuid)
+            return
+
+        _pushs = _redis.zrangebyscore(_key, _min_score, "+inf", start=0, num=_page_size)
+        if len(_pushs) == 0:
+            logging.info("no pushs lower than %s" % _max_score)
+            return
+
+        if _min_uuid in _pushs:
+            _pushs.remove(_min_uuid)
+        
+        self._detail(_pushs)
+        return
+    
+    def _Task(self):
+        super(PPPageUnackedMessageHandler, self)._Task()
+
+        _request = json.loads(self.request.body)
+        _app_uuid = _request.get("app_uuid")
+        _user_uuid = _request.get("user_uuid")
+
+        if _user_uuid == None or _app_uuid == None:
+            logging.error("not enough parameters.")
+            self.setErrorCode(API_ERR.NO_PARA)
+            return
+
+        self._app_uuid = _app_uuid
+        self._user_uuid = _user_uuid
+        
+        _redis = self.application.redis
+        _key = MessagePush.__tablename__ + ".app_uuid." + _app_uuid + ".user_uuid." + _user_uuid
+        _total_count = _redis.zcard(_key)
+
+        _page_offset = _request.get("page_offset")
+        if _page_offset == None or _page_offset < 0:
+            _page_offset = 0
+            
+        _page_size = _request.get("page_size")
+        if _page_size == None or _page_size < 0:
+            _page_size = 30
+
+        if _max_uuid != None:
+            logging.info("return by max: %s" % _max_uuid)
+            self._return_by_max(_key, _max_uuid, _page_size, _total_count)
+            return
+
+        if _min_uuid != None:
+            self._return_by_min(_key, _min_uuid, _page_size, _total_count)
+            return
+        
+        if _max_uuid == None and _min_uuid == None:
+            self._return_by_page(_key, _page_offset, _page_size, _total_count)
+            return
+
         return
