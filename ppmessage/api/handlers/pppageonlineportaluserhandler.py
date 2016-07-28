@@ -88,7 +88,7 @@ class PPPageOnlinePortalUserHandler(BaseHandler):
         _redis = self.application.redis
         _key = DeviceInfo.__tablename__ + ".app_uuid." + _app_uuid + \
                ".is_ppcom_device.True.device_is_online.True"
-        _total_count = _redis.zcount(_key, "-inf", "+inf")
+        _total_count = _redis.zcard(_key)
 
         _r = self.getReturnData()
         _r["total_count"] = _total_count

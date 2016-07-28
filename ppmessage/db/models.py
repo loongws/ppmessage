@@ -419,28 +419,20 @@ class MessagePush(CommonMixin, BaseModel):
         # ACKED PUSH NOT CACHED ANY LONGER
         if self.status == MESSAGE_STATUS.ACKED:
             return
-        
         if self.task_uuid == None or self.app_uuid == None or self.user_uuid == None:
             return
-
         CommonMixin.create_redis_keys(self, _redis, *args, **kwargs)
-        # badge number and unacked messages
         _key = self.__tablename__ + ".app_uuid." + self.app_uuid + ".user_uuid." + self.user_uuid
         _updatetime = time.mktime(self.updatetime.timetuple())*1000*1000 + self.updatetime.microsecond
-        _v = json.dumps([self.task_uuid, self.uuid])
-        _redis.zadd(_key, _v, _updatetime)
-
+        _redis.zadd(_key, self.uuid, _updatetime)
         return
 
     def delete_redis_keys(self, _redis):
         _obj = redis_hash_to_dict(_redis, MessagePush, self.uuid)
         if _obj == None or _obj["task_uuid"] == None or _obj["app_uuid"] == None or _obj["user_uuid"] == None:
             return
-        
         _key = self.__tablename__ + ".app_uuid." + _obj["app_uuid"] + ".user_uuid." + _obj["user_uuid"]
-        _v = json.dumps([_obj["task_uuid"], self.uuid])
-        _redis.zrem(_key, _v)
-        
+        _redis.zrem(_key, self.uuid)
         CommonMixin.delete_redis_keys(self, _redis)
         return
 

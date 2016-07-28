@@ -146,25 +146,15 @@ class PPPageHistoryMessageHandler(BaseHandler):
 
         _redis = self.application.redis
         _key = MessagePushTask.__tablename__ + ".conversation_uuid." + _conversation_uuid
-        _max_createtime = _redis.zscore(_key, _max_uuid)
-        if _max_createtime == None:
+        _max_score = _redis.zscore(_key, _max_uuid)
+        if _max_score == None:
             logging.error("no such task for max_uuid: %s" % _max_uuid)
             return
 
-        _redis = self.application.redis
-        _min_item = _redis.zrange(_key, 0, 0)[0]
-        _key = MessagePushTask.__tablename__ + ".uuid." + _min_item
-        _createtime = _redis.hget(_key, "createtime")
-        _createtime = string_to_datetime(_createtime, "extra")
-        _createtime = time.mktime(_createtime.timetuple())*1000*1000 + _createtime.microsecond
-
-        if _createtime >  _max_createtime:
-            logging.info("no more task for less than max_uuid: %s" % _max_uuid)
-            return
-        
         _key = MessagePushTask.__tablename__ + ".conversation_uuid." + _conversation_uuid
-        _tasks = _redis.zrevrangebyscore(_key, _max_createtime, 0, start=0, num=_page_size+1)
+        _tasks = _redis.zrevrangebyscore(_key, _max_score, "-inf", start=0, num=_page_size+1)
         if _tasks == None or len(_tasks) == 0:
+            logging.error("no message less than %s" % _max_uuid)
             return
         
         _tasks.remove(_max_uuid)
@@ -179,27 +169,19 @@ class PPPageHistoryMessageHandler(BaseHandler):
 
         _redis = self.application.redis
         _key = MessagePushTask.__tablename__ + ".conversation_uuid." + _conversation_uuid
-        _min_createtime = _redis.zscore(_key, _min_uuid)
-        if _min_createtime == None:
+        _min_score = _redis.zscore(_key, _min_uuid)
+        if _min_score == None:
             logging.error("no such task for min_uuid: %s" % _min_uuid)
             return
 
-        _max_item = _redis.zrevrange(_key, 0, 0)[0]
-        _key = MessagePushTask.__tablename__ + ".uuid." + _max_item
-        _createtime = _redis.hget(_key, "createtime")
-        _createtime = string_to_datetime(_createtime, "extra")
-        _createtime = time.mktime(_createtime.timetuple())*1000*1000 + _createtime.microsecond
-
-        if _createtime <  _min_createtime:
-            logging.info("no newer task for than min_uuid: %s" % _min_uuid)
-            return
-
-        _key = MessagePushTask.__tablename__ + ".conversation_uuid." + _conversation_uuid
-        _tasks = _redis.zrangebyscore(_key, _min_createtime, -1, start=0, num=_page_size)
+        _tasks = _redis.zrangebyscore(_key, _min_score, "+inf", start=0, num=_page_size)
         if _tasks == None or len(_tasks) == 0:
+            logging.info("no message larger than min_uuid: %s" % _min_uuid)
             return
+
+        if _min_uuid in _tasks:
+            _tasks.remove(_min_uuid)
         
-        _tasks.remove(_min_uuid)
         self._return_tasks(_tasks)
         return
     
@@ -235,7 +217,7 @@ class PPPageHistoryMessageHandler(BaseHandler):
 
         _redis = self.application.redis
         _key = MessagePushTask.__tablename__ + ".conversation_uuid." + _conversation_uuid
-        _total_count = _redis.zcount(_key, "-inf", "+inf")
+        _total_count = _redis.zcard(_key)
         if _total_count == 0:
             logging.info("no task of conversation_uuid: %s" % _conversation_uuid)
             _rdata["total_count"] = 0

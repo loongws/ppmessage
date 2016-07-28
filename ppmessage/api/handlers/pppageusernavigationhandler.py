@@ -53,7 +53,7 @@ class PPPageUserNavigationHandler(BaseHandler):
             
         _redis = self.application.redis
         _key = UserNavigationData.__tablename__ + ".app_uuid." + _app_uuid + ".user_uuid." + _user_uuid
-        _total_count = _redis.zcount(_key, "-inf", "+inf")
+        _total_count = _redis.zcard(_key)
 
         _r = self.getReturnData()
         _r["total_count"] = _total_count
