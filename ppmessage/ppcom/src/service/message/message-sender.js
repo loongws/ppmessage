@@ -56,7 +56,9 @@ Service.$messageSender = ( function() {
     }
 
     function onBeginUpload(ppMessage, settings) {
-        
+
+        ppMessage.messageState = 'BEGIN_UPLOAD';
+
         // upload file will get local upload file id
         var $fileUploader = Service.$uploader,
             
@@ -77,7 +79,9 @@ Service.$messageSender = ( function() {
                 } );
                 
             }).done(function(response) {
+                
                 // onEndUpload callback
+                ppMessage.messageState = 'SENDING';
                 onUploadDone(ppMessage, settings, response.fuuid);
                 
             }).fail(function(errorCode) {
@@ -99,7 +103,7 @@ Service.$messageSender = ( function() {
                 
                 onUploadFail(ppMessage, settings);
             }).query().uploadId;
-        
+
         // begin upload
         broadcastHelper( ppMessage, STATE.BEGIN_UPLOAD, {
             uploadTaskId: uploadFileId

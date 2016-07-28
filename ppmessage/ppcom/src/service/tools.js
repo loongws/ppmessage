@@ -88,8 +88,7 @@
          * Check message is uploading file
          */
         this.isUploading = function(message) {
-            return message.messageState == "BEGIN_UPLOAD" ||
-                message.messageState == "SENDING";
+            return message.messageState == "BEGIN_UPLOAD";
         };
 
         /*

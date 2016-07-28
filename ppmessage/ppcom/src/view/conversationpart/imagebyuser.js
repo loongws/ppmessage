@@ -13,8 +13,7 @@
                 showUploadingBar = Service.$tools.isUploading(item),
                 messageId = item.messageId,
                 imgSelector = '#pp-conversation-part-' + messageId + ' .pp-conversation-part-image-by-user-img',
-                error = Service.$tools.isMessageSendError(item),
-                extra = error ? item.extra.errorDescription : item.extra.description,
+                extra = View.conversationPartTools.buildExtra( item ),
                 shouldOpacity = Service.$tools.isMessageSendError(item) || showUploadingBar,
                 imageHref = item.message.image.url,
                 imageViewable = isZoomable(),
@@ -66,9 +65,9 @@
                           .add(new View.PPElement('span', {
                               id: 'pp-conversation-part-image-by-user-timestamp-span-' + item.messageId,
                               'class': 'pp-conversation-part-image-by-user-timestamp-span pp-font',
-                              style: error ? 'color:red; display:block;' : 'color:#c9cbcf; display:none;'
+                              style: extra.style
                           })
-                               .text(extra))
+                               .text( extra.text ))
                           .show(!showUploadingBar))
                      .add(new View.PPDiv({
                          'class': 'pp-fixme'
@@ -95,48 +94,85 @@
 
             getImageTimestampSelector = function(messageId) {
                 return '#pp-conversation-part-image-by-user-timestamp-span-' + messageId;
-            },
-
-            onBeginUpload = function(messageId) { // on begin upload
-
-                var imageSelector = getImageSelector(messageId);
-
-                // set image opacity from 1 to half-opacity
-                $(imageSelector).css({ 'opacity': 0.6 });
-                
-            },
-
-            onSendFail = function(messageId, errorDescription) {
-
-                // change cursor
-                $(getImageSelector(messageId)).css({
-                    'opacity': 0.6,
-                    'cursor': 'default'
-                });
-
-                // show error description
-                $(getImageTimestampContainerSelector(messageId)).show();
-                $(getImageTimestampSelector(messageId)).text(errorDescription).css({
-                    'color': 'red',
-                    'display': 'block'
-                });
-                
-            },
-
-            onSendDone = function(messageId, imageUrl) {
-
-                $(getImageSelector(messageId)).css({
-                    'opacity': 1.0
-                });
-
             };
+
+        ///////// Public API ////////
 
         return {
             build: build,
 
             onBeginUpload: onBeginUpload,
+            onUploading: onUploading,
+            onUploadDone: onUploadDone,
+            onUploadFail: onUploadFail,
+            onSending: onSending,
             onSendFail: onSendFail,
             onSendDone: onSendDone
+        }
+
+        ///////// Inner Impl ////////
+
+        function onUploading( ppMessageJsonBody, progress ) {
+            if (progress < 0) return;
+            if (progress <= 100) {
+                $('#pp-uploading-bar-state-' + ppMessageJsonBody.message.image.fileUploadId).css('width', progress + "%");
+            }
+        }
+
+        function onUploadDone( ppMessageJsonBody ) {
+            hideUploadBar( ppMessageJsonBody );
+        }
+
+        function onUploadFail( ppMessageJsonBody ) {
+            hideUploadBar( ppMessageJsonBody );            
+        }
+
+        function onSending( ppMessageJsonBody ) {
+            addDescription( ppMessageJsonBody, Service.Constants.i18n( 'SENDING' ), undefined );
+        }
+
+        function onBeginUpload( ppMessageJsonBody ) { // on begin upload
+            var imageSelector = getImageSelector( ppMessageJsonBody.messageId );
+
+            // set image opacity from 1 to half-opacity
+            $(imageSelector).css({ 'opacity': 0.6 });
+        }
+
+        function onSendFail( ppMessageJsonBody ) {
+            // change cursor
+            $(getImageSelector(messageId)).css({
+                'opacity': 0.6,
+                'cursor': 'default'
+            });
+
+            addDescription( ppMessageJsonBody, ppMessageJsonBody.extra.errorDescription, 'red' );
+        }
+
+        function onSendDone( ppMessageJsonBody ) {
+            $( getImageSelector( ppMessageJsonBody.messageId ) ).css({
+                'opacity': 1.0
+            });
+            removeDescription( ppMessageJsonBody );
+        }
+
+        function hideUploadBar( ppMessageJsonBody ) {
+            $('#pp-uploading-bar-outer-' + ppMessageJsonBody.message.image.fileUploadId).hide();
+        }
+
+        function removeDescription( ppMessageJsonBody ) {
+            $( getImageTimestampContainerSelector( ppMessageJsonBody.messageId ) ).hide();
+            $( getImageTimestampSelector( ppMessageJsonBody.messageId ) ).text( '' ).css({
+                'color': undefined,
+                'display': 'none'
+            });
+        }
+
+        function addDescription( ppMessageJsonBody, description, color ) {
+            $( getImageTimestampContainerSelector( ppMessageJsonBody.messageId ) ).show();
+            $( getImageTimestampSelector( ppMessageJsonBody.messageId ) ).text( description ).css({
+                'color': color,
+                'display': 'block'
+            });
         }
         
     })();

@@ -32,7 +32,7 @@
             break;
 
         case 'FILE':
-            this.add((item.user.admin) ? new View.PPConversationPartFileByAdmin(item) : new View.PPConversationPartFileByUser(item));
+            this.add((item.user.admin) ? new View.PPConversationPartFileByAdmin(item) : View.$userFileMessage.build(item));
             break;
 
         case 'TIMESTAMP':

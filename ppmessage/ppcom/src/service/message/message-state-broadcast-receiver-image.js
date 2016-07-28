@@ -21,18 +21,13 @@ Service.$msgStateImageReceiver = (function() {
                 
                 View.$composerContainer.focus();
                 
-                View.$userImageMessage.onBeginUpload( body.messageId );
+                View.$userImageMessage.onBeginUpload( body );
                 
                 break;
 
             case STATE.UPLOADING:
                 var progress = data.stateInfo.uploadProgress;
-                
-                if (progress < 0) return;
-                if (progress <= 100) {
-                    $('#pp-uploading-bar-state-' + body.message.image.fileUploadId).css('width', progress + "%");
-                }
-                
+                View.$userImageMessage.onUploading( body, progress );
                 break;
 
             case STATE.UPLOAD_DONE:
@@ -41,22 +36,21 @@ Service.$msgStateImageReceiver = (function() {
                 body.message.image.fuuid = fileId;
                 body.message.image.fileServerUrl = Service.$tools.getFileDownloadUrl(fileId);
 
-                // Hide upload bar
-                $('#pp-uploading-bar-outer-' + body.message.image.fileUploadId).hide();
+                View.$userImageMessage.onUploadDone( body );
+                View.$userImageMessage.onSending( body );
                 break;
 
             case STATE.UPLOAD_FAIL:
-                // Hide upload bar
-                $('#pp-uploading-bar-outer-' + body.message.image.fileUploadId).hide();
+                View.$userImageMessage.onUploadFail( body );
                 break;
 
             case STATE.SEND_DONE:
-                View.$userImageMessage.onSendDone(body.messageId, body.message.image.fileServerUrl);
+                View.$userImageMessage.onSendDone( body );
                 Service.$pubsub.unsubscribe( subscriber );
                 break;
 
             case STATE.SEND_FAIL:
-                View.$userImageMessage.onSendFail(body.messageId, body.extra.errorDescription);
+                View.$userImageMessage.onSendFail( body );
                 Service.$pubsub.unsubscribe( subscriber );
                 break;
             }

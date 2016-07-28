@@ -15,6 +15,7 @@ Service.$msgStateTextReceiver = ( function() {
 
             case STATE.BUILD_DONE:
                 Ctrl.$conversationContent.appendMessage( body );
+                View.$userTextMessage.onSending( body );
                 break;
 
             case STATE.UPLOAD_DONE:
@@ -22,6 +23,7 @@ Service.$msgStateTextReceiver = ( function() {
                 break;
 
             case STATE.SEND_DONE:
+                View.$userTextMessage.onSendDone( body );
                 Service.$pubsub.unsubscribe( subscriber );
                 break;
 

@@ -9,7 +9,9 @@ View.$userEmojiMessage = ( function() {
     
     return {
         build: build,
-        onSendFail: onSendFail
+        onSendFail: onSendFail,
+        onSending: onSending,
+        onSendFinish: onSendFinish
     }
 
     function build( item ) {
@@ -17,13 +19,31 @@ View.$userEmojiMessage = ( function() {
     }
 
     function onSendFail( ppMessageJsonBody ) {
-        
+        addDescription( ppMessageJsonBody, ppMessageJsonBody.extra.errorDescription, 'red' );
+    }
+
+    function onSending( ppMessageJsonBody ) {
+        addDescription( ppMessageJsonBody, Service.Constants.i18n( 'SENDING' ), undefined );
+    }
+
+    function onSendFinish( ppMessageJsonBody ) {
+        removeDescription( ppMessageJsonBody );
+    }
+
+    function addDescription( ppMessageJsonBody, description, color ) {
         $( prefixId + ppMessageJsonBody.messageId )
             .find( '.extra' )
-            .text( ppMessageJsonBody.extra.errorDescription )
-            .css( { color: 'red' } )
+            .text( description )
+            .css( { color: color } )
             .show();
+    }
 
+    function removeDescription( ppMessageJsonBody ) {
+        $( prefixId + ppMessageJsonBody.messageId )
+            .find( '.extra' )
+            .text( '' )
+            .css( { color: undefined } )
+            .hide();
     }
 
     /**
@@ -32,8 +52,7 @@ View.$userEmojiMessage = ( function() {
     function PPConversationPartEmojiByUser(item) {
         View.PPDiv.call(this, id);
 
-        var error = Service.$tools.isMessageSendError(item);
-        var extra = error ? item.extra.errorDescription : item.extra.description;
+        var extra = View.conversationPartTools.buildExtra( item );
 
         this.add(new View.PPDiv({
             className: 'pp-emoji-container'
@@ -44,9 +63,9 @@ View.$userEmojiMessage = ( function() {
                  .add(new View.PPDiv()
                       .add(new View.PPElement('span', {
                           className: 'extra ' + clsTextSelectable,
-                          style: error ? 'color:red; display:block;' : 'color:#c9cbcf; display:none;'
+                          style: extra.style
                       })
-                           .text(extra))));
+                           .text( extra.text ))));
     }
     extend(PPConversationPartEmojiByUser, View.PPDiv);
     

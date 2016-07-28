@@ -8,21 +8,41 @@ View.$userTextMessage = ( function() {
     
     return {
         build: build,
-        onSendFail: onSendFail
+        onSendFail: onSendFail,
+        onSending: onSending,
+        onSendDone: onSendDone
     }
 
     function build( item ) {
         return new PPConversationPartTextByUser( item );
     }
 
+    function onSending( ppMessageJsonBody ) {
+        addDescription( ppMessageJsonBody, Service.Constants.i18n( 'SENDING' ), undefined );
+    }
+
+    function onSendDone( ppMessageJsonBody ) {
+        removeDescription( ppMessageJsonBody );
+    }
+
     function onSendFail( ppMessageJsonBody ) {
-        
+        addDescription( ppMessageJsonBody, ppMessageJsonBody.extra.errorDescription, 'red' );
+    }
+
+    function addDescription( ppMessageJsonBody, description, color ) {
         $( prefixId + ppMessageJsonBody.messageId )
             .find( '.extra' )
-            .text( ppMessageJsonBody.extra.errorDescription )
-            .css({ 'color': 'red' })
+            .text( description )
+            .css({ 'color': color })
             .show();
-        
+    }
+
+    function removeDescription( ppMessageJsonBody ) {
+        $( prefixId + ppMessageJsonBody.messageId )
+            .find( '.extra' )
+            .text( '' )
+            .css({ 'color': undefined })
+            .hide();
     }
 
     /**
@@ -31,10 +51,8 @@ View.$userTextMessage = ( function() {
     function PPConversationPartTextByUser( item ) {
         Div.call(this, 'pp-conversation-part-text-by-user');
 
-        var error = Service.$tools.isMessageSendError(item);
-        var extra = error ? item.extra.errorDescription : item.extra.description;
-        
-        var html = View.$textUrlChecker.match(item.message.text.body).trustAsHtml();
+        var html = View.$textUrlChecker.match(item.message.text.body).trustAsHtml(),
+            extra = View.conversationPartTools.buildExtra( item );
         
         this.add(new Div('pp-conversation-part-text-by-user-outer')
                  .add(new Div( 'pp-wrapper' )
@@ -48,8 +66,9 @@ View.$userTextMessage = ( function() {
                  .add(new Div('pp-conversation-part-text-by-user-timestamp-outer')
                       .add(new View.Span({
                           'class': 'extra pp-selectable',
-                          style: error ? 'color:red; display:block' : 'color:#c9cbcf; display:none'
-                      }).text(extra))));
+                          style: extra.style
+                      }).text( extra.text ))));
+        
     }
     extend(PPConversationPartTextByUser, Div);
     
