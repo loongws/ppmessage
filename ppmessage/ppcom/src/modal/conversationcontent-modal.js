@@ -87,7 +87,15 @@
             },
             
             chatMessages = getInitChatMessages(), // Store messages
-            chatMessagesIds = [], // Cache messages Ids (for check is message exist) if message.id exist
+            
+            // Cache messages Ids (for check is message exist) if message.id exist
+            //
+            // NOTE:
+            // - Store message id: send by websocket/api
+            // - Store message id: receive by websocket
+            // - Won't store message id: history messages, see function `unshiftMessageArrays`
+            // - No promise the ids will order by timestamp
+            chatMessagesIds = [],
             
             isMessageIdExist = function(messageId) {
                 return $.inArray(messageId, chatMessagesIds) != -1;
@@ -116,7 +124,10 @@
                 }, function(response) { // On get message history success callback
 
                     // Update page offset and max id for next load
-                    loadMessageHistorysMaxId = response.list.length > 0 ? response.list[response.list.length-1].uuid : null;
+                    loadMessageHistorysMaxId =
+                        ( response.list && response.list.length > 0 ) ?
+                        response.list[response.list.length-1].uuid :
+                        null;
 
                     // Convert response api message array to ppMessage array
                     var ppMessageArray = [];
@@ -137,7 +148,7 @@
                             if (completeCallback) completeCallback();
                         }
                         
-                    })(0, response.list.length, response.list, function() {
+                    })(0, ( response.list && response.list.length ) || 0, response.list || [], function() {
                         
                         // apiMessageArray -> ppMessageArray completed
                         //
@@ -264,12 +275,29 @@
             
             tryLoadLostMessages = function(maxId) {
 
-                if (chatMessagesIds.length == 0) {
+                if (chatMessages.length == 0) {
                     // no messages no lost
                     return;
                 }
                 
-                maxId = maxId ? maxId : chatMessagesIds[chatMessagesIds.length-1];
+                maxId = maxId ? maxId : (function() {
+
+                    // find message max id ( normally the last one ) [xx, xx, xx, ...]
+                    var len = chatMessages.length;
+                    while ( len-- ) {
+                        var candidate = chatMessages [ len ];
+                        if ( Service.$messageToolsModule.isMessage( candidate ) ) {
+                            return candidate.messageId;
+                        }
+                    }
+
+                    return undefined;
+                }());
+
+                if ( maxId === undefined || maxId === null ) {
+                    // no messages no lost
+                    return;
+                }
             
                 $api.pageMessageHistory({
                     conversation_uuid: id,
@@ -279,11 +307,8 @@
                         if (response.list.length > 0) {
 
                             $.each(response.list, function(index, item) {
-                                var rawData = item, message = null;
-                                if (rawData) {
-                                    message = $json.parse(rawData);
-                                    $notifyMsg.get($notification, message).dispatch();
-                                }
+                                var messageInJsonFormat = item.message_body && Service.$json.parse( item.message_body );
+                                $notifyMsg.get($notification, messageInJsonFormat).dispatch();
                             });
 
                             tryLoadLostMessages(response.list[response.list.length-1].uuid);

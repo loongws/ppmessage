@@ -53,6 +53,7 @@ Service.$notifyAuth = (function() {
         }
 
         function onAuth () {
+            
             if ( !authMsg ) return;
 
             // auth success
