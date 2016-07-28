@@ -8,16 +8,16 @@
             sendSettings = function(){
                 
                 switch (body.messageType) {
-                case 'TEXT':
+                case Service.PPMessage.TYPE.TEXT:
                     return Service.$textMessageSendSettings.build(body);
                     
-                case 'EMOJI':
+                case Service.PPMessage.TYPE.EMOJI:
                     return Service.$emojiMessageSendSettings.build(body);
                     
-                case 'IMAGE':
+                case Service.PPMessage.TYPE.IMAGE:
                     return Service.$imageMessageSendSettings.build(body);
 
-                case 'FILE':
+                case Service.PPMessage.TYPE.FILE:
                     return Service.$fileMessageSendSettings.build(body);
                 }
             }();

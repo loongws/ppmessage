@@ -8,11 +8,11 @@
 
         var id = "";
         switch(item.messageType) {
-        case 'FILE':
+        case Service.PPMessage.TYPE.FILE:
             id = item.message.file.fileUploadId;
             break;
 
-        case 'IMAGE':
+        case Service.PPMessage.TYPE.IMAGE:
             id = item.message.image.fileUploadId;
             break;
         }

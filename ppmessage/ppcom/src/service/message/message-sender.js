@@ -57,7 +57,7 @@ Service.$messageSender = ( function() {
 
     function onBeginUpload(ppMessage, settings) {
 
-        ppMessage.messageState = 'BEGIN_UPLOAD';
+        ppMessage.messageState = Service.PPMessage.STATE.BEGIN_UPLOAD;
 
         // upload file will get local upload file id
         var $fileUploader = Service.$uploader,
@@ -81,13 +81,13 @@ Service.$messageSender = ( function() {
             }).done(function(response) {
                 
                 // onEndUpload callback
-                ppMessage.messageState = 'SENDING';
+                ppMessage.messageState = Service.PPMessage.STATE.SENDING;
                 onUploadDone(ppMessage, settings, response.fuuid);
                 
             }).fail(function(errorCode) {
                 
                 // Upload failed
-                ppMessage.messageState = 'ERROR';
+                ppMessage.messageState = Service.PPMessage.STATE.ERROR;
                 
                 switch (errorCode) {
 
@@ -128,7 +128,7 @@ Service.$messageSender = ( function() {
     function sendToServer(ppMessage, settings) {
 
         //check message is valid
-        if ( !ppMessage.messageIsConversationValid || ppMessage.messageState === 'ERROR') {
+        if ( !ppMessage.messageIsConversationValid || ppMessage.messageState === Service.PPMessage.STATE.ERROR) {
             onSendFail( ppMessage, settings );
             return;
         }
@@ -157,7 +157,7 @@ Service.$messageSender = ( function() {
     function onSendSuccess(ppMessage, settings, response) {
         
         // update ppMessage state when send success
-        ppMessage.messageState = 'FINISH';
+        ppMessage.messageState = Service.PPMessage.STATE.FINISH;
 
         // generally `response` if exist, we consider this message was send by `api`, not by `ws`
         if ( response ) {
@@ -173,7 +173,7 @@ Service.$messageSender = ( function() {
     }
 
     function onSendFail(ppMessage, settings) {
-        ppMessage.messageState = 'ERROR';
+        ppMessage.messageState = Service.PPMessage.STATE.ERROR;
         
         // Error , check errorDescription
         var errorDesc = ppMessage.extra.errorDescription;

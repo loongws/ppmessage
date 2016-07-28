@@ -62,6 +62,13 @@
         };
     }
 
+    PPMessage.STATE = {
+        BEGIN_UPLOAD: 'BEGIN_UPLOAD', /** Before sending, prepare to upload **/
+        SENDING: 'SENDING', /** In sending state, we have send out, but we don't know whether or not it has send succeed**/
+        ERROR: 'ERROR', /** Send failed or upload failed or some other reasons **/
+        FINISH: 'FINISH' /** Send to server, and we have received the ack message from server **/
+    };
+
     // supported types now
     PPMessage.TYPE = {
         TEXT: 'TEXT',
@@ -134,7 +141,7 @@
             messageTimestamp: Date.now() / 1000,
             messageType: messageType,
             messageToType: Service.$messageToolsModule.toType(), // detect toType
-            messageState: 'SENDING',
+            messageState: PPMessage.STATE.SENDING,
             messageConversationId: '',
             messageIsConversationValid: true,
             messageRawData: '',

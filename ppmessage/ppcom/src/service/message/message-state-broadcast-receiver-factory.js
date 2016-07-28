@@ -8,16 +8,16 @@ Service.$msgStateReceiverFactory = ( function() {
 
         switch ( ppMessageType ) {
 
-        case 'TEXT':
+        case Service.PPMessage.TYPE.TEXT:
             return Service.$msgStateTextReceiver;
 
-        case 'EMOJI':
+        case Service.PPMessage.TYPE.EMOJI:
             return Service.$msgStateEmojiReceiver;
 
-        case 'FILE':
+        case Service.PPMessage.TYPE.FILE:
             return Service.$msgStateFileReceiver;
 
-        case 'IMAGE':
+        case Service.PPMessage.TYPE.IMAGE:
             return Service.$msgStateImageReceiver;
 
         default:

@@ -178,7 +178,7 @@
             var ppMessageBuilder = new Service.PPMessage.Builder(getMessageType(apiMessage))
                 .id(apiMessage.id)
                 .timestamp(apiMessage.ts)
-                .messageState('FINISH')
+                .messageState( Service.PPMessage.STATE.FINISH )
                 .conversationId(apiMessage.ci)
                 .conversation({ uuid: apiMessage.ci })
                 .rawData(apiMessage)
