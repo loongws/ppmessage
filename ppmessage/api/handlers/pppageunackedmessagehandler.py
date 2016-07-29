@@ -63,7 +63,7 @@ class PPPageUnackedMessageHandler(BaseHandler):
         _r["message"] = {}
 
         if _total_count == 0:
-            logging.info("no unacked messages of user: %s" % _user_uuid)
+            logging.info("no unacked messages of user: %s" % self._user_uuid)
             return
         
         _offset = _page_offset * _page_size
@@ -75,7 +75,7 @@ class PPPageUnackedMessageHandler(BaseHandler):
         if _offset + _page_size >= _total_count:
             _return_count = _total_count - _offset
 
-        _task_list = _redis.zrevrange(_key, _offset, _offset+_return_count-1)
+        _task_list = _redis.zrange(_key, _offset, _offset+_return_count-1)
 
         if _task_list == None or len(_task_list) == 0:
             return
@@ -97,7 +97,7 @@ class PPPageUnackedMessageHandler(BaseHandler):
             logging.error("no max_core for the uuid: %s" % _max_uuid)
             return
 
-        _pushs = _redis.zrevrangebyscore(_key, _max_score, "-inf", start=0, num=_page_size)
+        _pushs = _redis.zrevrangebyscore(_key, _max_score, "-inf", start=0, num=_page_size).reverse()
         if len(_pushs) == 0:
             logging.info("no pushs lower than %s" % _max_score)
             return
@@ -160,13 +160,15 @@ class PPPageUnackedMessageHandler(BaseHandler):
         if _page_size == None or _page_size < 0:
             _page_size = 30
 
+        _max_uuid = _request.get("max_uuid")
         if _max_uuid != None:
             logging.info("return by max: %s" % _max_uuid)
-            self._return_by_max(_key, _max_uuid, _page_size, _total_count)
+            self._return_by_max(_key, _max_uuid, _page_size)
             return
 
+        _min_uuid = _request.get("max_uuid")
         if _min_uuid != None:
-            self._return_by_min(_key, _min_uuid, _page_size, _total_count)
+            self._return_by_min(_key, _min_uuid, _page_size)
             return
         
         if _max_uuid == None and _min_uuid == None:
