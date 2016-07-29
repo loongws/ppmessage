@@ -41,15 +41,15 @@
                 var type = '';
                 var DEFAULT = 'application/octet-stream';
                 switch(msg.messageType) {
-                case 'FILE':
+                case Service.PPMessage.TYPE.FILE:
                     type = msg.message.file.file.type || DEFAULT;
                     break;
 
-                case 'IMAGE':
+                case Service.PPMessage.TYPE.IMAGE:
                     type = msg.message.image.file.type || DEFAULT;
                     break;
 
-                case 'TEXT':
+                case Service.PPMessage.TYPE.TEXT:
                     type = msg.message.image.file.type || DEFAULT;
                     break;
 
@@ -80,18 +80,18 @@
                 .getBody();
             
             switch(data.messageType) {
-            case 'TEXT':
+            case Service.PPMessage.TYPE.TEXT:
                 var body = {
                     fid: data.message.text.fuuid
                 };
                 apiMessage['message_body'] = $messageToolsModule.isMessageTextOverflow(data) ? $json.stringify(body) : data.message.text.body;
                 break;
 
-            case 'EMOJI':
+            case Service.PPMessage.TYPE.EMOJI:
                 apiMessage['message_body'] = data.message.emoji.code;
                 break;
 
-            case 'FILE':
+            case Service.PPMessage.TYPE.FILE:
                 var body = {
                     fid: data.message.file.fuuid,
                     mime: getMessageFileType(data)
@@ -99,7 +99,7 @@
                 apiMessage['message_body'] = $json.stringify(body);
                 break;
 
-            case 'IMAGE':
+            case Service.PPMessage.TYPE.IMAGE:
                 var body = {
                     fid: data.message.image.fuuid,
                     mime: getMessageFileType(data)

@@ -11,31 +11,31 @@
         });
 
         switch(item.messageType) {
-        case 'WELCOME':
+        case Service.PPMessage.TYPE.WELCOME:
             item && this.add(new View.AppProfileContainer(item));
             break;
 
-        case 'TEXT':
+        case Service.PPMessage.TYPE.TEXT:
             this.add((item.user.admin) ? new View.PPConversationPartTextByAdmin(item) : View.$userTextMessage.build(item));
             break;
 
-        case 'EMOJI':
+        case Service.PPMessage.TYPE.EMOJI:
             this.add((item.user.admin) ? new View.PPConversationPartEmojiByAdmin(item) : View.$userEmojiMessage.build(item));
             break;
 
-        case 'IMAGE':
+        case Service.PPMessage.TYPE.IMAGE:
             this.add((item.user.admin) ? View.$adminImageMessage.build(item) : View.$userImageMessage.build(item));
             break;
 
-        case 'AUDIO':
+        case Service.PPMessage.TYPE.AUDIO:
             item.user.admin && this.add( View.$adminAudioMessage.build( item ) );
             break;
 
-        case 'FILE':
-            this.add((item.user.admin) ? new View.PPConversationPartFileByAdmin(item) : new View.PPConversationPartFileByUser(item));
+        case Service.PPMessage.TYPE.FILE:
+            this.add((item.user.admin) ? new View.PPConversationPartFileByAdmin(item) : View.$userFileMessage.build(item));
             break;
 
-        case 'TIMESTAMP':
+        case Service.PPMessage.TYPE.TIMESTAMP:
             this.add(new View.PPConversationPartTimestamp(item));
             break;
         }

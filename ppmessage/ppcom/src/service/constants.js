@@ -96,6 +96,7 @@
             SEND_ERROR: '\u53d1\u9001\u5931\u8d25',
             SERVICE_NOT_AVALIABLE: '\u670d\u52a1\u4e0d\u53ef\u7528',
             CANCELED: '\u5df2\u53d6\u6d88',
+            SENDING: '\u6b63\u5728\u53d1\u9001',
 
             CLOSE: '\u5173\u95ed',
 
@@ -150,6 +151,7 @@
             SEND_ERROR: 'Send Error',
             SERVICE_NOT_AVALIABLE: 'Service Not Avaliable',
             CANCELED: 'Cancled',
+            SENDING: 'Sending',
 
             CLOSE: 'Close',
 

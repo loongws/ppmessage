@@ -2,8 +2,6 @@
 
     var $messageToolsModule = (function Tools() {
 
-        var _toType; // message send to_type detect by different policy
-
         function encodeTextWithUtf8(s) {
             return unescape(encodeURIComponent(s));
         }
@@ -43,27 +41,7 @@
 
         // detect to_type
         function toType() {
-
-            if (!_toType) {
-                
-                switch (Service.$app.policy()) {
-                    
-                case Service.$app.POLICY.ALL:
-                    _toType = Service.PPMessage.TO_TYPE.AP;
-                    break;
-
-                case Service.$app.POLICY.GROUP:
-                    _toType = Service.PPMessage.TO_TYPE.OG;
-                    break;
-
-                default:
-                    _toType = Service.PPMessage.TO_TYPE.AP;
-                    break;
-                }
-                
-            }
-
-            return _toType;
+            return 'DU';
         }
 
         return {

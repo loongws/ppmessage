@@ -43,7 +43,7 @@ def _replace(_d):
     ppcom_assets_path = http + host + "/ppcom/assets/"
     web_socket_url = ws + host + "/pcsocket/WS"
     file_upload_url = http + host + "/upload/upload/"
-    file_upload_txt_url = http + host + "/ppkefu/upload_txt"
+    file_upload_txt_url = http + host + "/ppkefu/upload/"
     file_download_url= http + host + "/download/download/"
 
     if _ssl == "on":

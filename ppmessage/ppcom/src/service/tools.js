@@ -66,11 +66,11 @@
         this.getMessageUploadId = function(message) {
             var uploadId = '';
             switch(message.messageType) {
-            case 'FILE':
+            case Service.PPMessage.TYPE.FILE:
                 uploadId = message.message.file.fileUploadId;
                 break;
 
-            case 'IMAGE':
+            case Service.PPMessage.TYPE.IMAGE:
                 uploadId = message.message.image.fileUploadId;
                 break;
             }
@@ -81,15 +81,14 @@
          * Check message send canceled or send errored.
          */
         this.isMessageSendError = function(message) {
-            return message.messageState == 'ERROR' || message.messageState == 'CANCELED';
+            return message.messageState == Service.PPMessage.STATE.ERROR || message.messageState == 'CANCELED';
         };
 
         /**
          * Check message is uploading file
          */
         this.isUploading = function(message) {
-            return message.messageState == "BEGIN_UPLOAD" ||
-                message.messageState == "SENDING";
+            return message.messageState == Service.PPMessage.STATE.BEGIN_UPLOAD;
         };
 
         /*

@@ -1,12 +1,6 @@
 Service.$app = (function() {
 
-    var POLICY = { GROUP: 'GROUP',
-                   ALL: 'ALL',
-                   SMART: 'SMART' },
-
-        DEFAULT_POLICY = POLICY.ALL,
-
-        appInfo,
+    var appInfo,
         
         set = function(info) {
             appInfo = info;
@@ -17,14 +11,8 @@ Service.$app = (function() {
         };
     
     return {
-
-        POLICY: POLICY,
         
         set: set,
-
-        policy: function() { // policy
-            return ( get() && get().app_route_policy ) || DEFAULT_POLICY; 
-        },
 
         app: get, // appInfo
 

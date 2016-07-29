@@ -79,7 +79,7 @@ Ctrl.$emojiSelector = ( function() {
                 this.showSelector(false);
 
                 // Send emoji message
-                new Service.PPMessage.Builder('EMOJI')
+                new Service.PPMessage.Builder( Service.PPMessage.TYPE.EMOJI )
                     .emojiMessageCode(txtToAdd)
                     .build().send();
                 

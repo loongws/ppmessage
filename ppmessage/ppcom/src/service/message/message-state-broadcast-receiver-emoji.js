@@ -15,10 +15,12 @@ Service.$msgStateEmojiReceiver = ( function() {
 
             case STATE.BUILD_DONE:
                 Ctrl.$conversationContent.appendMessage( body );
+                View.$userEmojiMessage.onSending( body );
                 View.$composerContainer.focus();
                 break;
 
             case STATE.SEND_DONE:
+                View.$userEmojiMessage.onSendFinish( body );
                 Service.$pubsub.unsubscribe( subscriber );
                 break;
 

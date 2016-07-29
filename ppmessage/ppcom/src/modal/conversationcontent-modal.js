@@ -32,7 +32,7 @@
                     },
 
                     welcomeMsg = new Builder( 'WELCOME' )
-                    .messageState( 'FINISH' )
+                    .messageState( Service.PPMessage.STATE.FINISH )
                     .conversationId(Service.$tools.getUUID())
                     .welcomeBody(welcome)
                     .build()
@@ -46,8 +46,8 @@
                     // welcome text in mobile
                     welcomeText = Service.Constants.i18n('WELCOME_MSG'),
                     // welcome msg in mobile
-                    welcomeMsg = new Builder('TEXT')
-                    .messageState('FINISH')
+                    welcomeMsg = new Builder( Service.PPMessage.TYPE.TEXT )
+                    .messageState( Service.PPMessage.STATE.FINISH )
                     .conversationId(Service.$tools.getUUID())
                     .textMessageBody(welcomeText)
                     .admin(true)
@@ -268,7 +268,7 @@
                         time: time,
                         timeStr: timeStr
                     })
-                    .messageState( 'FINISH' )
+                    .messageState( Service.PPMessage.STATE.FINISH )
                     .build()
                     .getBody();
             },

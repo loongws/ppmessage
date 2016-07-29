@@ -10,8 +10,8 @@
         
     }
 
-    ApiMessage.TYPE_OG = 'OG'; // group mode, policy is `group`
-    ApiMessage.TYPE_AP = 'AP'; // No group, policy is `broadcast`
+    ApiMessage.TYPE_OG = 'OG';
+    ApiMessage.TYPE_AP = 'AP';
 
     function Builder(conversationId) {
 

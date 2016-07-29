@@ -116,7 +116,7 @@ Ctrl.$composerContainer = (function() {
                 $(composerContainerTextareaSelector)[0].rows = 1;
 
                 // Send text message
-                new Service.PPMessage.Builder('TEXT')
+                new Service.PPMessage.Builder( Service.PPMessage.TYPE.TEXT )
                     .textMessageBody(text)
                     .build().send();
 
@@ -146,7 +146,7 @@ Ctrl.$composerContainer = (function() {
                     if (e.target && e.target.result) {
 
                         // Send image message
-                        new Service.PPMessage.Builder('IMAGE')
+                        new Service.PPMessage.Builder( Service.PPMessage.TYPE.IMAGE )
                             .imageBody({
                                 file: f, url: filePath, data: e.target.result
                             })
@@ -162,7 +162,7 @@ Ctrl.$composerContainer = (function() {
                     }
 
                     // Send file message
-                    new Service.PPMessage.Builder('FILE')
+                    new Service.PPMessage.Builder( Service.PPMessage.TYPE.FILE )
                         .fileBody({
                             fileUrl: filePath,
                             file: f,
