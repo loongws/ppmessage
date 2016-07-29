@@ -28,7 +28,7 @@ def _qiniu_identicon_prefix(_string):
     return _qiniu_random_identicon_prefix + _string
     
 def _prefix(_string):
-    if IDENTICON_LOCAL_STORE:
+    if IDENTICON_PPMESSAGE_STORE:
         return _ppmessage_identicon_prefix(_string)
     return _qiniu_identicon_prefix(_string)
 
@@ -101,7 +101,7 @@ def upload_random_identicon(_abs):
     return
 
 def get_random_identicon_url(_file):
-    file = _file[_file.rfind["/"] + 1:]
+    file = _file[_file.rfind("/") + 1:]
     return _prefix(_file)
 
 if __name__ == "__main__":
