@@ -88,16 +88,16 @@ class TestApiCase(unittest.TestCase):
             http_client.close()
         return
                                     
-    def test_create_p2s_conversation(self):
-        print "\n test create p2s conversation \n"
-        _api = "PP_CREATE_ANONYMOUS"
+    def test_create_predefined_script(self):
+        print "\n test create predefined script \n"
+        _api = "PP_ADD_PREDEFINED_SCRIPT_GROUP"
         _data = {
-            "ppcom_trace_uuid": str(uuid.uuid1()),
+            "group_name": str(uuid.uuid1),
             "app_uuid": _get_config().get("team").get("app_uuid")
         }
         self._prepare(_api)
         self._exec(_data)
-        _user_uuid = self._get_return("user_uuid")
+        _group_uuid = self._get_return("uuid")
 
         _api = "PPCOM_CREATE_CONVERSATION"
         _data = {

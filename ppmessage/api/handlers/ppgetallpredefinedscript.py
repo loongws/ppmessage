@@ -17,6 +17,14 @@ import logging
 
 class PPGetAllPredefinedScript(BaseHandler):
 
+    def _detail(self, _script_uuid):
+        _script = redis_hash_to_dict(self.application.redis, PredefinedScript, _script_uuid)
+        _group_uuid = _script.get("group_uuid")
+        if _group_uuid != None and len(_group_uuid) != 0:
+            _key = PredefinedScriptGroup.__tablename__ + ".uuid." + _group_uuid
+            _script["group_name"] = self.application.redis.hget(_key, "group_name")
+        return
+
     def _get(self):
         _request = json.loads(self.request.body)
         _app_uuid = _request.get("app_uuid")
@@ -25,7 +33,7 @@ class PPGetAllPredefinedScript(BaseHandler):
         _ret = self.getReturnData()
         _ret["list"] = []
         for _script in _scripts:
-            _ret["list"].append(redis_hash_to_dict(self.application.redis, PredefinedScript, _script))
+            _ret["list"].append(self._detail(_script))
         return
         
     def initialize(self):

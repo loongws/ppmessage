@@ -6,7 +6,7 @@
 
 from ppmessage.core.constant import DEV_MODE
 from ppmessage.core.constant import CONVERSATION_TYPE
-from ppmessage.bootstrap.data import BOOTSTRAP_DATA
+from ppmessage.core.utils.config import _get_config
 
 import tornado.httpclient
 import uuid
@@ -46,8 +46,8 @@ class TestApiCase(unittest.TestCase):
         TOKEN_URI = "http://localhost:8080/ppauth/token"
         body = self._create_body_string({
             "grant_type": "client_credentials",
-            "client_id": BOOTSTRAP_DATA["PPCOM"]["api_key"],
-            "client_secret": BOOTSTRAP_DATA["PPCOM"]["api_secret"]
+            "client_id": _get_config().get("api").get("ppcom").get("key"),
+            "client_secret": _get_config().get("api").get("ppcom").get("secret"),
         })
         request = tornado.httpclient.HTTPRequest(TOKEN_URI, method="POST", body=body)
         client = tornado.httpclient.HTTPClient()
@@ -96,8 +96,8 @@ class TestApiCase(unittest.TestCase):
     def _get_conversation_by_page(self, page_offset, page_size):
         _api = "PP_PAGE_USER_CONVERSATION"
         _data = {
-            "app_uuid": BOOTSTRAP_DATA["team"]["app_uuid"],
-            "user_uuid": BOOTSTRAP_DATA["user"]["user_uuid"],
+            "app_uuid": _get_config().get("team").get("app_uuid"),
+            "user_uuid": _get_config().get("user").get("user_uuid"),
             "page_offset": page_offset,
             "page_size": page_size
         }
@@ -109,8 +109,8 @@ class TestApiCase(unittest.TestCase):
     def _get_conversation_by_max_uuid(self, max_uuid, page_size): 
         _api = "PP_PAGE_USER_CONVERSATION"
         _data = {
-            "app_uuid": BOOTSTRAP_DATA["team"]["app_uuid"],
-            "user_uuid": BOOTSTRAP_DATA["user"]["user_uuid"],
+            "app_uuid": _get_config().get("team").get("app_uuid"),
+            "user_uuid": _get_config().get("user").get("user_uuid"),
             "max_uuid": max_uuid,
             "page_size": page_size
         }
@@ -121,8 +121,8 @@ class TestApiCase(unittest.TestCase):
     def _get_conversation_by_min_uuid(self, min_uuid, page_size): 
         _api = "PP_PAGE_USER_CONVERSATION"
         _data = {
-            "app_uuid": BOOTSTRAP_DATA["team"]["app_uuid"],
-            "user_uuid": BOOTSTRAP_DATA["user"]["user_uuid"],
+            "app_uuid": _get_config().get("team").get("app_uuid"),
+            "user_uuid": _get_config().get("user").get("user_uuid"),
             "min_uuid": min_uuid,
             "page_size": page_size
         }

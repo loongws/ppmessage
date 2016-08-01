@@ -34,7 +34,7 @@ class PPAddPredefinedScriptGroup(BaseHandler):
         _row.create_redis_keys(self.application.redis)
         _ret = self.getReturnData()
         _ret = copy.deepcopy(_request)
-        _ret["uuid"] = _uuid
+        _ret.update({"uuid": _uuid})
         return
         
     def initialize(self):
