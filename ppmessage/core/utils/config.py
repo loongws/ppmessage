@@ -72,7 +72,7 @@ def get_config_server_url():
     _port = _config.get("server").get("port")
     if _port != None:
         _http = _http + ":" + str(_port)
-    return 
+    return _http
 
 def get_config_server_ssl():
     _config = _get_config()

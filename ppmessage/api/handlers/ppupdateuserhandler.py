@@ -13,6 +13,7 @@ from ppmessage.db.models import AppUserData
 from ppmessage.core.genericupdate import generic_update
 
 from ppmessage.core.utils.config import get_config_server_generic_store
+from ppmessage.core.utils.config import get_config_server_identicon_store
 from ppmessage.core.utils.randomidenticon import upload_random_identicon
 from ppmessage.core.utils.randomidenticon import get_random_identicon_url
 from ppmessage.core.utils.randomidenticon import download_random_identicon
@@ -24,6 +25,7 @@ import json
 import copy
 import hashlib
 import logging
+import shutil
 
 from tornado.ioloop import IOLoop
 
@@ -63,10 +65,12 @@ class PPUpdateUserHandler(BaseHandler):
             else:
                 _generic_store = get_config_server_generic_store()
                 _abs = _generic_store + os.path.sep + _user_icon
+                _dest = get_config_server_identicon_store()
+                shutil.copy(_abs, _dest)
                 if os.path.exists(_abs):
                     IOLoop.current().spawn_callback(upload_random_identicon, _abs)
                     _data["user_icon"] = get_random_identicon_url(_user_icon)
-            
+
         if len(_data) > 0:
             _updated = generic_update(_redis, DeviceUser, _user_uuid, _data)
             if not _updated:
